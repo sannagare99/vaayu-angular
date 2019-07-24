@@ -1,0 +1,69 @@
+.content-header
+  h2.content-title
+    | Exceptions Micro Dashboard
+.content-body.micro-dashboard.exceptions
+  #error-placement
+
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(exceptions_dashboard_index_path(:period => 'day'))}" type="button"]
+          =link_to exceptions_dashboard_index_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(exceptions_dashboard_index_path(:period => 'week'))}" type="button"]
+          =link_to exceptions_dashboard_index_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(exceptions_dashboard_index_path(:period => 'month'))}" type="button"]
+          =link_to exceptions_dashboard_index_path(:period => 'month')
+            | Monthly
+
+  .row.margin-top
+    .col-md-12
+      a[name='exceptions-trend']
+      h4 Trending: Daily Exceptions
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.black
+              span Total
+            li
+              span.point.square.dark-blue
+              span To Work
+            li
+              span.point.square.blue
+              span To Home
+        .col-md-10
+          canvas#exceptions-trend[height=250 data-chart_data="#{@data[:trend].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='exceptions-breakup']
+      h4 Exception Deep Dive
+      .col-md-9.border-bottom
+        canvas#exceptions-breakup[height=250 data-chart_data="#{@data[:breakup].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='exceptions-shift-wise']
+      h4 Shift Wise Exception Break-Up
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.square.dark-blue
+              span Panic
+            li
+              span.point.square.blue
+              span Still On Board
+            li
+              span.point.square.yellow
+              span Not On Board
+            li
+              span.point.square.red
+              span Driver No Show
+            li
+              span.point.square.black
+              span Employee No Show
+        .col-md-10
+          canvas#exceptions-shift-wise[height=250 data-chart_data="#{@data[:by_shift].to_json}"]

@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "status",
+    "trip_type",
+    "status",
+    "site"
+  ],
+  "properties": {
+    "id": { "type": "integer" },
+    "status": { "type": "string" },
+    "bus_rider": { "type": "boolean" },
+    "trip_type": { "type": "string" },
+    "passengers": { "type": "integer" },
+    "book_ola": { "type": "boolean" },
+    "approximate_duration": { "type": "integer" },
+    "approximate_distance": { "type": "integer" },
+    "start_date": { "type": "integer" },
+    "date": { "type": "integer" },
+    "approximate_trip_end_date": { "type": "integer" },
+    "suspended": { "type": "boolean" },
+    "suspending_trip_route_exceptions": { "type": "array" },
+    "site": {
+      "type": "object",
+      "required": [ "id", "name", "location"],
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "location": {
+          "type": "object",
+          "required": ["latitude", "longitude"],
+          "properties": {
+            "latitude": { "type": "string" },
+            "longitude": { "type": "string" }
+          }
+        }
+      }
+    },
+    "trip_routes": { "type": "array" }
+  }
+}

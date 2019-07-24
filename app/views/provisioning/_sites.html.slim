@@ -1,0 +1,36 @@
+#sites.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    table#sites-table.table.table-hover.table-bordered.table-no-modal[style="width: 100%;"]
+      thead
+        tr
+          th
+            | ID#
+          th
+            | Name
+          th
+            | Company
+          th
+            | Address
+          th
+            | Phone            
+          th
+            | Action
+      tbody
+
+#modal-confirm-remove-site.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Remove Site
+      .modal-body[style="max-height:500px; overflow-y:scroll"]
+        .row
+          .col-md-12
+            | Do you want to remove this site              
+      .modal-footer          
+        button#submit-remove-site.btn.btn-danger.btn-fixed-width.ladda-button[type="button"]
+          span.ladda-label
+            | Remove

@@ -1,0 +1,37 @@
+#operator-unassigned-rosters.tab-pane.fade
+  .col-md-6
+    .table-responsive.table-responsive-datatables
+      table#operator-unassigned-rosters-table.table.table-hover.table-bordered[style="width: 100%;" data-auto-update="true"]
+        thead
+          tr
+            th
+              | Action
+            th
+              | Trip Roster #
+            th
+              | Shift
+            th
+              | Direction
+            th
+              | Map
+        tbody
+      .table-controls.pull-left
+        button.btn.btn-primary#assign-trip-roster[type="button" disabled="disabled"]
+          | Assign Driver
+        button.btn.btn-primary#complete_with_exception[type="button" disabled="disabled"]
+          | Complete with Exception
+
+  .col-md-6
+    #map-operator-unassigned-rosters.map[style="width: 100%; height: 435px;"]
+    div.hidden#employee_summary
+      .table-responsive
+        table.table.table-bordered
+          tbody
+            tr
+              td
+                label.total-label for="total-employees-count" id="total-employees-count"
+              td
+                label.total-label for="total-distance" id="total-distance"
+            tr
+              td
+                label.total-label for="total-duration" id="total-duration"

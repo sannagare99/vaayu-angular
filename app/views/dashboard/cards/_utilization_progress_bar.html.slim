@@ -1,0 +1,7 @@
+- (capacity * utilization / 100).floor.times do
+  .progress[style="width: #{100.to_f/capacity}%"]
+    div[class="progress-bar #{trend ? 'bg-success' : 'bg-danger'}" role='progressbar' style="width: 100%"]
+.progress[style="width: #{100.to_f/capacity}%"]
+  div[class="progress-bar #{trend ? 'bg-success' : 'bg-danger'}" role='progressbar' style="width: #{(((capacity * utilization / 100) % 1) * 100).floor}%"]
+- (capacity * (1 - (utilization / 100))).floor.times do
+  .progress[style="width: #{100.to_f/capacity}%"]

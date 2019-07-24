@@ -1,0 +1,43 @@
+#modal-employee-list.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    = simple_form_for @line_manager, html: {:'data-validate' => 'form', class: 'modal-form', id: 'employee-list'}, :url => update_employee_list_line_manager_path, remote: true, :method => 'POST' do |f|
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Employee List
+        .modal-body
+          .row
+            .col-md-6
+              input#employee_list_search.form-control.string.optional name="search" type="text" /
+            .col-md-6
+              p.selected-employee-count
+                span 0
+                |  employees selected
+          .row
+            table.table.table-bordered.employee-list-table
+              tr
+                th Employee
+                th Gender
+                th Address
+                th
+                  input.employee-select-all name="employee_check_select_all" type="checkbox" value="" /
+
+              - @employees.each_with_index do |e, i|
+                tr
+                  td= e.full_name.capitalize
+                  td= e.gender.first.upcase
+                  td= e.home_address
+                  td
+                    input.employee-select-check name="employee_check[#{i}]" type="checkbox" value="#{@line_manager.id.to_i == e.line_manager_id.to_i ? 1 : 0}" /
+                    = f.simple_fields_for "employee_attributes[#{i}]", e do |ui|
+                      = ui.input :id, :as => 'hidden'
+                      = ui.input :line_manager_id, as: 'hidden', input_html: { class: "line-manager-id" }
+
+
+
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, 'Save', :class => 'btn btn-sm btn-primary'

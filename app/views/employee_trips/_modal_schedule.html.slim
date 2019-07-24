@@ -1,0 +1,66 @@
+#modal-employee-schedule.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-xlg
+    = simple_form_for @employee, html: {:'data-validate' => 'form', class: 'modal-form', id: 'form-employee-schedule'}, :url => schedule_trip_update_employee_path, :method => 'POST' do |f|
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Shift
+        .modal-body.calendar-schedule-module
+          .row
+            .col-md-3#schedule-date
+            .col-md-9
+              .calendar-week-title
+                | Sep 18 to Sep 23
+              .calendar-schedule-section
+                .calendar-week-header
+                  div
+                    button.btn.btn-sm.btn-default[type="button"]
+                      | Last week
+                  div
+                    button.btn.btn-sm.btn-default[type="button"]
+                      | Next week
+                div style=("clear: both;")
+                .calendar-week-details
+                  .table-custom-width
+                    table.table.table-bordered.employee-schedule-table
+                      #default-content style=("display: none;")
+                        p
+                          span.check_in --
+                          span &#160;&#58;&#160;
+                          span.check_out --
+                        p --
+                      = f.input :id, :as =>'hidden'
+                      tr
+                        - @new_employee_trips.each_slice(2).each do |sch|
+                            th
+                              = ''
+                      tr
+                        - @new_employee_trips.each_slice(2).with_index do |sch, i|
+                          td
+                            .schedule-column
+                              .schedule-content
+                                p
+                                  span.check_in --
+                                  span &#58;
+                                  span.check_out --
+                                p --
+                              .schedule-form style=("display: none;")
+                                = f.simple_fields_for "check_in_attributes[#{i}]", sch.first do |ui|
+                                  = ui.input :id, :as => 'hidden'
+                                  = ui.input :schedule_date, as: 'hidden', input_html: { class: "selected_date" }
+                                  = ui.input :check_in, as: 'hidden', input_html: {:'data-mask' => 'time', :value => sch.first.check_in_formatted}
+                                  = ui.input :site_id, as: 'hidden', input_html: { class: "check_in_location_select" }
+                                  = ui.input :shift_id, collection: @employee.shifts.active.map {|x| [x.start_time, x.id]}, label: "Check in", input_html: { class: "check_in_shift_select" }, prompt: "Clear"
+
+                                = f.simple_fields_for "check_out_attributes[#{i}]", sch.last do |ui|
+                                  = ui.input :id, :as => 'hidden'
+                                  = ui.input :schedule_date, :as => 'hidden', input_html: { class: "selected_date" }
+                                  = ui.input :check_out, as: 'hidden', input_html: {:'data-mask' => 'time', :value => sch.last.check_out_formatted }
+                                  = ui.input :shift_id, collection: @employee.shifts.active.map {|x| [x.end_time, x.id]}, label: "Check out", input_html: { class: "check_out_shift_select" }, prompt: "Clear"
+                                  = ui.input :site_id, collection: @sites, label: "Location", input_html: { class: "check_out_location_select" }
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, 'Save changes', :class => 'btn btn-sm btn-primary'

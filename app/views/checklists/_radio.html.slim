@@ -1,0 +1,14 @@
+.col-md-3
+  p
+    - if item.value == true
+      input class="checklist_radio ok_radio" id="#{item.to_id}1" name="checklist_items[#{item.to_id}]" type="radio" value='1' checked=true /
+    - else
+      input class="checklist_radio ok_radio" id="#{item.to_id}1" name="checklist_items[#{item.to_id}]" type="radio" value='1' /
+    label for="#{item.to_id}1"
+.col-md-3
+  p.no
+    - if item.value == false
+      input class="checklist_radio not_ok_radio" id="#{item.to_id}2" name="checklist_items[#{item.to_id}]" type="radio" value='0' checked=true /
+    - else
+      input class="checklist_radio not_ok_radio" id="#{item.to_id}2" name="checklist_items[#{item.to_id}]" type="radio" value='0' /
+    label for="#{item.to_id}2"

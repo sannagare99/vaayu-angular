@@ -1,0 +1,9 @@
+div[class="card text-center #{trend ? 'border-success' : 'border-danger'}"]
+  .card-body.card-sm
+    .card-title Cost Per Employee
+    .card-text
+      span.count.small
+        span &#x20B9;
+        span= value.round
+        .row
+          div[class="glyphicon #{trend ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{trend ? 'text-success' : 'text-danger'}"]

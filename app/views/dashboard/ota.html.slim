@@ -1,0 +1,40 @@
+.content-header
+  h2.content-title
+    | OTA Micro Dashboard
+.content-body.micro-dashboard.ota
+  #error-placement
+
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(ota_dashboard_index_path(:period => 'day'))}" type="button"]
+          =link_to ota_dashboard_index_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(ota_dashboard_index_path(:period => 'week'))}" type="button"]
+          =link_to ota_dashboard_index_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(ota_dashboard_index_path(:period => 'month'))}" type="button"]
+          =link_to ota_dashboard_index_path(:period => 'month')
+            | Monthly
+
+  .row.margin-top
+    .col-md-12
+      a[name='ota-trend']
+      h4 Trending: On-Time Arrivals and Departures
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.square.blue
+              span Total Login Attemps
+            li
+              span.point.dark-blue
+              span OTA
+        .col-md-5
+          .row.text-center On-Time Arrivals
+          .row
+            canvas#ota-trend-arrivals[height=250 data-chart_data="#{@data[:on_time_arrivals].to_json}"]
+        .col-md-5
+          .row.text-center On-Time Departure
+          .row
+            canvas#ota-trend-departures[height=250 data-chart_data="#{@data[:on_time_departures].to_json}"]

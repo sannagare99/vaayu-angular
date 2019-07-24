@@ -1,0 +1,148 @@
+#drivers.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    a.reload-button  Reload
+    table#drivers-table.table.table-hover.table-bordered.table-no-modal[style="width: 100%;"]
+      .search-section
+        input#drivers-table-search-input.form-control.string name="user[search_text]" type="text" /
+        select#drivers-table-field-name.form-control.select name="field_name"
+          option value="name"  Name
+          option value="email"  Email
+          option value="business_associate"  Business Associate
+          option value="licence_number"  License Numbers
+          option value="phone"  Phone
+          option value="username"  Username
+          option value="badge_number"  Badge Number
+          option value="aadhaar_number"  AADHAAR
+        a.btn.btn-sm href="#" id="drivers-table_search"
+          i.fa.fa-search aria-hidden="true"
+      thead
+        tr
+          th
+            | Name
+          th
+            | Business Associate
+          th
+            | License Number
+          th
+            | AADHAAR
+          th
+            | Compliance
+          th
+            | Status
+          th
+            | Assigned            
+          th
+            | Last Active
+          th
+            | Action
+      tbody
+
+#checklist-modal
+/! Checklist Modal
+/!#driverChecklistModal.modal.fade role="dialog"
+  .modal-dialog.modal-compliance
+    .modal-content
+      .modal-header
+        button.close data-dismiss="modal" type="button"  &times;
+        h4.modal-title Compliance Checklist - Driver Name
+      .modal-body
+        .progress-section
+          .col-md-11
+            .progress
+              .progress-bar.bg-danger role="progressbar" style="width: 75%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+          .col-md-1
+            span  75%
+
+        .field-section
+          /! Quality Section
+          .quantity.check-list-fields
+            p.title  Quality
+            .row
+              .col-md-4
+              .col-md-3.ok  OK
+              .col-md-3.not-ok  NOT OK
+            .row
+              .col-md-4.field-label
+                p.lable-name  Uniform
+              .col-md-3
+                p
+                  input#test2 name="radio-group" type="radio" /
+                  label for="test2"
+              .col-md-3
+                p.no
+                  input#test3 name="radio-group" type="radio" /
+                  label for="test3"
+            .row
+              .col-md-4.field-label
+                p.lable-name  Shoes
+              .col-md-3
+                p
+                  input#test4 name="radio-group1" type="radio" /
+                  label for="test4"
+              .col-md-3
+                p.no
+                  input#test5 name="radio-group1" type="radio" /
+                  label for="test5"
+            .row
+              .col-md-4.field-label
+                p.lable-name  Hygiene
+              .col-md-3
+                p
+                  input#test6 name="radio-group2" type="radio" /
+                  label for="test6"
+              .col-md-3
+                p.no
+                  input#test7 name="radio-group2" type="radio" /
+                  label for="test7"
+
+          /! Behaviour Section
+          .behaviour.check-list-fields
+            p.title  Behaviour
+            .row
+              .col-md-4
+              .col-md-3.ok  OK
+              .col-md-3.not-ok  NOT OK
+            .row
+              .col-md-4.field-label
+                p.lable-name  Intoxicated
+              .col-md-3
+                p
+                  input#test8 name="radio-group3" type="radio" /
+                  label for="test8"
+              .col-md-3
+                p.no
+                  input#test9 name="radio-group3" type="radio" /
+                  label for="test9"
+          /! Documents Section
+          .documents.check-list-fields
+            p.title  Documents
+            .row
+              .col-md-4
+              .col-md-3.ok  OK
+              .col-md-3.not-ok  NOT OK
+            .row
+              .col-md-4.field-label
+                p.lable-name  RC Book
+              .col-md-3
+                p
+                  input#test10 name="radio-group4" type="radio" /
+                  label for="test10"
+              .col-md-3
+                p.no
+                  input#test11 name="radio-group4" type="radio" /
+                  label for="test11"
+            .row
+              .col-md-4.field-label
+                p.lable-name  Insurance Papers
+              .col-md-3
+                p
+                  input#test12 name="radio-group5" type="radio" /
+                  label for="test12"
+              .col-md-3
+                p.no
+                  input#test13 name="radio-group5" type="radio" /
+                  label for="test13"
+
+      .modal-footer
+        a.btn.btn-sm.btn-primary.btn-fixed-width[href=""]  Save

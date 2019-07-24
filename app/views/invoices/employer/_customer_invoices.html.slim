@@ -1,0 +1,211 @@
+#customer-invoices.tab-pane.fade
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#customer-invoices-picker[class="form-control" type="text" name="customer-invoices-date" value=""]
+      .col-md-6.
+        .btn.btn-primary#download-invoices.pull-right
+          | Download
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#customer-invoices-table.table.table-hover.table-bordered[style="width: 100%;"]
+      thead
+        tr
+          th
+            | Invoice #
+          th
+            | Bill Data
+          th
+            | Trip Data
+          th
+            | Customer
+          th
+            | Toll
+          th
+            | Penalty
+          th
+            | CGST
+          th
+            | SGST
+          th
+            | Total
+          th
+            | Status
+          th.checkbox-select.ch-all[style="padding:18px"]
+      tbody
+
+
+  #modal-billing-detail.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#detail-info-trips-table.table
+                thead
+                  tr.reports-table
+                    th
+                      | Trip Id #
+                    th
+                      | Customer
+                    th
+                      | Vehicle
+                    th
+                      | Guard
+                    th
+                      | Toll
+                    th
+                      | Penalty
+                    th
+                      | Total Employees
+                    th
+                      | Served Employees
+                    th
+                      | Total
+                tbody
+                  
+          .row
+            .col-md-12
+              .total-amount.text-right
+                p
+                  | Total
+                  strong
+                    span
+                      i.fa.fa-inr
+                      span#trip_total
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+  #modal-bill-data.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#bill-data-table.table
+                thead
+                  tr.reports-table
+                    th
+                      | Vehicle #
+                    th
+                      | Vehicle Type
+                    th
+                      | Zone
+                    th
+                      | Total Trips
+                    th
+                      | Rate
+                    th
+                      | Toll Charges
+                    th
+                      | Amount                    
+                tbody
+                  
+          .row
+            .col-md-12
+              .total-amount.text-right
+                p[style="width:100px"]
+                  | Total Trips:
+                  span#bill_trips_total
+                p[style="width:100px"]
+                  | Total
+                  strong
+                    span
+                      i.fa.fa-inr
+                      span#bill_total
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+
+  #modal-trips-data.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#trip-data-table.table[style="width:2000px; overflow-x:scroll"]
+                thead
+                  tr.reports-table
+                    th
+                      | Date
+                    th
+                      | Tripsheet #
+                    th
+                      | Shift Time
+                    th
+                      | Reporting Time
+                    th
+                      | Actual Time
+                    th
+                      | Trip Type
+                    th
+                      | Site
+                    th
+                      | Planned Employees
+                    th
+                      | Actual Employees
+                    th
+                      | Vehicle #
+                    th
+                      | Vehicle Type
+                    th
+                      | Seating Capacity
+                    th
+                      | Operator
+                    th
+                      | BA Name
+                    th
+                      | Guard (Y/N)
+                    th
+                      | GPS (Y/N)
+                tbody          
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+  #modal-billing-status.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-sm[style="width:25%"]
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            Change Invoice Status
+        .modal-body
+          .row
+            .col-md-4.col-md-offset-1.margin-top
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="created_status" value="created"]
+                  |    New
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="approved_status" value="approved"]
+                  |    Approved
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="dirty_status" value="dirty"]
+                  |    Dirty
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="paid_status" value="paid"]
+                  |    Paid
+        .modal-footer
+          a.btn.btn-sm.btn-default#cancel_status[href="#" data-dismiss="modal"]
+            | Cancel
+          a.btn.btn-sm.btn-primary#save_status[href="#"]
+            | Save

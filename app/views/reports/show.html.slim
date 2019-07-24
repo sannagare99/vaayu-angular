@@ -1,0 +1,109 @@
+.content-header
+  h2.content-title
+    | Reports
+.content-body
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom.nav-actions-block
+      ul.nav.nav-tabs
+        -if can?(:view, :all_reports) || can?(:view, :trip_logs)
+          li
+            a[href="#trip-logs" data-toggle="tab"]
+              | Trip Logs
+        -if can?(:view, :all_reports) || can?(:view, :employee_logs)
+          li
+            a[href="#employee-logs" data-toggle="tab"]
+              | Employee Logs
+        -if can?(:view, :all_reports) || can?(:view, :vehicle_deployment)
+          li
+            a[href="#vehicle-deployment" data-toggle="tab"]
+              | Vehicle Deployment
+        -if can?(:view, :all_reports) || can?(:view, :ota)
+          li
+            a[href="#ota" data-toggle="tab"]
+              | OTA
+        -if can?(:view, :all_reports) || can?(:view, :otd)
+          li
+            a[href="#otd" data-toggle="tab"]
+              | OTD
+        -if can?(:view, :all_reports) || can?(:view, :employee_no_show)
+          li
+            a[href="#employee-no-show" data-toggle="tab"]
+              | Employee No Show
+        -if can?(:view, :all_reports) || can?(:view, :employee_satisfaction)
+          li
+            a[href="#employee-satisfaction" data-toggle="tab"]
+              | Employee Satisfaction
+        -if can?(:view, :all_reports) || can?(:view, :operations_summary)
+          li
+            a[href="#operations-summary" data-toggle="tab"]
+              | Operations Summary
+        -if can?(:view, :all_reports) || can?(:view, :ota_summary)
+          li
+            a[href="#on-time-arrivals" data-toggle="tab"]
+              | OTA Summary
+        -if can?(:view, :all_reports) || can?(:view, :otd_summary)
+          li
+            a[href="#otd-summary" data-toggle="tab"]
+              | OTD Summary
+        -if can?(:view, :all_reports) || can?(:view, :no_show_and_cancellations)
+          li
+            a[href="#no-show-and-cancellations" data-toggle="tab"]
+              | No Show and Cancellation Summary
+        -if can?(:view, :all_reports) || can?(:view, :panic_alarms)
+          li
+            a[href="#panic-alarms" data-toggle="tab"]
+              | Panic Alarms
+        -if can?(:view, :all_reports) || can?(:view, :employee_activity)
+          li
+            a[href="#employee-activity" data-toggle="tab"]
+              | Employee Activity
+        -if can?(:view, :all_reports) || can?(:view, :driver_activity)
+          li
+            a[href="#driver-activity" data-toggle="tab"]
+              | Driver Activity
+        -if can?(:view, :all_reports) || can?(:view, :drivers_trip_summary)
+          li
+            a[href="#drivers-trip-summary" data-toggle="tab"]
+              | Drivers Trip Summary
+        -if can?(:view, :all_reports) || can?(:view, :employee_wise_no_show)
+          li
+            a[href="#employee-wise-no-show" data-toggle="tab"]
+              | Employee Wise No Show
+        -if can?(:view, :all_reports) || can?(:view, :shift_fleet_utilisation_summary)
+          li
+            a[href="#shift-fleet-utilisation-summary" data-toggle="tab"]
+              | Shift Fleet Utilisation Summary
+        -if can?(:view, :all_reports) || can?(:view, :shift_wise_no_show)
+          li
+            a[href="#shift-wise-no-show" data-toggle="tab"]
+              | Shift Wise No Show
+        -if can?(:view, :all_reports) || can?(:view, :trip_wise_driver_exception)
+          li
+            a[href="#trip-wise-driver-exception" data-toggle="tab"]
+              | Trip Wise Driver Exception
+        -if can?(:view, :all_reports) || can?(:view, :vendor_trip_distribution)
+          li
+            a[href="#vendor-trip-distribution" data-toggle="tab"]
+              | Vendor Trip Distribution
+    .tab-content
+      = render :partial => 'reports/trip_logs' if can?(:view, :all_reports) || can?(:view, :trip_logs)
+      = render :partial => 'reports/employee_logs' if can?(:view, :all_reports) || can?(:view, :employee_logs)
+      = render :partial => 'reports/vehicle_deployment' if can?(:view, :all_reports) || can?(:view, :vehicle_deployment)
+      = render :partial => 'reports/ota' if can?(:view, :all_reports) || can?(:view, :ota)
+      = render :partial => 'reports/otd' if can?(:view, :all_reports) || can?(:view, :otd)
+      = render :partial => 'reports/employee_no_show' if can?(:view, :all_reports) || can?(:view, :employee_no_show)
+      = render :partial => 'reports/employee_satisfaction' if can?(:view, :all_reports) || can?(:view, :employee_satisfaction)
+      = render :partial => 'reports/operations_summary' if can?(:view, :all_reports) || can?(:view, :operations_summary)
+      = render :partial => 'reports/ota_summary' if can?(:view, :all_reports) || can?(:view, :ota_summary)
+      = render :partial => 'reports/otd_summary' if can?(:view, :all_reports) || can?(:view, :otd_summary)
+      = render :partial => 'reports/no_show_and_cancellations' if can?(:view, :all_reports) || can?(:view, :no_show_and_cancellations)
+      = render :partial => 'reports/panic_alarms' if can?(:view, :all_reports) || can?(:view, :panic_alarms)
+      = render :partial => 'reports/employee_activity' if can?(:view, :all_reports) || can?(:view, :employee_activity)
+      = render :partial => 'reports/driver_activity' if can?(:view, :all_reports) || can?(:view, :driver_activity)
+      = render :partial => 'reports/drivers_trip_summary' if can?(:view, :all_reports) || can?(:view, :drivers_trip_summary)
+      = render :partial => 'reports/employee_wise_no_show' if can?(:view, :all_reports) || can?(:view, :employee_wise_no_show)
+      = render :partial => 'reports/shift_fleet_utilisation_summary' if can?(:view, :all_reports) || can?(:view, :shift_fleet_utilisation_summary)
+      = render :partial => 'reports/shift_wise_no_show' if can?(:view, :all_reports) || can?(:view, :shift_wise_no_show)
+      = render :partial => 'reports/trip_wise_driver_exception' if can?(:view, :all_reports) || can?(:view, :trip_wise_driver_exception)
+      = render :partial => 'reports/vendor_trip_distribution' if can?(:view, :all_reports) || can?(:view, :vendor_trip_distribution)

@@ -1,0 +1,6 @@
+| $("#operator-shift-managers .table-content-edit").html('');
+| $("#operator-shift-managers .table-content-edit").html('
+= j render partial: 'operator_shift_managers/form', locals: { url: operator_shift_managers_path, action: "POST" }
+| ');
+| datepickerInit();
+| initSelectbox();

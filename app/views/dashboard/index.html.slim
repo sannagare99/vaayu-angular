@@ -1,0 +1,50 @@
+.content-header
+  h2.content-title
+    | Dashboard
+.content-body.dashboard
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(root_path(:period => 'day'))}" type="button"]
+          =link_to root_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(root_path(:period => 'week'))}" type="button"]
+          =link_to root_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(root_path(:period => 'month'))}" type="button"]
+          =link_to root_path(:period => 'month')
+            | Monthly
+  .col-md-4.clickable[onclick="window.location='/dashboard/completed_trips'"]
+    .row
+      .col-md-12
+        = render 'dashboard/cards/total_trips', @stats[:total_trips]
+    .row
+      .col-md-6
+        = render 'dashboard/cards/distance_per_trip', @stats[:distance_per_trip]
+      .col-md-6
+        = render 'dashboard/cards/duration_per_trip', @stats[:duration_per_trip]
+    .row
+      .col-md-6
+        = render 'dashboard/cards/employee_check_in', @stats[:employee_check_in]
+      .col-md-6
+        = render 'dashboard/cards/manifest_fulfillment', @stats[:manifest_fulfillment]
+  .col-md-4.clickable[onclick="window.location='/dashboard/ota'"]
+    .row
+      .col-md-12
+        = render 'dashboard/cards/arrivals', @stats[:on_time_arrivals]
+    .row
+      .col-md-12.clickable[onclick="window.location='/dashboard/exceptions'"]
+        = render 'dashboard/cards/employee_rating', @stats[:employee_rating]
+    .row
+      .col-md-12
+        = render 'dashboard/cards/driver_stats', @stats[:driver_stats]
+  .col-md-4
+    .row
+      .col-md-12.clickable[onclick="window.location='/dashboard/fleet_utilization'"]
+        = render 'dashboard/cards/fleet_utilization', @stats[:fleet_utilization]
+    .row.clickable[onclick="window.location='/dashboard/costs'"]
+      .col-md-12
+        = render 'dashboard/cards/cost_per_trip', @stats[:cost_per_trip]
+      .col-md-12
+        = render 'dashboard/cards/cost_per_employee', @stats[:cost_per_employee]

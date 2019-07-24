@@ -1,0 +1,374 @@
+= simple_form_for @business_associate, html: {'data-validate' => 'form', :id => 'form-business-associates', :class => 'business-associate-form'}, :url => url, :method => method do |f|
+  .row
+    .col-md-15-3.group-label.text-right
+      span.field-label
+        | Primary Administrator:
+    .col-md-15-3
+      = f.input :admin_f_name, label: 'First Name', required: true
+    .col-md-15-3
+      = f.input :admin_m_name, label: 'Middle Name', required: true
+    .col-md-15-3
+      = f.input :admin_l_name, label: 'Last Name', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-3
+      = f.input :admin_email, label: 'Email', required: true
+    .col-md-15-3
+      = f.input :admin_phone, label: 'Phone', required: true
+    .col-md-15-3
+      = f.input :name, label: 'Name', required: true
+  .row
+    .col-md-15-3.group-label.text-right
+      span.field-label
+        | Business Information:
+    .col-md-15-3
+      = f.input :legal_name, label: 'Legal Name', required: true
+    .col-md-15-3
+      = f.input :pan, label: 'Legal Business Name (PAN Card)', required: true, input_html: {minlength: 10, maxlength: 10}
+    .col-md-15-3
+      = f.input :tan, label: 'Legal Business Name (TAN Card)', required: true, input_html: {minlength: 10, maxlength: 10}
+  .row
+    .col-md-15-3.col-md-15-offset-3
+      = f.input :business_type, label: 'Business Type', required: true
+    .col-md-15-3
+      = f.input :service_tax_no, label: 'Service Tax No.', required: true, input_html: {minlength: 15, maxlength: 15}
+  .row
+    .col-md-15-6.col-md-15-offset-3
+      = f.input :hq_address, label: 'HQ Address', required: true
+
+
+
+
+
+  p[style="font-size:18px; font-weight:600; margin-left:10px"]
+    | Billing Attributes
+  .row
+    -if current_user.admin?
+      .col-md-4.no-margin
+        label.site_labels for="ba_operator"
+          | Operator
+        select.form-control#ba_operator
+          option [value="0"]
+            | Choose Operator      
+
+    -if current_user.operator?
+      .col-md-4.no-margin[style="display:none"]
+        label.site_labels for="ba_operator_id"
+          | Operator
+        input#ba_operator_id[class="form-control" type="text" name="ba_operator_id" value=current_user.entity.logistics_company.id]
+
+  div#serviceContainer
+    div.services#services[style="display:none"]
+      .row.vehicle-div#service_1
+        .col-md-4.margin-top
+          label.site_labels for="serviceType"
+            | Service Type
+          select.form-control.serviceType#serviceType_1
+            option [value=""]
+              | Choose Service Type
+            option [value="Door To Door"]
+              | Door To Door
+            option [value="Nodal"]
+              | Nodal
+
+        .col-md-4.margin-top
+          label.site_labels for="billingModel"
+            | Billing Model
+          select.form-control.billingModel#billingModel_1[data-vehicleNumber="1"]
+            option [value=""]
+              | Choose Billing Model
+            option [value="Fixed Rate per Trip"]
+              | Fixed Rate per Trip
+            option [value="Fixed Rate per Zone"]
+              | Fixed Rate per Zone
+            option [value="Package Rates"]
+              | Package Rates
+
+        .col-md-4.pull-right.margin-top
+          button.fa.fa-times.deleteIcon#serviceDelete_1[data-serviceNumber="1"]
+
+        .col-md-4.margin-top[style="clear:both"]
+          label.site_labels for="varyWithVehicle_1"
+            | Vary With Vehicle
+          .row[style="margin-left:5px"]
+            input.varyWithVehicle [type="radio" name="varyWithVehicle_1" id="varyWithVehicleYes_1" value="true" data-vehicleNumber="1"]
+              |    Yes
+            input.varyWithVehicle [type="radio" name="varyWithVehicle_1" id="varyWithVehicleNo_1" value="false" style="margin-left:20px" checked="true" data-vehicleNumber="1"]
+              |    No    
+
+        .col-md-4.margin-top#defaultRateDiv_1
+          label.site_labels for="defaultRate_1"
+            | Default Rate
+          input#defaultRate_1[class="form-control" type="number" name="defaultRate_1" value=""]
+        .col-md-4.margin-top#guardRateDiv_1
+          label.site_labels for="guardRate_1"
+            | Default Guard Rate
+          input#guardRate_1[class="form-control" type="number" name="guardRate_1" value=""]
+
+        .col-md-4.col-md-offset-4.hidden.margin-top#overageDiv_1
+          label.site_labels for="overage"
+            | Overage
+          .row[style="margin-left:5px"]
+            input.overage [type="radio" name="overage_1" id="overageYes_1" value="true"]
+              |    Yes
+            input.overage [type="radio" name="overage_1" id="overageNo_1" value="false" style="margin-left:20px" checked="true"]
+              |    No
+
+        .col-md-4.col-md-offset-4.hidden.margin-top#timeOnDutyDiv_1[style="display:none"]
+          label.site_labels for="timeOnDuty_1"
+            | Time on Duty per Day
+          input#timeOnDuty_1[class="form-control" type="number" name="timeOnDuty_1" value=""]
+        .col-md-4.hidden.margin-top#overageRateDiv_1[style="display:none"]
+          label.site_labels for="overageRate_1"
+            | Overage Rate
+          input#overageRate_1[class="form-control" type="number" name="overageRate_1" value=""]
+
+        div#zones_1[style="display:none"]
+          div.col-md-12
+            .col-md-4.margin-top
+              label.site_labels for="zoneName_1_1"
+                | Zone Name
+              input#zoneName_1_1[class="form-control" name="zoneName_1_1" value=""]
+            .col-md-4.margin-top
+              label.site_labels for="zoneRate_1_1"
+                | Zone Rate
+              input#zoneRate_1_1[class="form-control" type="number" name="zoneRate_1_1" value=""]
+            .col-md-3.margin-top
+              label.site_labels for="zoneGuardRate_1_1"
+                | Guard Rate
+              input#zoneGuardRate_1_1[class="form-control" type="number" name="zoneGuardRate_1_1" value=""]
+            .col-md-1.margin-top
+              button.fa.fa-times.deleteIcon#zoneDelete_1_1[data-serviceNumber="1" data-zoneNumber="1"]
+        div.col-md-12#addZonesDiv_1[style="display:none"]
+          button.margin-top.margin-right.btn.btn-primary.pull-right.addZone#addZones_1[data-serviceNumber="1" data-zoneNumber="2"]
+            | Add Zone Rate
+
+
+        div#package_1[style="display:none"]
+          div.col-md-12[style="padding:0px"]
+            .col-md-3.margin-top
+              label.site_labels for="packageDuration_1"
+                | Package Duration
+              select.form-control.billingModel#packageDuration_1[data-vehicleNumber="1"]
+                option [value=""]
+                  | Choose Package Duration
+                option [value="Daily"]
+                  | Daily
+                option [value="Weekly"]
+                  | Weekly
+                option [value="Monthly"]
+                  | Monthly
+            .col-md-3.margin-top
+              label.site_labels for="packageKm_1"
+                | Package KMs
+              input#packageKm_1[class="form-control" type="number" name="packageKm_1" value=""]
+            .col-md-3.margin-top
+              label.site_labels for="packageRate_1"
+                | Package Rate
+              input#packageRate_1[class="form-control" type="number" name="packageRate_1" value=""]
+            .col-md-3.margin-top
+              label.site_labels for="packageOveragePerKm_1"
+                | Overage (per KM)
+              input#packageOveragePerKm_1[class="form-control" type="number" name="packageOveragePerKm_1" value=""]
+            .col-md-3.margin-top
+              label.site_labels for="packageMileageCalculation_1"
+                | Mileage Calculation
+              .row
+                input.packageMileageCalculation [type="radio" name="packageMileageCalculation_1" id="packageMileageCalculationOnDuty_1" value="On Duty Hours" style="margin-left:20px" checked="true"]
+                  |    On Duty Hours
+                input.packageMileageCalculation [type="radio" name="packageMileageCalculation_1" id="packageMileageCalculationTripDuration_1" value="Trip Duration" style="margin-left:5px"]
+                  |    Trip Duration    
+            .col-md-3.margin-top
+              label.site_labels for="packageOverageTime_1"
+                | Overage for Duty Time
+              .row
+                input.packageOverage [type="radio" name="packageOverageTime_1" id="packageOverageNo_1" value="false" style="margin-left:20px" checked="true"]
+                  |    No
+                input.packageOverage [type="radio" name="packageOverageTime_1" id="packageOverageTimeYes_1" value="true" style="margin-left:5px"]
+                  |    Yes              
+            .col-md-3.margin-top#packageDutyHoursDiv_1[style="display:none"]
+              label.site_labels for="packageDutyHours_1"
+                | Package Duty Hours
+              input#packageDutyHours_1[class="form-control" type="number" name="packageDutyHours_1" value=""]
+            .col-md-3.margin-top#packageOveragePerTimeDiv_1[style="display:none"]
+              label.site_labels for="packageOveragePerTime_1"
+                | Overage (per hour)
+              input#packageOveragePerTime_1[class="form-control" type="number" name="packageOveragePerTime_1" value=""]
+
+
+
+
+        div.vehicles#vehicles_1[style="display:none"]
+          div.col-md-12.vehicle-div
+            .col-md-3.margin-top
+              label.site_labels for="vehicleCapacity_1_1"
+                | Vehicle Capacity
+              input#vehicleCapacity_1_1[class="form-control" type="number" name="vehicleCapacity_1_1" value=""]
+
+            .col-md-3.margin-top#packageDurationDiv_1_1[style="display:none"]
+              label.site_labels for="packageDuration_1_1"
+                | Package Duration
+              select.form-control.billingModel#packageDuration_1_1[data-vehicleNumber="1"]
+                option [value=""]
+                  | Choose Package Duration
+                option [value="Daily"]
+                  | Daily
+                option [value="Weekly"]
+                  | Weekly
+                option [value="Monthly"]
+                  | Monthly
+            .col-md-3.margin-top#packageKmDiv_1_1[style="display:none"]
+              label.site_labels for="packageKm_1_1"
+                | Package KMs
+              input#packageKm_1_1[class="form-control" type="number" name="packageKm_1_1" value=""]
+            .col-md-3.margin-top#packageRateDiv_1_1[style="display:none"]
+              label.site_labels for="packageRate_1_1"
+                | Package Rate
+              input#packageRate_1_1[class="form-control" type="number" name="packageRate_1_1" value=""]
+            .col-md-3.margin-top#packageOveragePerKmDiv_1_1[style="display:none"]
+              label.site_labels for="packageOveragePerKm_1_1"
+                | Overage (per KM)
+              input#packageOveragePerKm_1_1[class="form-control" type="number" name="packageOveragePerKm_1_1" value=""]
+            .col-md-3.margin-top#packageMileageCalculationDiv_1_1[style="display:none"]
+              label.site_labels for="packageMileageCalculation_1_1"
+                | Mileage Calculation
+              .row
+                input.packageMileageCalculation [type="radio" name="packageMileageCalculation_1_1" id="packageMileageCalculationOnDuty_1_1" value="On Duty Hours" style="margin-left:20px" checked="true"]
+                  |    On Duty Hours
+                input.packageMileageCalculation [type="radio" name="packageMileageCalculation_1_1" id="packageMileageCalculationTripDuration_1_1" value="Trip Duration" style="margin-left:5px"]
+                  |    Trip Duration    
+            .col-md-3.margin-top#packageOverageTimeDiv_1_1[style="display:none"]
+              label.site_labels for="packageOverageTime_1_1"
+                | Overage for Duty Time
+              .row
+                input.packageOverage [type="radio" name="packageOverageTime_1_1" id="packageOverageNo_1_1" value="false" style="margin-left:20px" checked="true"]
+                  |    No
+                input.packageOverage [type="radio" name="packageOverageTime_1_1" id="packageOverageTimeYes_1_1" value="true" style="margin-left:5px"]
+                  |    Yes              
+            .col-md-3.margin-top#packageDutyHoursDiv_1_1[style="display:none"]
+              label.site_labels for="packageDutyHours_1_1"
+                | Package Duty Hours
+              input#packageDutyHours_1_1[class="form-control" type="number" name="packageDutyHours_1_1" value=""]
+            .col-md-3.margin-top#packageOveragePerTimeDiv_1_1[style="display:none"]
+              label.site_labels for="packageOveragePerTime_1_1"
+                | Overage (per hour)
+              input#packageOveragePerTime_1_1[class="form-control" type="number" name="packageOveragePerTime_1_1" value=""]
+
+
+
+            .col-md-3.margin-top#vehicleDefaultRateDiv_1_1
+              label.site_labels for="vehicleDefaultRate_1_1"
+                | Default Rate
+              input#vehicleDefaultRate_1_1[class="form-control" type="number" name="vehicleDefaultRate_1_1" value=""]    
+            .col-md-3.margin-top#vehicleGuardRateDiv_1_1
+              label.site_labels for="vehicleGuardRate_1_1"
+                | Default Guard Rate
+              input#vehicleGuardRate_1_1[class="form-control" type="number" name="vehicleGuardRate_1_1" value=""]              
+
+            .col-md-2.margin-top
+              label.site_labels for="vehicleAc_1_1" style="margin-right:20px"
+                | AC/Non-AC
+              .row
+                input [type="radio" name="vehicleAc_1_1" id="vehicleAcYes_1_1" value="true" checked="true"]
+                  |    AC
+                input [type="radio" name="vehicleAc_1_1" id="vehicleAcNo_1_1" value="false" style="margin-left:20px"]
+                  |    Non-AC
+            .col-md-1.margin-top
+              button.fa.fa-times.deleteIcon#vehicleDelete_1_1[data-serviceNumber="1" data-vehicleNumber="1"]
+
+            .col-md-12.margin-top.hidden#overageDiv_1_1
+              label.site_labels for="overage_1_1"
+                | Overage
+              .row[style="margin-left:5px"]
+                input.overage [type="radio" name="overage_1_1" id="overageYes_1_1" value="true"]
+                  |    Yes
+                input.overage [type="radio" name="overage_1_1" id="overageNo_1_1" value="false" style="margin-left:20px" checked="true"]
+                  |    No
+
+            .col-md-4.margin-top.hidden#timeOnDutyDiv_1_1[style="display:none"]
+              label.site_labels for="timeOnDuty_1_1"
+                | Time on Duty per Day
+              input#timeOnDuty_1_1[class="form-control" type="number" name="timeOnDuty_1_1" value=""]
+            .col-md-4.margin-top.hidden#overageRateDiv_1_1[style="display:none"]
+              label.site_labels for="overageRate_1_1"
+                | Overage Rate
+              input#overageRate_1_1[class="form-control" type="number" name="overageRate_1_1" value=""]
+
+
+            div#zones_1_1[style="display:none"]
+              div.col-md-12.zone-div
+                .col-md-4.margin-top
+                  label.site_labels for="zoneName_1_1_1"
+                    | Zone Name
+                  input#zoneName_1_1_1[class="form-control" name="zoneName_1_1_1" value=""]
+                .col-md-4.margin-top
+                  label.site_labels for="zoneRate_1_1_1"
+                    | Zone Rate
+                  input#zoneRate_1_1_1[class="form-control" type="number" name="zoneRate_1_1_1" value=""]
+                .col-md-3.margin-top
+                  label.site_labels for="zoneGuardRate_1_1_1"
+                    | Guard Rate
+                  input#zoneGuardRate_1_1_1[class="form-control" type="number" name="zoneGuardRate_1_1_1" value=""]
+                .col-md-1.margin-top
+                  button.fa.fa-times.deleteIcon#zoneDelete_1_1_1[data-serviceNumber="1" data-vehicleNumber="1" data-zoneNumber="1"]
+            div.col-md-12#addZonesDiv_1_1[style="display:none"]
+              button.margin-top.margin-right2x.btn.btn-primary.pull-right.addZone#addZones_1_1[data-serviceNumber="1" data-zoneNumber="2" data-vehicleNumber="1"]
+                | Add Zone Rate
+
+        div.col-md-12#addVehiclesDiv_1[style="display:none"]
+          button.margin-top.margin-right.btn.btn-primary.pull-right.addVehicle[data-serviceNumber="1" data-vehicleNumber="2" data-zoneNumber="1"]
+            | Add Vehicle Rate
+
+    div.col-md-12#addServicesDiv[style="display:none"]
+      button.margin-top.margin-right.btn.btn-primary.pull-right.addService[data-serviceNumber="2" data-vehicleNumber="1" data-zoneNumber="1"]
+        | Add Service
+
+    .col-md-4.margin-top[style="clear:left; display:none"]
+      label.site_labels for="cgst_1"
+        | CGST(%)
+      input#cgst_1[class="form-control" type="number" name="cgst_1" value=""]
+    .col-md-4.margin-top[style="display:none"]
+      label.site_labels for="sgst_1"
+        | SGST(%)
+      input#sgst_1[class="form-control" type="number" name="sgst_1" value=""]
+
+
+
+
+
+
+
+
+
+
+/!    
+  .row
+    .col-md-15-3.group-label.text-right
+      span.field-label
+        | Billing Information:
+    .col-md-15-3
+      = f.input :standard_price, label: 'Standard Price', required: true
+    .col-md-15-3
+      = f.input :pay_period, label: 'Pay Period', collection: BusinessAssociate.pay_period_type, required: true, input_html: {class: 'selectboxit', :'placeholder' => 'Choose frequency'}
+    .col-md-15-3
+      = f.input :time_on_duty_limit, label: 'Time on duty limit', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-3
+      = f.input :distance_limit, label: 'Distance Limit', required: true
+    .col-md-15-3
+      = f.input :rate_by_time, label: 'Rate by time', required: true
+    .col-md-15-3
+      = f.input :rate_by_distance, label: 'Rate by distance', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-3
+      = f.input :swachh_bharat_cess, label: 'Swachh Bharat Cess', required: true
+    .col-md-15-3
+      = f.input :krishi_kalyan_cess, label: 'Krishi Kalyan Cess', required: true
+    .col-md-15-3
+      = f.input :profit_centre, label: 'Profit Centre', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-3
+      = f.input :service_tax_percent, label: 'Service Tax Percent', required: true
+    .col-md-15-3
+      = f.input :agreement_date, as: :string, label: 'Agreement Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @business_associate.agreement_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :invoice_frequency, label: 'Invoice Frequency', collection: BusinessAssociate.invoice_frequency_type, required: true, input_html: {class: 'selectboxit', :'placeholder' => 'Choose frequency'}

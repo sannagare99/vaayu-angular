@@ -1,0 +1,23 @@
+#modal-annotate-trip.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title#annotate_modal_header
+          | Add Remarks
+      .modal-body[style="min-height:100px"]
+        .col-md-6
+          .label.annotate_label
+            | Subject
+          input.form-control[type="text" name="name" id="annotate_subject_text"]
+        .col-md-6
+          .label.annotate_label
+            | Body
+          textarea.form-control[type="text" name="name" id="annotate_body_text"]
+              
+      .modal-footer
+        a.btn.btn-sm.btn-primary#add-annotation-to-trip[aria-hidden="true" disabled="disabled"]
+          | Submit
+        a.btn.btn-sm.btn-default[aria-hidden="true" data-dismiss="modal"]
+          | Close

@@ -1,0 +1,5 @@
+| $("#detail-invoice").html('');
+| $("#detail-invoice").html('
+= j render :partial => 'invoices/detail', locals: { trip: @trip }
+| ');
+| $("#modal-billing-detail").modal('show');

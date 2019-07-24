@@ -1,0 +1,54 @@
+#employee-logs.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#employee-logs-picker[class="form-control" type="text" name="employee-logs-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'employee_logs')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-employee-logs-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Date
+          th
+            | Trip Id
+          th
+            | Status
+          th
+            | Shift Time
+          th
+            | Direction
+          th
+            | Employee Id            
+          th
+            | Rider Name
+          th
+            | Driver Name
+          th
+            | Operator
+          th
+            | Vehicle
+          th
+            | Planned ETA
+          th
+            | Notified ETA
+          th
+            | I Am Here
+          th
+            | Pick Up Time
+          th
+            | Wait Time (min)
+          th
+            | Drop Off Time
+          th
+            | Employee Status
+          th
+            | Exception Detail
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'employee_logs'}

@@ -1,0 +1,34 @@
+#operations-summary.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#operations-summary-picker[class="form-control" type="text" name="operations-summary-date" value=""]
+      .col-md-6
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'operations_summary')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-operations-summary-table.table.table-bordered
+      thead
+        tr
+          th
+            | Date
+          th
+            | Total Trips
+          th
+            | Trips Catered To
+          th
+            | Trips Cancelled
+          th
+            | Drivers
+          th
+            | Total Distance (km)
+          th
+            | Distance Per Trip (km)
+          th
+            | Duration Per Trip
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'operations_summary'}

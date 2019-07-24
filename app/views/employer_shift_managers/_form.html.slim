@@ -1,0 +1,20 @@
+= simple_form_for @user, html: {'data-validate' => 'form', :class => 'modal-form', id: "form-employer_shift_managers"}, url: url, remote: true, method: action do |f|
+  .row
+    .col-md-4
+      = f.input :f_name, label: 'First Name', required: true
+    .col-md-4
+      = f.input :m_name, label: 'Middle Name'
+    .col-md-4
+      = f.input :l_name, label: 'Last name', required: true
+  .row
+    .col-md-4.col-md-offset-4
+      = f.input :email, label: 'Email', required: true
+    .col-md-4
+      = f.input :phone, as: :tel, label: 'Phone', required: true
+  = f.simple_fields_for :entity_attributes, @user.entity do |ui|
+    .row
+      .col-md-4.group-label.text-right
+        span.field-label
+          | Shift Manager attributes:
+      .col-md-4
+        = ui.association :employee_company, prompt: false, label: 'Company', input_html: {class: 'selectboxit', placeholder: 'Choose company'}

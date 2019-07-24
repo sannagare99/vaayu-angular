@@ -1,0 +1,231 @@
+#employee-trip-request.tab-pane.fade.active.in  
+  .col-lg-12
+    form[action="#" style="display:inline-block"]
+      ul.date-filter
+        li.filter-block.short-date-filter
+          input#trip-date[class="form-control" type="text" name="trip-date" value="" style="max-width:200px"]
+        li.filter-block.short-date-filter
+          input#trip-time[class="form-control" type="text" name="trip-time" value="" style="max-width:200px"]
+        li.filter-block
+          select#bus-cab.form-control.selectboxit[placeholder="false" name="bus-cab"]
+            option[value="0"]
+              | CAB
+            option[value="1"]
+              | BUS
+        li.filter-block
+          select#trip-direction.form-control.selectboxit[placeholder="" name="trip-direction"]
+            option[value="0"]
+              | Check IN
+            option[value="1"]
+              | Check OUT
+        li.filter-block
+          input#queue-table_search_value[class="form-control" type="text" name="searchName" value="" placeholder="Employee Name" style="width:200px"]
+          a#queue-table_search.btn.btn-sm href="#" style="color:black; margin-left:10px; border:1px solid #E0E4E8; height:30px"
+            i.fa.fa-search aria-hidden="true"
+    -if current_user.admin? || current_user.employer? || (current_user.transport_desk_manager? && ENV["ENABLE_TRANSPORT_DESK_MANAGER_APPROVE"] == "true")
+      .pull-right[style="display=inline-block"]
+        .helper-inline.driver-nav-button[
+          style="text-align: center; width: 100px"
+          data-toggle="modal"
+          data-target="#modal-clustering-configuration"
+        ]
+          | Cluster Config
+        .helper-inline.bg-white.driver-nav-button#request-list[style="text-align:center"]
+          | List
+        .helper-inline.bg-cloud.driver-nav-button#request-list-map[style="text-align:center"]
+          | List + Map
+
+  - if ENV["ENABLE_LINE_MANAGER_APPROVE"] == "true" && current_user.line_manager?
+    .col-lg-12.table-responsive.table-responsive-datatables.clearfix#table-trip-request
+      div
+        table#employee-trip-request-table.table.table-bordered.table-responsive[style="width: 100%"]
+          thead
+            tr
+              th
+                | Status
+              th
+                | Date
+              th
+                | Direction
+              th
+                | Site              
+              th
+                | Employee
+              th
+                | Sex
+              th
+                | Area
+              th
+                | Message
+              th.checkbox-select.ch-all[style="padding:18px"]
+          tbody
+          .table-controls.pull-right.adhoc-controls
+            button.btn.btn-wide.btn-danger[type="button" disabled data-type="decline"]
+              | Cancel
+            button.btn.btn-wide.btn-primary[type="button" data-toggle="modal" disabled data-type="decline"]
+              | Approve
+
+
+  - else
+    .col-lg-8#trip-tables
+      div[style="height:450px; overflow-y:auto"]
+        .table-responsive.table-responsive-datatables.clearfix#table-trip-request[style="position:relative; z-index:0"]
+          div
+            table#employee-trip-request-table.table.table-bordered[style="width: 100%"]
+              thead
+                tr
+                  th
+                    | Status
+                  th
+                    | Date
+                  th
+                    | Direction
+                  th
+                    | Site              
+                  th
+                    | Employee
+                  th
+                    | Sex
+                  th
+                    | Area
+                  th
+                    | Message
+                  th.checkbox-select.ch-all[style="padding:18px"]
+              tbody
+
+        .table-responsive.table-responsive-datatables.clearfix#table-trip-request-cluster[style="position:relative; z-index:0; overflow-x:initial"]
+          div
+            table#employee-trip-request-cluster-table.table.table-bordered[style="width: 100%; border-spacing: 0px 2px; border:0px"]
+              thead[style="display:none"]
+              tbody
+                
+      .div[style="padding-top:30px"]
+        .div.row[style="padding-left:15px"]
+          .div.pull-left
+            button#prev-date.btn.btn-small.btn-default.text-primary[type="button" style="margin-right:10px; border-radius:50px"]
+              .i.glyphicon.glyphicon-arrow-left[style="display:inline-block; padding-right:5px"]
+              .p#prev-date-value[style="display:inline-block"]
+          .div.pull-right
+            button#next-date.btn.btn-small.btn-default.text-primary[type="button" style="margin-right:15px; border-radius:50px"]              
+              .p#next-date-value[style="display:inline-block; padding-right:5px"]
+              .i.glyphicon.glyphicon-arrow-right[style="display:inline-block"]
+        .div.row[style="padding-left:15px; padding-top:15px"]
+          .div.pull-right
+            button#cancel-trip-request.btn.btn-wide.btn-danger[type="button" disabled style="margin-right:10px"]
+              | Cancel Request
+            button#create-trip-roster.btn.btn-wide.btn-primary[type="button" style="margin-right:15px"]
+              | Create Trip Roster
+          - if current_user.admin? || current_user.employer? || current_user.transport_desk_manager?
+            button#auto-cluster.btn.btn-wide.btn-primary.pull-left[type="button" data-toggle="modal" data-action="cluster"]
+              | Cluster
+
+
+
+
+  -if current_user.admin? || current_user.employer? || current_user.transport_desk_manager?
+    .col-lg-4[style="padding: 0"]
+      #map-employee-trip-requests.map[style="width: 100%; height: 435px;"]
+      #map-cluster-info
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-user
+          span.emp-count -
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-road
+          span.trip-distance -
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-time
+          span.trip-duration -
+  -else
+    .col-lg-4[style="padding: 0"]
+      #map-employee-trip-requests.map.hidden[style="width: 100%; height: 435px;"]
+      #map-cluster-info
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-user
+          span.emp-count -
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-road
+          span.trip-distance -
+        .col-md-4.no-padding.text-center
+          span.glyphicon.glyphicon-time
+          span.trip-duration -
+
+
+  div#overlay[style="width: 100%; height:1000px; background-color:black; opacity:0.5; top: 0px; position:fixed; display:none; z-index:10000"]
+
+
+  #modal-confirm-remove.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Remove Passenger
+        .modal-body[style="max-height:500px; overflow-y:scroll"]
+          .row
+            .col-md-12
+              | Do you want to remove this passenger              
+        .modal-footer
+          button#submit-remove-passenger.btn.btn-danger.btn-fixed-width.ladda-button[type="button"]
+            span.ladda-label
+              | Remove
+
+  #modal-manifest-shift-time-error.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Create Trip Roster
+        .modal-body[style="max-height:500px; overflow-y:scroll"]
+          .row
+            .col-md-12
+              | Cannot create manifests with different Shift Times!              
+        .modal-footer
+          button.btn.btn-default.btn-fixed-width.ladda-button[type="button" data-dismiss="modal"]
+            span.ladda-label
+              | Close
+
+  #modal-add-passenger-cluster.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Add Passenger
+        .modal-body[style="max-height:500px; overflow-y:scroll"]
+          .row
+            .col-md-12
+              table#add-passenger-table.table.table-bordered
+                thead
+                  tr
+                    th
+                      | Employee
+                    th
+                      | Status                    
+                    th
+                      | Date
+                    th
+                      | Sex
+                    th
+                      | Area
+                    th
+                      | Site
+                    th
+                      | Message
+                    th.checkbox-select.ch-all-add-passenger[style="padding:18px"]
+                tbody            
+        .modal-footer  
+          .div.pull-left.text-danger#count-error
+          button#submit-add-passenger.btn.btn-primary.ladda-button[type="button" data-style="slide-down" disabled]
+            span.ladda-label
+              | Add To Roster
+  = render 'ingest_job/form',
+    title: 'Ingest Manifest',
+    url: ingest_job_index_path,
+    ingest_type: 'ingest_manifest',
+    sample_file: '/ingest_manifest.xlsx'
+  = render 'ingest_job/stats', title: 'Ingest Manifest Stats'
+  = render 'trips/employer/modal_clustering_configuration'

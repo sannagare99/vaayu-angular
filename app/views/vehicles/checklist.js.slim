@@ -1,0 +1,9 @@
+| $("#vehicle-checklist-modal").html('');
+| $("#vehicle-checklist-modal").html('
+= j render :partial => 'checklists/form', locals: { checklist: @checklist, obj: 'vehicle', total_fields: @total_fields, progress: @checklist_progress, id: "form-vehicle-checklist", url: update_checklist_vehicle_path}
+| ');
+| $("#driverChecklistModal").modal('show');
+
+|$('#form-vehicle-checklist').submit(function(){
+|   $("#driverChecklistModal").modal('hide');
+|});

@@ -1,0 +1,40 @@
+#trip-wise-driver-exception.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#trip-wise-driver-exception-picker[class="form-control" type="text" name="trip-wise-driver-exception-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'trip_wise_driver_exceptions')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-trip-wise-driver-exception-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Date
+          th
+            | Trip ID
+          th
+            | Shift Time
+          th
+            | Direction
+          th
+            | Driver
+          th
+            | Vehicle
+          th
+            | Out-Of-Geofence Driver Arrived
+          th
+            | Out-Of-Geofence Pick Up
+          th
+            | Out-Of-Geofence Drop Off
+          th
+            | Panic Alert
+          th
+            | Car Broke Down
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'trip_wise_driver_exceptions'}

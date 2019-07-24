@@ -1,0 +1,125 @@
+.employee-schedule-table {
+  margin-bottom: 0;
+
+  th {
+    padding: 0 8px !important;
+    text-align: center;
+  }
+
+  .control-label {
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+
+  .form-group.employee_employee_schedule_check_in.optional {
+    margin-bottom: 5px;
+  }
+
+  .form-control {
+    height: 24px;
+  }
+}
+
+.datepicker table {
+  tr td {
+    font-weight: bold;
+  }
+  td.today {
+    border: 1px solid;
+    background: #fff !important;
+  }
+  tr td:not(:first-child):not(:last-child) {
+    color: #0E7D76;
+  }
+}
+
+.datepicker-current-week {
+  background: #f2f2f2;
+}
+
+.modal-xlg {
+  width: 1140px;
+}
+
+.calendar-schedule-module {
+  .calendar-week-title {
+    padding: 1% 2% 1%;
+    font-weight: bold;
+    font-size: 15px;
+    border: 1px solid #E0E4E9;
+    border-bottom: none;
+  }
+
+  .calendar-schedule-section {
+    padding: 1% 2% 1%;
+    border: 1px solid #E0E4E8;
+    .calendar-week-header div:first-child {
+      float: left;
+      margin-bottom: 10px;
+    }
+    .calendar-week-header div:last-child {
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    .calendar-week-details table {
+      tbody tr td {
+        padding: 6px 4px;
+        width: 14%;
+      }
+
+      th {
+        width: 14%;
+      }
+
+      .schedule-column {
+        height: 119px;
+        p { margin: 0; }
+        .schedule-content {
+          margin: 5% 0;
+          background: #47bdb7;
+          color: #fff;
+          padding-left: 5%;
+          padding-bottom: 10%;
+          border-radius: 4px;
+          font-size: 10px;
+        }
+
+        .schedule-form {
+          background: #47bdb7;
+          input, select {
+            height: 16px;
+            font-size: 10px;
+            width: 90%;
+            padding: 0 2px;
+            margin: 4% 5% 0 4%;
+          }
+          label {
+            margin-right: 3px;
+            font-size: 9px;
+            color: #fff;
+            text-transform: capitalize;
+            margin: 5% 0 0 5%;
+          }
+          &:last-child {
+            padding-bottom: 10px;
+          }
+          select.disabled{
+            background-color: #d7dae0;
+            border-color: #b6bbc4;
+          }
+        }
+      }
+    }
+  }
+}
+
+.green-background {
+  background: #d0efc0;
+}
+
+.error-input-color {
+  background-color: #f2dede;
+  border-color: #a94442;
+  color: black;
+}

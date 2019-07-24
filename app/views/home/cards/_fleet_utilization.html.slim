@@ -1,0 +1,24 @@
+#stats-fleet-utilization.stats-panel.panel.panel-animated.panel-default.bg-primary.border-primary
+  .panel-heading.bg-transparent.no-border
+    h3.text-center
+      a[href="#" data-toggle="modal" data-target="#stats-fleet-utilization-modal"]
+        | Fleet Utilization
+  .panel-body.text-center.bordered-bottom.border-transparent
+    .row
+      .col-xs-6.col-sm-5.col-sm-offset-1
+        p.chart-label.text-ellipsis.text-center
+          | Fleet Idleness
+        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-lineWidth="2" data-scalecolor="#ecf0f1" data-percent="#{@fleet_utilization[:fleet_idleness]}" data-size="80"]
+          span
+
+      .col-xs-6.col-sm-5
+        p.chart-label.text-ellipsis.text-center
+          | Capacity Utilization
+        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-lineWidth="2" data-scalecolor="#ecf0f1" data-percent="#{@fleet_utilization[:capacity_utilization]}" data-size="80"]
+          span
+
+  ul.list-group.bg-primary
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@fleet_utilization[:trips_per_vehicle]}
+      |  Trips per Vehicle

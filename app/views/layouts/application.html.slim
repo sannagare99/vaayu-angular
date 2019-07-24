@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title Vaayu
+    meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+
+    = javascript_include_tag "//maps.google.com/maps/api/js?key=#{GoogleAPIKey.working.first.key rescue Configurator.get('GOOGLE_MAPS_API_KEY')}"
+    = javascript_include_tag '//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js'
+    = javascript_include_tag '//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js'
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+    = favicon_link_tag 'favicon.ico'
+    = csrf_meta_tags
+
+  body.animated.fadeIn class =yield(:body_class)
+    - if current_user
+      =render :partial => 'layouts/header'
+      section.section
+        =render :partial => 'layouts/sidebar-left'
+
+        section.section
+          .content
+            = flash_messages
+            = yield
+      =render :partial => 'layouts/footer'
+    -else
+      .content.content-full
+        - if !request.path.start_with?('/employee_trips')
+          .container
+            .signin-wrapper
+              .signin-brand
+                = link_to root_path
+                  = image_tag("logo-dark.svg", :class => "brand-logo")
+        section.section
+          .content
+            = flash_messages
+            = yield
+    .loading style=("display: none;")
+      p Processing…

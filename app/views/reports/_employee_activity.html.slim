@@ -1,0 +1,42 @@
+#employee-activity.tab-pane.fade.reports-section
+  .col-md-12
+    .col-md-6.hidden
+      ul.date-filter
+        li.filter-block.date-filter
+          input#employee-activity-picker[class="form-control" type="text" name="employee-activity-date" value=""]
+    .col-md-6.pull-right
+      -if @can_perform_download
+        a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'employee_activities')}" type="button"]
+          | Download
+      button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-employee-activity-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | First Name
+          th
+            | Last Name
+          th
+            | Employee ID
+          th
+            | Phone
+          th
+            | Email
+          th
+            | Site
+          th
+            | # Sign Ins
+          th
+            | Current Sign In At
+          th
+            | Last Sign In At
+          th
+            | Last Active At
+          th
+            | Last Active
+          th
+            | Status
+      tbody
+
+  = render :partial => 'report_download_modal', locals: { report_name: 'employee_activities'}

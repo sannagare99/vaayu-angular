@@ -1,0 +1,6 @@
+| $("#employers .table-content-edit").html('');
+| $("#employers .table-content-edit").html('
+= j render partial: 'employers/form_employer', locals: { url: employers_path, action: "POST" }
+| ');
+| datepickerInit();
+| initSelectbox();

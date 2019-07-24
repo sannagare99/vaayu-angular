@@ -1,0 +1,83 @@
+= simple_form_for @vehicle, html: {'data-validate' => 'form', :class => 'modal-form vehicle-form', :id => 'form-vehicles'}, :url => url, remote: true, :method => method do |f|
+  .row
+    .col-md-15-2.group-label.text-right
+      span.field-label
+        | Info:
+    .col-md-15-3
+      = f.association :business_associate, label: 'Choose associate', prompt: false, input_html: {class: 'selectboxit', :'placeholder' => ''}, required: true
+    .col-md-15-3
+      = f.input :make, label: 'Make', required: true
+  .row
+    .col-md-15-6.col-md-15-offset-2
+      label.control-label[for="user_avatar"]
+        | Image
+      .fileinput[data-provides="fileinput" class="#{@vehicle.photo.present? ? 'fileinput-exists' : 'fileinput-new'}"]
+        .file-wrap-block
+          input[type="hidden" value="" name="fileinput_widget"]
+          .file-input-wrap
+            .input-group
+              .form-control[data-trigger="fileinput"]
+                i.glyphicon.glyphicon-file.fileinput-exists
+                span.fileinput-filename
+                  - if @vehicle.photo.present?
+                      = @vehicle.photo_file_name
+              span.input-group-btn
+                button.btn.btn-default.fileinput-exists[rel="tooltip" title="" data-dismiss="fileinput" data-original-title="remove"]
+                  i.fa.fa-times
+                button.btn.btn-inverse.btn-file
+                  span.fileinput-new
+                    | Choose image
+                  span.fileinput-exists
+                    | Change
+                  = f.input :photo, as: :file, label: false, :wrapper => false, input_html: {class: 'file-upload', accept: 'image/*'}
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :plate_number, label: 'Plate Number', required: true
+    .col-md-15-3
+      = f.input :model, label: 'Model', required: true
+    .col-md-15-3
+      = f.input :colour, label: 'Colour', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :rc_book_no, label: 'Rc Book No', required: true
+    .col-md-15-3
+      = f.input :registration_date, as: :string, label: 'Registration Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.registration_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :insurance_date, as: :string, label: 'Insurance Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.insurance_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :fuel_type, label: 'Fuel Type', required: true
+
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :permit_type, label: 'Permit Type', required: true
+    .col-md-15-3
+      = f.input :permit_validity_date, as: :string, label: 'Permit Validity Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.permit_validity_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :puc_validity_date, as: :string, label: 'Puc Validity Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.puc_validity_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :fc_validity_date, as: :string, label: 'Fc Validity Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.fc_validity_date.try(:strftime, '%d/%m/%Y')}
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :seats, label: 'Seats', required: true
+    .col-md-15-3
+      = f.input :make_year, label: 'Make Year', required: true
+    .col-md-15-3
+      = f.input :induction_date, as: :string, label: 'Induction Date', required: true, input_html: {data: {input: 'datepicker'}, :value => @vehicle.induction_date.try(:strftime, '%d/%m/%Y')}
+    .col-md-15-3
+      = f.input :odometer, label: 'Odometer', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :tyre_condition, label: 'Tyre Condition', required: true
+    .col-md-15-3
+      = f.input :device_id, label: 'Device ID', required: true
+    .col-md-15-3
+      = f.input :fuel_level, label: 'Fuel Level', required: true
+    .col-md-15-3
+      = f.input :plate_condition, label: 'Plate Condition', required: true
+  .row
+    .col-md-15-3.col-md-15-offset-2
+      = f.input :ac, :wrapper => :checkbox_basic, required: true, :default => false
+    .col-md-15-3
+      = f.input :spare_type, :wrapper => :checkbox_basic, required: true
+    .col-md-15-3
+      = f.input :first_aid_kit, :wrapper => :checkbox_basic, required: true

@@ -1,0 +1,36 @@
+#panic-alarms.tab-pane.fade.reports-section  
+  .col-md-12
+    .col-md-6
+      ul.date-filter
+        li.filter-block.date-filter
+          input#panic-alarms-picker[class="form-control" type="text" name="panic-alarms-date" value=""]
+    .col-md-6.
+      -if @can_perform_download
+        a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'panic_alarms')}" type="button"]
+          | Download
+      button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-panic-alarms-table.table.table-bordered
+      thead
+        tr
+          th
+            | Date
+          th
+            | Manifest ID
+          th
+            | Driver
+          th
+            | Vehicle
+          th
+            | Employee ID
+          th
+            | Alarm Time
+          th
+            | Location
+          th
+            | Resolution Time
+          th
+            | Resolved By                                         
+      tbody
+
+  = render :partial => 'report_download_modal', locals: { report_name: 'panic_alarms'}

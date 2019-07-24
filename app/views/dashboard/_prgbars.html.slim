@@ -1,0 +1,43 @@
+#overall-visitor.panel.panel-animated.panel-primary.bg-primary
+  .panel-body
+    .panel-actions-fly
+      button.btn-panel[data-refresh="#overall-visitor" data-error-place="#error-placement" title="refresh"]
+        i.glyphicon.glyphicon-refresh
+      a.btn-panel[href="#" title="Go to system stats page"]
+        i.glyphicon.glyphicon-stats
+    p.lead
+      | Visitor
+    ul.list-percentages.row
+      li.col-xs-4
+        p.text-ellipsis
+          | Monthly
+        p.text-lg
+          strong
+            | 765,298
+      li.col-xs-4
+        p.text-ellipsis
+          | Weekly
+        p.text-lg
+          strong
+            | 1,765
+      li.col-xs-4
+        p.text-ellipsis
+          | Today
+        p.text-lg
+          strong
+            | 563
+    p.helper-block
+
+    .progress.progress-xs.progress-flat.progress-inverse-inverse
+      .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"]
+        span.sr-only
+          | 60% Complete (inverse)
+    p.text-ellipsis
+      i.fa.fa-caret-up
+      |  654    +21
+      i.fa.fa-caret-down
+      |  386    -5
+      sup
+        | %
+      small
+        | Looks Good!, up from last month

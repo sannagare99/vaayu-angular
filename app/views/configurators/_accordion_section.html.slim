@@ -1,0 +1,226 @@
+.col
+  a.accordion aria-controls="shift-policies" aria-expanded="true" data-toggle="collapse" href="#shift-policies" role="button"  Shift Policies
+  #shift-policies.collapse.in.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      p.accordion-sub-title  Change Request
+      .row
+        - if change_time_check_in.present?
+          .col-md-4
+            = ui.input :change_time_check_in, required: false, label: change_time_check_in.display_name, input_html: { value: change_time_check_in.value }
+        - if change_time_check_out.present?
+          .col-md-4
+            = ui.input :change_time_check_out, required: false, label: change_time_check_out.display_name, input_html: { value: change_time_check_out.value }
+        - if change_request_require_approval.present?
+          .col-md-4
+            label.control-label.string=  change_request_require_approval.display_name
+            = ui.input :change_request_require_approval, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{change_request_require_approval.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input change_request_require_approval'}
+      br /
+
+      p.accordion-sub-title  Cancel Request
+      .row
+        - if consider_non_compliant_cancel_as_no_show.present?
+          .col-md-4
+            label.control-label.string=  consider_non_compliant_cancel_as_no_show.display_name
+            = ui.input :consider_non_compliant_cancel_as_no_show, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{consider_non_compliant_cancel_as_no_show.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input consider_non_compliant_cancel_as_no_show'}
+        - if cancel_time_check_in.present?
+          .col-md-4 class=(consider_non_compliant_cancel_as_no_show.present? && consider_non_compliant_cancel_as_no_show.value == '1' ? 'cancel_time_check_in' : 'cancel_time_check_in hidden')
+            = ui.input :cancel_time_check_in, label: cancel_time_check_in.display_name, input_html: { value: cancel_time_check_in.value }
+        - if cancel_time_check_out.present?
+          .col-md-4 class=(consider_non_compliant_cancel_as_no_show.present? && consider_non_compliant_cancel_as_no_show.value == '1' ? 'cancel_time_check_out' : 'cancel_time_check_out hidden')
+            = ui.input :cancel_time_check_out, label: cancel_time_check_out.display_name, input_html: { value: cancel_time_check_out.value }
+      br /
+
+.col
+  a.accordion aria-controls="pick_up_drop_off" aria-expanded="false" data-toggle="collapse" href="#pick_up_drop_off" role="button" 
+    | Pick-Ups and Drop-Offs
+  #pick_up_drop_off.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      .row
+        - if report_time_check_in.present?
+          .col-md-4
+            = ui.input :report_time_check_in, label: report_time_check_in.display_name, input_html: { value: report_time_check_in.value }
+        - if no_show_approval_required.present?
+          .col-md-4
+            label.control-label.string=  no_show_approval_required.display_name
+            = ui.input :no_show_approval_required, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{no_show_approval_required.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input no_show_approval_required'}
+      br /
+      p.accordion-sub-title  D2D
+      .row
+        - if wait_time_at_pickup_D2D.present?
+          .col-md-4
+            label.control-label.string=  
+            = ui.input :wait_time_at_pickup_D2D, label: wait_time_at_pickup_D2D.display_name, input_html: { value: wait_time_at_pickup_D2D.value }
+      br /
+      
+
+      p.accordion-sub-title  Nodal
+      .row
+        - if wait_time_at_pickup_NODAL.present?
+          .col-md-4
+            = ui.input :wait_time_at_pickup_NODAL, label: wait_time_at_pickup_NODAL.display_name, input_html: { value: wait_time_at_pickup_NODAL.value }
+      br /      
+      .row
+        - if is_nodal_trip_allowed.present?
+          .col-md-4
+            label.control-label.string=  is_nodal_trip_allowed.display_name
+            = ui.input :is_nodal_trip_allowed, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{is_nodal_trip_allowed.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input is_nodal_trip_allowed'}
+        - if start_time_NODAL.present?
+          .col-md-4 class=(is_nodal_trip_allowed.present? && is_nodal_trip_allowed.value == '1' ? 'start_time_NODAL' : 'start_time_NODAL hidden')
+            = ui.input :start_time_NODAL, label: start_time_NODAL.display_name, input_html: { value: start_time_NODAL.value, data: { "mask" => "time" } }
+        - if end_time_NODAL.present?
+          .col-md-4 class=(is_nodal_trip_allowed.present? && is_nodal_trip_allowed.value == '1' ? 'end_time_NODAL' : 'end_time_NODAL hidden')
+            = ui.input :end_time_NODAL, label: end_time_NODAL.display_name, input_html: { value: end_time_NODAL.value, data: { "mask" => "time" } }        
+      br /
+
+      p.accordion-sub-title  Bus
+      .row
+        - if wait_time_at_pickup_BUS.present?
+          .col-md-4
+            = ui.input :wait_time_at_pickup_BUS, label: wait_time_at_pickup_BUS.display_name, input_html: { value: wait_time_at_pickup_BUS.value }
+      br /
+
+
+.col
+  a.accordion aria-controls="safety" aria-expanded="false" data-toggle="collapse" href="#safety" role="button"  Employee Safety
+  #safety.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      p.accordion-sub-title  Female First / Last Exception
+      .row
+        - if female_exception_required.present?
+          .col-md-4
+            label.control-label.string=  female_exception_required.display_name
+            = ui.input :female_exception_required, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{female_exception_required.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input female_exception_required'}
+        - if female_exception_check_in_time.present?
+          .col-md-4 class=(female_exception_required.present? && female_exception_required.value == '1' ? 'female_exception_check_in_time' : 'female_exception_check_in_time hidden')
+            = ui.input :female_exception_check_in_time, label: female_exception_check_in_time.display_name, input_html: { value: female_exception_check_in_time.value, data: { "mask" => "time" } }
+        - if female_exception_check_out_time.present?
+          .col-md-4 class=(female_exception_required.present? && female_exception_required.value == '1' ? 'female_exception_check_out_time' : 'female_exception_check_out_time hidden')
+            = ui.input :female_exception_check_out_time, label: female_exception_check_out_time.display_name, input_html: { value: female_exception_check_out_time.value, data: { "mask" => "time" } }
+      br /
+
+      .row
+        - if female_exception_resequence_required.present?
+          .col-md-4 class=(female_exception_required.present? && female_exception_required.value == '1' ? 'female_exception_resequence_required' : 'female_exception_resequence_required hidden')
+            label.control-label.string=  female_exception_resequence_required.display_name
+            = ui.input :female_exception_resequence_required, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{female_exception_resequence_required.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if female_exception_aerial_distance.present?
+          .col-md-4 class=(female_exception_resequence_required.present? && female_exception_resequence_required.value == '1' && female_exception_required.value == '1' ? 'female_exception_aerial_distance' : 'female_exception_aerial_distance hidden')
+            = ui.input :female_exception_aerial_distance, label: female_exception_aerial_distance.display_name, input_html: { value: female_exception_aerial_distance.value }
+      br /
+
+      .row
+        - if speed_limit.present?
+          .col-md-4
+            = ui.input :speed_limit, label: speed_limit.display_name, input_html: { value: speed_limit.value }
+        - if speed_limit_violation_time.present?
+          .col-md-4
+            = ui.input :speed_limit_violation_time, label: speed_limit_violation_time.display_name, input_html: { value: speed_limit_violation_time.value }
+      br /
+
+/!
+  .col
+    a.accordion aria-controls="trips" aria-expanded="false" data-toggle="collapse" href="#trips" role="button"  Routes
+    #trips.collapse.accordion-body
+      = f.simple_fields_for :shift_policies do |ui|
+        .row
+          - if max_allowed_distance_trip.present?
+            .col-md-4
+              = ui.input :max_allowed_distance_trip, label: max_allowed_distance_trip.display_name, input_html: { value: max_allowed_distance_trip.value }
+          /!
+            - if handle_max_distance_violation_trip.present?
+            .col-md-4
+              = ui.input :handle_max_distance_violation_trip, required: false, label: handle_max_distance_violation_trip.display_name, prompt: false, collection: generate_option(handle_max_distance_violation_trip.options), prompt: "Choose Approver", selected: handle_max_distance_violation_trip.value
+          - if max_duration_allowed_trip.present?
+            .col-md-4
+              = ui.input :max_duration_allowed_trip, label: max_duration_allowed_trip.display_name, input_html: { value: max_duration_allowed_trip.value }
+        br /      
+
+.col
+  a.accordion aria-controls="ota-wait-times" aria-expanded="false" data-toggle="collapse" href="#ota-wait-times" role="button"
+    |  On Time Arrivals and SLA
+  #ota-wait-times.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      .row
+        - if buffer_time_allowed_check_in.present?
+          .col-md-4
+            label.control-label.string=  buffer_time_allowed_check_in.display_name
+            = ui.input :buffer_time_allowed_check_in, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{buffer_time_allowed_check_in.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input buffer_time_allowed_check_in'}        
+        - if report_time_delay_check_in.present?
+          .col-md-4 class=(buffer_time_allowed_check_in.present? && buffer_time_allowed_check_in.value == '1' ? 'report_time_delay_check_in' : 'report_time_delay_check_in hidden')
+            = ui.input :report_time_delay_check_in, label: report_time_delay_check_in.display_name, input_html: { value: report_time_delay_check_in.value }
+      br /
+      .row  
+        - if departure_time_check_out.present?
+          .col-md-4
+            = ui.input :departure_time_check_out, label: departure_time_check_out.display_name, input_html: { value: departure_time_check_out.value }
+      br /
+
+.col
+  a.accordion aria-controls="compliance" aria-expanded="false" data-toggle="collapse" href="#compliance" role="button"  Compliance Notifications
+  #compliance.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      p.accordion-sub-title  Vehicle
+      .row
+        - if show_driver_licence_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_driver_licence_expiry_date_notification.display_name
+            = ui.input :show_driver_licence_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_driver_licence_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_driver_licence_expiry_date_notification'}                
+        - if driver_licence_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_driver_licence_expiry_date_notification.present? && show_driver_licence_expiry_date_notification.value == '1' ? 'driver_licence_expiry_date_notification_lead_time' : 'driver_licence_expiry_date_notification_lead_time hidden')
+            = ui.input :driver_licence_expiry_date_notification_lead_time, required: false, label: driver_licence_expiry_date_notification_lead_time.display_name, input_html: { value: driver_licence_expiry_date_notification_lead_time.value }
+        br /
+      br /
+      .row
+        - if show_driver_badge_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_driver_badge_expiry_date_notification.display_name
+            = ui.input :show_driver_badge_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_driver_badge_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_driver_badge_expiry_date_notification'}                
+        - if driver_badge_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_driver_badge_expiry_date_notification.present? && show_driver_badge_expiry_date_notification.value == '1' ? 'driver_badge_expiry_date_notification_lead_time' : 'driver_badge_expiry_date_notification_lead_time hidden')
+            = ui.input :driver_badge_expiry_date_notification_lead_time, required: false, label: driver_badge_expiry_date_notification_lead_time.display_name, input_html: { value: driver_badge_expiry_date_notification_lead_time.value }
+        br /
+      br /
+      .row
+        - if show_vehicle_insurance_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_vehicle_insurance_expiry_date_notification.display_name
+            = ui.input :show_vehicle_insurance_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_vehicle_insurance_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_vehicle_insurance_expiry_date_notification'}                
+        - if vehicle_insurance_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_vehicle_insurance_expiry_date_notification.present? && show_vehicle_insurance_expiry_date_notification.value == '1' ? 'vehicle_insurance_expiry_date_notification_lead_time' : 'vehicle_insurance_expiry_date_notification_lead_time hidden')
+            = ui.input :vehicle_insurance_expiry_date_notification_lead_time, required: false, label: vehicle_insurance_expiry_date_notification_lead_time.display_name, input_html: { value: vehicle_insurance_expiry_date_notification_lead_time.value }
+        br /
+      br /
+      .row
+        - if show_vehicle_permit_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_vehicle_permit_expiry_date_notification.display_name
+            = ui.input :show_vehicle_permit_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_vehicle_permit_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_vehicle_permit_expiry_date_notification'}                
+        - if vehicle_permit_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_vehicle_permit_expiry_date_notification.present? && show_vehicle_permit_expiry_date_notification.value == '1' ? 'vehicle_permit_expiry_date_notification_lead_time' : 'vehicle_permit_expiry_date_notification_lead_time hidden')
+            = ui.input :vehicle_permit_expiry_date_notification_lead_time, required: false, label: vehicle_permit_expiry_date_notification_lead_time.display_name, input_html: { value: vehicle_permit_expiry_date_notification_lead_time.value }
+        br /
+      br /
+      .row
+        - if show_vehicle_puc_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_vehicle_puc_expiry_date_notification.display_name
+            = ui.input :show_vehicle_puc_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_vehicle_puc_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_vehicle_puc_expiry_date_notification'}                
+        - if vehicle_puc_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_vehicle_puc_expiry_date_notification.present? && show_vehicle_puc_expiry_date_notification.value == '1' ? 'vehicle_puc_expiry_date_notification_lead_time' : 'vehicle_puc_expiry_date_notification_lead_time hidden')
+            = ui.input :vehicle_puc_expiry_date_notification_lead_time, required: false, label: vehicle_puc_expiry_date_notification_lead_time.display_name, input_html: { value: vehicle_puc_expiry_date_notification_lead_time.value }
+        br /
+      br /
+      .row
+        - if show_vehicle_fc_expiry_date_notification.present?
+          .col-md-4
+            label.control-label.string=  show_vehicle_fc_expiry_date_notification.display_name
+            = ui.input :show_vehicle_fc_expiry_date_notification, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{show_vehicle_fc_expiry_date_notification.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input show_vehicle_fc_expiry_date_notification'}                
+        - if vehicle_fc_expiry_date_notification_lead_time.present?
+          .col-md-4 class=(show_vehicle_fc_expiry_date_notification.present? && show_vehicle_fc_expiry_date_notification.value == '1' ? 'vehicle_fc_expiry_date_notification_lead_time' : 'vehicle_fc_expiry_date_notification_lead_time hidden')
+            = ui.input :vehicle_fc_expiry_date_notification_lead_time, required: false, label: vehicle_fc_expiry_date_notification_lead_time.display_name, input_html: { value: vehicle_fc_expiry_date_notification_lead_time.value }
+        br /
+      br /
+
+
+
+

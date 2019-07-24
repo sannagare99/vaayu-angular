@@ -1,0 +1,66 @@
+#stats-fleet-utilization-modal.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog[style="width: 50%;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Fleet Utilization
+      .modal-body
+        .row.no-margin
+          .col-sm-6
+            #stats-manifest-fulfilled.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Manifest Fulfilled
+                .row
+                  .col-sm-2.col-sm-offset-1.no-padding
+                    p.chart-label
+                      | Fulfilled
+                  .col-sm-6
+                    .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@completed_trips_data[:manifest_fulfiled]}%" data-size="80"]
+                      span
+                        | #{@completed_trips_data[:manifest_fulfiled]}%
+                p.rank-info.text-ellipsis
+                  | 
+          .col-sm-6.col-md-6
+            #stats-trip.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Trip
+                ul.list-percentages.row
+                  li.col-xs-12
+                    p.stat-label.text-ellipsis
+                      | Trips per Vehicle
+                    strong
+                      | #{@fleet_utilization[:trips_per_vehicle]}
+                p.helper-block
+
+                .progress.progress-xs.progress-flat.progress-inverse-inverse[style="visibility:hidden"]
+                  .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"]
+                    span.sr-only
+                      | 60% Complete (inverse)
+                p.rank-info.text-ellipsis
+          .col-sm-6
+            #stats-fleet-idleness.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Fleet Idleness
+                .row
+                  .col-sm-2.col-sm-offset-1.no-padding                  
+                    p.chart-label
+                      strong
+                        | #{@fleet_utilization[:vehicles_on_duty_count]}<br>
+                      | Active on Delivery
+                  .col-sm-6
+                    .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@fleet_utilization[:fleet_idleness]}%" data-size="80"]
+                      span
+                        | #{@fleet_utilization[:fleet_idleness]}%
+                  .col-sm-2.no-padding
+                    p.chart-label
+                      strong
+                        | #{@fleet_utilization[:vehicles_waiting_for_assignment]}<br>                    
+                      | Waiting for Assignment
+      .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close

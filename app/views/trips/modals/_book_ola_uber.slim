@@ -1,0 +1,51 @@
+#book-ola-uber-modal.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog[style="width: 80%; max-width: 1100px;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title        
+          -if trip.check_in?
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} IN #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+          -else
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} OUT #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}          
+      .modal-body
+        .row        
+          .col-sm-6.col-md-4
+            .card
+              .card-body
+                #map-trip-info[style="width: 100%; height: 250px;"]            
+          .col-sm-6.col-md-8#trip-board-driver-info
+            .card[style="border:none"]
+              .card-body[style="overflow:scroll; height:250px;"]
+                .table-responsive
+                  table#book-ola-uber-table
+                    - @employee_trips.each do |employee_trip|
+                      - if employee_trip.trip_route.status != "completed" && employee_trip.trip_route.status != "canceled" && employee_trip.trip_route.status != "missed"
+                        tr[id='#{employee_trip.trip_route.id}']
+                          div
+                            .call-div.bg-primary[style="display:inline-block; line-height:20px; margin-right:10px"]
+                              a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                = image_tag 'phone.svg'
+                            .helper-inline.ola-employee-name
+                              | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                          div.col-sm-12[style="padding-top:14px"]
+                            button.helper-inline.bg-white.ola-button.ola-height.ola-border.col-sm-2.select_ola_button id="ola_button_#{employee_trip.trip_route.id}"
+                              | Ola
+                            button.helper-inline.bg-cloud.ola-button.ola-height.ola-border.col-sm-2.select_uber_button id="uber_button_#{employee_trip.trip_route.id}"
+                              | Uber
+                            input.ola-height.ola-border.col-sm-4[style="margin-left:10px; padding-left:14px" placeholder="Driver Name" id="driver-name-#{employee_trip.trip_route.id}" type="text" value="#{employee_trip.trip_route.cab_driver_name}"]
+                            input.ola-height.ola-border.col-sm-4[style="padding-left:14px" placeholder="License Number" id="driver-number-#{employee_trip.trip_route.id}" type="text" value="#{employee_trip.trip_route.cab_licence_number}"]
+                          div.col-sm-12[style="padding-top:5px"]
+                            span.col-sm-2.ola-text.helper-inline[style="width:142px; text-align:right; padding-top:7px; padding-right:0px"]
+                              | Location
+                            input.ola-height.ola-border.helper-inline.col-sm-8[style="margin-left:10px; padding-left:14px" placeholder="Location" id="location-#{employee_trip.trip_route.id}" value="#{employee_trip.trip_route.cab_start_location}"]
+                          div.col-sm-12[style="padding-top:12px" type="text"]
+                            -if show_cost
+                              span.col-sm-2.ola-text.helper-inline[style="width:142px; text-align:right; padding-right:0px"]
+                                | Total Cost
+                              input.ola-height.ola-border.helper-inline[style="margin-left:10px; padding-left:14px; margin-bottom:30px" placeholder="Cost" id="cost-#{employee_trip.trip_route.id}" type="text" value="#{employee_trip.trip_route.cab_fare}"]
+
+      .modal-footer
+        a.btn.btn-sm.btn-primary#book-ola-uber-submit[href="#" data-show-cost="#{show_cost}" data-trip-id="#{trip.id}"]
+          | Submit

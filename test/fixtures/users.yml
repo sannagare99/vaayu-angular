@@ -1,0 +1,49 @@
+driver_user:
+  email: driver@n3wnormal.com
+  username: driver
+  encrypted_password: <%= User.new.send(:password_digest, 'password3') %>
+  role: 3
+  f_name: Driver
+  l_name: Test
+  phone: 5554433
+  entity: driver (Driver)
+
+employee_user:
+  email: employee@n3wnormal.com
+  username: employee
+  encrypted_password: <%= User.new.send(:password_digest, 'password0') %>
+  role: 0
+  f_name: Employee
+  l_name: Test
+  phone: 6665544
+  entity: employee (Employee)
+
+other_employee_user:
+  email: employee2@n3wnormal.com 
+  username: employee2 
+  encrypted_password: <%= User.new.send(:password_digest, 'password0') %>
+  role: 0 
+  f_name: Employee2 
+  l_name: Test 
+  phone: 6665542
+  entity: other_employee (Employee)
+
+employer_user:
+  email: employer@n3wnormal.com
+  username: employer 
+  encrypted_password: <%= User.new.send(:password_digest, 'password2') %>
+  role: 1
+  f_name: Employer 
+  l_name: Test 
+  phone: 7776655
+  entity: employer (Employer)
+
+operator_user:
+  email: operator@n3wnormal.com
+  username: operator
+  encrypted_password: <%= User.new.send(:password_digest, 'password1') %>
+  role: 2
+  f_name: Operator
+  l_name: Test
+  phone: 9998877
+  entity: operator (Operator)

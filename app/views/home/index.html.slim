@@ -1,0 +1,24 @@
+.content-header
+  h2.content-title
+    | Dashboard
+.content-body.dashboard
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(root_path(:period => 'day'))}" type="button"]
+          =link_to root_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(root_path(:period => 'week'))}" type="button"]
+          =link_to root_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(root_path(:period => 'month'))}" type="button"]
+          =link_to root_path(:period => 'month')
+            | Monthly
+
+    = render :partial => 'dashboard/content'
+  = render :partial => 'dashboard/modals/on_time_arrivals'
+  = render :partial => 'dashboard/modals/completed_trips'
+  = render :partial => 'dashboard/modals/fleet_utilication'
+  = render :partial => 'dashboard/modals/exeptions_compliance'
+  = render :partial => 'dashboard/modals/employee_satisfaction'

@@ -1,0 +1,127 @@
+= simple_form_for @employee, html: {:'data-validate' => 'form', class: 'modal-form live-validation', :multipart => true, id: id}, :url => url, :method => meth, remote: remote do |f|
+    .row
+      .col-md-4
+        = f.input :f_name, label: 'First Name', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+      .col-md-4
+        = f.input :m_name, label: 'Middle Name', wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+      .col-md-4
+        = f.input :l_name, label: 'Last name', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+    .row
+      - unless @is_guard
+        .col-md-4
+          = f.input :email, label: 'Email', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "email" } }
+      .col-md-4
+        = f.input :phone, as: :tel, label: 'Phone', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "phone" } }
+      .col-md-4
+        = f.simple_fields_for :entity_attributes, @employee.entity do |ui|
+          = ui.association :employee_company, label: 'Company', prompt: false, required: true, prompt: "Choose a Company"
+      - if @is_guard
+        .col-md-4
+          = f.input :shift_ids, collection: Shift.active.map { |x| [x.name, x.id] }, input_html: { multiple: true, class: "multiple-select-ui" }, wrapper_html: { class: "provisioning-multiselect" }
+    - unless @is_guard
+      .row
+        .col-md-4
+          = f.input :shift_ids, collection: Shift.active.map { |x| [x.name, x.id] }, input_html: { multiple: true, class: "multiple-select-ui" }, wrapper_html: { class: "provisioning-multiselect" }
+        .col-md-4
+          = f.input :process_code, label: 'Process Code'
+        .col-md-4
+          = f.simple_fields_for :entity_attributes, @employee.entity do |ui|
+            = ui.input :line_manager_id, collection: @line_managers, label: "Line Manager", prompt: "Choose a Line Manager"
+    = f.simple_fields_for :entity_attributes, @employee.entity do |ui|
+      -if @is_guard
+        = ui.input :is_guard, as: 'hidden', input_html: { value: '1' }
+      .row
+        .col-md-4.group-label.text-right
+          -if @is_guard
+            span.field-label
+              | Guard attributes:
+          -else
+            span.field-label
+              | Employee attributes:
+        .col-md-4
+          = ui.input :employee_id, label: 'Employee id', required: true
+        .col-md-4
+          - if @is_guard
+            = ui.input :gender, as: 'hidden', input_html: { value: 'male' }
+            = ui.association :site, label: 'Site', wrapper_html: { class: 'site' }, prompt: false, required: true, prompt: "Choose Site"
+          -else
+            = ui.input :gender, required: true, label: 'Gender', prompt: false, collection: [['Male', 'male'], ['Female', 'female']], prompt: "Choose Gender"
+      - unless @is_guard
+        .row
+          .col-md-8.col-md-offset-4
+            label.control-label[for="user_avatar"]
+              | Image
+            .fileinput[data-provides="fileinput" class="#{@employee.avatar.present? ? 'fileinput-exists' : 'fileinput-new'}"]
+              .file-wrap-block
+                input[type="hidden" value="" name="fileinput_widget"]
+                .file-input-wrap
+                  .input-group
+                    .form-control[data-trigger="fileinput"]
+                      i.glyphicon.glyphicon-file.fileinput-exists
+                      span.fileinput-filename
+                        - if @employee.avatar.present?
+                          = @employee.avatar_file_name
+                    span.input-group-btn
+                      button.btn.btn-default.fileinput-exists[rel="tooltip" title="" data-dismiss="fileinput" data-original-title="remove"]
+                        i.fa.fa-times
+                      button.btn.btn-inverse.btn-file
+                        span.fileinput-new
+                          | Choose image
+                        span.fileinput-exists
+                          | Change
+                        = f.input :avatar, as: :file, label: false, :wrapper => false, input_html: {class: 'file-upload', accept: 'image/*'}
+      - unless @is_guard
+        .row
+          .col-md-4.col-md-offset-4
+            = ui.association :site, label: 'Site', wrapper_html: { class: 'site' }, prompt: false, required: true, prompt: "Choose Site"
+          .col-md-4
+            = ui.input :billing_zone, required: false, label: 'Billing Zone', prompt: false, collection: @billing_zones, prompt: "Choose Billing Zone"
+      .row[style="margin-bottom:0px"]
+        .col-md-6.col-md-offset-4.employee-home-address
+          .input-group
+            = ui.input :home_address, label: "#{@is_guard ? 'Pick-Up Address' : 'Home Address'}", required: true
+            span.input-group-btn
+              /!button.btn.btn-primary type="button"  Go!
+              = link_to 'Geocode', get_geocode_employees_path, class: "geo_code btn btn-primary"
+        .col-md-1
+          = ui.input :home_address_latitude, label: 'Lat', required: true, input_html: { class: "geo-code-numner-field" }
+        .col-md-1
+          = ui.input :home_address_longitude, label: 'Long', required: true, input_html: { class: "geo-code-numner-field" }
+      .row
+        .col-md-4.col-md-offset-4
+          = ui.input :landmark, label: 'Area/Landmark'
+        .col-md-4
+          = ui.input :nodal_name, label: 'Nodal Name'
+      .row[style="margin-bottom:0px"]
+        .col-md-6.col-md-offset-4.employee-home-address
+          .input-group
+            = ui.input :nodal_address, label: "#{@is_guard ? 'Nodal Address' : 'Nodal Address'}"
+            span.input-group-btn
+              /!button.btn.btn-primary type="button"  Go!
+              = link_to 'Geocode', get_nodal_geocode_employees_path, class: "nodal_geo_code btn btn-primary"
+        .col-md-1
+          = ui.input :nodal_address_latitude, label: 'Lat', input_html: { class: "geo-code-numner-field" }
+        .col-md-1
+          = ui.input :nodal_address_longitude, label: 'Long', input_html: { class: "geo-code-numner-field" }
+      - unless @is_guard
+        .row
+          .col-xs-4.col-md-4.col-md-offset-4
+            = ui.input :bus_travel, input_html: {class: "bus_travel"}
+          .col-md-4
+            = ui.association :bus_trip_route, label: 'Bus Stop', prompt: false, required: false, prompt: "Choose Bus Stop"
+
+      ul.match-result style=("display: none;")
+
+/! Delete Modal
+#employeeDeleteModal.modal.fade role="dialog"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close data-dismiss="modal" type="button"  &times;
+        h4.modal-title Delete Employee
+      .modal-body
+        p Are you sure you wish to delete this employee?
+      .modal-footer
+        = link_to 'Delete', @employee.entity, method: :delete, class: "btn btn-danger btn-sm"
+        button.btn.btn-sm.btn-default data-dismiss="modal" type="button"  Close
+

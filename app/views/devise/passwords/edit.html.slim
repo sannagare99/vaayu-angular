@@ -1,0 +1,35 @@
+.content.content-full
+  .container
+    .signin-wrapper
+      .row
+        .col-md-offset-3.col-md-6.col-sm-offset-2.col-sm-8
+          .reset-pass.signin
+              .signin-brand
+                a[href="/"]
+                  = image_tag("logo-dark.svg", :class => "lazy")
+                h1.text-lead
+                  | Change your password
+              .row
+                .col-md-offset-2.col-md-8.col-sm-12
+                  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put, class: 'reset-password-form'}) do |f|
+                    = f.error_notification
+                    = f.input :reset_password_token, as: :hidden
+                    = f.full_error :reset_password_token
+                    = f.input :password, label: false, required: true, autofocus: true, placeholder: 'New Password', wrapper_html: {class: 'helper'}
+                    p.helper-block.text-muted
+                      small
+                        | 6 characters minimum
+                    = f.input :password_confirmation, label: false, required: true, placeholder: 'Confirm your new password'
+                    .form-group.form-actions
+                      = f.button :submit, 'Change my password', class: 'hidden-sm btn btn-primary'
+                      = f.button :submit, 'Change my password', class: 'visible-sm btn btn-lg btn-block btn-primary'
+      .signin-footer
+        ul.list-inline
+          li
+            | © 2016 Vaayu
+          li
+            a[href="#"]
+              | Terms of Use
+          li
+            a[href="#"]
+              | Privacy Policy

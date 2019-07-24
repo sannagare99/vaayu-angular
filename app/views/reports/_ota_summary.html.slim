@@ -1,0 +1,32 @@
+#on-time-arrivals.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#on-time-arrivals-picker[class="form-control" type="text" name="on-time-arrivals-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'ota_summaries')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-on-time-arrivals-table.table.table-bordered
+      thead
+        tr
+          th
+            | Date
+          th
+            | Shift Time
+          th
+            | Total Logins
+          th
+            | Logins Catered To
+          th
+            | Logins Cancelled
+          th
+            | Logins Delayed
+          th
+            | Avg. Delay to Login (min)
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'ota_summaries'}

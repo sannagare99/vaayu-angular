@@ -1,0 +1,8 @@
+= simple_form_for @compliance, html: {:'data-validate' => 'form', class: 'modal-form live-validation', :multipart => true, id: "form-compliance"}, :method => meth do |f|
+    .row
+      .col-md-4
+        = f.input :key, label: 'Key', required: true
+      .col-md-4
+        = f.input :modal_type, label: 'Type', required: true, collection: Compliance::modal_types.to_a, prompt: "Choose Type"
+      .col-md-4
+        = f.input :compliance_type, label: 'Compliance Type', required: true, collection: Compliance::compliance_types.to_a, prompt: "Choose Compliance Type"

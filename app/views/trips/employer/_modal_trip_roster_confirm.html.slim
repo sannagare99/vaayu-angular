@@ -1,0 +1,39 @@
+#modal-employer-tr-confirm.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Create New Trip Roster
+      .modal-body
+        .row
+          .col-md-8[style="max-height:297px; overflow:scroll"]
+            table#trip-roster-confirm-table.table.table-bordered
+              thead
+                tr
+                  th
+                    | Employee
+                  th
+                    | Shift                    
+                  th[style="width: 10%;"]
+                    | Sex
+                  th[style="width: 15%;"]
+                    | Area
+                  th[style="width: 15%;"]
+                    | Sequence
+              tbody#trip-roster-confirm-body
+          .col-md-4
+            .card
+              .card-body
+                #map-trip-roster-confirm[style="width: 100%; height: 250px;"]      
+      .modal-footer        
+        label.pull-left.text-red for="error-message" id="error-message"
+        button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+          | Cancel
+        button#submit-trip-roster.btn.btn-sm.btn-primary.btn-fixed-width.ladda-button[type="button" data-style="slide-down"]
+          span.ladda-label
+            | Submit
+        button#save-sequence.btn.btn-sm.btn-primary.btn-fixed-width.ladda-button[style="display:none" type="button" data-style="slide-down"]
+          span.ladda-label
+            | Save

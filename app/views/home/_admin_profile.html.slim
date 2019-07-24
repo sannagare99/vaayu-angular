@@ -1,0 +1,15 @@
+= simple_form_for @user, html: {'data-validate' => 'form', :class => 'update_profile'}, :url => user_path(@user), :method => 'PATCH' do |f|
+  .row
+    .col-md-4
+      = f.input :f_name, label: false, placeholder: '*First Name', required: true
+    .col-md-4
+      = f.input :m_name, label: false, placeholder: 'Middle Name'
+    .col-md-4
+      = f.input :l_name, label: false, placeholder: '*Last name', required: true
+  .row
+    .col-md-4
+      = f.input :email, label: false, placeholder: '*Email', required: true
+    .col-md-4
+      = f.input :phone, as: :tel, label: false, placeholder: '*Phone', required: true
+
+    = f.button :submit, 'Submit', :class => 'btn btn-sm btn-primary'

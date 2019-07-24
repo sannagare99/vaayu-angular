@@ -1,0 +1,98 @@
+| $("#schedule").html('');
+| $("#schedule").html('
+= j render :partial => 'shift_times/modal_schedule', :locals => { schedule: @schedule, sites: @sites}
+| ');
+| $("#modal-schedule-time").modal('show');
+
+|$('#form-employee-schedule').submit(function(){
+|   $("#modal-schedule-time").modal('hide');
+|});
+
+| var employeeTripObjects = {};
+| var currentPageDate = "";
+| var isAdmin = "#{can? :update, @shift_manager}";
+| var modalUrl = "/shift_times/#{@shift_manager.id}/timings?sm_type=#{@sm_type}";
+| var submitSelector = "#form-employee-schedule input[type='submit']";
+| var fieldStartWith = ".#{@sm_type}_";
+| var checkInFocusOut = ".#{@sm_type}_check_in_check_in input";
+| var checkOutFocusOut = ".#{@sm_type}_check_out_check_out input";
+| var submitParams = { "id": "#{@shift_manager.id}", "employee": {}, "sm_type": "#{@sm_type}" };
+| var scheduleType = "shift_type";
+
+| $('#schedule-date').datepicker({
+|   todayHighlight: true
+| }).on('changeDate', function(e){
+|   if (JSON.parse(isAdmin) || isFutureDate(e.date)) {
+|     weekNo = getWeek(e.date);
+|     dateRange = getDateRangeOfWeek(weekNo);
+|     if (!isNaN(getWeek(new Date(currentPageDate))) && getWeek(new Date(currentPageDate)) >= getWeek(new Date())){
+|       updateEmployeeTripObjects(getWeek(new Date(currentPageDate)));
+|     }
+|     toggleRowHighligh();
+|     updateCalendarTableHead(e);
+|     updateCalendarTitle(e);
+|     setSelectedDateVal(e.date);
+|     getEmployeeTrips(dateRange);
+|     scheduleContentHighlight(e);
+|   }
+| });
+
+| $(".calendar-week-header button").on("click", function(){
+|   selectedDate = $("#schedule-date").data("datepicker").getDate();
+|   updateEmployeeTripObjects(getWeek(selectedDate));
+|   if ($(this).text() == "Next week") {
+|     weekNo = getWeek(selectedDate) + 1;
+|     weekForwardBackward(weekNo);
+|   }else {
+|     weekNo = getWeek(selectedDate) - 1;
+|     weekForwardBackward(weekNo);
+|   }
+| });
+
+| $(".check_out_location_select").on("change", function(i, val) {
+|   $(this).closest(".schedule-form").find("input.check_in_location_select").val($(this).val());
+|   txt = getSelectedSiteName({site_id: $(this).val()});
+|   $(this).closest(".schedule-column").find(".schedule-content p:last").text(txt);
+|   var checkOutField = $(this).closest(".schedule-form").find(".employee_check_out_check_out input");
+|   var checkInField = $(this).closest(".schedule-form").find(".employee_check_in_check_in input");
+|   if ($(this).val() == "" && checkInField.val() !== "" && checkOutField.val() !== "") {
+|     $(this).addClass("error-input-color");
+|   } else {
+|     $(this).removeClass("error-input-color");
+|   }
+|   enableDisableSubmit();
+| });
+
+| $(".schedule-content").on("click", function(){
+|   selectedDate = $(this).closest(".schedule-column").find(".selected_date:first").val();
+|   if (selectedDate >= dateFormatter(new Date(), "YYYY-MM-DD")){
+|     removeScheduleHighlight();
+|     $(this).hide();
+|     $(this).next().show();
+|     $(this).closest("td").addClass("green-background");
+|   }
+| });
+
+| $(".datepicker table tr:has(td.today)").addClass("datepicker-current-week");
+| $(".datepicker table td.today").addClass("active").click();
+
+| weekNo = getWeek(new Date());
+| getEmployeeTrips(getDateRangeOfWeek(weekNo));
+| updateEmployeeTripObjects(weekNo);
+
+| $("#form-employee-schedule").on("submit", function(e){
+|   updateEmployeeTripObjects(weekNo);
+|   submitForm($(this).attr("action"));
+|   e.preventDefault();
+| });
+
+| $(checkInFocusOut).focusout(function(i, e) {
+|   $(this).closest(".schedule-column").find(".schedule-content .check_in").text($(this).val());
+|   toggleSubmitButtonVisiblity($(this));
+| });
+
+| $(checkOutFocusOut).focusout(function(i, e) {
+|   $(this).closest(".schedule-column").find(".schedule-content .check_out").text($(this).val());
+|   toggleSubmitButtonVisiblity($(this));
+| });
+

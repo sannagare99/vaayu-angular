@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  web:
+    image: moove/webapp:latest
+    ports:
+      - 80:80
+      - 3000:3000
+      - 3001:3001
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - location_service
+      - clustering_core
+      - sidekiq
+      - mysql
+  redis:
+    image: 'redis:3.2.9-alpine'
+    command: redis-server
+    ports:
+      - 6379
+    sysctls:
+      - net.core.somaxconn=1024
+    volumes:
+      - ~/redis-data:/data
+  location_service:
+    # TODO: Fix location_services' environment loading
+    # TODO: Setup local make file to tag docker builds with moove/location_service:latest
+    image: 482532497705.dkr.ecr.ap-south-1.amazonaws.com/location_service:0.1.193
+    ports:
+      - 4343
+  clustering_core:
+    image: 482532497705.dkr.ecr.ap-south-1.amazonaws.com/location_service:build-1
+    ports:
+      - 8989
+  sidekiq:
+    image: moove/webapp:latest
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    env_file:
+      - .env
+  selenium:
+    image: selenium/standalone-chrome-debug:3.0.1-germanium
+    ports: ['4444:4444', '5900:5900']
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - web
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'moove_test'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:

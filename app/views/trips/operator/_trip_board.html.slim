@@ -1,0 +1,20 @@
+#operator-trip-board.tab-pane.fade.active.in
+  .col-md-12[style="padding-bottom:10px"]
+  	.helper-inline.text-center
+	  .helper-inline.bg-cloud.trip-board-button#trip_board_all_employees
+		| All
+	  .helper-inline.bg-white.trip-board-button#trip_board_female_trips
+		| Trips With Female Employee		    
+	.helper-inline.text-center[style="padding-left:15px"]
+	  .helper-inline.bg-cloud.trip-board-button#trip_board_all_type
+		| All
+	  .helper-inline.bg-white.trip-board-button#trip_board_cab
+		| Cab Rides Only
+	- if current_user.employer? || current_user.admin?
+		.helper-inline.text-center.pull-right[style="width:270px"]
+			select#select_operators.form-control.selectboxit[placeholder="Select Operator" name="select_operators"]
+			    option[value="0"]
+			      | All Operators
+
+  .col-md-12
+    #driver-schedule-timeline

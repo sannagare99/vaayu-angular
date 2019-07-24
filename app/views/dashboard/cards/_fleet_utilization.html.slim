@@ -1,0 +1,22 @@
+.card.text-center
+  .card-body[style='min-height: 10px !important;']
+    .card-title Fleet Utilization
+  ul.list-group.list-group-flush
+    li.list-group-item[style='border-top: none;']
+      .row
+        .col-md-4
+          .easyPieChart[data-barcolor="#{overall[:trend] ? '#13A89E' : '#DA4F49'}" data-trackcolor='white' data-scalecolor='white' data-lineWidth="5" data-percent="#{overall[:value].round}" data-size="90" data-lineCap="square"]
+            span.count.xsmall
+          .count.small
+            div[class="glyphicon #{overall[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{overall[:trend] ? 'text-success' : 'text-danger'}"]
+        .col-md-8.border-left
+          - by_capacity[:value].each do |capacity, utilization|
+            .row
+              .col-md-5
+                span #{capacity} seater
+              .col-md-4.no-padding.text-left
+                = render 'dashboard/cards/utilization_progress_bar', capacity: capacity, utilization: utilization, trend: by_capacity[:trend][capacity]
+              .col-md-3.no-padding
+                .pull-left
+                  div[class="glyphicon #{by_capacity[:trend][capacity] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{by_capacity[:trend][capacity] ? 'text-success' : 'text-danger'}" style='padding-left: 15px']
+                div #{(capacity * utilization / 100).round(1)}

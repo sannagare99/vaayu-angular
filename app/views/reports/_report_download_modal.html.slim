@@ -1,0 +1,14 @@
+/! Report Download Modal
+.reportDownloadModal.modal.fade role="dialog"
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close data-dismiss="modal" type="button"  &times;
+        h4.modal-title Download Report
+      .modal-body
+        | Email
+        input name="email" class="email" type="text" /
+      .modal-footer
+        a.btn.btn-sm.send-report-button[href="#{send_report_reports_path(report_name: report_name)}" type="button"]
+          | Submit
+        button.btn.btn-sm.btn-default data-dismiss="modal" type="button"  Close

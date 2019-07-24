@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": [
+    "success",
+    "errors"
+  ],
+  "properties": {
+    "success": {
+      "success": { "enum": [ false ] }
+    },
+    "errors": {
+      "type": "array"
+    }
+  }
+}

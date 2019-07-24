@@ -1,0 +1,258 @@
+/** SIDEBAR LEFT **/
+
+.side-left {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  width: 92px;
+  background: #232332;
+  z-index: 98;
+
+  &.fixed {
+    position: fixed;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/** THE SIDEBAR **/
+
+.sidebar {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  > li {
+    position: relative;
+    margin: 0px;
+    list-style: none;
+    display: block;
+    font-size: 11px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    vertical-align: middle;
+
+    &.active {
+      &:after, &:before {
+        right: -1px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      &:after {
+        border-color: rgba(204, 204, 204, 0);
+        border-right-color: #FFFFFF;
+        border-width: 10px;
+        top: 50%;
+        margin-top: -10px;
+      }
+    }
+
+    &:first-child.active:after {
+      border-right-color: #EDEDED;
+    }
+
+    &.active {
+      &:before {
+        border-color: rgba(204, 204, 204, 0);
+        border-right-color: #E0E4E8;
+        border-width: 11px;
+        top: 50%;
+        margin-top: -11px;
+      }
+
+      > a {
+        .icon {
+          fill: #ffffff;
+        }
+
+        &:hover {
+          .icon {
+            fill: #ffffff;
+          }
+          color: #ffffff;
+          cursor: default;
+        }
+
+        color: #ffffff;
+        cursor: default;
+      }
+    }
+
+    > a {
+      display: block;
+      margin: 0;
+      padding: 10px 0 5px;
+      height: 100%;
+      width: 100%;
+      background-color: #232332;
+      color: #bdc3c7;
+      cursor: pointer;
+
+      &:hover {
+        .icon {
+          fill: #13A89E;
+        }
+        color: #13A89E;
+      }
+    }
+  }
+
+  li a > .sidebar-icon {
+    display: block;
+    margin: 0 auto 3px;
+  }
+
+  > li > a > {
+    .badge, .label {
+      position: absolute;
+      top: 5px;
+      left: 60%;
+      padding: 2px 5px;
+      font-size: 11px;
+      font-weight: normal;
+      -webkit-animation-delay: 3s;
+      -moz-animation-delay: 3s;
+      -o-animation-delay: 3s;
+      animation-delay: 3s;
+    }
+  }
+}
+
+.sidebar-child, .sidebar-child-inline {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  top: -2px;
+  left: 100%;
+  background-color: #ffffff;
+  color: #232332;
+  border: 1px solid #E0E4E8;
+  border-left: none;
+  display: none;
+  white-space: nowrap;
+
+  /* make box available auto width */
+  z-index: 99;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-clip: padding-box;
+}
+
+.sidebar-child {
+  padding: 5px 0;
+}
+
+.sidebar > li:hover {
+  .sidebar-child, .sidebar-child-inline {
+    display: block;
+  }
+}
+
+.sidebar-child li {
+  position: relative;
+  margin: 0;
+  padding: 0 5px;
+  display: block;
+  min-width: 160px;
+  list-style: none;
+  font-size: 1.2em;
+  text-align: left;
+
+  &.divider {
+    margin: 6px 15px;
+    height: 1px;
+    border-top: 1px solid #E0E4E8;
+  }
+
+  a {
+    border-radius: 0px;
+    display: block;
+    padding: 6px 10px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #13A89E;
+      color: #ecf0f1;
+    }
+  }
+
+  &.active a {
+    background-color: #394264;
+    color: #ecf0f1;
+
+    &:hover {
+      background-color: #394264;
+      color: #ecf0f1;
+    }
+  }
+}
+
+.sidebar-child-inline li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  margin-right: -3px;
+  vertical-align: middle;
+
+  &.divider {
+    height: 60px;
+    width: 1px;
+    cursor: default;
+    background-color: #E0E4E8;
+    -webkit-user-select: none;
+
+    /* Chrome all / Safari all */
+    -moz-user-select: none;
+
+    /* Firefox all */
+    -ms-user-select: none;
+
+    /* IE 10+ */
+
+    /* No support for these yet, use at own risk */
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  &:first-child {
+    margin-left: -2px;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  a {
+    padding: 8px 20px;
+    display: block;
+
+    &:hover {
+      color: #13A89E;
+    }
+  }
+
+  &.active a {
+    color: #13A89E;
+
+    &:hover {
+      color: #13A89E;
+    }
+  }
+}
+
+/** end sidebar left **/

@@ -1,0 +1,105 @@
+| $("#schedule").html('');
+| $("#schedule").html('
+= j render :partial => 'employee_trips/modal_schedule',:locals => { schedule: @schedule, sites: @sites}
+| ');
+| $("#modal-employee-schedule").modal('show');
+
+|$('#form-employee-schedule').submit(function(){
+|   $("#modal-employee-schedule").modal('hide');
+|});
+
+| var employeeTripObjects = {};
+| var currentPageDate = "";
+| var isAdmin = "#{current_user.role == 'admin'}";
+| var modalUrl = "/employees/#{@employee.id}/trips";
+| var submitSelector = "#form-employee-schedule input[type='submit']";
+| var fieldStartWith = ".employee_";
+| var checkInFocusOut = ".check_in_shift_select";
+| var checkOutFocusOut = ".check_out_shift_select";
+| var submitParams = { "id": "#{@employee.id}", "employee": {} };
+| var scheduleType = "trip_type";
+| var allShifts = #{@all_shifts};
+
+| $('#schedule-date').datepicker({
+|   todayHighlight: true
+| }).on('changeDate', function(e){
+|   if (JSON.parse(isAdmin) || isFutureDate(e.date)) {
+|     weekNo = getWeek(e.date);
+|     dateRange = getDateRangeOfWeek(weekNo, new Date(e.date));
+|     if (!isNaN(getWeek(new Date(currentPageDate))) && getWeek(new Date(currentPageDate)) >= getWeek(new Date())){
+|       updateEmployeeTripObjects(getWeek(new Date(currentPageDate)));
+|     }
+|     toggleRowHighligh();
+|     updateCalendarTableHead(e);
+|     updateCalendarTitle(e);
+|     setSelectedDateVal(e.date);
+|     getEmployeeTrips(dateRange);
+|     scheduleContentHighlight(e);
+|   }
+| });
+
+| $(".calendar-week-header button").on("click", function(){
+|   selectedDate = $("#schedule-date").data("datepicker").getDate();
+|   updateEmployeeTripObjects(getWeek(selectedDate));
+|   if ($(this).text() == "Next week") {
+|     weekNo = getWeek(selectedDate) + 1;
+|     weekForwardBackward(weekNo, selectedDate);
+|   }else {
+|     weekNo = getWeek(selectedDate) - 1;
+|     weekForwardBackward(weekNo, selectedDate);
+|   }
+| });
+
+| $(".check_out_location_select").on("change", function(i, val) {
+|   $(this).closest(".schedule-form").find("input.check_in_location_select").val($(this).val());
+|   txt = getSelectedSiteName({site_id: $(this).val()});
+|   $(this).closest(".schedule-column").find(".schedule-content p:last").text(txt);
+|   var checkOutField = $(this).closest(".schedule-form").find(".employee_check_out_check_out input");
+|   var checkInField = $(this).closest(".schedule-form").find(".employee_check_in_check_in input");
+|   if ($(this).val() == "" && checkInField.val() !== "" && checkOutField.val() !== "") {
+|     $(this).addClass("error-input-color");
+|   } else {
+|     $(this).removeClass("error-input-color");
+|   }
+|   enableDisableSubmit();
+| });
+
+| $(".schedule-content").on("click", function(){
+|   selectedDate = $(this).closest(".schedule-column").find(".selected_date:first").val();
+|   if (selectedDate >= dateFormatter(new Date(), "YYYY-MM-DD")){
+|     removeScheduleHighlight();
+|     $(this).hide();
+|     $(this).next().show();
+|     $(this).closest("td").addClass("green-background");
+|   }
+| });
+
+| $(".datepicker table tr:has(td.today)").addClass("datepicker-current-week");
+| $(".datepicker table td.today").addClass("active").click();
+
+| weekNo = getWeek(new Date());
+| updateEmployeeTripObjects(weekNo);
+
+| $("#form-employee-schedule").on("submit", function(e){
+|   updateEmployeeTripObjects(weekNo);
+|   submitForm($(this).attr("action"));
+|   e.preventDefault();
+| });
+
+| $(".check_in_shift_select").focusout(function(i, e) {
+|   toggleSubmitButtonVisiblity($(this));
+| });
+
+| $(".check_out_shift_select").focusout(function(i, e) {
+|   toggleSubmitButtonVisiblity($(this));
+| });
+
+| $(".check_out_shift_select").on("change", function(){
+|   $(this).closest(".schedule-form").find(".check_out_location_select").trigger("change");
+|   updateCheckoutTimeFields($(this));
+| });
+
+| $(".check_in_shift_select").on("change", function(){
+|   $(this).closest(".schedule-form").find(".check_out_location_select").trigger("change");
+|   updateCheckinTimeFields($(this));
+| });

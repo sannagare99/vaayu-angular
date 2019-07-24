@@ -1,0 +1,11 @@
+.container
+  = simple_form_for @user, html: {'data-validate' => 'form', :class => 'form_employer'}, :url =>  employers_path, :method => 'POST' do |f|
+    = f.input :f_name, label: 'First Name', placeholder: 'Your Name', required: true
+    = f.input :m_name, label: 'Middle Name', placeholder: 'Middle Name'
+    = f.input :l_name, label: 'Last Name', placeholder: 'Your Last name', required: true
+    = f.input :email, label: 'Email', placeholder: 'Email', required: true
+    = f.input :phone, as: :tel, label: 'Cell Phone', placeholder: '(---) --- ----', required: true
+    = f.simple_fields_for :entity_attributes, @user.entity do |ui|
+      = ui.association :employee_company
+      
+    = f.button :submit, 'Save Profile', :class => "submit-button href"

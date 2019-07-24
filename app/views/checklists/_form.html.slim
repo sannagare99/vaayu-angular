@@ -1,0 +1,76 @@
+#driverChecklistModal.modal.fade role="dialog"
+  .modal-dialog.modal-compliance
+    = simple_form_for checklist, html: {:'data-validate' => 'form', class: obj == 'driver' ? 'modal-form checklist-form-driver' : 'modal-form checklist-form-vehicle', id: id}, url: url, method: 'POST', remote: true do |f|
+      .modal-content
+        .modal-header
+          button.close data-dismiss="modal" type="button"  &times;
+          h4.modal-title Compliance Checklist
+        .modal-body
+          .progress-section
+            .col-md-11
+              .progress
+                .progress-bar.bg-danger role="progressbar" style="width: #{progress}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+            .col-md-1
+              span= "#{progress}%"
+
+          .field-section
+            .total_fields.hidden
+              | #{total_fields}
+            /! Quality Section
+            .quantity.check-list-fields
+              p.title  Quality
+              .row
+                .col-md-6
+                .col-md-3.ok  OK
+                .col-md-3.not-ok  NOT OK
+              - checklist.checklist_items.quality.each do |item|
+                .row
+                  .col-md-6.field-label
+                    p.lable-name= item.key
+                  = render partial: "checklists/radio", locals: { item: item }
+
+            -if obj == 'driver'
+              /! Behaviour Section
+              .behaviour.check-list-fields
+                p.title  Behaviour
+                .row
+                  .col-md-6
+                  .col-md-3.ok  YES
+                  .col-md-3.not-ok  NO
+                - checklist.checklist_items.behaviour.each do |item|
+                  .row
+                    .col-md-6.field-label
+                      p.lable-name= item.key
+                    = render partial: "checklists/radio", locals: { item: item }
+
+            -if obj == 'vehicle'
+              /! Safety Section
+              .behavior.check-list-fields
+                p.title  Safety
+                .row
+                  .col-md-6
+                  .col-md-3.ok  PRESENT
+                  .col-md-3.not-ok  NOT PRESENT
+                - checklist.checklist_items.safety.each do |item|
+                  .row
+                    .col-md-6.field-label
+                      p.lable-name= item.key
+                    = render partial: "checklists/radio", locals: { item: item }
+
+            /! Documents Section
+            .documents.check-list-fields
+              p.title  Documents
+              .row
+                .col-md-6
+                .col-md-3.ok  PRESENT
+                .col-md-3.not-ok  NOT PRESENT
+              - checklist.checklist_items.document.each do |item|
+                .row
+                  .col-md-6.field-label
+                    p.lable-name= item.key
+                  = render partial: "checklists/radio", locals: { item: item }
+
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, 'Save', :class => 'btn btn-sm btn-primary save_checklist'

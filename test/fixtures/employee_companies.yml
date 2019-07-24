@@ -1,0 +1,3 @@
+e_comp:
+  name: EmployeeCompany_test
+  logistics_company: l_comp

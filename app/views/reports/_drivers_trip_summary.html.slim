@@ -1,0 +1,30 @@
+#drivers-trip-summary.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#drivers-trip-summary-picker[class="form-control" type="text" name="drivers-trip-summary-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'drivers_trip_summaries')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-drivers-trip-summary-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Date
+          th
+            | Driver Name
+          th
+            | Vehicle
+          th
+            | # Trips
+          th
+            | Mileage (km)
+          th
+            | Mileage / Trip (km)
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'drivers_trip_summaries'}

@@ -1,0 +1,18 @@
+| $("#shifts .table-content-edit").html('');
+| $("#shifts .table-content-edit").html('
+= j render :partial => 'shifts/new'
+| ');
+| datepickerInit();
+| initSelectbox();
+
+| $("#shift_start_time").timepicker({
+|   showMeridian: false,
+|   defaultTime: false,
+| }).on('changeTime.timepicker', function(e){ timepickerChangeEvent(e, $('#shift_start_time')) });
+
+| $("#shift_end_time").timepicker({
+|   showMeridian: false,
+|   defaultTime: false,
+| }).on('changeTime.timepicker', function(e){ timepickerChangeEvent(e, $('#shift_end_time')) });
+
+| // setDefaultTime();

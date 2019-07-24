@@ -1,0 +1,88 @@
+/* NICE CHECKBOX & RADIO BUTTON */
+/* Base for label styling */
+
+.nice-checkbox {
+  position: relative;
+  min-height: 27px;
+  padding-top: 7px;
+  color: #394264;
+
+  [type="checkbox"] {
+    display: none;
+
+    &:not(:checked) + label, &:checked + label {
+      position: relative;
+      padding-left: 20px;
+      color: inherit;
+      font-size: 13px;
+      line-height: 14px;
+      z-index: 1;
+    }
+  }
+
+  &.checkbox-basic {
+    label:before {
+      color: #13A89E !important;
+    }
+  }
+
+  label:before {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    font-family: 'FontAwesome';
+    font-size: 17px;
+    color: inherit;
+    transition: all .3s ease;
+  }
+
+  &:hover {
+    label:before {
+      color: inherit;
+      cursor: default !important;
+    }
+
+    [type="checkbox"] {
+      &:disabled:not(:checked) + label:before {
+        content: '\f096';
+      }
+
+      &:not(:checked) + label:before {
+        content: '\f147';
+      }
+    }
+  }
+
+  [type="checkbox"]:not(:checked) + label:before {
+    content: '\f096';
+  }
+
+  [type="checkbox"]:checked + label:before {
+    content: '\f14a';
+    color: inherit;
+  }
+
+  .checkbox-o[type="checkbox"]:checked + label:before {
+    content: '\f046';
+  }
+
+  [type="checkbox"] {
+    &:disabled {
+      &:not(:checked) + label:before, &:checked + label:before {
+        color: #95a5a6;
+      }
+
+      + label {
+        color: #95a5a6 !important;
+
+        > [class*="text-"] {
+          color: #95a5a6 !important;
+        }
+      }
+    }
+
+    &:checked:focus + label:before, &:not(:checked):focus + label:before {
+      color: #49AFCD;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+#operator-leave-requests.tab-pane.fade
+  .col-md-12.table-responsive.table-responsive-datatables.clearfix
+    .table-responsive
+      table#operator-leave-requests-table.table.table-bordered[data-auto-update="true"]
+        thead
+          tr
+            th
+              | Request Date
+            th
+              | Request
+            th
+              | Driver Name
+            th
+              | Reason
+            th
+              | Start Date
+            th
+              | End Date
+            th.text-center[style="width: 5%;"]
+              .nice-checkbox.text-primary
+                input#ch-all[type="checkbox"]
+                label[for="ch-all"]
+        tbody
+    .table-controls.pull-right.leave-controls
+      button#cancel-leave-request.btn.btn-wide.btn-danger[type="button" data-type="decline"]
+        | Cancel Request
+      button#approve-leave-request.btn.btn-wide.btn-primary[type="button" data-type="approve"]
+        | Approve

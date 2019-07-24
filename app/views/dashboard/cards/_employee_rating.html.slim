@@ -1,0 +1,14 @@
+div[class="card text-center #{trend ? 'border-success' : 'border-danger'}"]
+  .card-body.card-sm
+    .card-title Employee Satisfaction
+    .card-text
+      span.count.small
+        span.rating
+          - for i in (1..value.floor)
+            i.fa.fa-star
+          - if value % 1 > 0.5
+            i.fa.fa-star-half-o
+        .row
+          span= value.round(1)
+        .row
+          div[class="glyphicon #{trend ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{trend ? 'text-success' : 'text-danger'}"]

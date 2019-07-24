@@ -1,0 +1,2 @@
+#m-employees-new
+  = render :partial => 'employees/form', :locals => {:url => employees_path, :meth => 'POST', :remote => true, id: @is_guard ? "form-guards" : "form-employees"}

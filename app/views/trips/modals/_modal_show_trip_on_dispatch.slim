@@ -1,0 +1,2 @@
+#modal_show_trip_on_dispatch.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  = render :partial => 'trips/modals/trip_info_content_driver', :locals => {:trip => @trip, :employee_trips => @employee_trips, :submit => true, :exception => @exception, :driver => @driver, :vehicle => @vehicle, :last_paired_vehicle => @last_paired_vehicle}

@@ -1,0 +1,57 @@
+#modal-operator-active-trip2.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Driver
+      .modal-body
+        .table-responsive
+          table.table.table-bordered
+            thead
+              tr
+                th
+                  | ID #
+                th
+                  | Driver
+                th
+                  | Make
+                th
+                  | Plate
+                th
+                  | Seats
+                th.text-center
+                  | Call
+            tbody
+              tr
+                td
+                  | 12345 XYZ
+                td
+                  | Hemant Tata
+                td
+                  | Maruti Wagon R
+                td.text-center
+                  | KA 19P 8488
+                td.text-center
+                  | 5
+                td.text-center
+                  a[href="#"]
+                    = inline_svg 'phone.svg', class: 'text-primary'
+              tr
+                td
+                  | 12345 XYZ
+                td
+                  | Hemant Tata
+                td
+                  | Maruti Wagon R
+                td.text-center
+                  | KA 19P 8488
+                td.text-center
+                  | 5
+                td.text-center
+                  a[href="#"]
+                    = inline_svg 'phone.svg', class: 'text-primary'
+      .modal-footer
+        button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+          | Close

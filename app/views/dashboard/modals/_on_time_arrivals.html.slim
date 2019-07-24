@@ -1,0 +1,142 @@
+#stats-arrivals-modal.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog[style="width: 60%;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | On Time Arrivals
+      .modal-body
+        .row.no-margin.on-time-arrivals
+          .col-sm-12
+            h5.stats-block-title
+              | Pick-Up Trip Deep Dive
+            ul.stats-list.list-unstyled
+              li.col-sm-3
+                #d-off-on-time-check-in.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | On-Time Check In
+                    .row
+                      .col-sm-2.col-sm-offset-1.no-padding
+                        p.chart-label
+                          | On-time
+                      .col-sm-7
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:on_time_check_in]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:on_time_check_in]}%
+
+              li.col-sm-3
+                #d-off-on-time-pick-up.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | On-Time First Pick Up
+                    .row
+                      .col-sm-2.col-sm-offset-1.no-padding
+                        p.chart-label
+                          | On-time
+                      .col-sm-7
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:on_time_first_check_in]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:on_time_first_check_in]}%
+
+              li.col-sm-3
+                #d-off-no-show.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | No Show
+                    .row
+                      .col-xs-12
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:no_show_check_in]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:no_show_check_in]}%
+
+              li.col-sm-3
+                #d-off-delays.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | Delay and Wait
+                    ul.list-percentages.row
+                      li.col-xs-6
+                        p.stat-label.text-ellipsis
+                          | Average Delay
+                        strong
+                          | #{@on_time_arrivals[:avg_delay_check_in]} min
+                      li.col-xs-6
+                        p.stat-label.text-ellipsis
+                          | Average Wait
+                        strong
+                          | #{@on_time_arrivals[:avg_wait_check_in]} min
+                    p.helper-block
+                    .progress.progress-xs.progress-flat.progress-inverse-inverse[style="visibility:hidden"]
+                      .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: #{@on_time_arrivals[:delay_check_in_count]}%"]
+                         span.sr-only
+                           | #{@on_time_arrivals[:delay_check_in_count]}% Complete (inverse)                                        
+          .col-sm-12
+            h5.stats-block-title
+              | Drop-Off Trip Deep Dive
+            ul.stats-list.list-unstyled
+              li.col-sm-3
+                #pick-up-on-time-check-in.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | On-Time Check In
+                    .row
+                      .col-sm-2.col-sm-offset-1.no-padding
+                        p.chart-label
+                          | On-time
+                      .col-sm-7
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:on_time_check_out]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:on_time_check_out]}%
+
+              li.col-sm-3
+                #pick-up-on-time-pick-up.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | On-Time First Pick Up
+                    .row
+                      .col-sm-2.col-sm-offset-1.no-padding
+                        p.chart-label
+                          | On-time
+                      .col-sm-7
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:on_time_first_check_out]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:on_time_first_check_out]}%
+
+              li.col-sm-3
+                #pick-up-no-show.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | No Show
+                    .row
+                      .col-xs-12
+                        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@on_time_arrivals[:no_show_check_out]}" data-size="60"]
+                          span
+                            | #{@on_time_arrivals[:no_show_check_out]}%
+
+              li.col-sm-3
+                #pick-up-off-delays.stats-sm-panel.panel.panel-primary.bg-primary
+                  .panel-body
+                    p.lead
+                      | Delay and Wait
+                    ul.list-percentages.row
+                      li.col-xs-6
+                        p.stat-label.text-ellipsis
+                          | Average Delay
+                        strong
+                          | #{@on_time_arrivals[:avg_wait_check_in]} min
+                      li.col-xs-6
+                        p.stat-label.text-ellipsis
+                          | Average Wait
+                        strong
+                          | #{@on_time_arrivals[:avg_wait_check_out]} min
+                    p.helper-block
+                    .progress.progress-xs.progress-flat.progress-inverse-inverse[style="visibility:hidden"]
+                      .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: #{@on_time_arrivals[:delay_check_in_count]}%"]
+                         span.sr-only
+                           | #{@on_time_arrivals[:delay_check_in_count]}% Complete (inverse)                    
+
+      .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close

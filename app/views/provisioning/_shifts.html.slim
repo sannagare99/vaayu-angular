@@ -1,0 +1,32 @@
+#shifts.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    a.reload-button  Reload
+    table#shifts-table.table.table-hover.table-no-modal.table-bordered[style="width: 100%;"]
+      thead
+        tr
+          th
+            | Name
+          th
+            | Start Time
+          th
+            | End Time
+          th
+            | Status
+          th
+            | Action
+      tbody
+
+#modal-shift-deactive-warning.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | x
+        h4.modal-title
+          | Deactivation Warning
+      .modal-body
+        p Upcoming trips are depends on this shift.
+      .modal-footer
+        button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+          | Close

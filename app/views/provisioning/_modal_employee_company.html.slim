@@ -1,0 +1,20 @@
+#modal-employee-company.modal.fade.modal-employees.modal-inputs[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Add a New Employee Company
+      .modal-body
+        .row.vertical-align
+          em
+            | All fields are mandatory.
+        .row
+          .col-md-4
+            input.form-control[type="text" name="name" placeholder=" Name"]
+      .modal-footer
+        button.btn.btn-default[type="button" data-dismiss="modal"]
+          | Close
+        button.btn.btn-primary.submit-modal[type="button"]
+          | Save changes

@@ -1,0 +1,18 @@
+#stats-completed-trips.stats-panel.panel.panel-animated.panel-default.bg-primary.border-primary
+  .panel-heading.bg-transparent.no-border
+    h3.text-center
+      a[href="#" data-toggle="modal" data-target="#stats-completed-trips-modal"]
+        | Completed Trips
+  ul.list-group.bg-primary
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@completed_trips_data[:total_mileage]} km
+      |  Total Distance
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@completed_trips_data[:mileage_per_trip]} km
+      |  Distance per Trip
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@completed_trips_data[:duration_per_trip]}
+      |  Duration per Trip

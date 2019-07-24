@@ -1,0 +1,52 @@
+.col-md-8
+  div
+  	.col-md-12
+      div.col-md-12[style="padding:10px 0px"]
+      	p.route_form_label
+          | ROUTE NAME
+        - if !@bus_trip.blank?
+          input.col-md-3#route_name[placeholder="*Route Name" style="height:30px" value="#{@bus_trip.route_name}"]
+        -else
+          input.col-md-3#route_name[placeholder="*Route Name" style="height:30px"]
+
+      - if !@bus_trip_routes.blank?
+      	div.col-md-12#bus_stops[style="padding-left:0px"]
+      	  - @bus_trip_routes.each_with_index do |bus_trip_route, i|	      
+	      	div.col-md-12[style="padding:10px 0px"]
+	      	  div.col-md-1[style="padding:18px 0px 0px 0px"]
+	      	    div[style="border-radius:15px; height: 30px; width:30px; background-color:#2b3152"]
+	      	  	  p[style="color:white; position:relative; text-align:center; top:5px;"]
+	      	  	    | #{i + 1}
+	      	  div.col-md-4[style="padding:0px"]
+	      	    p.route_form_label
+	              | "STOP ##{i + 1} NAME"
+	      	    input.col-md-12[placeholder="*Stop ##{i + 1} Name" style="height:30px" value="#{bus_trip_route.stop_name}" id="#stop_#{i + 1}_name"]
+	      	  div.col-md-7[style="padding-left:10px"]
+	      	    p.route_form_label
+	              | STOP ##{i + 1} ADDRESS
+	      	    input.col-md-12[placeholder="*Stop ##{i + 1} Address" style="height:30px" value="#{bus_trip_route.stop_address}" id="#stop_#{i + 1}_address"]  
+      -else
+        div.col-md-12#bus_stops[style="padding-left:0px"]
+      	  div.col-md-12[style="padding:10px 0px"]
+      	    div.col-md-1[style="padding:18px 0px 0px 0px"]
+      	      div[style="border-radius:15px; height: 30px; width:30px; background-color:#2b3152"]
+      	  	    p[style="color:white; position:relative; text-align:center; top:5px;"]
+      	  	      | 1
+      	    div.col-md-4[style="padding:0px"]
+      	      p.route_form_label
+                | STOP #1 NAME
+      	      input.col-md-12#stop_1_name[placeholder="*Stop #1 Name" style="height:30px" value=""]
+      	    div.col-md-7[style="padding-left:10px"]
+      	      p.route_form_label
+                | STOP #1 ADDRESS
+      	      input.col-md-12#stop_1_address[placeholder="*Stop #1 Address" style="height:30px" value=""]
+
+      div.col-md-12.col-md-offset-1[style="padding-top:10px"]
+        - if !@bus_trip_routes.blank?
+      	  button.btn.btn-primary#add-stop[style="width:150px" data-bus_trip_routes=@bus_trip_routes.size]
+      	    | Add Stop
+      	-else
+      	  button.btn.btn-primary#add-stop[style="width:150px" data-bus_trip_routes=1]
+      	    | Add Stop
+.col-md-4
+  #map-bus-trip.map[style="width: 100%; height: 435px;"]

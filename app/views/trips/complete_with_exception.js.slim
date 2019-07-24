@@ -1,0 +1,5 @@
+| $("#m-operator-complete-with-exception").html('');
+| $("#m-operator-complete-with-exception").html('
+= j render :partial => 'trips/modals/complete_with_exception',:locals => {:trip => @trip, :employee_trips => @employee_trips, :notification => @notification, :driver_id => @driver_id, :book_ola => @book_ola}
+| ');
+| $("#complete-with-exception").modal('show');

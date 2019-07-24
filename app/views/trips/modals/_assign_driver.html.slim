@@ -1,0 +1,123 @@
+#modal-operator-available-drivers.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header        
+        h4.modal-title
+          .text-left.helper-inline
+            | Drivers
+          .helper-inline.text-center[style="left:0; right: 0; margin:auto; position:fixed"]
+            .helper-inline.bg-white.driver-nav-button#match-drivers[data-trip-id='#{trip.id}']
+              | Match          
+            .helper-inline.bg-cloud.driver-nav-button#available-drivers[data-trip-id='#{trip.id}']
+              | Available
+            .helper-inline.bg-cloud.driver-nav-button#all-drivers[data-trip-id='#{trip.id}']
+              | All
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+
+      .modal-body[style="overflow:scroll; height:400px"]
+        .table-responsive
+          table.table.table-bordered#assign-driver-table[data-trip-id='#{trip.id}']
+            thead
+              tr
+                th
+                  | Plate Number
+                th
+                  | Driver
+                th
+                  | Operator
+                th[style="width: 10%;"]
+                  | Seats
+                th
+                  | ETA to First Pickup
+                th
+                  | Status                  
+                th[style="width: 10%;"]
+                  | Assign
+            tbody#all-drivers-div.hidden
+              - drivers.each_with_index do |driver, i|
+                - can_select = can_select_vehicle(driver, emp_count)
+                tr[data-assign-driver-id="#{driver.id}" data-last-paired-vehicle="#{@driver_last_paired_vehicle[driver.id]}" class="select-#{can_select}"]
+                  td
+                    |#{@driver_last_paired_vehicle[driver.id]}
+                  td                 
+                    |#{driver.f_name} #{driver.l_name}
+                    a#call-person[href="#" data-number='#{driver.phone}' style="margin-top:2px; margin-left:6px; position:relative"]
+                      = inline_svg 'phone.svg', class: 'text-primary'
+                  td
+                    |#{driver.logistics_company.name}
+                  td
+                    |#{driver&.vehicle&.seats}
+                  td
+                    | --
+                  td
+                    |#{@driver_status[driver.id]}
+                  -if driver&.status == "on_duty" && driver&.vehicle&.status == 'vehicle_ok' && can_select
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary
+                        input[type="radio" name="assign_driver_id" id="all-drivers-r-#{driver.id}" value="#{driver.id}" data-driver-status='on_duty' data-vehicle-status='vehicle_ok']
+                        label[for="all-drivers-r-#{driver.id}"]
+                  -else
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary.disabled
+                        input[type="radio" name="assign_driver_id" id="all-drivers-r-#{driver.id}" value="#{driver.id}" ]
+                        label[for="all-drivers-r-#{driver.id}" class="select-#{can_select}"]
+            tbody#available-drivers-div.hidden
+              - @available_drivers.each_with_index do |driver, i|
+                - can_select = can_select_vehicle(driver, emp_count)
+                tr[data-assign-driver-id="#{driver.id}" data-last-paired-vehicle="#{@driver_last_paired_vehicle[driver.id]}" class="select-#{can_select}"]
+                  td
+                    |#{@driver_last_paired_vehicle[driver.id]}
+                  td                 
+                    |#{driver.f_name} #{driver.l_name}
+                    a#call-person[href="#" data-number='#{driver.phone}' style="margin-top:2px; margin-left:6px; position:relative"]
+                      = inline_svg 'phone.svg', class: 'text-primary'
+                  td
+                    |#{driver.logistics_company.name}
+                  td
+                    |#{driver&.vehicle&.seats}
+                  td
+                    | --
+                  td
+                    |#{@driver_status[driver.id]}
+                  -if driver&.status == "on_duty" && driver&.vehicle&.status == 'vehicle_ok' && can_select
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary
+                        input[type="radio" name="assign_driver_id" id="available-drivers-r-#{driver.id}" value="#{driver.id}" data-driver-status='on_duty' data-vehicle-status='vehicle_ok']
+                        label[for="available-drivers-r-#{driver.id}"]
+                  -else
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary.disabled
+                        input[type="radio" name="assign_driver_id" id="available-drivers-r-#{driver.id}" value="#{driver.id}" class="select-#{can_select}"]
+                        label[for="available-drivers-r-#{driver.id}" class="select-#{can_select}"]
+            tbody#match-drivers-div
+              - @match_drivers.each_with_index do |driver, i|
+                - can_select = can_select_vehicle(driver, emp_count)
+                tr[data-assign-driver-id="#{driver.id}" data-last-paired-vehicle="#{@driver_last_paired_vehicle[driver.id]}" class="select-#{can_select}"]
+                  td
+                    |#{@driver_last_paired_vehicle[driver.id]}
+                  td                 
+                    |#{driver.f_name} #{driver.l_name}
+                    a#call-person[href="#" data-number='#{driver.phone}' style="margin-top:2px; margin-left:6px; position:relative"]
+                      = inline_svg 'phone.svg', class: 'text-primary'
+                  td
+                    |#{driver.logistics_company.name}                      
+                  td
+                    |#{driver&.vehicle&.seats}
+                  td
+                    |#{@drivers_match_eta[i]}
+                  td
+                    |#{@driver_status[driver.id]}
+                  -if driver&.status == "on_duty" && driver&.vehicle&.status == 'vehicle_ok' && can_select
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary
+                        input[type="radio" name="assign_driver_id" id="match-drivers-r-#{driver.id}" value="#{driver.id}" data-driver-status='on_duty' data-vehicle-status='vehicle_ok']
+                        label[for="match-drivers-r-#{driver.id}"]
+                  -else
+                    td.text-center.text-primary.radio-row
+                      .nice-radio.text-primary.disabled
+                        input[type="radio" name="assign_driver_id" id="match-drivers-r-#{driver.id}" value="#{driver.id}" class="select-#{can_select}"]
+                        label[for="match-drivers-r-#{driver.id}" class="select-#{can_select}"]                        
+      .modal-footer
+        a.btn.btn-sm.btn-primary.disabled-default#assign-roster-confirm[href="#"]
+          | Dispatch

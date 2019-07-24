@@ -1,0 +1,6 @@
+| $("#transport-desk-managers .table-content-edit").html('');
+| $("#transport-desk-managers .table-content-edit").html('
+= j render partial: 'transport_desk_managers/form', locals: { url: transport_desk_manager_path, action: "PUT" }
+| ');
+| datepickerInit();
+| initSelectbox();

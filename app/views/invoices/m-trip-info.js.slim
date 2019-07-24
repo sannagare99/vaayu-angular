@@ -1,0 +1,5 @@
+| $("#m-trip-info").html('');
+| $("#m-trip-info").html('
+= j render :partial => 'trips/modals/modal_trip_info',:locals => {:trip => @trip, :employee_trips => @employee_trips, :notification => @notification, :driver => @driver, :vehicle => @vehicle}
+| ');
+| $("#modal-trip-info").modal('show');

@@ -1,0 +1,50 @@
+#stats-exeptions-compliance-modal.html.slim-modal.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog[style="width: 60%;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Exeptions Compliance
+      .modal-body
+        .row.no-margin       
+          .col-sm-12
+            #stats-exceptions.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Exceptions
+                ul.list-percentages.row
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Panic
+                    strong
+                      | #{@exceptions[:panic]}
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Not On Board
+                    strong
+                      | #{@exceptions[:not_on_board]}
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Still On Board
+                    strong
+                      | #{@exceptions[:still_on_board]}
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Driver No Show
+                    strong
+                      | #{@exceptions[:driver_no_show]}
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Car Broke Down
+                    strong
+                      | #{@exceptions[:car_broke_down]}
+                  li.col-xs-2
+                    p.stat-label.text-ellipsis
+                      | Employee No Show
+                    strong
+                      | #{@exceptions[:employee_no_show]}                                            
+                p.helper-block
+      .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close

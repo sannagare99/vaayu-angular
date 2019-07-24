@@ -1,0 +1,40 @@
+#employees.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    a.reload-button  Reload
+    table#employees-table.table.table-hover.table-no-modal.table-bordered[style="width: 100%;"]
+      .search-section
+        input#employees-table-search-input.form-control.string name="user[search_text]" type="text" /
+        select#employees-table-field-name.form-control.select name="field_name"
+          option value="name"  Name
+          option value="email"  Email
+          option value="phone"  Phone
+          option value="gender"  Gender
+          option value="home_address"  Address
+          option value="zone"  Zone
+          option value="line_manager"  Line Manager
+          option value="employee_id"  Employee ID
+        a#employees-table_search.btn.btn-sm href="#"
+          i.fa.fa-search aria-hidden="true"
+      thead
+        tr
+          th
+            | ID#
+          th
+            | Name
+          th
+            | Shifts
+          th
+            | Contact Number
+          th
+            | Sex
+          th
+            | Address
+          th
+            | Status
+          th
+            | Action
+      tbody
+
+script type="text/javascript"
+  | var shiftsCollection = #{Shift.all.to_json.html_safe}

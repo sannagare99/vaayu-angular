@@ -1,0 +1,5 @@
+| $("#m-operator-unassigned-rosters").html('');
+| $("#m-operator-unassigned-rosters").html('
+= j render :partial => 'trips/modals/unassigned_rosters',:locals => {:trip => @trip,:employee_trips => @employee_trips}
+| ');
+| $("#modal-operator-unassigned-rosters").modal('show');

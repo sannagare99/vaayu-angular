@@ -1,0 +1,34 @@
+#shift-fleet-utilisation-summary.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#shift-fleet-utilisation-summary-picker[class="form-control" type="text" name="shift-fleet-utilisation-summary-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'shift_fleet_utilisation_summaries')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-shift-fleet-utilisation-summary-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Date
+          th
+            | Shift Time
+          th
+            | Direction
+          th
+            | Vehicle Deployed
+          th
+            | Total Capacity
+          th
+            | Planned Capacity
+          th
+            | Actual Capacity
+          th
+            | Load Factor
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'shift_fleet_utilisation_summaries'}

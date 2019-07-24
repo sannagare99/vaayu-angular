@@ -1,0 +1,30 @@
+| var line_manager_id = "#{@line_manager.id}";
+| $("#modal-wrap").html('');
+| $("#modal-wrap").html('
+= j render :partial => 'line_managers/modal_employee_list', locals: { line_manager: @line_manager, employees: @employees}
+| ');
+| $("#modal-employee-list").modal('show');
+
+| $(".employee-select-check").on("click", function(){
+|   selectEmployeeCheckbox($(this));
+| });
+
+| $(".employee-select-all").on("click", function() {
+|   isChecked = $(this).is(":checked");
+|   $.each($(".employee-select-check"), function(i, val){
+|     selectEmployeeCheckbox($(val), isChecked);
+|   });
+| });
+
+| $("#employee_list_search").on("keyup", function() {
+|   reloadEmployeeList($(this).val());
+| });
+
+| var initCheckboxSelectors = ".line_manager_employee_line_manager_id input[value='" + line_manager_id + "']";
+| $.each($(initCheckboxSelectors), function(i, e) {
+|   selectEmployeeCheckbox($(e).closest("td").find(".employee-select-check"), true);
+| });
+
+| $('#employee-list').on('submit', function() {
+|   $("#modal-employee-list").modal('toggle');
+| });

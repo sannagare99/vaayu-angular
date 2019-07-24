@@ -1,0 +1,5 @@
+| $("#m-operator-book-ola-uber").html('');
+| $("#m-operator-book-ola-uber").html('
+= j render :partial => 'trips/modals/book_ola_uber',:locals => {:trip => @trip, :driver_id => @driver_id, :employee_trips => @employee_trips, :show_cost => false}
+| ');
+| $("#book-ola-uber-modal").modal('show');

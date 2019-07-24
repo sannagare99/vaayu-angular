@@ -1,0 +1,6 @@
+| $("#devices .table-content-edit").html('');
+| $("#devices .table-content-edit").html('
+= j render partial: 'devices/form', locals: { url: devices_path, action: "POST" }
+| ');
+| datepickerInit();
+| initSelectbox();

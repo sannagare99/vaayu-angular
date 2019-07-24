@@ -1,0 +1,140 @@
+.timeline-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  bottom: 0;
+  display: flex;
+  background: #fff;
+  > div {
+    margin: auto;
+  }
+}
+
+.vis-item {
+  padding: 0 18px;
+  border: 0;
+  border-radius: 3px;
+  color: #42496c;
+  background-color: #ecf0f1;
+  &.active-trip, &.resolved-trip {
+    background-color: #00a69c;
+  }
+
+  &.completed-trip {
+    background-color: #bdc3c7;
+  }
+
+  &.error-trip {
+    background-color: #DA4F49;
+  }
+
+  &.warning-trip {
+    background-color: #ed9c28;
+  }
+
+  &.active-trip a, &.resolved-trip a, &.error-trip a,
+  &.warning-trip a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &.assign_requested-trip a, &.completed-trip a, 
+  &.assigned-trip a, &.assign_requested-trip a, 
+  &.assign_request_expired-trip a {
+    color: #3D3B3B;
+    text-decoration: none;
+  }
+
+  &.assign_request_expired-trip,
+  &.assign_request_declined-trip {
+    color: #3D3B3B;
+    background-color: #ecf0f1;
+  }
+
+  .vis-item-content {
+    padding: 0;
+  }
+
+  .vis-range {
+    border-radius: 3px;
+  }
+}
+
+.vis-labelset {
+  .vis-label {
+    line-height: 2;
+    border-color: #e0e4e8;
+
+    .vis-inner {
+      height: 35px;
+      font-weight: 600;
+    }
+  }
+}
+
+.vis-timeline {
+  border: 0;
+}
+
+.vis-foreground .vis-group {
+  border: 0;
+}
+
+.vis-current-time {
+  top: 53px !important;
+  z-index: 0;
+  width: 3px;
+  background-color: #979797;
+}
+
+.vis-panel.vis-center,
+.vis-panel.vis-left,
+.vis-panel.vis-right,
+.vis-panel.vis-top,
+.vis-panel.vis-bottom {
+  border: 0;
+}
+
+.vis-panel {
+
+  &.vis-left {
+    background: #fff;
+    border: 1px solid #e0e4e8;
+  }
+
+  &.vis-top {
+    border-bottom: solid 3px #979797;
+  }
+}
+
+.vis-time-axis {
+  .vis-today,
+  .vis-tomorrow,
+  .vis-yesterday,
+  .vis-current-week,
+  .vis-current-month,
+  .vis-current-year {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    color: #42496c;
+  }
+}
+
+.vis-background.vis-vertical,
+.vis-panel.vis-center,
+.vis-panel.vis-top {
+  margin-left: 17px;
+}
+
+.vis-time-axis {
+  .vis-grid {
+    &.vis-minor,
+    &.vis-major {
+      border: 0;
+    }
+  }
+}

@@ -1,0 +1,71 @@
+.modal-dialog[style="width: 100%; max-width: 800px;"]
+  .modal-content
+    .modal-header
+      button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+        | ×
+      h4.modal-title
+        -if trip.check_in?
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} IN #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+          -else
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} OUT #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+    .modal-body
+      .row
+        .col-sm-6
+          .card
+            .card-body
+              table.table.table-bordered.employee-trip-info-table
+                thead
+                  tr
+                    th
+                      | Employee
+                    th.text-center
+                      | ETA
+                    th.text-center
+                      | Call
+                tbody
+                  - employee_trips.each do |employee_trip|
+                    tr
+                      td
+                        span.employee-name
+                          | #{employee_trip.employee.f_name} #{employee_trip.employee.l_name}
+                      td.text-center
+                        | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                      td.text-center
+                        a#call-person[href="#" data-number='#{employee_trip.employee.phone}']
+                          = image_tag 'phone.svg'
+            .card-footer
+              -if trip.check_in?
+                .card-footer-row
+                  span.cf-label
+                    | Check-in Time
+                  span.cf-label-value
+                    | #{employee_trips.minimum(:date)&.strftime("%I:%M%p")}
+                .card-footer-row
+                  span.cf-label
+                    | ETA
+                  span.cf-label-value
+                    | #{trip.approximate_trip_end_date&.strftime("%I:%M%p")}
+              -else
+                .card-footer-row
+                  span.cf-label
+                    | Check-out Time
+                  span.cf-label-value
+                    | #{employee_trips.maximum(:date)&.strftime("%I:%M%p")}
+        .col-sm-6
+          .card
+            .card-body
+              #map-trip-info[style="width: 100%; height: 250px;"]
+            .card-footer
+              .card-footer-row
+                span.cf-label
+                  | Duration
+                span
+                  | #{trip.scheduled_approximate_duration} min
+              .card-footer-row
+                span.cf-label
+                  | Distance
+                span
+                  | #{number_to_human(trip.scheduled_approximate_distance, units: :distance, precision: 2)}
+    .modal-footer
+      button#contact-operator.btn.btn-sm.btn-primary[type="button"]
+        | Contact Operator

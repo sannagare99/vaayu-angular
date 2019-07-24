@@ -1,0 +1,802 @@
+-if !trip.book_ola.blank? && (trip.status != 'completed' && trip.status != 'canceled') && (current_user.operator? || current_user.admin?)
+  = render :partial => 'trips/modals/book_ola_uber', :locals => {:trip => @trip, :employee_trips => @employee_trips, :submit => false, :notification => @notification, :show_cost => true}
+-else 
+  .modal-dialog[style="width: 80%; max-width: 1100px;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          -if trip.check_in?
+            | Trip# #{employee_trips&.first&.date&.strftime("%d/%m")} IN #{employee_trips&.first&.date&.strftime("%H:%M")} - #{trip.id}
+          -else
+            | Trip# #{employee_trips&.first&.date&.strftime("%d/%m")} OUT #{employee_trips&.first&.date&.strftime("%H:%M")} - #{trip.id}
+      .modal-body
+        .row
+          .col-sm-12.col-md-8
+            .card
+              .card-body[style="height:285px; overflow-y:scroll; overflow-x:hidden"]
+                table#trip-info-content-table.table.table-bordered.employee-trip-info-table[data-trip-id='#{trip.id}' style="border-bottom:1px solid #E0E4E8"]
+                  thead
+                    tr
+                      th[style="width:130px"]
+                        | Employee                      
+                      th
+                        | Sex                      
+                      th
+                        | Address
+                      - if trip.check_in?
+                        th
+                          | ETA
+                        - if !trip.assign_requested? && !trip.assign_request_expired? && !trip.assigned?
+                          th
+                            | Arrival
+                          th
+                            | On Board
+                        th
+                          | Start Shift
+                      -else
+                        - if !trip.assign_requested? && !trip.assign_request_expired? && !trip.assigned?
+                          th
+                            | On Board
+                        th
+                          | ETA
+                        - if !trip.assign_requested? && !trip.assign_request_expired? && !trip.assigned?
+                          th
+                            | Arrival
+                      - if trip.assign_requested? || trip.assigned? || trip.assign_request_expired?
+                        th.text-center
+                          | Delete
+                  tbody
+                    - if trip.assign_requested? || trip.assign_request_expired?
+                      -if trip.check_in?
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}                            
+                            
+                            -if employee_trip&.trip_route&.scheduled_route_order != employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                            -else
+                              -if index == 0
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                                td.text-center colspan="1" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                  -if employee_trip.planned_eta.blank?
+                                    | --
+                                  -else
+                                    | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                              -else
+                                td[style="display:none"]
+                                td[style="display:none"]
+
+
+                            td.text-center
+                              | #{employee_trip.date&.strftime("%I:%M%p")}
+                            td.text-danger.text-center.hand-cursor[id="action-item-#{employee_trip.id}" data-employee-trip-id='#{employee_trip.id}']
+                              | Delete
+
+                      -else
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}
+                            
+                            -if employee_trip&.trip_route&.scheduled_route_order != employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                            -else
+                              -if index == 0
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                                td.text-center colspan="1" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                  -if employee_trip.planned_eta.blank?
+                                    | --
+                                  -else
+                                    | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                              -else
+                                td[style="display:none"]
+                                td[style="display:none"]
+                            
+                            td.text-danger.text-center.hand-cursor[id="action-item-#{employee_trip.id}" data-employee-trip-id='#{employee_trip.id}']
+                              | Delete
+
+                    -elsif trip.assigned?
+                      -if trip.check_in?
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}
+                            -if employee_trip&.trip_route&.scheduled_route_order != employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                            -else
+                              -if index == 0
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                                td.text-center colspan="1" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                  -if employee_trip.planned_eta.blank?
+                                    | --
+                                  -else
+                                    | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                              -else
+                                td[style="display:none"]
+                                td[style="display:none"]
+
+                            td.text-center
+                              | #{employee_trip.date&.strftime("%I:%M%p")}
+                            td.text-danger.text-center.hand-cursor[id="action-item-#{employee_trip.id}" data-employee-trip-id='#{employee_trip.id}']
+                              | Delete
+                      -else
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}
+                            -if employee_trip&.trip_route&.scheduled_route_order != employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                              td.text-center colspan="1" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                            -else
+                              -if index == 0
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                                td.text-center colspan="1" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}'
+                                  -if employee_trip.planned_eta.blank?
+                                    | --
+                                  -else
+                                    | #{employee_trip.planned_eta&.strftime("%I:%M%p")}
+                              -else
+                                td[style="display:none"]
+                                td[style="display:none"]
+                            td.text-danger.text-center.hand-cursor[id="action-item-#{employee_trip.id}" data-employee-trip-id='#{employee_trip.id}']
+                              | Delete
+                    -else
+                      -if trip.check_in?
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}
+                            -if index == 0
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                            -else
+                              -if employee_trip&.trip_route&.scheduled_route_order == employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                                td[style="display:none"]
+                              -else
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                            -if @eta_mapping[employee_trip.employee.id].nil?
+                              td[style="display:none"]
+                              td[style="display:none"]
+                            -else
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}' colspan="1"
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}  
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}' colspan="1"
+                                -if employee_trip.actual_time.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.actual_time}
+                            end
+                            -if !@status_mapping[employee_trip.employee.id].nil?
+                              -if employee_trip.trip_route.cancel_exception? && employee_trip.trip_route.cab_fare.blank?
+                                td.text-center
+                                  select.text-danger#exception-status.form-control.selectboxit[placeholder="false" name="exception-status" style="border:0px" data-employee_trip_id='#{employee_trip.id}' data-route_id='#{employee_trip.trip_route.id}']
+                                    -if employee_trip.trip_route.status == 'canceled'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[selected value="canceled"]
+                                        | Canceled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'missed'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[selected value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Canceled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'exception'
+                                      option[selected value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Canceled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'on_board'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Canceled                                      
+                                      option[selected value="on_board"]
+                                        | Picked Up
+                              -else
+                                td.text-center.text-red colspan="1"
+                                  | #{@status_mapping[employee_trip.employee.id]}                       
+                            -else
+                              td.text-center colspan="1"                              
+                                -if employee_trip.onboard_time.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.onboard_time}
+                            td.text-center
+                              | #{employee_trip.date&.strftime("%I:%M%p")}
+
+                      -else
+                        - employee_trips.each_with_index do |employee_trip, index|
+                          tr
+                            td class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'bg-notification' : '')
+                              div class=(@notification != nil && @notification.employee_id == employee_trip.employee.id && (@notification.message == 'panic' || @notification.message == 'employee_no_show' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'employee_changed_trip' || @notification.message == 'female_exception_female_removed')? 'call-div bg-danger' : 'call-div bg-primary') style="display:inline-block; line-height:20px"
+                                a#call-person[href="#" data-number='#{employee_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                                  = image_tag 'phone.svg'
+                              span[class="" style="padding-left:10px"]
+                                | #{employee_trip.employee&.f_name} #{employee_trip.employee&.l_name}
+                            td.text-center
+                              | #{employee_trip.employee.gender.to_s.first.capitalize}
+                            -if index == 0
+                              td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                | #{employee_trip.pick_up_address}
+                            -else
+                              -if employee_trip&.trip_route&.scheduled_route_order == employee_trips[index - 1]&.trip_route&.scheduled_route_order
+                                td[style="display:none"]
+                              -else
+                                td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}']
+                                  | #{employee_trip.pick_up_address}
+                            -if !@status_mapping[employee_trip.employee.id].nil?
+                              -if employee_trip.trip_route.cancel_exception? && employee_trip.trip_route.cab_fare.blank?
+                                td.text-center
+                                  select.text-danger#exception-status.form-control.selectboxit[placeholder="false" name="exception-status" style="border:0px" data-employee_trip_id='#{employee_trip.id}' data-route_id='#{employee_trip.trip_route.id}']
+                                    -if employee_trip.trip_route.status == 'canceled'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[selected value="canceled"]
+                                        | Canceled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'missed'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[selected value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Cancelled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'exception'
+                                      option[selected value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Canceled
+                                      option[value="on_board"]
+                                        | Picked Up
+                                    -elsif employee_trip.trip_route.status == 'on_board'
+                                      option[value="exception"]
+                                        | CWE
+                                      option[value="missed"]
+                                        | No Show
+                                      option[value="canceled"]
+                                        | Canceled
+                                      option[selected value="on_board"]
+                                        | Picked Up
+                              -else
+                                td.text-center.text-red colspan="1"
+                                  | #{@status_mapping[employee_trip.employee.id]}
+                            -else
+                              td.text-center colspan="1"                              
+                                -if employee_trip.trip_route.on_board_date.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.trip_route.on_board_date&.strftime("%I:%M%p")}
+                            -if @eta_mapping[employee_trip.employee.id].nil?
+                              td[style="display:none"]                              
+                            -else
+                              td.text-center rowspan='#{@address_mapping[employee_trip&.trip_route&.scheduled_route_order].size}' colspan="1"
+                                -if employee_trip.planned_eta.blank?
+                                  | --
+                                -else
+                                  | #{employee_trip.planned_eta&.strftime("%I:%M%p")}                                
+                            td.text-center colspan="1"
+                              -if employee_trip.actual_time.blank?
+                                | --
+                              -else
+                                | #{employee_trip.actual_time}                            
+
+
+
+
+
+
+
+                      
+
+
+                    
+          .col-sm-6.col-md-4#trip-board-map-info[style="visibility:hidden; z-index:0; position:fixed"]
+            .card
+              .card-body
+                #map-trip-info[style="width: 100%; height: 250px;"]
+              .card-footer[style="padding:0px"]
+                button#close-map.btn.btn-inverse[type="button" style="width:100%"]
+                    | CLOSE MAP
+          .col-sm-6.col-md-4#trip-board-driver-info[style="z-index:1; position:relative"]
+            .card
+              .card-body
+                -if @driver.present?
+                  div[style="border-bottom:1px solid #bfbfbf; position:relative"]
+                    div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'driver_didnt_accept_trip' || @notification.message == 'trip_should_start' || @notification.message == 'trip_not_started' || @notification.message == 'female_exception_driver_unassigned' || @notification.message == 'car_break_down_driver_unassigned')) || (trip.assign_request_expired?)? 'bg-notification notification-div' : '')
+                    div class=(@notification != nil && @notification.driver_id != '' && (@notification.message == 'on_leave' || @notification.message == 'on_leave_trip' || @notification.message == 'out_of_geofence_check_in' || @notification.message == 'out_of_geofence_drop_off' || @notification.message == 'out_of_geofence_driver_arrived' || @notification.message == 'out_of_geofence_missed' || @notification.message == 'out_of_geofence_check_in_site' || @notification.message == 'out_of_geofence_drop_off_site' || @notification.message == 'out_of_geofence_driver_arrived_site' || @notification.message == 'out_of_geofence_missed_site' || @notification.message == 'female_exception_route_resequenced' || @notification.message == 'employee_no_show_approved')? 'bg-notification-yellow notification-div' : '')
+                    div class=(@notification != nil && @notification.driver_id != '' && (@notification.message == 'car_break_down') ? 'bg-notification notification-div-vehicle' : '')
+                    div[style="padding: 17px 20px; position:relative; z-index:10"]
+                      div[style="margin-bottom:17px; height:50px; display:flex"]                        
+                        .small-image[style="background: url(#{@driver.avatar.url(:large)}) center no-repeat; background-size: cover; float: left; display:table-cell"]
+                          div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'driver_didnt_accept_trip' || @notification.message == 'trip_should_start' || @notification.message == 'trip_not_started' || @notification.message == 'female_exception_driver_unassigned' || @notification.message == 'car_break_down_driver_unassigned')) || (trip.assign_request_expired?)? 'call-div bg-danger' : 'call-div bg-primary') style="margin: 30px 0px 0px 30px; display:inline-block"
+                            .driver-call
+                              a#call-person[href="#" data-number='#{@driver.phone}' style="position:relative; left:3px; top:3px"]
+                                = inline_svg 'phone.svg', class: 'call'
+                        div[style="margin:4px 0px 7px 16px; float:left; display:table-cell; width:100%"]
+                          - if trip.assign_requested?
+                            div
+                              p.driver-name.cf-label[style="display:inline-block; max-width:40%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                                | #{@driver.f_name} #{@driver.l_name}
+                              p.driver-name[style="color:grey; padding-left:5px; font-size:10px; display:inline-block; vertical-align:top"]
+                                | (pending)
+                              -if current_user.operator? || current_user.admin?
+                                p#change-driver.driver-name.text-teal[style="font-size:10px; display:inline-block; float:right; cursor:pointer" data-trip_id='#{trip.id}' data-dismiss="modal"]
+                                  | Change Driver
+                          - if trip.assign_request_expired?
+                            div
+                              p.driver-name.cf-label[style="display:inline-block; max-width:40%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                                | #{@driver.f_name} #{@driver.l_name}
+                              p.driver-name[style="color:grey; padding-left:5px; font-size:10px; display:inline-block; vertical-align:top"]
+                                | (expired)
+                              -if current_user.operator? || current_user.admin?
+                                p#change-driver.driver-name.text-teal[style="font-size:10px; display:inline-block; cursor:pointer; float:right" data-trip_id='#{trip.id}' data-dismiss="modal"]
+                                  | Change Driver
+                          - if trip.assigned?
+                            div
+                              p.driver-name.cf-label[style="display:inline-block; max-width:40%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                                | #{@driver.f_name} #{@driver.l_name}
+                              -if current_user.operator? || current_user.admin?
+                                p#change-driver.driver-name.text-teal[style="font-size:10px; display:inline-block; cursor:pointer; float:right" data-trip_id='#{trip.id}' data-dismiss="modal"]
+                                  | Change Driver
+                          -if !trip.assign_requested? && !trip.assign_request_expired? && !trip.assigned?
+                            div
+                              p.driver-name.cf-label[style="display:inline-block"]
+                                | #{@driver.f_name} #{@driver.l_name}                              
+                          div.driver-name
+                            | #{@driver.licence_number}
+                      div[style="margin-bottom:10px; height:50px; padding-top:7px; display:flex"]
+                        -if !@vehicle.blank?
+                          .small-image[style="background: url(#{@vehicle.photo.url(:medium)}) center no-repeat; background-size: cover; float: left; display:inline-table"]
+                            div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'car_break_down'))? 'call-div bg-danger' : 'call-div bg-primary') style="margin: 30px 0px 0px 30px; display:inline-block; visibility:hidden"
+                              .driver-call
+                                a#call-person[href="#" style="position:relative; left:3px; top:3px"]
+                                  = inline_svg 'phone.svg', class: 'call'
+                        -else
+                          .small-image[style="background: center no-repeat; background-size: cover; float: left; display: inline-table"]
+                            div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'car_break_down'))? 'call-div bg-danger' : 'call-div bg-primary') style="margin: 30px 0px 0px 30px; display:inline-block; visibility:hidden"
+                              .driver-call
+                                a#call-person[href="#" style="position:relative; left:3px; top:3px"]
+                                  = inline_svg 'phone.svg', class: 'call'
+                        div[style="margin:4px 0px 7px 16px; float:left; display:table-cell; width:100%"]
+                          - if @vehicle.present?
+                            div
+                              p.driver-name.cf-label[style="display:inline-block; max-width:60%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                                | #{@vehicle.make} #{@vehicle.model}
+                              -if current_user.operator? || current_user.admin?
+                                -if @vehicle.status == '' || @vehicle.status == 'vehicle_broke_down_pending' || @vehicle.status == 'vehicle_ok'
+                                  a#car_broke_down.driver-name.text-teal[href="provisioning#vehicles" style="font-size:10px; display:inline-block; float:right; cursor:pointer" data-trip_id='#{trip.id}']
+                                    | Car Broke Down
+                                -else
+                                  a#car_broke_down.driver-name.text-teal[href="provisioning#vehicles" style="font-size:10px; display:inline-block; float:right; cursor:pointer" data-trip_id='#{trip.id}']
+                                    | Car OK
+                          div.driver-name
+                            - if @vehicle.present?
+                              | #{@vehicle.plate_number}
+                -else
+                  div[style="border-bottom:1px solid #bfbfbf; position:relative"]
+                    div[style="padding: 17px 20px; position:relative; z-index:10"]
+                      div[style="margin-bottom:17px; height:50px; display:flex"]                        
+                        .small-image[style="background: center no-repeat; background-size: cover; float: left; display:table-cell"]
+                          div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'car_break_down' || @notification.message == 'driver_didnt_accept_trip' || @notification.message == 'trip_should_start' || @notification.message == 'trip_not_started' || @notification.message == 'female_exception_driver_unassigned' || @notification.message == 'car_break_down_driver_unassigned')) || (trip.assign_request_expired?)? 'call-div bg-danger' : 'call-div bg-primary') style="margin: 30px 0px 0px 30px; display:inline-block"
+                            .driver-call
+                              a#call-person[href="#" style="position:relative; left:3px; top:3px"]
+                                = inline_svg 'phone.svg', class: 'call'
+                        div[style="margin:4px 0px 7px 16px; float:left; display:table-cell; width:100%"]
+                          div
+                            p.driver-name.cf-label[style="display:inline-block; max-width:40%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                              | N/A
+                            -if current_user.operator? || current_user.admin?
+                              p#change-driver.driver-name.text-teal[style="font-size:10px; display:inline-block; float:right; cursor:pointer" data-trip_id='#{trip.id}' data-dismiss="modal"]
+                                | Assign Driver                          
+                          div.driver-name
+                            | N/A
+                      div[style="margin-bottom:10px; height:50px; padding-top:7px; display:flex"]
+                        .small-image[style="background: center no-repeat; background-size: cover; float: left; display: table-cell"]
+                          div class=((@notification != nil && @notification.driver_id != '' && (@notification.message == 'car_break_down' || @notification.message == 'driver_didnt_accept_trip' || @notification.message == 'trip_should_start' || @notification.message == 'trip_not_started' || @notification.message == 'female_exception_driver_unassigned' || @notification.message == 'car_break_down_driver_unassigned')) || (trip.assign_request_expired?)? 'call-div bg-danger' : 'call-div bg-primary') style="margin: 30px 0px 0px 30px; display:inline-block; visibility:hidden"
+                            .driver-call
+                              a#call-person[href="#" style="position:relative; left:3px; top:3px"]
+                                = inline_svg 'phone.svg', class: 'call'
+                        div[style="margin:4px 0px 7px 16px; float:left; display:table-cell; width:100%"]
+                          div
+                            p.driver-name.cf-label[style="display:inline-block; max-width:60%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden"]
+                              | N/A                            
+                          div.driver-name
+                            | N/A
+                div
+                  div.row[style="padding: 12px 37px 0px"]
+                    -if trip.check_in?
+                      -if trip.status == 'completed' || trip.status == 'canceled'
+                        div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                          | Arrive on Site Time
+                      -else
+                        div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                          | Est. Arrive on Site Time                      
+                    -else
+                      -if trip.status == 'completed' || trip.status == 'canceled'
+                        div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                          | Trip End Time
+                      -else
+                        div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                          | Shift Logout Time
+                    -if trip.check_in?
+                      -if trip.status == 'completed' || trip.status == 'canceled'
+                        -if trip.completed_date == nil
+                          div.driver-name.no-margin[style="float:right"]
+                            | --
+                        -else
+                          div.driver-name.no-margin[style="float:right"]
+                            | #{trip.completed_date.strftime("%I:%M%p")}
+                      -else
+                        div.driver-name.no-margin[style="float:right"]
+                          | #{trip.planned_trip_end_date.strftime("%I:%M%p")}
+                    -else
+                      -if trip.status == 'completed' || trip.status == 'canceled'
+                        -if trip.completed_date == nil
+                          div.driver-name.no-margin[style="float:right"]
+                            | --
+                        -else
+                          div.driver-name.no-margin[style="float:right"]
+                            | #{trip.completed_date.strftime("%I:%M%p")}
+                      -else
+                        div.driver-name.no-margin[style="float:right"]
+                          | #{@employee_trips[0].date.strftime("%I:%M%p")}
+                    
+                  div.row[style="padding: 7px 37px 0px"]
+                    div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                      | Duration
+                    -if trip.status == 'completed' || trip.status == 'canceled'
+                      div.driver-name.no-margin[style="float:right"]
+                        | #{trip.real_duration} min
+                    -else
+                      div.driver-name.no-margin[style="float:right"]
+                        | #{trip.planned_approximate_duration} min
+                  div.row[style="padding: 7px 37px 0px"]
+                    div.driver-name.no-margin.modal-label[style="display:inline-block; float:left"]
+                      | Distance
+                    div.driver-name.no-margin[style="display:inline-block; float:right"]
+                      | #{number_to_human(trip.planned_approximate_distance, units: :distance, precision: 2)}
+              .card-footer[style="padding:0px"]
+                button#open-map.btn.btn-inverse.btn-large[type="button"]
+                  | OPEN MAP
+                
+      -if trip.cancel_status?                    
+        .row
+          .col-md-4[style="margin-left:15px" id="exception_text"]                    
+            label for="drivers-count" id="drivers-count" Reason for Exception: #{trip.cancel_status}
+      -if trip.ola_fare?                    
+        .row
+          .col-md-4[style="margin-left:15px"]                    
+            label Ola/Uber Fare: #{trip.ola_fare}          
+      .modal-footer
+        .notification-text#notification-text
+          -if !@notification.blank?
+            -if @notification.message == 'panic'              
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.employee.f_name} #{@notification.employee.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Panic
+              
+            -if @notification.message == 'employee_no_show'
+              .[style="display:inline-block"]
+                | Driver
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | Passenger 
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.employee.f_name} #{@notification.employee.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : No Show   
+
+            -if @notification.message == 'not_on_board'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.employee.f_name} #{@notification.employee.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : I am not onboard
+
+            -if @notification.message == 'still_on_board'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.employee.f_name} #{@notification.employee.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : I am still onboard            
+
+            -if @notification.message == 'driver_didnt_accept_trip'
+              .[style="display:inline-block"]
+                | Driver                
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Driver didn’t accept trip 
+
+            -if @notification.message == 'trip_should_start'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Driver didn’t start trip 
+             
+            -if @notification.message == 'out_of_geofence_check_in' || @notification.message == 'out_of_geofence_check_in_site'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Out of Geo-fence
+
+            -if @notification.message == 'out_of_geofence_drop_off' || @notification.message == 'out_of_geofence_drop_off_site'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Out of Geo-fence
+
+            -if @notification.message == 'out_of_geofence_driver_arrived' || @notification.message == 'out_of_geofence_driver_arrived_site'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Out of Geo-fence Driver Arrived
+
+            -if @notification.message == 'out_of_geofence_missed' || @notification.message == 'out_of_geofence_missed_site'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Out of Geo-fence Driver Missed              
+
+            -if @notification.message == 'car_break_down'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Car Break Down
+
+            -if @notification.message == 'car_broken_down'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification.driver.f_name} #{@notification.driver.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Car Broken Down
+
+            -if @notification.message == 'female_first_or_last_in_trip'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.employee&.f_name} #{@notification&.employee&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Female First or Last in Trip
+
+            -if @notification.message == 'employee_changed_trip'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.employee&.f_name} #{@notification&.employee&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Trip Change Request           
+
+            -if @notification.message == 'trip_not_started'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.driver&.f_name} #{@notification&.driver&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Trip not started
+
+            -if @notification.message == 'female_exception_driver_unassigned'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.driver&.f_name} #{@notification&.driver&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Unasigned due to Female Exception              
+
+            -if @notification.message == 'female_exception_female_removed'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.employee&.f_name} #{@notification&.employee&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Female Exception: Employee removed from active Trip
+
+            -if @notification.message == 'car_break_down_driver_unassigned'
+              .[style="display:inline-block"]
+                | Driver                              
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.driver&.f_name} #{@notification&.driver&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Car Break Down: Driver Unassigned
+
+            -if @notification.message == 'female_exception_route_resequenced'
+              .[style="display:inline-block"]
+                | Passenger
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.employee&.f_name} #{@notification&.employee&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Female Exception: handled by re-sequencing
+
+            -if @notification.message == 'employee_no_show_approved'
+              .[style="display:inline-block"]
+                | Driver
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.driver&.f_name} #{@notification&.driver&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | Passenger 
+              .[style="font-weight:600; display:inline-block"]
+                | &nbsp#{@notification&.employee&.f_name} #{@notification&.employee&.l_name}&nbsp
+              .[style="display:inline-block"]
+                | : Employee No Show Approved
+                
+        button.btn.btn-sm.btn-primary.pull-right#save-exception-status[href="#" style="display:none; margin-left:10px"]
+          | Save Changes
+        a.btn.btn-sm.btn-default#annotate-modal[href="#" data-trip_id='#{trip.id}']
+          | Add Remarks        
+        -if submit
+          a.btn.btn-sm.btn-primary#assign-driver-submit[href="#" data-trip-id='#{trip.id}' data-driver-trip-id='#{@driver.id}' data-last-paired-vehicle='#{@last_paired_vehicle}']
+            | Submit
+          a.btn.btn-sm.btn-danger#assign-driver-change-driver.hidden[href="#" data-trip_id='#{trip.id}' data-dismiss="modal"]
+            | Change Driver
+          a.btn.btn-sm.btn-danger#assign-driver-continue.hidden[href="#" data-trip-id='#{trip.id}' data-driver-trip-id='#{@driver.id}']
+            | Continue
+        -if trip.book_ola.blank?
+          -if (trip.status == 'assigned' || trip.status == "active" || trip.status == "assign_requested" || trip.status == "assign_request_expired") && (current_user.operator? || current_user.admin?)     
+            - if @notification.blank?              
+              button#complete_with_exception.btn.btn-sm.btn-primary[type="button" data-trip_id='#{trip.id}']
+                | Complete with Exception
+            -else
+              button#complete_with_exception.btn.btn-sm.btn-primary[type="button" data-trip_id='#{trip.id}' data-notification_id='#{@notification.id}']
+                | Complete with Exception
+          
+          - if trip.assign_requested? || trip.assign_request_expired? || trip.assigned?  
+            button#save_changes.btn.btn-sm.btn-default.hidden[type="button" data-trip_id='#{trip.id}']
+              | Save Changes
+          
+
+        -else
+          -if trip.book_ola.blank?
+            -if (trip.status == 'assigned' || trip.status == "active" || trip.status == "assign_requested" || trip.status == "assign_request_expired") && (current_user.operator? || current_user.admin?)
+              - if @notification.blank?
+                button#complete_with_exception.btn.btn-sm.btn-primary[type="button" data-trip_id='#{trip.id}']
+                  | Complete with Exception
+              -else
+                button#complete_with_exception.btn.btn-sm.btn-primary[type="button" data-trip_id='#{trip.id}' data-notification_id='#{@notification.id}']
+                  | Complete with Exception
+          -else
+            -if (trip.status != 'completed' && trip.status != 'canceled') && (current_user.operator? || current_user.admin?)
+              .row
+                .col-md-4[style="margin-top: 15px;" id="ride_cost_div"]
+                  input.form-control[type="text" name="name" placeholder=" Cost of the Ola/Uber ride" id="ride_cost"]
+              button#complete-and-record-fare.btn.btn-sm.btn-danger[type="button" data-trip_id='#{trip.id}']
+                | Record Fare          
+          -if current_user.employer?
+            button#contact-operator.btn.btn-sm.btn-primary[type="button"]
+              | Contact Operator
+
+        -if !@notification.blank?
+          -if @notification.message == 'female_exception_route_resequenced' || @notification.message == 'female_exception_female_removed'
+            a.btn.btn-sm.btn-danger#call-person[href="#" data-number='#{@notification.employee.phone}' data-notification-id='#{@notification.id}']
+              | Call Female Employee
+
+          -if @notification.message == 'panic' || @notification.message == 'not_on_board' || @notification.message == 'still_on_board' || @notification.message == 'employee_no_show_approved'
+            a.btn.btn-sm.btn-danger#call-person[href="#" data-number='#{@notification.employee.phone}' data-notification-id='#{@notification.id}']
+              | Call Passenger
+
+          -if @notification.message == 'employee_no_show'
+            a.btn.btn-sm.btn-danger#move_driver_to_next_step[data-dismiss='modal' data-notification-id='#{@notification.id}']
+              | Move To Next Step
+
+          -if @notification.message == 'driver_didnt_accept_trip' || @notification.message == 'trip_not_started' || @notification.message == 'trip_should_start' || @notification.message == 'out_of_geofence_check_in' || @notification.message == 'out_of_geofence_drop_off' || @notification.message == 'out_of_geofence_driver_arrived' || @notification.message == 'out_of_geofence_missed' || @notification.message == 'out_of_geofence_check_in_site' || @notification.message == 'out_of_geofence_drop_off_site' || @notification.message == 'out_of_geofence_driver_arrived_site' || @notification.message == 'out_of_geofence_missed_site'
+            a.btn.btn-sm.btn-danger#call-person[href="#" data-number='#{@notification.driver.phone}']
+              | Call Driver
+
+          -if @notification.message == 'female_first_or_last_in_trip' || @notification.message == 'female_exception_driver_unassigned'
+            a.btn.btn-sm.btn-danger[href="/trips/guards_list?trip_id=#{trip.id}" data-remote="true"]
+              | Add Guard
+
+          -if @notification.message == 'car_break_down_driver_unassigned'
+            a.btn.btn-sm.btn-danger#book-ola-uber-car-break-down[href="#" data-driver_id='#{@notification.driver.id}' data-trip_id='#{@notification.trip.id}']
+              | Book Ola Uber
+
+          -if @notification.message == 'car_break_down'
+            a.btn.btn-sm.btn-danger#view-vehicle[href="provisioning#vehicles"]
+              | View Vehicle            
+
+        -else
+          button#save_changes.btn.btn-sm.btn-default.hidden[type="button" data-trip_id='#{trip.id}']
+            | Save Changes

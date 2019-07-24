@@ -1,0 +1,196 @@
+/* Driver Compliances section */
+#driverChecklistModal {
+  .progress-section {
+    .col-md-11 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .col-md-1 {
+      padding-left: 10px;
+    }
+
+    span {
+      color: #DA4F49;
+      font-weight: bold;
+    }
+  }
+
+  .field-section {
+    margin: 1% 3%;
+    .check-list-fields {
+      p.title {
+        font-weight: bold;
+        font-size: 15px;
+      }
+
+      .ok_radio {
+        &:checked, &:not(:checked) {
+          position: absolute;
+          left: -9999px;
+        }
+        &:checked + label, &:not(:checked) + label {
+          position: relative;
+          padding-left: 28px;
+          cursor: pointer;
+          line-height: 20px;
+          display: inline-block;
+          color: #666;
+        }
+        &:checked + label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 5px;
+          width: 15px;
+          height: 14px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+          background: #13a89e;
+        }
+        &:not(:checked) + label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 5px;
+          width: 15px;
+          height: 14px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+          background: #fff;
+        }
+        &:checked + label:after {
+          /*content: '✔';*/
+          content: '\f00c';
+          font-family: FontAwesome;
+          /*background: #F87DA9;*/
+          position: absolute;
+          left: 2px;
+          top: 3px;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+          color: #fff;
+          font-size: 11px;
+        }
+        &:not(:checked) + label:after {
+          content: '';
+          width: 12px;
+          height: 12px;
+          /*background: #F87DA9;*/
+          position: absolute;
+          top: 4px;
+          left: 4px;
+          border-radius: 100%;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+          opacity: 0;
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        &:checked + label:after {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+      .not_ok_radio {
+        &:checked, &:not(:checked) {
+          position: absolute;
+          left: -9999px;
+        }
+        &:checked + label, &:not(:checked) + label {
+          position: relative;
+          padding-left: 28px;
+          cursor: pointer;
+          line-height: 20px;
+          display: inline-block;
+          color: #666;
+        }
+        &:checked + label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 5px;
+          width: 15px;
+          height: 14px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+          background: #DA4F49;
+        }
+        &:not(:checked) + label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 5px;
+          width: 15px;
+          height: 14px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+          background: #fff;
+        }
+        &:checked + label:after {
+          /*content: '✔';*/
+          content: '\f00c';
+          font-family: FontAwesome;
+          /*background: #F87DA9;*/
+          position: absolute;
+          left: 2px;
+          top: 3px;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+          color: #fff;
+          font-size: 11px;
+        }
+        &:not(:checked) + label:after {
+          content: '';
+          width: 12px;
+          height: 12px;
+          /*background: #F87DA9;*/
+          position: absolute;
+          top: 4px;
+          left: 4px;
+          border-radius: 100%;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+          opacity: 0;
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        &:checked + label:after {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+
+      .col-md-4.field-label {
+        text-align: left;
+        padding-top: 10px;
+      }
+      p.no {
+        padding-left: 15px;
+        font-size: 12px
+      }
+
+      p.lable-name {
+        margin-bottom: 4px;
+        font-weight: normal;
+      }
+    }
+
+    .not-ok, .ok { font-weight: bold; }
+    .documents, .behaviour {
+      p.title { margin-top: 30px; }
+    }
+  }
+}
+/* End of Driver Compliance */
+
+.notification-status {
+  color: orange;
+}
+
+.checklist-status {
+  color: red;
+}

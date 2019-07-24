@@ -1,0 +1,157 @@
+= content_for :body_class, 'provisioning'
+.content-header.provisioning
+  .row
+    .col-md-1
+      h2.content-title
+        | Resources
+    .col-md-11
+      .resource-headers
+        .btn-group
+          - if can?(:view, :people_tab)
+            a[href="#people" data-toggle="tab" data-modal-type="simple" class="btn btn-default active #{can?(:view, :places_tab) ? 'people-style' : ''}"]
+              | People
+              span.center.hidden[class="glyphicon glyphicon-dot" id="badge-people" style="position:absolute"]
+          - if can?(:view, :places_tab)
+            a[href="#places" data-toggle="tab" data-hide-edit-buttons="true" class="btn btn-default places-style"]
+              | Places
+          - if can?(:view, :things_tab)
+            a[href="#things" data-toggle="tab" data-hide-edit-buttons="true" class="btn btn-default things-style"]
+              | Things
+              span.center.hidden[class="glyphicon glyphicon-dot" id="badge-things" style="position:absolute"]
+.content-body
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom.nav-actions-block
+      .people
+        ul.nav.nav-tabs
+          -if current_user.admin?
+            li.logistic-companies
+              a[class="people default" href="#logistic-companies" data-toggle="tab" data-modal-type="simple"]
+                | PTS Operators
+            li.logistic-companies-users
+              a[class="people" href="#logistic-companies-users" data-toggle="tab" data-source="/operators/new"]
+                | Site Managers
+          -if current_user.operator? || current_user.admin? || current_user.operator_shift_manager?
+            - if !current_user.operator_shift_manager? || (current_user.operator_shift_manager? && can?(:read, EmployeeCompany))
+              li.employee-company
+                a[class="people" href="#employee-company" data-toggle="tab"  data-modal-type="simple"]
+                  | PTS Customers
+              -if current_user.operator?
+                li.logistic-companies
+                  a[class="people" href="#logistic-companies" data-toggle="tab" data-modal-type="simple"]
+                    | PTS Operators
+            li.operator_shift_managers
+              a[class="people" href="#operator-shift-managers" data-toggle="tab" data-source="/operator_shift_managers/new"]
+                | Operator Shift Manager
+            - if !current_user.operator_shift_manager? || (current_user.operator_shift_manager? && can?(:read, Employer))
+              li.employers
+                a[class="people" href="#employers" data-toggle="tab" data-source="/employers/new"]
+                  | Employers
+            li.drivers
+              a[class="people" href="#drivers" data-toggle="tab" data-source="/drivers/new"]
+                |  Drivers
+                span.center.hidden[style="margin-bottom: 2px;" class="glyphicon glyphicon-dot"  id="badge-driver"]
+            li.business-associates
+              a[class="people" href="#business-associates" data-toggle="tab" data-source="/business_associates/new"]
+                | Business Associates
+          -if current_user.employer? || current_user.admin? || current_user.line_manager?
+            li.employees
+              a[class="people" href="#employees" data-toggle="tab" data-source="/employees/new" data-hide-edit-buttons="true"]
+                |  Employees
+          -if current_user.employer? || current_user.admin?
+            li.transport_desk_managers
+              a[class="people" href="#transport-desk-managers" data-toggle="tab" data-source="/transport_desk_managers/new"]
+                | Transport Desk Managers
+            li.line_managers
+              a[class="people" href="#line-managers" data-toggle="tab" data-source="/line_managers/new"]
+                | Line Managers
+          -if ENV["ENALBE_GUARD_PROVISIONGING"] == "true" && can?(:manage, :guard)
+            li.guards
+              a[class="people" href="#guards" data-toggle="tab" data-source="/employees/new?is_guard=true"]
+                | Guards
+          -if can?(:read, EmployerShiftManager)
+            li.employer_shift_managers
+              a[class="people" href="#employer-shift-managers" data-toggle="tab" data-source="/employer_shift_managers/new"]
+                | Employer Shift Manager
+      .places[style="display:none;"]
+        ul.nav.nav-tabs
+          -if current_user.operator? || current_user.admin? || current_user.operator_shift_manager?
+            - if !current_user.operator_shift_manager? || (current_user.operator_shift_manager? && can?(:read, Site))
+              li.sites
+                a[class="places" href="#sites" data-toggle="tab" data-source="/sites/new"]
+                  | Sites
+            li.routes
+              a[class="places" href="#routes" data-toggle="tab" data-source="/bus_trips/new"]
+                | Routes
+      .things[style="display:none;"]
+        ul.nav.nav-tabs
+          -if current_user.operator? || current_user.admin? || current_user.operator_shift_manager?
+            li.vehicles
+              a[class="things" href="#vehicles" data-toggle="tab" data-source="/vehicles/new"]
+                |  Vehicles 
+                span.center.hidden[style="margin-bottom: 2px;" class="glyphicon glyphicon-dot" id="badge-vehicle"]
+            li.devices
+              a[class="things" href="#devices" data-toggle="tab" data-source="/devices/new"]
+                |  Devices
+                span.center.hidden[style="margin-bottom: 2px;" class="glyphicon glyphicon-dot" id="badge-device"]
+            li.shifts
+              a[class="things" href="#shifts" data-toggle="tab" data-source="/shifts/new"]
+                |  Shifts
+      .nav-actions
+        .edit-buttons
+          a.btn.btn-sm.btn-default.cancel.btn-fixed-width[type="button" data-action="cancel"]
+            | Cancel
+          button.btn.btn-sm.btn-primary.submit-btn[type="submit" data-action="submit" form=""]
+            | Save changes
+        .action-buttons
+          a.hide.ingest.btn.btn-sm.btn-primary.btn-fixed-width[href="" data-toggle="modal" data-remote="" data-target="#modal-ingest-job-form"]
+            | Import
+          a.editor_create.add-new-item.btn.btn-sm.btn-primary.btn-fixed-width[href="" data-toggle="modal" data-remote="" data-target=""]
+            | Add
+    .tab-content
+      - if current_user.admin?
+        = render :partial => 'provisioning/companies_tab'
+        = render :partial => 'provisioning/operators'
+
+      -if current_user.operator? || current_user.admin? || current_user.operator_shift_manager?
+        = render :partial => 'provisioning/employee_company'
+        -if current_user.operator?
+          = render :partial => 'provisioning/companies_tab'
+        = render :partial => 'provisioning/employers'
+        = render :partial => 'provisioning/drivers'
+        = render :partial => 'provisioning/vehicles'
+        = render :partial => 'provisioning/sites'
+        = render :partial => 'provisioning/business_associates'
+        = render :partial => 'provisioning/bus_trips'
+        = render :partial => 'provisioning/shifts'
+        = render :partial => 'provisioning/devices'
+      -if current_user.employer? || current_user.admin? || current_user.line_manager?
+        = render :partial => 'provisioning/employees'
+        = render :partial => 'provisioning/zones'
+      -if current_user.employer? || current_user.admin?  
+        = render :partial => 'provisioning/transport_desk_managers'
+        = render :partial => 'provisioning/line_managers'
+        = render :partial => 'provisioning/shifts'
+      = render :partial => "provisioning/guards" if ENV["ENALBE_GUARD_PROVISIONGING"] == "true" && can?(:read, :guard)
+      = render :partial => "provisioning/employer_shift_managers" if can?(:read, EmployerShiftManager)
+      = render :partial => "provisioning/operator_shift_managers" if can?(:read, OperatorShiftManager)
+
+  - if current_user.employer? || current_user.admin?
+    = render :partial => 'provisioning/modal_employers'
+    = render 'ingest_job/form',
+      title: 'Ingest Schedule',
+      url: ingest_employees_path,
+      ingest_type: 'ingest_schedule',
+      sample_file: '/Ingest Excel Format.xlsx'
+    = render 'ingest_job/stats', title: 'Ingest Schedule Stats'
+
+  - if current_user.line_manager?
+    = render 'ingest_job/form',
+      title: 'Ingest Schedule',
+      url: ingest_employees_path,
+      ingest_type: 'ingest_schedule',
+      sample_file: '/Ingest Excel Format.xlsx'
+    = render 'ingest_job/stats', title: 'Ingest Schedule Stats'
+  #schedule
+  #modal-wrap
+  #modal-edit-wrap

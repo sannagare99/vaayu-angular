@@ -1,0 +1,60 @@
+#employee-change-request.tab-pane.fade
+  .col-lg-12
+    form[action="#"]
+      ul.date-filter
+        li.filter-block.short-date-filter
+          input#change-request-date[placeholder="SELECT DATE" class="form-control" type="text" name="change-request-date" value="" style="max-width:200px"]
+        li.filter-block.short-date-filter
+          input#change-request-time[placeholder="SELECT TIME" class="form-control" type="text" name="change-request-time" value="" style="max-width:200px"]
+        li.filter-block
+          select#change-request-type.form-control.selectboxit[placeholder="TYPE" name="change-request-type"]
+            option[value="0"]
+              | CHANGE
+            option[value="1"]
+              | CANCEL
+            option[value="2"]
+              | NEW TRIP
+        li.filter-block
+          select#change-request-direction.form-control.selectboxit[placeholder="DIRECTION" name="change-request-direction"]
+            option[value="0"]
+              | Check IN
+            option[value="1"]
+              | Check OUT
+        li.filter-block
+          input#change-request-value[class="form-control" type="text" name="searchName" value="" placeholder="Employee Name" style="width:200px"]
+          a#change-request-search.btn.btn-sm href="#" style="color:black; margin-left:10px; border:1px solid #E0E4E8; height:30px"
+            i.fa.fa-search aria-hidden="true"
+        li
+          button.btn.btn-default#change-request-clear-filters[type="button" style="display:none"]
+            | Clear Filters
+
+  .col-md-12.table-responsive.table-responsive-datatables.clearfix
+    .table-responsive
+      table#employee-change-request-table.table.table-bordered[data-auto-update="false"]
+        thead
+          tr
+            th
+              | Request Type
+            th
+              | Date
+            th
+              | Direction
+            th
+              | Site
+            th
+              | Employee ID              
+            th
+              | Employee
+            th
+              | Gender
+            th
+              | Reason            
+            th
+              | Action            
+        tbody
+    /!
+      .table-controls.pull-right.adhoc-controls
+        button#cancel-adhoc-trip.btn.btn-wide.btn-danger[type="button" data-type="decline"]
+          | Cancel Request
+        button#approve-adhoc-trip.btn.btn-wide.btn-primary[type="button" data-type="approve"]
+          | Approve

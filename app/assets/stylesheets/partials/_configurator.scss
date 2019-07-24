@@ -1,0 +1,163 @@
+#configurators {
+  #form-configurators {
+    .radio-button-input {
+      margin-left: 25px;
+    }
+
+    .radio {
+      display: inline;
+      .collection_radio_buttons {
+        margin-left: 25px;
+      }
+    }
+  }
+
+  h5 {
+    margin-left: 17%;
+  }
+}
+
+#form-configurators, #form-general_settings {
+  .add-google-api, .remove-google-api {
+    color: #fff;
+    border-color: #13a89e;
+    background-color: #13a89e;
+  }
+
+  .google-api-form {
+    margin-bottom: 20px;;
+  }
+
+}
+
+.accordion-section {
+  margin: 1% 2%;
+
+  .col {
+    margin-bottom: 1%;
+  }
+
+  .accordion {
+    position: relative;
+    background-color: #ecf0f1;
+    color: #444;
+    cursor: pointer;
+    padding: 0.8%;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+    padding-left: 2%;
+    border-radius: 4px 4px 0 0;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &:before {
+      position: absolute;
+      font-family: FontAwesome;
+      content: "\f107";
+      width: 32px;
+      padding-top: 7px;
+      border-left: 1px solid #e1e4e8;
+      right: 0;
+      top: 5px;
+      bottom: 0;
+      text-align: center;
+    }
+
+    &.collapsed:before {
+      float: right !important;
+      content: "\f105";
+    }
+  }
+
+  .accordion-body {
+    padding: 2%;
+    border: 1px solid #E0E4E8;
+    border-radius: 0 0 7px 7px;
+
+    p { font-weight: bold; }
+  }
+
+  .radio-button-input {
+    margin-left: 25px !important;
+  }
+
+  .radio {
+    display: inline;
+    .collection_radio_buttons {
+      margin-left: 25px;
+    }
+  }
+
+  /* Custom Radio Design */
+
+  [type="radio"] {
+    &:checked, &:not(:checked) {
+      position: absolute;
+      left: -9999px;
+    }
+    &:checked + label, &:not(:checked) + label {
+      position: relative;
+      padding-left: 28px;
+      cursor: pointer;
+      line-height: 20px;
+      display: inline-block;
+      color: #666;
+    }
+    &:checked + label:before, &:not(:checked) + label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 100%;
+    }
+    &:checked + label:before, &:not(:checked) + label:before {
+      border: 2px solid #13A89E;
+      background: #fff;
+    }
+    &:not(:checked) + label:before {
+      border: 2px solid #ddd;
+      background: #fff;
+    }
+    &:checked + label:after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #13A89E;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      border-radius: 100%;
+      -webkit-transition: all 0.2s ease;
+      transition: all 0.2s ease;
+    }
+    &:not(:checked) + label:after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #F87DA9;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border-radius: 100%;
+      -webkit-transition: all 0.2s ease;
+      transition: all 0.2s ease;
+      opacity: 0;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    }
+    &:checked + label:after {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  /* Custom radio design end */
+}

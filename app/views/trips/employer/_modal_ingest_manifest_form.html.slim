@@ -1,0 +1,22 @@
+#modal-ingest-manifest.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    = simple_form_for @ingest_manifest_job, remote: true, html: {'data-validate' => 'form', 'data-type' => 'json', class: 'modal-form', multipart: true, id: 'ingest_manifest_job_form'}, url: ingest_manifest_job_index_path, method: 'POST' do |f|
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Import Manifest
+        .modal-body
+          .row
+            .col-md-6.error-message.text-danger
+          .row
+            .col-md-6
+              = f.input :file, as: :file, label: 'Excel File', required: true
+          .row
+            .col-md-6
+              a[href='/ingest_manifest.xlsx'] Downlooad Sample File
+        .modal-footer
+          button.btn.btn-sm.btn-default[type='button' data-dismiss='modal']
+            | Close
+          = f.button :submit, 'Submit', class: 'btn btn-sm btn-primary'

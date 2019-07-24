@@ -1,0 +1,37 @@
+#employee-completed-trips.tab-pane.fade
+  .col-md-6.table-responsive.table-responsive-datatables
+    label.total-label for="completed-trips-count" id="completed-trips-count"
+    table#employee-completed-trips-table.table.table-hover.table-bordered[data-auto-update="true"]
+      thead
+        tr
+          th
+            | Status        
+          th
+            | Trip Roster #
+          th
+            | Sch Time
+          th
+            | Actual Time
+          th
+            | Map
+      tbody
+
+  .col-md-6
+    #map-employee-completed-trips.map[style="width: 100%; height: 435px;"]\
+    div.hidden#employee_record
+      .table-responsive
+        table.table.table-bordered
+          tbody
+            tr
+              td
+                label.total-label for="total-employees-count" id="total-employees-count"
+              td
+                label.total-label for="total-serviced-count" id="total-serviced-count"
+            tr
+              td
+                label.total-label for="total-missed-count" id="total-missed-count"
+              td
+                label.total-label for="total-canceled-count" id="total-canceled-count"
+            tr
+              td#complete_with_exception_row.hidden
+                label.total-label for="total-canceled-with-exception-count" id="total-canceled-with-exception-count"

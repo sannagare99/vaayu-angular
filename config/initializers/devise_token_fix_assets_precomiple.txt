@@ -1,0 +1,8 @@
+module DeviseTokenAuth::Concerns::User
+    module ClassMethods
+        protected
+        def database_exists?
+            ActiveRecord::Base.connection_pool.with_connection { |con| con.active? } rescue false
+        end
+    end
+end

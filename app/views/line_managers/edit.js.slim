@@ -1,0 +1,6 @@
+| $("#line-managers .table-content-edit").html('');
+| $("#line-managers .table-content-edit").html('
+= j render partial: 'line_managers/form', locals: { url: line_manager_path, action: "PUT" }
+| ');
+| datepickerInit();
+| initSelectbox();

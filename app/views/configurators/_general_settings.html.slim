@@ -1,0 +1,60 @@
+#general_settings.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    .row
+      .accordion-section
+        = simple_form_for :configurator, html: {:'data-validate' => 'form', class: 'modal-form', id: "form-general_settings", :multipart => true}, url: update_config_path, method: 'PUT', remote: false do |f|
+          = render partial: "accordion_section", locals: {f: f}        
+        /!.col
+          a.accordion aria-controls="general_settings-form1" aria-expanded="false" data-toggle="collapse" href="#general_settings-form1" role="button"  CONSUMER
+          #general_settings-form1.collapse.accordion-body
+            | In case of a non-compliant cancellation the Employee is considered a No Show? In case of a non-compliant cancellation the Employee is considered a No Show? In case of a non-compliant cancellation the Employee is considered a No Show? In case of a non-compliant cancellation the Employee is considered a No Show?
+        /!.col
+          a.accordion aria-controls="general_settings-form2" aria-expanded="false" data-target="#general_settings-form2" data-toggle="collapse" type="button"  SHIFTS
+          #general_settings-form2.collapse.in.accordion-body
+            .row
+              .col-md-3
+                .form-group.string.required.name
+                  label.control-label.string.required for="name" 
+                    abbr title="required"  *
+                    | Name
+                  input#name.form-control.string.required aria-required="true" data-match-user="name" name="name" required="required" type="text" /
+              .col-md-3
+                .form-group.string.required.state
+                  label.control-label.string.required for="state" 
+                    abbr title="required"  *
+                    | State
+                  input#state.form-control.string.required aria-required="true" data-match-user="state" name="state" required="required" type="text" /
+              .col-md-3
+                .form-group.string.required.city
+                  label.control-label.string.required for="city" 
+                    abbr title="required"  *
+                    | City
+                  input#city.form-control.string.required aria-required="true" data-match-user="city" name="city" required="required" type="text" /
+              .col-md-3
+                .form-group.string.required.country
+                  label.control-label.string.required for="country" 
+                    abbr title="required"  *
+                    | Country
+                  input#country.form-control.string.required aria-required="true" data-match-user="country" name="country" required="required" type="text" /
+            br /
+            p  Customer Contact:
+            .row
+              .col-md-3
+                .form-group.string.required.name
+                  label.control-label.string.required for="name" 
+                    abbr title="required"  *
+                    | Name
+                  input#name.form-control.string.required aria-required="true" data-match-user="name" name="name" required="required" type="text" /
+              .col-md-3
+                .form-group.string.required.state
+                  label.control-label.string.required for="state" 
+                    abbr title="required"  *
+                    | State
+                  input#state.form-control.string.required aria-required="true" data-match-user="state" name="state" required="required" type="text" /
+              .col-md-3
+                .form-group.string.required.city
+                  label.control-label.string.required for="city" 
+                    abbr title="required"  *
+                    | City
+                  input#city.form-control.string.required aria-required="true" data-match-user="city" name="city" required="required" type="text" /

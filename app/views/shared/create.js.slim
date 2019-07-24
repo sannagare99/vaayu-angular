@@ -1,0 +1,10 @@
+| var errorMessages = '#{@errors}';
+| var tableSelector = '#'+ '#{@datatable_name}' + '.tab-pane a.reload-button';
+
+| if(errorMessages.length > 1) {
+|   showErrorMessage(errorMessages);
+| } else {
+|   removeErrorMessage();
+|   $('.provisioning .edit-buttons a.cancel').click();
+|   $(tableSelector).click();
+| }

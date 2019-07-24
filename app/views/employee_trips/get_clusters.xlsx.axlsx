@@ -1,0 +1,44 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  header_cell = s.add_style bg_color: 'BFBFBF',
+                            b: true,
+                            border: {
+                              style: :thin,
+                              color: '00'
+                            }
+  wb.add_worksheet do |sheet|
+    @clusters.each do |cluster_key, employee_trips|
+      cluster = EmployeeCluster.find(cluster_key[1])
+      sheet.add_row [
+        'Date', employee_trips.first.date.strftime('%d/%m/%y %I:%M %p'),
+        'Direction', employee_trips.first.check_in? ? 'To Office' : 'To Home',
+        'Driver', cluster.driver&.user&.full_name,
+        'Driver Contact', cluster.driver&.user&.phone
+      ], style: header_cell
+      sheet.add_row [
+        'Sequence',
+        'Employee ID',
+        'Employee Name',
+        'Process',
+        'Gender',
+        'Pick-Up Address',
+        'Mobile Number',
+        'Email'
+      ], style: header_cell
+      employee_trips.sort_by { |e|
+        e.route_order
+      }.each do |employee_trip|
+        sheet.add_row [
+          employee_trip.route_order.to_i + 1,
+          employee_trip.employee.employee_id,
+          employee_trip.employee.user.full_name,
+          '',
+          employee_trip.employee.gender[0].upcase,
+          employee_trip.employee.home_address,
+          employee_trip.employee.user.phone,
+          employee_trip.employee.user.email
+        ]
+      end
+    end
+  end
+end

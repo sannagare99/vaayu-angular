@@ -1,0 +1,245 @@
+#customer-invoices.tab-pane.fade
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#customer-invoices-picker[class="form-control" type="text" name="customer-invoices-date" value=""]
+      .col-md-6
+        a.btn.btn-sm.billing-delete-button.btn-fixed-width.pull-right#delete_customer_invoices[type="button" disabled="true" style="margin-left:10px"]
+          | Delete
+        a.btn.btn-sm.report-download-button.btn-fixed-width.pull-right#download_customer_invoices[href="/invoices/download" type="button" disabled="true"]
+          | Download
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#customer-invoices-table.table.table-hover[style="width: 100%;"]
+      thead
+        tr
+          th.checkbox-select.ch-all-customer-invoices[style="padding:18px"]
+          th
+            | Invoice #
+          th
+            | Bill Data
+          th
+            | Trip Data
+          th
+            | Customer
+          th
+            | Site
+          th
+            | Operator
+          th
+            | Business Associate
+          th
+            | CGST
+          th
+            | SGST
+          th
+            | Total
+          th
+            | Status          
+      tbody
+
+
+  #modal-billing-detail.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#detail-info-trips-table.table
+                thead
+                  tr.reports-table
+                    th
+                      | Trip Id #
+                    th
+                      | Customer
+                    th
+                      | Vehicle
+                    th
+                      | Guard
+                    th
+                      | Toll
+                    th
+                      | Penalty
+                    th
+                      | Total Employees
+                    th
+                      | Served Employees
+                    th
+                      | Total
+                tbody
+                  
+          .row
+            .col-md-12
+              .total-amount.text-right
+                p
+                  | Total
+                  strong
+                    span
+                      i.fa.fa-inr
+                      span#trip_total
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+  #modal-bill-data.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#bill-data-table.table[style="width:2000px; overflow-x:scroll"]
+                thead
+                  tr.reports-table
+                    th
+                      | Customer
+                    th
+                      | Site
+                    th
+                      | Operator
+                    th
+                      | Business Associate
+                    th
+                      | Vehicle #
+                    th
+                      | Vehicle Type
+                    th
+                      | Zone
+                    th
+                      | Total Trips
+                    th
+                      | Guard Trips
+                    th
+                      | Rate
+                    th
+                      | Guard Rate
+                    th
+                      | Hours on Duty
+                    th
+                      | Mileage on Duty(in kms)
+                    th
+                      | Hours on Trips
+                    th
+                      | Mileage on Trips(in kms)
+                    th
+                      | Amount                    
+                tbody
+                  
+          .row
+            .col-md-12
+              .total-amount.text-right
+                p[style="width:100px"]
+                  | Total Trips:
+                  span#bill_trips_total
+                p[style="width:100px"]
+                  | Total
+                  strong
+                    span
+                      i.fa.fa-inr
+                      span#bill_total
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+
+  #modal-trips-data.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-xlg
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | x
+          h4.modal-title
+            | Detail
+        .modal-body
+          .row
+            .col-md-12.table-responsive
+              table#trip-data-table.table[style="width:2000px; overflow-x:scroll"]
+                thead
+                  tr.reports-table
+                    th
+                      | Date
+                    th
+                      | Customer
+                    th
+                      | Site
+                    th
+                      | Operator
+                    th
+                      | Business Associate
+                    th
+                      | Tripsheet #
+                    th
+                      | Trip Type
+                    th
+                      | Shift Time
+                    th
+                      | Reporting Time
+                    th
+                      | Actual Time                    
+                    th
+                      | Vehicle #
+                    th
+                      | Vehicle Type
+                    th
+                      | Seating Capacity
+                    th
+                      | Driver
+                    th
+                      | Planned Employees
+                    th
+                      | Actual Employees                                        
+                    th
+                      | Guard (Y/N)
+                    th
+                      | GPS (Y/N)
+                    th
+                      | Planned Mileage (in kms)  
+                    th
+                      | Planned Duration (in hours) 
+                    th
+                      | Actual Mileage (in kms) 
+                    th
+                      | Actual Duration (in hours)
+                tbody          
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+
+  #modal-billing-status.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-sm[style="width:25%"]
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            Change Invoice Status
+        .modal-body
+          .row
+            .col-md-4.col-md-offset-1.margin-top
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="created_status" value="created"]
+                  |    New
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="approved_status" value="approved"]
+                  |    Approved
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="dirty_status" value="dirty"]
+                  |    Dirty
+              .row[style="margin-left:5px"]
+                input [type="radio" name="status" id="paid_status" value="paid"]
+                  |    Paid
+        .modal-footer
+          a.btn.btn-sm.btn-default#cancel_status[href="#" data-dismiss="modal"]
+            | Cancel
+          a.btn.btn-sm.btn-primary#save_status[href="#"]
+            | Save

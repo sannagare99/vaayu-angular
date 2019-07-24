@@ -1,0 +1,21 @@
+h1 Users#index
+button = link_to 'Register New User', new_user_path, class: 'button'
+.container
+  .table-responsive
+    table.items-listing
+      thead
+        tr
+          th #
+          th Name
+          th Email
+          th Role
+          th
+
+      tbody
+        - @users.each do |user|
+          tr
+            td = user.id
+            td = user.full_name
+            td = user.email
+            td = user.aasm.human_state
+            /td.button-cell = link_to 'Show', show_user_path(user), class: 'brand-button'

@@ -1,0 +1,8 @@
+div[class="card text-center #{trend ? 'border-success' : 'border-danger'}"]
+  .card-body
+    .card-title Total Trips
+    .card-text
+      span.count
+        span= value.round
+        .row
+          div[class="glyphicon #{trend ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{trend ? 'text-success' : 'text-danger'}"]

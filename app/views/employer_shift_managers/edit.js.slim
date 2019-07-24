@@ -1,0 +1,6 @@
+| $("#employer-shift-managers .table-content-edit").html('');
+| $("#employer-shift-managers .table-content-edit").html('
+= j render partial: 'employer_shift_managers/form', locals: { url: employer_shift_manager_path, action: "PUT" }
+| ');
+| datepickerInit();
+| initSelectbox();

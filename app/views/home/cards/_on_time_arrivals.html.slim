@@ -1,0 +1,36 @@
+#stats-arrivals.stats-panel.panel.panel-animated.panel-default.bg-primary.border-primary
+  .panel-heading.bg-transparent.no-border
+    h3.text-center
+      a[href="#" data-toggle="modal" data-target="#stats-arrivals-modal"]
+        | On Time Arrivals
+  .panel-body.text-center.bordered-bottom.border-transparent
+    .row
+      .col-xs-12
+        p.chart-label.text-ellipsis.text-center
+          | On Time Arrival
+        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-lineWidth="2" data-scalecolor="#ecf0f1" data-percent="#{@on_time_arrivals[:late]}" data-size="80"]
+          span
+            | #{@on_time_arrivals[:late]}%
+  /.col-xs-6.col-sm-5
+  /  p.chart-label.text-ellipsis.text-center
+  /    | Report for Duty
+  /  .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-lineWidth="2" data-scalecolor="#ecf0f1" data-percent="16" data-size="80"]
+  /    span
+  /      | 16%
+  ul.list-group.bg-primary
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@on_time_arrivals[:on_time]}%
+      |  On-Time Check-in
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@on_time_arrivals[:no_show]}%
+      |  No Show
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@on_time_arrivals[:avg_delay]} min
+      |  Average Delay
+    li.list-group-item
+      .list-group-item-text.pull-right
+        | #{@on_time_arrivals[:avg_wait]} min
+      |  Average Wait

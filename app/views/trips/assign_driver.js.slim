@@ -1,0 +1,5 @@
+| $("#m-operator-available-drivers").html('');
+| $("#m-operator-available-drivers").html('
+= j render :partial => 'trips/modals/assign_driver',:locals => {:emp_count => @emp_count, :trip => @trip,:drivers => @drivers}
+| ');
+| $("#modal-operator-available-drivers").modal('show');

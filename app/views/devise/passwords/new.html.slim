@@ -1,0 +1,29 @@
+.content.content-full
+  .container
+    .signin-wrapper
+      .row
+        .col-md-offset-3.col-md-6.col-sm-offset-2.col-sm-8
+          .reset-pass.signin
+            .signin-brand
+              a[href="/"]
+                = image_tag("logo-dark.svg", :class => "lazy")
+              h1.text-lead
+                | Forgot your password?
+            .row
+              .col-md-offset-2.col-md-8.col-sm-12
+                =simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+                  = f.error_notification
+
+                  = f.input :email, required: true, autofocus: true
+                  .form-group.form-actions
+                    = f.button :submit, "Send me reset password instructions"
+      .signin-footer
+        ul.list-inline
+          li
+            | © 2016 Vaayu
+          li
+            a[href="#"]
+              | Terms of Use
+          li
+            a[href="#"]
+              | Privacy Policy

@@ -1,0 +1,97 @@
+#stats-completed-trips-modal.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog[style="width: 90%;"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Stats title
+      .modal-body
+        .row.no-margin
+          .col-sm-4.col-md-3
+            #stats-manifest-fulfilled.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Manifest Fulfilled
+                .row
+                  .col-xs-6.col-sm-2.col-sm-offset-1.no-padding
+                    p.chart-label
+                      | Fulfilled
+                  .col-xs-6
+                    .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@completed_trips_data[:manifest_fulfiled]}%" data-size="80"]
+                      span
+                        | #{@completed_trips_data[:manifest_fulfiled]}%
+                p.rank-info.text-ellipsis
+                  |
+          .col-sm-6
+            #stats-duration.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Duration
+                ul.list-percentages.row
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Total Duration
+                    strong
+                      | #{@completed_trips_data[:total_duration]}
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Duration per Trip
+                    strong
+                      | #{@completed_trips_data[:duration_per_trip]}
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Duration per Employee
+                    strong
+                      | #{@completed_trips_data[:duration_per_employee]}
+                p.helper-block
+
+                .progress.progress-xs.progress-flat.progress-inverse-inverse[style="visibility:hidden"]
+                  .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"]
+                    span.sr-only
+                      | 60% Complete (inverse)
+          .col-sm-4.col-md-3
+            #stats-employees-catered.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Employees Catered
+                .row
+                  .col-sm-2.col-sm-offset-1.no-padding
+                    p.chart-label
+                      | Catered
+                  .col-sm-6
+                    .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-scalecolor="#ecf0f1" data-lineWidth="2" data-percent="#{@completed_trips_data[:employees_catered]}%" data-size="80"]
+                      span
+                        | #{@completed_trips_data[:employees_catered]}%
+                p.rank-info.text-ellipsis
+                  | 
+          .col-sm-6
+            #stats-mileage.stats-sm-panel.panel.panel-primary.bg-primary
+              .panel-body
+                p.lead
+                  | Distance
+                ul.list-percentages.row
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Total Distance
+                    strong
+                      | #{@completed_trips_data[:total_mileage]} km
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Distance per Trip
+                    strong
+                      | #{@completed_trips_data[:mileage_per_trip]} km
+                  li.col-xs-4
+                    p.stat-label.text-ellipsis
+                      | Distance per Employee
+                    strong
+                      | #{@completed_trips_data[:mileage_per_employee]} km
+                p.helper-block
+
+                .progress.progress-xs.progress-flat.progress-inverse-inverse[style="visibility: hidden"]
+                  .progress-bar.progress-bar[role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"]
+                    span.sr-only
+                      | 60% Complete (inverse)
+      .modal-footer
+        button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+          | Close

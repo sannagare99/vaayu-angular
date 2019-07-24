@@ -1,0 +1,11 @@
+| $("#{@is_guard ? '#guards' : '#employees'} .table-content-edit").html('');
+| $("#{@is_guard ? '#guards' : '#employees'} .table-content-edit").html('
+= j render :partial => 'employees/modal_employees_new', :locals => {:employee => @employee, line_managers: @line_managers}
+| ');
+| datepickerInit();
+| initSelectbox();
+
+| $('.multiple-select-ui').multiselect({
+|   includeSelectAllOption: true
+| });
+

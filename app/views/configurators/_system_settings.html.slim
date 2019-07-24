@@ -1,0 +1,11 @@
+#system_settings.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    .row
+      .accordion-section
+        = simple_form_for :configurator, html: {:'data-validate' => 'form', class: 'modal-form', id: "form-system_settings", :multipart => true}, url: update_system_config_path, method: 'PUT', remote: false do |f|
+          = render partial: "accordion_section_system", locals: {f: f}
+
+        /!
+        	= simple_form_for :google_api_key, html: {:'data-validate' => 'form', class: 'modal-form', id: "form-general_settings", :multipart => true}, url: update_config_path, method: 'PUT', remote: false do |f|
+          	= render partial: "accordion_section_google", locals: {f: f}

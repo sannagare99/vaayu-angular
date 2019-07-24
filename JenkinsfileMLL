@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building Image'
+        sh '''echo "Git Commit :: ${GIT_COMMIT}"
+docker system prune -a -f
+docker build -t webapp:build-${GIT_COMMIT} .'''
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'echo "Hi"'
+      }
+    }
+    stage('Push To ECS') {
+      steps {
+        sh 'echo "Push to ECS"'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'echo "Deploy"'
+      }
+    }
+  }
+}

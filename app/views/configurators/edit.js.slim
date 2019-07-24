@@ -1,0 +1,10 @@
+| $("#configurators .table-content-edit").html('');
+| $("#configurators .table-content-edit").html('
+= j render :partial => 'configurators/form', locals: {employee: @employee, line_managers: @line_managers}
+| ');
+| datepickerInit();
+| initSelectbox();
+
+| $('.multiple-select-ui').multiselect({
+|   includeSelectAllOption: true
+| });

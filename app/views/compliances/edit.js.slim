@@ -1,0 +1,10 @@
+| $("#compliances .table-content-edit").html('');
+| $("#compliances .table-content-edit").html('
+= j render :partial => 'form', locals: { meth: "put" }
+| ');
+| datepickerInit();
+| initSelectbox();
+
+| $('.multiple-select-ui').multiselect({
+|   includeSelectAllOption: true
+| });

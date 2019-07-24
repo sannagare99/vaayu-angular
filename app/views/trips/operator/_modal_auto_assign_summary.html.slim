@@ -1,0 +1,33 @@
+#modal-auto-assign-driver-summary.modal.modal-inputs.modal-stats.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Driver Auto Assignment Summary
+      .modal-body
+        .row
+          .col-md-12
+            span#auto-assign-driver-total-count.stat-count
+            span
+              | Total Trips eligible for auto assignment
+        .row
+          .col-md-12
+            span#auto-assign-driver-error-count.stat-count
+            span
+              | trips failed to be assigned a driver
+            a[data-toggle='collapse' href='#collapse-auto-assign-error-data']
+              | (show me)
+          .col-md-12
+            #collapse-auto-assign-error-data.collapse
+              table#auto-assign-driver-errors.table.table-hover.table-bordered[style="width:
+              100%;"]
+                thead
+                  tr
+                    th Manifest ID
+                    th Error
+                tbody
+      .modal-footer
+        button.btn.btn-sm.btn-primary[type='button' data-dismiss='modal']
+          | Ok

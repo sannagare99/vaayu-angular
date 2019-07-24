@@ -1,0 +1,84 @@
+/* RADIO */
+
+.nice-radio {
+  position: relative;
+  min-height: 27px;
+  padding-top: 7px;
+  color: #394264;
+
+  > {
+    [type="radio"] {
+      display: none;
+
+      &:not(:checked) + label, &:checked + label {
+        position: relative;
+        padding-left: 20px;
+        color: inherit;
+        font-size: 13px;
+        line-height: 14px;
+        z-index: 1;
+        height: 1px;
+      }
+    }
+
+    label:before {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      font-family: 'FontAwesome';
+      font-size: 17px;
+      color: inherit;
+      -webkit-transition: all .3s ease;
+      -moz-transition: all .3s ease;
+      -ms-transition: all .3s ease;
+      -o-transition: all .3s ease;
+      transition: all .3s ease;
+    }
+  }
+
+  &:hover {
+    > label:before {
+      color: inherit;
+      cursor: default !important;
+    }
+
+    > [type="radio"] {
+      &:disabled:not(:checked) + label:before {
+        content: '\f10c';
+      }
+
+      &:not(:checked) + label:before {
+        /*content: '\f147';*/
+      }
+    }
+  }
+
+  > [type="radio"]:not(:checked) + label:before {
+    content: '\f10c';
+  }
+
+  > [type="radio"] {
+    &:checked + label:before {
+      content: '\f192';
+      color: inherit;
+    }
+
+    &:disabled {
+      &:not(:checked) + label:before, &:checked + label:before {
+        color: #95a5a6;
+      }
+
+      + label {
+        color: #95a5a6 !important;
+
+        > [class*="text-"] {
+          color: #95a5a6 !important;
+        }
+      }
+    }
+
+    &:checked:focus + label:before, &:not(:checked):focus + label:before {
+      color: #49AFCD;
+    }
+  }
+}

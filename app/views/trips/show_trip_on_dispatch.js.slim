@@ -1,0 +1,5 @@
+| $("#m-trip-info").html('');
+| $("#m-trip-info").html('
+= j render :partial => 'trips/modals/modal_show_trip_on_dispatch',:locals => {:trip => @trip, :employee_trips => @employee_trips, :submit => true, :exception => @exception, :driver => @driver, :vehicle => @vehicle, :last_paired_vehicle => @last_paired_vehicle}
+| ');
+| $("#modal_show_trip_on_dispatch").modal('show');

@@ -1,0 +1,43 @@
+aside.side-left
+  ul.sidebar
+      - if can? :view, :dashboard_tab
+        li[class="#{active_class(root_path)}"]
+          = link_to root_path
+            = inline_svg 'dashboard-icon.svg', class: 'sidebar-icon'
+            span.sidebar-text
+              | Dashboard
+      - if can? :view, :trips_tab
+        li[class="#{active_class(trips_path)}"]
+          =link_to trips_path
+            = inline_svg 'trips-icon.svg', class: 'sidebar-icon'
+            span.sidebar-text
+              - if !current_user.operator?
+                | Trips
+              -else
+                | Jobs
+      - if can? :view, :billing_tab
+        li[class="#{active_class(invoices_path)}"]
+          =link_to invoices_path
+            = inline_svg 'billing-icon.svg', class: 'sidebar-icon'
+            span.sidebar-text
+              | Billing
+      - if can? :view, :provisioning_tab
+        li[class="#{active_class(provisioning_path)}"]
+          =link_to provisioning_path do            
+            = inline_svg 'provisioning-icon.svg', class: 'sidebar-icon'
+            span.hidden.center#badge-provisioning[style="margin-bottom: 2px; position:relative; top:-33px; left:43px;" class="glyphicon glyphicon-dot"]
+            span.sidebar-text
+              | Resources              
+
+      - if can? :view, :reports_tab
+        li[class="#{active_class(reports_path)}"]
+          =link_to reports_path do
+            = inline_svg 'reports-icon.svg', class: 'sidebar-icon'
+            span.sidebar-text
+              | Reports
+      - if can? :view, :configurators_tab
+        li[class="#{active_class(configurators_path)}"]
+          =link_to configurators_path do
+            = inline_svg 'configurator.svg', class: 'sidebar-icon'
+            span.sidebar-text
+              | Configurator

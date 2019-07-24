@@ -1,0 +1,6 @@
+| $("#logistic-companies-users .table-content-edit").html('');
+| $("#logistic-companies-users .table-content-edit").html('
+= j render partial: 'operators/form', locals: { url: operator_path, action: "PUT" }
+| ');
+| datepickerInit();
+| initSelectbox();

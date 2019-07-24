@@ -1,0 +1,90 @@
+#completed-trips.tab-pane.fade.reports-section    
+  .col-md-12
+    .ul.date-filter.inline-display
+      li.filter-block.date-filter
+        input#completed-trips-picker[class="form-control" type="text" name="completed-trips-date" value=""]
+    .filter-block.inline-display[style="width:130px"]
+      select#billable_entities.form-control.selectboxit[placeholder="false" name="billable_entities"]
+        option[value="trips"]
+          | By Trips
+        option[value="vehicles"]
+          | By Vehicles
+    -if current_user.admin?
+      .filter-block.inline-display[style="width:200px; margin-left:10px"]
+        select#invoice_type.form-control.selectboxit[placeholder="false" name="invoice_type"]
+          option[value="customer"]
+            | Customer Invoice
+          option[value="ba"]
+            | Business Associate Invoice
+    .inline-display[style="float:right"]
+      .btn.btn-primary#generate-invoices.pull-right[style="display:none"]
+        | Generate Invoices
+      .btn.btn-primary#select-all-trips.pull-right
+        | Select All
+      .btn.btn-default#cancel-select-all.pull-right[style="display:none; margin-right:5px"]
+        | Cancel
+  .col-md-12.table-responsive.table-responsive-datatables#billing-completed-trips-div
+    table#billing-completed-trips-table.table.table-hover
+      thead
+        tr.reports-table
+          th[style="padding:18px"]
+          th
+            | Trip Id #
+          th
+            | Customer
+          th
+            | Site
+          th
+            | Operator
+          th
+            | Business Associate          
+          th
+            | Vehicle Type
+          th
+            | Security Guard
+          th
+            | Seats
+          th
+            | Served Employees                    
+      tbody
+
+  .col-md-12.table-responsive.table-responsive-datatables#billing-completed-vehicles-div[style="display:none"]
+    table#billing-completed-vehicles-table.table
+      thead
+        tr.reports-table
+          th[style="padding:18px"]
+          th
+            | Customer
+          th
+            | Site
+          th
+            | Operator
+          th
+            | Business Associate
+          th
+            | Vehicle
+          th
+            | Vehicle Type
+          th
+            | Hours On Duty
+          th
+            | Mileage On Duty(in kms)
+          th
+            | Total Trips
+          th
+            | Hours On Trips
+          th
+            | Mileage On Trips(in kms)          
+      tbody
+
+  #generate_success.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-header
+          h4.modal-title
+            | Create Invoice
+        .modal-body
+          div#generate_invoices_body
+        .modal-footer
+          button.btn.btn-sm.btn-primary#close_invoice_summary[type="button" data-dismiss="modal" disabled]
+            | Close

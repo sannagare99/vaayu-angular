@@ -1,0 +1,4 @@
+= simple_form_for @zone, html: {'data-validate' => 'form', :class => 'modal-form', id: "form-zones"}, remote: true do |f|
+  .row
+    .col-md-4
+      = f.input :name, label: 'Name', required: true

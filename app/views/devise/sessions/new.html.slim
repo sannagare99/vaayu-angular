@@ -1,0 +1,135 @@
+.content.content-full
+  .container
+    .signin-wrapper
+      .tab-content
+        #signin.row.tab-pane.fade.in.active
+          .col-md-offset-4.col-md-4.col-sm-offset-2.col-sm-8
+            .signin
+              .signin-brand
+                a[href="/"]
+                  = image_tag("logo-dark.svg", :class => "lazy")
+              = flash_messages
+              = simple_form_for resource, url: session_path(resource_name), as: resource_name, \
+                wrapper_mappings: {\
+                  check_boxes: :vertical_radio_and_checkboxes, \
+                  radio_buttons: :vertical_radio_and_checkboxes, \
+                  file: :vertical_file_input, \
+                  boolean: :vertical_boolean                                                   \
+                } do |f|
+
+                = f.input :name, label: false, wrapper: :input_group do
+                  span.input-group-addon.text-muted
+                    | @
+                  = f.input :username, wrapper: false, label: false, required: false, autofocus: true, placeholder: 'Username/Email'
+
+                = f.input :name, label: false, wrapper: :input_group do
+                  span.input-group-addon.text-muted
+                    i.fa.fa-circle-o
+                  = f.input :password, wrapper: false, label: false, required: false, placeholder: 'Password'
+
+                = f.input :remember_me, :wrapper => :checkbox, input_html: {class: 'checkbox-o' }, as: :boolean if devise_mapping.rememberable?
+
+                .form-group.form-actions
+                  = f.button :submit, 'Sign In', class: 'hidden-sm btn btn-primary'
+                  = f.button :submit, 'Sign In', class: 'visible-sm btn btn-lg btn-block btn-primary'
+                p
+                  small
+                    a[href="#modalRecover" data-toggle="modal"]
+                      | Can't Access your Account?
+                    br
+                p.margin-top
+                  small
+                    ' Don't have a account?
+                    a[data-toggle="tab" href="#signup"]
+                      strong
+                        | Create an Account
+            #modalRecover.modal.fade[tabindex="-1" role="dialog" aria-labelledby="modalRecoverLabel" aria-hidden="true"]
+              .modal-dialog
+                .modal-content
+                  = simple_form_for resource, url: password_path(resource_name), as: resource_name do |f|
+                    .modal-header
+                      button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+                        | ×
+                      h4#modalRecoverLabel.modal-title
+                        | Reset Password
+                    .modal-body
+                      = f.input :name, label: false, wrapper: :input_group do
+                        span.input-group-addon.text-muted
+                          | @
+                        = f.input :email, wrapper: false, label: false, required: false, autofocus: true, placeholder: 'Email'
+                      p.text-muted
+                        small
+                          | Enter your username or email address and we will send you a link to reset your password.
+
+                    .modal-footer
+                      button.btn.btn-default[type="button" data-dismiss="modal"]
+                        | Close
+                      = f.button :submit, 'Send reset link', class: 'btn btn-primary'
+        #signup.signup.tab-pane.fade
+          .signup-brand
+            = image_tag("logo-dark.svg")
+          h1.text-lead
+            | Create an account
+          p
+            ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, ad, sint, ea, dicta dolor nesciunt adipisci molestias molestiae ex fugit sunt quia praesentium? Deserunt atque tenetur mollitia perspiciatis doloribus sint. By creating an account you agree to the
+            a[href="#"]
+              ' Terms of Use
+            ' and
+            a[href="#"]
+              | Privacy Policy
+            | .
+          p
+            ' Already have an account, please
+            a[data-toggle="tab" href="#signin"]
+              | Signin
+            | .
+          form#signup-form[data-validate="form" action="index.html" role="form"]
+            .row
+              .col-sm-5
+                .form-group
+                  label.control-label.text-inverse[for="usernameUp"]
+                    | Username
+                  input#usernameUp.form-control[type="text" name="usernameUp" required minlength="4" maxlength="12" autocomplete="off"]
+                  p.helper-block.text-muted
+                    small
+                      | May contain letters, digits, dashes and underscores, and should be between 4 and 12 characters long.
+                .form-group
+                  label.control-label.text-inverse[for="emailUp"]
+                    | Email
+                  input#emailUp.form-control[type="email" name="emailUp" autocomplete="off"]
+                  p.helper-block.text-muted
+                    small
+                      strong
+                        | Type carefully!
+                      |  You will be sent a confirmation email.
+                .form-group
+                  label.control-label.text-inverse[for="passwordUp"]
+                    | Password
+                  input#passwordUp.form-control[type="password" name="passwordUp" required minlength="4"]
+                  p.helper-block.text-muted
+                    small
+                      | The longer the better. Include numbers for protein.
+                .form-group
+                  label.control-label.text-inverse[for="cpasswordUp"]
+                    | Confirm Password
+                  input#cpasswordUp.form-control[type="password" name="cpasswordUp" equalto="#passwordUp"]
+                  p.helper-block.text-muted
+                    small
+                      | Enter your password again!
+                .form-group.margin-top
+                  .nice-checkbox
+                    input#newsletter.checkbox-o[type="checkbox" name="newsletter" checked]
+                    label[for="newsletter"]
+                      | Sign me up for the newsletter
+                .form-group.form-actions
+                  input.btn.btn-primary[type="submit" value="Create account"]
+      .signin-footer
+        ul.list-inline
+          li
+            | © #{Date.current.year} Vaayu
+          li
+            a[href="#"]
+              | Terms of Use
+          li
+            a[href="#"]
+              | Privacy Policy

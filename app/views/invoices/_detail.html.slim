@@ -1,0 +1,50 @@
+#modal-billing-detail.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-xlg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | x
+        h4.modal-title
+          | Detail
+      .modal-body
+        .row
+          .col-md-12.table-responsive
+            table#detail-info-trips-table.table.table-striped
+              thead
+                tr.reports-table
+                  th
+                    | Trip Route ID
+                  th
+                    | Date
+                  th
+                    | Customer
+                  th
+                    | Vehicle Type
+                  th
+                    | Security Guard
+                  th
+                    | Toll Charge
+                  th
+                    | Total Employees
+              tbody
+                - @trip.trip_routes.each do |trip_route|
+                  tr
+                    td= trip_route.id
+                    td  Hello
+                    td  Hello
+                    td  Hello
+                    td  Hello
+                    td  Hello
+                    td  Hello
+
+        .row
+          .col-md-12
+            .total-amount.text-right
+              p
+                | Total
+                strong
+                  i.fa.fa-inr
+                  | 4500
+      .modal-footer
+        button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+          | Close

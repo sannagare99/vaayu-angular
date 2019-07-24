@@ -1,0 +1,16 @@
+= simple_form_for @device, html: {'data-validate' => 'form', :class => 'modal-form live-validation', id: "form-devices"}, url: url, remote: true, method: action do |f|
+  .row
+    .col-md-4
+      = f.input :device_id, label: 'Device ID', required: true
+    .col-md-4
+      = f.input :make, label: 'Make'
+    .col-md-4
+      = f.input :model, label: 'Model', required: true
+  .row
+    .col-md-4
+      = f.input :os, label: 'OS', required: true
+    .col-md-4
+      = f.input :os_version, label: 'OS Version'
+    .col-md-4
+      /!= f.association :driver, label_method: :driver_name, value_method: :id, prompt: false, required: true, prompt: "Choose a Driver"
+      = f.input :driver_id, collection: @drivers, label: "Driver", prompt: "Choose a Driver"

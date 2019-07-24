@@ -1,0 +1,69 @@
+/** FONT USAGE **/
+@import url(//fonts.googleapis.com/css?family=Aclonica);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,700,600,800);
+
+/** RESETER **/
+
+body {
+  background: #ecf0f1;
+  font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection, ::moz-selection, ::webkit-selection {
+  background-color: #13A89E;
+  color: #ecf0f1;
+}
+
+a {
+  color: #13A89E;
+
+  &:hover, &:focus {
+    color: #0E7D76;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal {
+    text-align: center;
+    padding: 0 !important;
+  }
+
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+}
+
+.modal-footer {
+  margin-top: 6px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.translate-left {
+  transition: all .3s ease;
+  margin-right: 300px;
+}
+
+.header .animated, .sidebar .animated {
+  animation-duration: .75s !important;
+}
+
+abbr {
+  border: none !important;
+}
+
+.clear {
+  clear: left;
+}

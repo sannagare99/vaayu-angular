@@ -1,0 +1,11 @@
+driver:
+  badge_number: EE444V43
+  aadhaar_number: 891234781256
+  local_address: "#2, 2ND CROSS, GHATTA GAON, NEAR LIC BUILDING, GURGAON, HARYANA, 122002"
+  permanent_address: "#2, 2ND CROSS, GHATTA GAON, NEAR LIC BUILDING, GURGAON, HARYANA, 122002"
+  licence_number: DL1234567893214
+  licence_validity: <%= 5.months.since.to_s(:db) %>
+  verified_by_police: true
+  logistics_company: l_comp
+  business_associate: business_associate
+  site: site

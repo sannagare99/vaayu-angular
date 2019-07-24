@@ -1,0 +1,184 @@
+.col
+  a.accordion aria-controls="system_pick_up_drop_off" aria-expanded="true" data-toggle="collapse" href="#system_pick_up_drop_off" role="button"
+    | Pick-Ups and Drop-Offs
+  #system_pick_up_drop_off.collapse.in.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      p.accordion-sub-title  D2D
+      .row
+        - if driver_no_show_allowed_D2D.present?
+          .col-md-4
+            label.control-label.string=  driver_no_show_allowed_D2D.display_name
+            = ui.input :driver_no_show_allowed_D2D, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_no_show_allowed_D2D.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if passcode_required_driver_check_in_D2D.present?
+          .col-md-4
+            label.control-label.string=  passcode_required_driver_check_in_D2D.display_name
+            = ui.input :passcode_required_driver_check_in_D2D, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{passcode_required_driver_check_in_D2D.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if employee_check_in_allowed_D2D.present?
+          .col-md-4
+            label.control-label.string=  employee_check_in_allowed_D2D.display_name
+            = ui.input :employee_check_in_allowed_D2D, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_check_in_allowed_D2D.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        
+      br /
+      .row
+        - if employee_no_show_allowed_D2D.present?
+          .col-md-4
+            label.control-label.string=  employee_no_show_allowed_D2D.display_name
+            = ui.input :employee_no_show_allowed_D2D, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_no_show_allowed_D2D.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if move_to_next_step_required_D2D.present?
+          .col-md-4
+            label.control-label.string=  move_to_next_step_required_D2D.display_name
+            = ui.input :move_to_next_step_required_D2D, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{move_to_next_step_required_D2D.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+      br /
+
+      p.accordion-sub-title  Nodal
+      .row
+        - if driver_no_show_allowed_NODAL.present?
+          .col-md-4
+            label.control-label.string=  driver_no_show_allowed_NODAL.display_name
+            = ui.input :driver_no_show_allowed_NODAL, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_no_show_allowed_NODAL.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if passcode_required_driver_check_in_NODAL.present?
+          .col-md-4
+            label.control-label.string=  passcode_required_driver_check_in_NODAL.display_name
+            = ui.input :passcode_required_driver_check_in_NODAL, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{passcode_required_driver_check_in_NODAL.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if employee_check_in_allowed_NODAL.present?
+          .col-md-4
+            label.control-label.string=  employee_check_in_allowed_NODAL.display_name
+            = ui.input :employee_check_in_allowed_NODAL, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_check_in_allowed_NODAL.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+      br /
+      .row
+        - if employee_no_show_allowed_NODAL.present?
+          .col-md-4
+            label.control-label.string=  employee_no_show_allowed_NODAL.display_name
+            = ui.input :employee_no_show_allowed_NODAL, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_no_show_allowed_NODAL.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if move_to_next_step_required_NODAL.present?
+          .col-md-4
+            label.control-label.string=  move_to_next_step_required_NODAL.display_name
+            = ui.input :move_to_next_step_required_NODAL, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{move_to_next_step_required_NODAL.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        
+      br /
+
+      p.accordion-sub-title  Bus
+      .row
+        - if driver_no_show_allowed_BUS.present?
+          .col-md-4
+            label.control-label.string=  driver_no_show_allowed_BUS.display_name
+            = ui.input :driver_no_show_allowed_BUS, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_no_show_allowed_BUS.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if passcode_required_driver_check_in_BUS.present?
+          .col-md-4
+            label.control-label.string=  passcode_required_driver_check_in_BUS.display_name
+            = ui.input :passcode_required_driver_check_in_BUS, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{passcode_required_driver_check_in_BUS.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if employee_check_in_allowed_BUS.present?
+          .col-md-4
+            label.control-label.string=  employee_check_in_allowed_BUS.display_name
+            = ui.input :employee_check_in_allowed_BUS, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_check_in_allowed_BUS.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+      br /
+      .row
+        - if employee_no_show_allowed_BUS.present?
+          .col-md-4
+            label.control-label.string=  employee_no_show_allowed_BUS.display_name
+            = ui.input :employee_no_show_allowed_BUS, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{employee_no_show_allowed_BUS.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if move_to_next_step_required_BUS.present?
+          .col-md-4
+            label.control-label.string=  move_to_next_step_required_BUS.display_name
+            = ui.input :move_to_next_step_required_BUS, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{move_to_next_step_required_BUS.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+
+
+.col
+  a.accordion aria-controls="system_employee_notifications" aria-expanded="false" data-toggle="collapse" href="#system_employee_notifications" role="button"
+    |  Employee Notifications
+  #system_employee_notifications.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      .row
+        - if send_notification_driver_assigned.present?
+          .col-md-4
+            label.control-label.string=  send_notification_driver_assigned.display_name
+            = ui.input :send_notification_driver_assigned, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{send_notification_driver_assigned.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if send_notification_driver_start_trip.present?
+          .col-md-4
+            label.control-label.string=  send_notification_driver_start_trip.display_name
+            = ui.input :send_notification_driver_start_trip, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{send_notification_driver_start_trip.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+        - if send_notification_driver_arrived.present?
+          .col-md-4
+            label.control-label.string=  send_notification_driver_arrived.display_name
+            = ui.input :send_notification_driver_arrived, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{send_notification_driver_arrived.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}        
+      br /
+      .row
+        - if send_notification_employee_check_out.present?
+          .col-md-4
+            label.control-label.string=  send_notification_employee_check_out.display_name
+            = ui.input :send_notification_employee_check_out, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{send_notification_employee_check_out.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+
+.col
+  a.accordion aria-controls="system_geofencing" aria-expanded="false" data-toggle="collapse" href="#system_geofencing" role="button"  
+    | Geofencing and Time Fencing
+  #system_geofencing.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|
+      p.accordion-sub-title  Female First / Last Exception
+      .row
+        - if driver_narrow_geofence_distance.present?
+          .col-md-4
+            = ui.input :driver_narrow_geofence_distance, required: false, label: driver_narrow_geofence_distance.display_name, input_html: { value: driver_narrow_geofence_distance.value }
+        - if driver_wide_geofence_distance.present?
+          .col-md-4
+            = ui.input :driver_wide_geofence_distance, required: false, label: driver_wide_geofence_distance.display_name, input_html: { value: driver_wide_geofence_distance.value }        
+      br /
+      .row
+        - if driver_auto_signal_i_am_here_by_geofence.present?
+          .col-md-4
+            label.control-label.string=  driver_auto_signal_i_am_here_by_geofence.display_name
+            = ui.input :driver_auto_signal_i_am_here_by_geofence, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_auto_signal_i_am_here_by_geofence.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}        
+        - if driver_auto_complete_trip_by_geofence.present?
+          .col-md-4
+            label.control-label.string=  driver_auto_complete_trip_by_geofence.display_name
+            = ui.input :driver_auto_complete_trip_by_geofence, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_auto_complete_trip_by_geofence.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}        
+        - if driver_restrict_i_am_here_by_geofence.present?
+          .col-md-4
+            label.control-label.string=  driver_restrict_i_am_here_by_geofence.display_name
+            = ui.input :driver_restrict_i_am_here_by_geofence, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{driver_restrict_i_am_here_by_geofence.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}        
+      br /      
+
+.col
+  a.accordion aria-controls="system_more" aria-expanded="false" data-toggle="collapse" href="#system_more" role="button"  More
+  #system_more.collapse.accordion-body
+    = f.simple_fields_for :shift_policies do |ui|      
+      .row
+        - if buffer_duration_for_start_trip_notification.present?
+          .col-md-4
+            = ui.input :buffer_duration_for_start_trip_notification, required: false, label: buffer_duration_for_start_trip_notification.display_name, input_html: { value: buffer_duration_for_start_trip_notification.value }
+        - if buffer_duration_to_allow_start_trip.present?
+          .col-md-4
+            = ui.input :buffer_duration_to_allow_start_trip, required: false, label: buffer_duration_to_allow_start_trip.display_name, input_html: { value: buffer_duration_to_allow_start_trip.value }
+        - if min_distance_to_calc_start_trip_eta.present?
+          .col-md-4
+            = ui.input :min_distance_to_calc_start_trip_eta, required: false, label: min_distance_to_calc_start_trip_eta.display_name, input_html: { value: min_distance_to_calc_start_trip_eta.value }
+      br /
+      .row
+        - if max_time_to_calc_start_trip_eta.present?
+          .col-md-4
+            = ui.input :max_time_to_calc_start_trip_eta, required: false, label: max_time_to_calc_start_trip_eta.display_name, input_html: { value: max_time_to_calc_start_trip_eta.value }
+        - if send_drivers_off_duty.present?
+          .col-md-4
+            label.control-label.string=  send_drivers_off_duty.display_name
+            = ui.input :send_drivers_off_duty, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{send_drivers_off_duty.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}        
+        
+      br /
+
+.col
+  a.accordion aria-controls="system_google" aria-expanded="false" data-toggle="collapse" href="#system_google" role="button" Google API Keys
+  #system_google.collapse.accordion-body
+    .google-api-section
+      - get_all_google_key.each_with_index do |config, i|
+        .row.google-api-form
+          .col-md-4.google-config-padding
+            input[class="form-control" type="text" name="google_configs[#{i}][google_api_key]" data-index-val="#{i}" id="google_api_key-#{i}" value=config.key]
+            input name="google_configs[#{i}][google_api_key_id]" type="hidden" value=config.id
+          .col-md-2.google-config-padding
+            a.btn.btn-sm.remove-google-api.google-config-buttons.btn-fixed-width[href="#" type="button"]
+              | Remove
+
+    .row.google-add-api
+      .col-md-4.google-config-padding
+      .col-md-2.google-config-padding
+        a.btn.btn-sm.add-google-api.btn-fixed-width.google-config-buttons[href="#" type="button"]
+          | Add
+      

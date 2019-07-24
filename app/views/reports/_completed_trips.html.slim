@@ -1,0 +1,24 @@
+#completed-trip.tab-pane.fade
+  .col-md-12.table-responsive.table-responsive-datatables
+    form[action="#"]
+      ul.date-filter
+        li.filter-block.date-filter
+          input#completed-trips-picker[class="form-control" type="text" name="completed-trips-date" value=""]
+    table#reports-completed-trips-table.table.table-bordered
+      thead
+        tr
+          th
+            | Trip Manifest #
+          th
+            | Driver
+          th
+            | Check-in Time
+          th
+            | Actual Check-in Time
+          th
+            | Average Rating
+          th
+            | Duration
+          th
+            | Distance
+      tbody

@@ -1,0 +1,1 @@
+Zone.create! name: 1, latitude: '17.3980155', longitude: '78.5932912'

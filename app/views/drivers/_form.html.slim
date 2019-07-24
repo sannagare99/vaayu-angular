@@ -1,0 +1,87 @@
+= simple_form_for @driver, html: {'data-validate' => 'form', :class => 'modal-form live-validation', :multipart => true, id: "form-drivers"}, :url => url, :method => meth, :remote => remote do |f|
+  = f.simple_fields_for :entity_attributes, @driver.entity do |ui|
+    .row
+      .col-md-4
+        = f.input :f_name, label: 'First Name', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+      .col-md-4
+        = f.input :m_name, label: 'Middle Name', wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+      .col-md-4
+        = f.input :l_name, label: 'Last name', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "name" } }
+    .row
+      .col-md-4
+        = f.input :email, label: 'Email', required: false, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "email" } }
+      .col-md-4
+        = f.input :phone, as: :tel, label: 'Phone', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "phone" } }
+      - if current_user.admin?
+        .col-md-4
+          = ui.association :logistics_company, label: 'Company', prompt: "Choose company", required: true
+
+    .row
+      .col-md-4.group-label.text-right
+        span.field-label
+          | Driver attributes:
+      .col-md-4
+        = ui.input :badge_number, label: 'Badge Number', required: true
+    .row
+      .col-md-8.col-md-offset-4
+        label.control-label[for="user_avatar"]
+          | Image
+        .fileinput[data-provides="fileinput" class="#{@driver.avatar.present? ? 'fileinput-exists' : 'fileinput-new'}"]
+          .file-wrap-block
+            input[type="hidden" value="" name="fileinput_widget"]
+            .file-input-wrap
+              .input-group
+                .form-control[data-trigger="fileinput"]
+                  i.glyphicon.glyphicon-file.fileinput-exists
+                  span.fileinput-filename
+                    - if @driver.avatar.present?
+                        = @driver.avatar_file_name
+                span.input-group-btn
+                  button.btn.btn-default.fileinput-exists[rel="tooltip" title="" data-dismiss="fileinput" data-original-title="remove"]
+                    i.fa.fa-times
+                  button.btn.btn-inverse.btn-file
+                    span.fileinput-new
+                      | Choose image
+                    span.fileinput-exists
+                      | Change
+                    = f.input :avatar, as: :file, label: false, :wrapper => false, input_html: {class: 'file-upload', accept: 'image/*'}
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.association :site, label: 'Choose site', prompt: "Choose site"
+      .col-md-4
+        = ui.input :badge_issue_date, :as => :string, label: 'Badge Issue Date', input_html: {data: {input: 'datepicker'}, :value => @driver.entity.badge_issue_date.try(:strftime, '%d/%m/%Y')}
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :badge_expire_date, :as => :string, label: 'Badge Expire Date', input_html: {data: {input: 'datepicker'}, :value => @driver.entity.badge_expire_date.try(:strftime, '%d/%m/%Y')}
+      .col-md-4
+        = ui.input :local_address, label: 'Local Address', required: true
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :permanent_address, label: 'Permanent Address', required: true
+      .col-md-4
+        = ui.input :aadhaar_number, label: 'Aadhaar Number', input_html: { class: "live-validate" }
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :aadhaar_mobile_number, label: 'Aadhaar Mobile Number'
+      .col-md-4
+        = ui.input :aadhaar_address, label: 'Aadhaar Address'
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :licence_validity, :as => :string, label: 'Licence Validity', input_html: {data: {input: 'datepicker'}, :value => @driver.entity.licence_validity.try(:strftime, '%d/%m/%Y')}
+      .col-md-4
+        = ui.input :licence_number, label: 'Licence Number', required: true, input_html: {minlength: 15, maxlength: 15}
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.association :business_associate, label_method: :legal_name, value_method: :id, label: 'Business associate', prompt: "Choose associate"
+      .col-md-4
+        = ui.input :offline_phone, label: 'Offline Phone', prompt: "Add Offline Phone"
+    .row
+      .col-xs-4.col-md-2.col-md-offset-4.small-padding
+        = ui.input :verified_by_police, required: true
+      .col-xs-3.col-md-2.small-padding
+        = ui.input :uniform
+      .col-xs-3.col-md-2.small-padding
+        = ui.input :licence
+      .col-xs-3.col-md-2.small-padding
+        = ui.input :badge
+  ul.match-result style=("display: none;")

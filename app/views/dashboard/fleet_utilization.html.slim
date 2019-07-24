@@ -1,0 +1,31 @@
+.content-header
+  h2.content-title
+    | Fleet Utilization Micro Dashboard
+.content-body.micro-dashboard.fleet-utilization
+  #error-placement
+
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(fleet_utilization_dashboard_index_path(:period => 'day'))}" type="button"]
+          =link_to fleet_utilization_dashboard_index_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(fleet_utilization_dashboard_index_path(:period => 'week'))}" type="button"]
+          =link_to fleet_utilization_dashboard_index_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(fleet_utilization_dashboard_index_path(:period => 'month'))}" type="button"]
+          =link_to fleet_utilization_dashboard_index_path(:period => 'month')
+            | Monthly 
+  .row.margin-top
+    .col-md-12
+      a[name='fleet-utilization-usage']
+      h4 Vehicle Usage
+      .col-md-12
+        .col-md-6
+          .row.text-center Vehicles Used
+          .row
+            canvas#fleet-utilization-operator-wise[height=250 data-chart_data="#{@data[:by_operator].to_json}"]
+        .col-md-6
+          .row.text-center Load Factor
+          .row
+            canvas#fleet-utilization-load-factor[height=250 data-chart_data="#{@data[:load_factor].to_json(except: :id)}"]

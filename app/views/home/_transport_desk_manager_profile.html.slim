@@ -1,0 +1,50 @@
+= simple_form_for @user, html: {'data-validate' => 'form', :class => 'update_profile'}, :url => transport_desk_manager_path(@user.entity), :method => 'PATCH' do |f|
+  = f.simple_fields_for :entity_attributes, @user.entity do |ui|
+    .row
+      .col-md-15-2.group-label.text-right
+        span.field-label
+          | Info:
+      .col-md-15-3
+        = f.input :f_name, label: 'First Name', required: true
+      .col-md-15-3
+        = f.input :m_name, label: 'Middle Name'
+      .col-md-15-3
+        = f.input :l_name, label: 'Last name', required: true
+    .row
+      .col-md-15-3.col-md-15-offset-2
+        = f.input :email, label: 'Email', required: true
+      .col-md-15-6
+        .form-group
+          label.control-label[for="user_avatar"]
+            | Image
+          .fileinput[data-provides="fileinput" class="#{@user.avatar.present? ? 'fileinput-exists' : 'fileinput-new'}"]
+            .file-wrap-block
+              input[type="hidden" value="" name="fileinput_widget"]
+              .file-input-wrap
+                .input-group
+                  .form-control[data-trigger="fileinput"]
+                    i.glyphicon.glyphicon-file.fileinput-exists
+                    span.fileinput-filename
+                      - if @user.avatar.present?
+                        = @user.avatar_file_name
+                  span.input-group-btn
+                    button.btn.btn-default.fileinput-exists[rel="tooltip" title="" data-dismiss="fileinput" data-original-title="remove"]
+                      i.fa.fa-times
+                    button.btn.btn-inverse.btn-file
+                      span.fileinput-new
+                        | Choose image
+                      span.fileinput-exists
+                        | Change
+                      = f.input :avatar, as: :file, label: false, :wrapper => false, input_html: {class: 'file-upload', accept: 'image/*'}
+    .row
+      .col-md-15-2.group-label.text-right
+        span.field-label
+          | User attributes:
+      .col-md-15-3
+        = f.input :phone, as: :tel, label: 'Phone', required: true
+  = f.simple_fields_for :entity_attributes, @user.entity do |entity|
+    = entity.input :employee_company_id, as: 'hidden', input_html: { value: @user.entity.employee_company_id }
+
+    .row
+      .col-md-15-3.col-md-15-offset-2
+        = f.button :submit, 'Save changes', :class => 'btn btn-sm btn-primary'

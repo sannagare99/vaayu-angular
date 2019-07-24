@@ -1,0 +1,32 @@
+#vendor-trip-distribution.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#vendor-trip-distribution-picker[class="form-control" type="text" name="vendor-trip-distribution-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'vendor_trip_distributions')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-vendor-trip-distribution-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Date
+          th
+            | Shift
+          th
+            | Direction
+          th
+            | Vendor
+          th
+            | # Trips
+          th
+            | Planned Mileage (km)
+          th
+            | Actual Mileage (km)
+      tbody
+  = render partial: 'report_download_modal', locals: { report_name: 'vendor_trip_distributions'}

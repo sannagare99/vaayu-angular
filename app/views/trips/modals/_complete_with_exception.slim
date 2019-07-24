@@ -1,0 +1,120 @@
+#complete-with-exception.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-md#exception_reasons_sm[style="width:50%"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          -if trip.check_in?
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} IN #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+          -else
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} OUT #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}          
+      .modal-body
+        .row#complete-with-exception-reasons
+          .col-md-6#complete-with-exception-reasons-div[style="padding:0px 0px 0px 30px"]
+            div[data-exception="Wrong Assignment"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_1" value="complete_with_exception_1" ]
+                label[for="complete_with_exception_1"]
+              .exception-reason
+                | Wrong Assignment
+            div[data-exception="Missed Assignment"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_2" value="complete_with_exception_2" ]
+                label[for="complete_with_exception_2"]
+              .exception-reason
+                | Missed Assignment
+            div[data-exception="Network Issue"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_3" value="complete_with_exception_3" ]
+                label[for="complete_with_exception_3"]
+              .exception-reason
+                | Network Issue
+            div[data-exception="App Issue"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_4" value="complete_with_exception_4" ]
+                label[for="complete_with_exception_4"]
+              .exception-reason
+                | App Issue
+            div[data-exception="Driver Didn’t Accept"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_5" value="complete_with_exception_5" ]
+                label[for="complete_with_exception_5"]
+              .exception-reason
+                | Driver Didn’t Accept             
+            div[data-exception="Driver Didn’t Start"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_6" value="complete_with_exception_6" ]
+                label[for="complete_with_exception_6"]
+              .exception-reason
+                | Driver Didn’t Start
+            div[data-exception="Driver Didn’t Complete"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_7" value="complete_with_exception_7" ]
+                label[for="complete_with_exception_7"]
+              .exception-reason
+                | Driver Didn’t Complete
+            div[data-exception="Driver Was Off Duty"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_8" value="complete_with_exception_8" ]
+                label[for="complete_with_exception_8"]
+              .exception-reason
+                | Driver Was Off Duty
+            div[data-exception="Driver Completed Trip"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_9" value="complete_with_exception_9" ]
+                label[for="complete_with_exception_9"]
+              .exception-reason
+                | Driver Completed Trip
+            div[data-exception="Different Sequence"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_10" value="complete_with_exception_10" ]
+                label[for="complete_with_exception_10"]
+              .exception-reason
+                | Different Sequence
+            div[data-exception="Driver Not On-boarded"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_11" value="complete_with_exception_11" ]
+                label[for="complete_with_exception_11"]
+              .exception-reason
+                | Driver Not On-boarded                
+            div[data-exception="Other" style="height:32px"]
+              span.nice-radio.text-default.exception-radio
+                input[type="radio" name="assign_driver_id" id="complete_with_exception_12" value="complete_with_exception_12" ]
+                label[for="complete_with_exception_12"]
+              .exception-reason
+                | Other
+              .helper-inline[style="margin-left:10px" id="exception_text"]
+                input.form-control.hidden[type="text" name="name" placeholder=" Reason" id="complete_with_exception_text"]
+          .col-md-6#driver_names
+            div[style="margin-bottom:3px"]
+              .col-md-12.input-group
+                input#complete_with_exception_driver_name.form-control[type="text" name="name" placeholder=" Driver"]      
+                span#complete-with-exception-search-driver.input-group-addon.btn[href="#" data-trip-id='#{trip.id}']
+                  i.fa.fa-search
+            div[style="max-height:280px; overflow:scroll"]
+              .table-responsive
+                table.table.table-bordered#complete-with-exception-drivers[data-trip-id='#{trip.id}' data-all-drivers='#{@drivers.to_json}']
+                  tbody
+                    - @drivers.each do |driver|
+                      tr[data-driver-id="#{driver.id}"]
+                        td.text-center.text-default.radio-row.col-md-2
+                          .nice-radio.text-default
+                            -if @selected_driver != nil && driver.id == @selected_driver.id
+                              input[type="radio" checked="true" name="driver_id" id="#{driver.id}" value="#{driver.id}" ]
+                            -else
+                              input[type="radio" name="driver_id" id="#{driver.id}" value="#{driver.id}" ]
+                            label[for="#{driver.id}"]
+                        td.col-md-6
+                          | #{driver.f_name} #{driver.l_name}
+                        td.col-md-4
+                          | #{driver.paired_vehicle}
+      .modal-footer
+        a.btn.btn-sm.btn-primary.disabled-default#book-ola-uber[href="#" data-trip-id='#{trip.id}' data-driver-id='#{@driver_id}' data-book-ola='true']
+          | Book Ola/Uber
+        -if @notification.blank?
+          a.btn.btn-sm.btn-primary.disabled-default#complete-with-exception-submit[href="#" data-trip-id='#{trip.id}' data-driver-id='#{@driver_id}']
+            | Submit
+        -else
+          a.btn.btn-sm.btn-primary.disabled-default#complete-with-exception-submit[href="#" data-trip-id='#{trip.id}' data-notification-id='#{notification.id}' data-driver-id='#{@driver_id}']
+            | Submit

@@ -1,0 +1,34 @@
+#modal-rosters-guards-assignment.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Guards
+      .modal-body
+        .table-responsive
+          table#guards-list-table.table.table-bordered
+            thead
+              tr
+                th
+                  | Guard
+                th
+                  | Location
+                th.text-center
+                  | Assign
+            tbody
+              -employees.each do |emp|
+                tr
+                  td
+                    |#{emp.f_name} #{emp.l_name}
+                    a#call-person[href="#" data-number='#{emp.phone}' style="margin-top:2px; margin-left:6px; position:relative"]
+                      = inline_svg 'phone.svg', class: 'text-primary'                    
+                  td
+                    | #{emp&.home_address}
+                  td.text-center.text-primary.nice-radio
+                    input.guard_employee_id id="#{emp.id}" name="employee_id" value="#{emp.id}" type="radio"
+                    label for="#{emp.id}" style="top:-5px; left:5px"
+      .modal-footer
+        a.btn.btn-sm.btn-primary#add-guard-to-trip[data-trip-id='#{@trip_id}' aria-hidden="true" disabled="disabled"]
+          | Add

@@ -1,0 +1,8 @@
+.card.text-center
+  .card-body.card-sm
+    .card-title Manifest Fulfillment
+    .card-text
+      .easyPieChart[data-barcolor="#{trend ? '#13A89E' : '#DA4F49'}" data-trackcolor='white' data-scalecolor='white' data-lineWidth="5" data-percent="#{value.round}" data-size="90" data-linecap="butt"]
+        span.count.xsmall= value.round
+      .count.small
+        div[class="glyphicon #{trend ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{trend ? 'text-success' : 'text-danger'}"]

@@ -1,0 +1,203 @@
+.content-header
+  h2.content-title
+    | Completed Trips Micro Dashboard
+.content-body.micro-dashboard.completed-trips
+  #error-placement
+
+  .row.margin-top
+    .col-md-12.margin-bottom
+      .btn-group
+        button[class="btn btn-default #{active_class(completed_trips_dashboard_index_path(:period => 'day'))}" type="button"]
+          =link_to completed_trips_dashboard_index_path(:period => 'day')
+            | Daily
+        button[class="btn btn-default #{active_class(completed_trips_dashboard_index_path(:period => 'week'))}" type="button"]
+          =link_to completed_trips_dashboard_index_path(:period => 'week')
+            | Weekly
+        button[class="btn btn-default #{active_class(completed_trips_dashboard_index_path(:period => 'month'))}" type="button"]
+          =link_to completed_trips_dashboard_index_path(:period => 'month')
+            | Monthly
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-trend']
+      h4 Tending: Completed Trips
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.black
+              span Total
+            li
+              span.point.square.dark-blue
+              span To Work
+            li
+              span.point.square.blue
+              span To Home
+        .col-md-10
+          canvas#completed-trips-trend[height=250 data-chart_data="#{@data[:trend].to_json}"]
+
+      .col-md-3.pull-right
+        ul.nav.flex-column
+          li
+            a.nav-link[href='#completed-trips-trend'] Trending: Completed Trips
+          li
+            a.nav-link[href='#completed-trips-breakup'] Completed Trips Breakup
+          li
+            a.nav-link[href='#completed-trips-esummary'] High Level Exception Summary
+          li
+            a.nav-link[href='#completed-trips-fulfillment'] Employee Request Fulfillment
+          li
+            a.nav-link[href='#completed-trips-overall-mileage'] Overall Mileage Analysis
+          li
+            a.nav-link[href='#completed-trips-average-mileage'] Trip Duration and Mileage
+          li
+            a.nav-link[href='#completed-trips-per-employee'] Employee Duration and Mileage
+          li
+            a.nav-link[href='#more'] More
+
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-breakup']
+      h4 Completed Trips Breakup
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.blue &nbsp;
+              span All Good
+            li
+              span.point.red &nbsp;
+              span With Exceptions
+            li
+              span.point.yellow &nbsp;
+              span OLA / Uber
+        .col-md-3
+          canvas#completed-trips-breakup-total[height=250 data-chart_data="#{@data[:exceptions_breakup][:total].to_json}"]
+        .col-md-3
+          canvas#completed-trips-breakup-work[height=250 data-chart_data="#{@data[:exceptions_breakup][:to_work].to_json}"]
+        .col-md-3
+          canvas#completed-trips-breakup-home[height=250 data-chart_data="#{@data[:exceptions_breakup][:to_home].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-esummary']
+      h4 High Level Exceptions Summary
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.square.dark-blue
+              span Driver
+            li
+              span.point.square.blue
+              span Employee
+            li
+              span.point.square.yellow
+              span Vehicle
+            li
+              span.point.square.red
+              span Technical
+        .col-md-9
+          canvas#completed-trips-exceptions-summary[height=250 data-chart_data="#{@data[:exceptions_summary].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-fulfillment']
+      h4 Employee Request Fulfillment
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.square.dark-blue
+              span Scheduled + Change
+            li
+              span.point.square.blue
+              span Transported
+            li
+              span.point.square.yellow
+              span Cancelled
+            li
+              span.point.square.red
+              span No Shows
+        .col-md-3
+          canvas#completed-trips-fulfillment[height=250 data-chart_data="#{@data[:fulfillment][:total].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-overall-mileage']
+      h4 Overall Mileage Analysis
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.square.dark-blue
+              span With Employees
+            li
+              span.point.square.blue
+              span Without Employees
+        .col-md-9
+          canvas#completed-trips-overall-mileage[height=250 data-chart_data="#{@data[:overall_mileage].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-average-mileage']
+      h4 Average Trip Duration and Mileage
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.dark-blue
+              span To Work
+            li
+              span.point.blue
+              span To Home
+        .col-md-5
+          .row.text-center Trip Mileage
+          .row
+            canvas#completed-trips-average-mileage[height=250 data-chart_data="#{@data[:average_mileage].to_json}"]
+        .col-md-5
+          .row.text-center Trip Duration
+          .row
+            canvas#completed-trips-average-duration[height=250 data-chart_data="#{@data[:average_duration].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='completed-trips-per-employee']
+      h4 Employee Trip Duration and Mileage
+      .col-md-9.border-bottom
+        .col-md-2.legend-wrapper
+          ul.legend
+            li
+              span.point.dark-blue
+              span To Work
+            li
+              span.point.blue
+              span To Home
+        .col-md-5
+          .row.text-center Commute Distance Per Employee
+          .row
+            canvas#completed-trips-distance-per-employee[height=250 data-chart_data="#{@data[:distance_per_employee].to_json}"]
+        .col-md-5
+          .row.text-center Commute Time Per Employee
+          .row
+            canvas#completed-trips-duration-per-employee[height=250 data-chart_data="#{@data[:duration_per_employee].to_json}"]
+
+  .row.margin-top
+    .col-md-12
+      a[name='more']
+      h4 More
+      .col-md-12
+        .col-md-4
+          .row.text-center Shift Wise Distribution
+          .row
+            canvas#completed-trips-by-shift[height=250 data-chart_data="#{@data[:by_shift].to_json}"]
+        .col-md-4
+          .row.text-center Vehicle Type Wise
+          .row
+            canvas#completed-trips-by-vehicle[height=250 data-chart_data="#{@data[:by_vehicle].to_json}"]
+        .col-md-4
+          .row.text-center Client Location Wise
+          .row
+            canvas#completed-trips-by-site[height=250 data-chart_data="#{@data[:by_site].to_json}"]
+

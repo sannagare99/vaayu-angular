@@ -1,0 +1,40 @@
+| $("#schedule").html('');
+| $("#schedule").html('
+= j render :partial => 'employee_schedules/modal_schedule',:locals => {:schedule => @schedule}
+| ');
+| $("#modal-employee-schedule").modal('show');
+
+|$('#form-employee-schedule').submit(function(){
+|   $("#modal-employee-schedule").modal('hide');
+|});
+
+| $('#schedule-date').datepicker({
+|   todayHighlight: true
+| }).on('changeDate', function(e){
+|   if (isFutureDate(e.date)) {
+|     toggleRowHighligh();
+|     updateCalendarTableHead(e);
+|     updateCalendarTitle(e);
+|   }
+| });
+
+| $(".calendar-week-header button").on("click", function(){
+|   selectedDate = $("#schedule-date").data("datepicker").getDate();
+|   if ($(this).text() == "Next week") {
+|     weekNo = getWeek(selectedDate) + 1;
+|     weekForwardBackward(weekNo);
+|   }else {
+|     weekNo = getWeek(selectedDate) - 1;
+|     weekForwardBackward(weekNo);
+|   }
+| });
+
+| $(".schedule-content").on("click", function(){
+|   $(".schedule-form").hide();
+|   $(".schedule-content").show();
+|   $(this).hide();
+|   $(this).next().show();
+| });
+
+| $(".datepicker table tr:has(td.today)").addClass("datepicker-current-week");
+| $(".datepicker table td.today").addClass("active").click();

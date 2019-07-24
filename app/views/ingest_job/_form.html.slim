@@ -1,0 +1,23 @@
+#modal-ingest-job-form.modal.fade.modal-inputs[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal
+    = simple_form_for @ingest_job, remote: true, html: {'data-validate' => 'form', 'data-type' => 'json', class: 'modal-form', multipart: true, id: 'ingest_job_form'}, url: url, method: 'POST' do |f|
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            = title
+        .modal-body
+          .row
+            .col-md-6.error-message.text-danger
+          .row
+            .col-md-6
+              = f.input :file, as: :file, label: 'Excel File', required: true
+              = f.input :ingest_type, as: :hidden, input_html: {value: ingest_type}
+          .row
+            .col-md-6
+              a[href="#{sample_file}"] Download Sample Ingest File
+        .modal-footer
+          button.btn.btn-sm.btn-default[type='button' data-dismiss='modal']
+            | Close
+          = f.button :submit, 'Submit', class: 'btn btn-sm btn-primary'

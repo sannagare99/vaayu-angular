@@ -1,0 +1,22 @@
+= content_for :body_class, 'profile'
+.content-header
+  h2.content-title
+    | User Profile
+.content-body
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom.nav-actions-block
+      -if @user.admin?
+        = render :partial => 'home/admin_profile'
+      -if @user.employer?
+        = render :partial => 'home/employer_profile'
+      -if @user.operator?
+        = render :partial => 'home/operator_profile'
+      -if @user.line_manager?
+        = render :partial => 'home/line_manager_profile'
+      -if @user.transport_desk_manager?
+        = render :partial => 'home/transport_desk_manager_profile'
+      -if @user.operator_shift_manager?
+        = render "operator_shift_manager_profile"
+      -if @user.employer_shift_manager?
+        = render "employer_shift_manager_profile"

@@ -1,0 +1,38 @@
+= simple_form_for @user, html: {'data-validate' => 'form', :class => 'modal-form', id: "form-employers"}, url: url, remote: true, method: action do |f|
+  .row
+    .col-md-4
+      = f.input :f_name, label: 'First Name', required: true
+    .col-md-4
+      = f.input :m_name, label: 'Middle Name'
+    .col-md-4
+      = f.input :l_name, label: 'Last name', required: true
+
+  .row
+    .col-md-4.col-md-offset-4
+      = f.input :email, label: 'Email', required: true, wrapper_html: { class: 'search-match' }, input_html: { data: { "match-user" => "email" } }
+    .col-md-4
+      = f.simple_fields_for :entity_attributes, @user.entity do |ui|
+        = ui.association :employee_company, label: 'Company', prompt: false, required: true, prompt: "Choose a Company"
+  .row
+    .col-md-4.col-md-offset-4
+      = f.input :phone, as: :tel, label: 'Phone', required: true
+  = f.simple_fields_for :entity_attributes, @user.entity do |ui|
+    .row
+      .col-md-4.group-label.text-right
+        span.field-label
+          | Employer attributes:
+      .col-md-4
+        = ui.input :legal_name, as: :string, label: 'Legal Name', required: true
+      .col-md-4
+        = ui.input :pan, as: :string, label: 'Pan', required: true
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :tan, as: :string, label: 'Tan', required: true
+      .col-md-4
+        = ui.input :business_type, as: :string, label: 'Business Type'
+    .row
+      .col-md-4.col-md-offset-4
+        = ui.input :service_tax_no, as: :string, label: 'Service Tax No', required: true
+      .col-md-4
+        = ui.input :hq_address, as: :string, label: 'HQ Address'
+        

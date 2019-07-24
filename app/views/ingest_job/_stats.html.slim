@@ -1,0 +1,50 @@
+#modal-ingest-job-stats.modal.fade.modal-inputs.modal-stats[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          = title
+      .modal-body
+        .row.processing
+          .col-md-12.text-center
+            = image_tag 'ajax-loader.gif'
+        .row.stats
+          .col-md-12
+            span#processed-count.stat-count
+            span
+              | records processed
+          .col-md-12
+            span#schedules-updated-count.stat-count
+            span
+              | schedules updated
+          .col-md-12
+            span#employees-provisioned-count.stat-count
+            span
+              | new employees provisioned
+          .col-md-12
+            span#schedules-assigned-count.stat-count
+            span
+              | employees assigned new schedules
+          .col-md-12
+            span#schedules-provisioned-count.stat-count
+            span
+              | new schedules provisioned
+          .col-md-12
+            span#failed-row-count.stat-count
+            span
+              | bad records &nbsp;
+            a[data-toggle='collapse' href='#collapse-error-data']
+              | (show me)
+          .col-md-12
+            #collapse-error-data.collapse
+              table#ingest-errors-table.table.table-hover.table-bordered[style="width: 100%"]
+                thead
+                  tr
+                    th Employee ID#
+                    th Error
+                tbody
+      .modal-footer
+        button.btn.btn-sm.btn-primary[type='button' data-dismiss='modal']
+          | Ok

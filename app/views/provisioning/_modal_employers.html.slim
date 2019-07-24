@@ -1,0 +1,50 @@
+#modal-employers.modal.fade.modal-inputs[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    = simple_form_for @employer, html: {'data-validate' => 'form', :class => 'modal-form'}, :url => employers_path, :method => 'POST' do |f|
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            | Add New Customer
+        .modal-body
+          .row
+            .col-md-4
+              = f.input :f_name, label: 'First Name', required: true
+            .col-md-4
+              = f.input :m_name, label: 'Middle Name'
+            .col-md-4
+              = f.input :l_name, label: 'Last name', required: true
+          .row
+            .col-md-4.col-md-offset-4
+              = f.input :email, label: 'Email', required: true
+            .col-md-4
+              = f.simple_fields_for :entity_attributes, @employer.entity do |ui|
+                = ui.association :employee_company, prompt: false, label: 'Company', input_html: {class: 'selectboxit', placeholder: 'Choose company'}
+          = f.simple_fields_for :entity_attributes, @employer.entity do |ui|
+            .row
+              .col-md-4.group-label.text-right
+                span.field-label
+                  | Customer attributes:
+              .col-md-4
+                = f.input :phone, as: :tel, label: 'Phone', required: true
+              .col-md-4
+                = ui.input :legal_name, label: 'Legal Name', required: true
+            .row
+              .col-md-4.col-md-offset-4
+                = ui.input :pan, label: 'Pan', required: true, input_html: {minlength: 10, maxlength: 10}
+              .col-md-4
+                = ui.input :tan, label: 'Tan', required: true, input_html: {minlength: 10, maxlength: 10}
+            .row
+              .col-md-4.col-md-offset-4
+                = ui.input :business_type, label: 'Business type'
+              .col-md-4
+                = ui.input :service_tax_no, label: 'Service tax no', required: true, input_html: {minlength: 15, maxlength: 15}
+            .row
+              .col-md-4.col-md-offset-4
+                = ui.input :hq_address, label: 'HQ Address', required: true
+
+        .modal-footer
+          button.btn.btn-sm.btn-default[type="button" data-dismiss="modal"]
+            | Close
+          = f.button :submit, 'Submit', :class => 'btn btn-sm btn-primary'

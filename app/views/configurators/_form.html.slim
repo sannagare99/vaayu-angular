@@ -1,0 +1,42 @@
+= simple_form_for :configurator, html: {:'data-validate' => 'form', class: 'modal-form', id: "form-configurators", :multipart => true}, url: configurators_path, method: 'PUT', remote: false do |f|
+    - @configurations.boolean.each do |config|
+      .row
+        .col-md-2
+        .col-md-4
+          label= config.request_type.humanize
+        .col-md-4
+          = f.input config.request_type.to_sym, collection: [["Yes", 1], ["No", 0]], as: :radio_buttons, checked: "#{config.value}", item_wrapper_class: 'inline' , label: false, input_html: {class: 'radio-button-input'}
+    - @configurations.time.each do |config|
+      .row
+        .col-md-2
+        .col-md-4
+          label= config.request_type.humanize
+        .col-md-4
+          input[class="form-control" type="text" name="configurator[#{config.request_type}]" data-mask="time" id="#{config.request_type}" value=config.value]
+    - @configurations.string.each do |config|
+      .row
+        .col-md-2
+        .col-md-4
+          label= config.request_type.humanize
+        .col-md-4
+          input[class="form-control" type="text" name="configurator[#{config.request_type}]" id="#{config.request_type}" value=config.value]
+    hr
+    .google-api-section
+      h5  Google API Key
+      - @custom_configs.each_with_index do |config, i|
+        .row.google-api-form
+          .col-md-2
+          .col-md-4
+          .col-md-4
+            input[class="form-control" type="text" name="google_configs[#{i}][google_api_key]" data-index-val="#{i}" id="google_api_key-#{i}" value=config.key]
+            input name="google_configs[#{i}][google_api_key_id]" type="hidden" value=config.id
+          .col-md-2
+            a.btn.btn-sm.remove-google-api.btn-fixed-width[href="#" type="button"]
+              | Remove
+
+    .row.google-add-api
+      .col-md-7
+      .col-md-3
+        a.btn.btn-sm.add-google-api.btn-fixed-width[href="#" type="button"]
+          | Add
+      .col-md-2

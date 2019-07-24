@@ -1,0 +1,201 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+  distance:
+    centi:
+      one: "sm"
+      other: "sm"
+    unit:
+      one: "meter"
+      other: "m"
+    thousand:
+      one: "kilometer"
+      other: "km"
+  activerecord:
+    attributes:
+      user:
+       employee: 'Employee'
+       employer: 'Employer'
+       operator: 'Operator'
+       driver: 'Driver'
+       admin: 'Admin'
+       line_manager: 'Line Manager'
+       transport_desk_manager: 'Transport Desk Manager'
+    employee_schedule:
+      day:
+        mon: 'Monday'
+        tue: 'Tuesday'
+        wed: 'Wednesday'
+        thu: 'Thursday'
+        fri: 'Friday'
+        sat: 'Saturday'
+        sun: 'Sunday'
+    trip:
+      status:
+        created:  'Created'
+        assigned: 'Assigned to Driver'
+        canceled: 'Canceled'
+        active:   'Active'
+        completed: 'Completed'
+        assign_requested: 'assign_requested'
+        assign_request_declined: 'assign_request_declined'
+        assign_request_expired: 'assign_request_expired'
+    employee_trip:
+      status:
+
+#  user notifications
+  notification:
+    message:
+      not_accepted_manifest: "Driver didn't Accepted Manifest"
+      employer_planned_trip: "Employer planned trip"
+      driver_started_trip: 'Trip started by Driver'
+      employee_no_show: 'Employee No Show: %{employee_name}'
+      employee_no_show_no_approval_required: 'Employee No Show(Auto Approved): %{employee_name}'
+      passanger_no_show: 'Passanger No Show'
+      driver_no_show: 'Driver No Show'
+      not_on_board: "I'm not on board"
+      panic: 'Panic: %{employee_name}'
+      still_on_board: "I'm still in the car"
+      trip_completed: 'Trip completed'
+      out_of_geofence: 'Driver out of Geofence'
+      out_of_geofence_check_in: 'Out-of-geofence - pickup : %{employee_name}'
+      out_of_geofence_drop_off: 'Out-of-geofence - dropoff : %{employee_name}'
+      out_of_geofence_driver_arrived: 'Out-of-geofence - driver arrived : %{employee_name}'
+      out_of_geofence_missed: 'Out-of-geofence - no show : %{employee_name}'
+      out_of_geofence_check_in_site: 'Out-of-geofence - pickup : %{site_name}'
+      out_of_geofence_drop_off_site: 'Out-of-geofence - dropoff : %{site_name}'
+      out_of_geofence_driver_arrived_site: 'Out-of-geofence - driver arrived : %{site_name}'
+      out_of_geofence_missed_site: 'Out-of-geofence - no show : %{site_name}'      
+      car_broke_down: 'Car Broke Down'
+      car_broken_down: 'Car Broken Down'
+      car_ok_pending: 'Car OK Requested'
+      vehicle_ok: 'Vehicle OK Now'
+      car_broke_down_trip: 'Car Broke Down On Trip'
+      on_leave: 'Driver Leave Request'
+      cancel_leave: 'Driver Cancel Leave Request'
+      on_leave_trip: 'Driver on Leave - Assigned Trip'
+      driver_didnt_accept_trip: 'Trip not accepted'
+      trip_should_start: 'Trip Should Start'
+      complete_with_exception: 'Complete With Exception'
+      operator_assigned_trip: 'Trip Assigned'
+      driver_accepted_trip: 'Driver accepted the Trip'
+      female_first_or_last_in_trip: 'Female first / last exception'
+      book_ola_uber: 'Book Ola/Uber'
+      first_pickup_delayed: 'First Pickup Delayed'
+      site_arrival_delay: 'Site Arrival Delay'
+      driver_over_speeding: 'Driver drove above speed limit'
+      operator_created_trip: 'Trip Created'
+      driver_arrived_check_in: "Arrived at: %{employee_name}"
+      driver_arrived_check_out: "Arrived at: %{site_name}"
+      employee_on_board_check_in: "Picked Up: %{employee_name}"
+      employee_on_board_check_out: "Picked Up: %{employee_name}"
+      employee_drop_off_check_in: "Dropped Off: %{site_name}"
+      employee_drop_off_check_out: "Dropped Off: %{employee_name}"
+      reassigned_trip: "Re-try Trip assignment"
+      employee_canceled_trip_auto_approved: "Ride Canceled(Auto Approved): %{employee_name}"
+      employee_canceled_trip: "Ride Canceled: %{employee_name}"
+      cancel_request_approved: "Cancel request approved: %{employee_name}"
+      employee_changed_trip_auto_approved: "Change Request(Auto Approved): %{employee_name}"
+      employee_changed_trip: "Change Request: %{employee_name}"      
+      change_request_approved: "Change request approved: %{employee_name}"
+      annotate_trip: "Remarks Added: %{notification_remarks}"
+      completed_with_exception: "Trip completed with exception"
+      trip_not_started: "Trip not started"
+      employee_no_show_approved: "Employee No Show Approved: %{employee_name}"
+      driver_called_employee: "Call Employee: %{employee_name}"
+      employee_called_driver: "Call Driver: %{driver_name}"
+      guard_added: "Guard added to Trip"
+      female_exception_driver_unassigned: "Unasigned due to Female Exception"
+      female_exception_route_resequenced: "Female Exception: handled by re-sequencing"
+      female_exception_female_removed: "Female Exception: %{employee_name} (%{employee_id}) removed from active Trip"
+      car_break_down: "Car Break Down"
+      car_break_down_approved: "Car Break Down: Approved"
+      car_break_down_declined: "Car Break Down: Declined"
+      car_break_down_driver_unassigned: "Car Break Down: Driver Unassigned"
+      employee_deleted_from_trip: "Employee Removed: %{employee_name} (%{employee_id})"
+      guard_deleted_from_trip: "Guard Removed: %{employee_name}"
+      car_break_down_employee_removed: "Car Break Down: %{employee_name} (%{employee_id}) removed from active Trip" 
+    receiver:
+      operator:
+        not_accepted_manifest: "<b>%{driver_name}</b> (%{driver_licence})(%{driver_plate}) didn't accepted manifest <span class='trip-link'>%{trip_number}</a><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        driver_started_trip: "<b>%{driver_name}</b> (%{driver_plate}) started trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        employee_no_show: "<b>%{driver_name}:</b> Employee <b>%{employee_name}</b> didn't not appear for check in on trip <span class='trip-link'>%{trip_number}</span> <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a><a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a><a id='move_driver_to_next_step' data-remote='true' class='btn btn-default btn-sm no-show-btn clear' data-method='POST' href='/notifications/%{id}/move_driver_to_next_step'>Move to next step</a></div>"
+        driver_no_show: "<b>%{employee_name}:</b> Driver: <b>%{driver_name}</b> (%{driver_plate}) didn't not appear for check in on trip <span class='trip-link'>%{trip_number}</span> <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        not_on_board: "Employee <b>%{employee_name}</b> reports that they are not on board in trip <span class='trip-link'>%{trip_number}</span> with driver %{driver_name}. <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        panic: "Employee <b>%{employee_name}</b> reports that they are feeling unsafe in trip <span class='trip-link'>%{trip_number}</span> with driver %{driver_name}. <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        still_on_board: "Employee <b>%{employee_name}</b> reports that they are still in the Car for Completed trip <span class='trip-link'>%{trip_number}</span> with driver %{driver_name}. </span>.<div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        trip_completed: "Driver <b>%{driver_name}:</b> (%{driver_plate}) has finished trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        out_of_geofence: "Driver <b>%{driver_name}:</b> (%{driver_plate}) was out of geofence for trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        out_of_geofence_check_in: "Driver <b>%{driver_name}:</b> (%{driver_plate}) was out of geofence while Check In for trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        out_of_geofence_drop_off: "Driver <b>%{driver_name}:</b> (%{driver_plate}) was out of geofence while Drop Off for trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        out_of_geofence_driver_arrived: "Driver <b>%{driver_name}:</b> (%{driver_plate}) was out of geofence while I am here for trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        out_of_geofence_missed: "Driver <b>%{driver_name}:</b> (%{driver_plate}) was out of geofence while No Show for trip <span class='trip-link'>%{trip_number}</span><div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        car_broke_down: "<b>%{driver_name}:</b> Car broke down.<div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        vehicle_ok: "<b>%{driver_name}:</b> Vehicle Ok Now.<div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        car_broke_down_trip: "<b>%{driver_name}:</b> Car broke down on trip <span class='trip-link'>%{trip_number}</span> <div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a><a href='' id='view_trip_with_exception' data-remote='true' data-notification_id='%{id}' data-trip_id='%{trip_id}' class='btn btn-default btn-sm'>Complete With Exception</a></div>"
+        on_leave: "<b>%{driver_name}:</b> Driver has requested leave.<div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        cancel_leave: "<b>%{driver_name}:</b> Driver has requested to cancel his leave.<div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+        on_leave_trip: "<b>%{driver_name}:</b> Driver going on leave - has Assigned trip <span class='trip-link'>%{trip_number}</span> <div class='buttons'><a href='' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a><a href='' id='view_trip_with_exception' data-trip_id='%{trip_id}' data-remote='true' data-method='GET' data-notification_id='%{id}' class='btn btn-default btn-sm'>Complete With Exception</a></div>"
+      employer:
+        employee_no_show: "<b>%{driver_name}:</b> Employee <b>%{employee_name}</b> didn't not appear for check in on trip <span class='trip-link'>%{trip_number}</span> <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        driver_no_show: "<b>%{employee_name}:</b> Driver <b>%{driver_name}</b> (%{driver_plate}) didn't not appear for check in on trip <span class='trip-link'>%{trip_number}</span> <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        not_on_board: "Employee <b>%{employee_name}:</b> reports that they are not on board in trip <span class='trip-link'>%{trip_number}</span> with driver %{driver_name}. <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        panic: "Employee <b>%{employee_name}:</b> raised an alarm. <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        still_on_board: "Employee <b>%{employee_name}:</b>: I'm still in the car on trip <span class='trip-link'>%{trip_number}</span>.<div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a> <a href='' data-notification-id='%{id}' data-number='%{employee_phone}' id='call-person' class='btn btn-default btn-sm'>Call passenger</a></div>"
+        trip_completed: "Driver <b>%{driver_name}:</b> (%{driver_plate}) has finished trip <span class='trip-link'>%{trip_number}</span>. <div class='buttons text-center'><a href='' data-notification-id='%{id}' data-number='%{driver_phone}' id='call-person' class='btn btn-default btn-sm'>Call driver</a></div>"
+  user:
+    sms_notification: "Dear %{full_name}, your Company's Transport Desk has invited you to register with MOOVE. Please install the MOOVE App and experience the re-imagined office commute. %{link}"
+    driver_sms_notification: "Dear %{full_name}, you have been invited to register with MOOVE. Please get in touch with the Transport Desk or your Site Incharge to get the App. %{link}"
+    welcome_sms: "MOOVE is a re-imagined way for your office commute. It easily schedules your ride to office, keeps you informed about your ride and enables you to share your ride with friends and family. Please contact your Company's Transport Desk to know more. Happy MOOVING!"
+    guard_sms_notification: "Dear #{first_name}, You have been on-boarded to MOOVE as an Escort by {customer_name}. Welcome!"
+  push_notification:
+    driver_trip_exception:
+      title: MOOVE
+      body: Car which was assigned to pick you up broke down. Please press the panic button to contact operator.
+    driver_started_trip:
+      title: MOOVE
+      body: Driver has started the trip. The Expected Arrival Time (ETA) is %{eta}
+    employee_upcoming_trip:
+      title: Driver Assigned
+      body:  Driver will arrive %{day} at %{time}
+    employee_on_board:
+      title: MOOVE
+      body: You are in the car.
+    employee_missed_trip:
+      title: MOOVE
+      body: You missed your trip!
+    employee_trip_completed:
+      title: Trip Completed!
+      body: Your trip has been completed. Please rate this trip and optionally provide additional feedback.
+    next_drop:
+      title: MOOVE
+      body: You are next to be dropped off The updated ETA is %{updated_eta}
+    next_pick_up:
+      title: MOOVE
+      body: You are next to be picked up The updated ETA is %{updated_eta}
+    driver_arrived:
+      title: Driver has arrived at your pick-up location
+      body: "Driver has arrived at your pick-up location in %{color} %{make} %{model} (%{plate_no})."
+    driver_arrived_early:
+      title: Driver has arrived at your pick-up location
+      body: "Driver has arrived at your pick-up location in %{color} %{make} %{model} (%{plate_no})."

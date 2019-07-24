@@ -1,0 +1,98 @@
+#modal-operator-unassigned-rosters.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  .modal-dialog.modal-lg
+    .modal-content
+      div#unassigned_overlay[style="left:-2000px; width:5000px; height:5000px; background-color:black; opacity:0.5; top:-2000px; position:absolute; display:none; z-index:10000"]
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          -if trip.check_in?
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} IN #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+          -else
+            | Trip# #{employee_trips.first.date.strftime("%d/%m")} OUT #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+      .modal-body
+        .table-responsive
+          table#operator-unassigned-roster-table.table.table-bordered[data-trip-id='#{trip.id}']
+            thead
+              tr
+                th
+                  | Employee
+                th
+                  | Process Code
+                th
+                  | Sex
+                th
+                  | Address
+                th
+                  | ETA
+                th
+                  | Shift Starts
+                th.text-center
+                  | Delete                
+            tbody
+              -employee_trips.each_with_index do |emp_trip, index|
+                tr[data-employee-trip-id='#{emp_trip.id}']
+                  td
+                    .call-div.bg-primary[style="display:inline-block; line-height:20px"]
+                      a#call-person[href="#" data-number='#{emp_trip.employee.phone}' style="position:relative; top:-2px; left:3px"]
+                        = image_tag 'phone.svg'
+                    span[class="employee-name #{emp_trip.trip_route.status}" style="padding-left:10px"]
+                      | #{emp_trip.employee&.f_name} #{emp_trip.employee&.l_name}
+                  td
+                    -if emp_trip.employee.is_guard?
+                      | Guard
+                    -elsif emp_trip.employee.process_code.blank?
+                      | --
+                    -else                      
+                      | #{emp_trip.employee.process_code}
+                  td.text-center
+                    | #{emp_trip.employee.gender.to_s.first.capitalize}
+                  -if emp_trip.pick_up_address != employee_trips[index - 1].pick_up_address
+                    td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[emp_trip.pick_up_address].size}']
+                      | #{emp_trip.pick_up_address}
+                    td[rowspan='#{@address_mapping[emp_trip.pick_up_address].size}']
+                      | #{emp_trip.planned_eta&.strftime("%I:%M%p")}
+                    td
+                      | #{emp_trip.date.strftime("%I:%M %p")}
+                  -else
+                    -if index == 0
+                      td[style="max-width:170px; white-space:nowrap; overflow-x:scroll" rowspan='#{@address_mapping[emp_trip.pick_up_address].size}']
+                        | #{emp_trip.pick_up_address}
+                      td rowspan='#{@address_mapping[emp_trip.pick_up_address].size}'
+                        | #{emp_trip.planned_eta&.strftime("%I:%M%p")}
+                      td
+                        | #{emp_trip.date.strftime("%I:%M %p")}
+                    -else
+                      td[style="display:none"]
+                      td[style="display:none"]
+                      td
+                        | #{emp_trip.date.strftime("%I:%M %p")}
+                  td.text-danger.text-center.hand-cursor[id="action-item-#{emp_trip.id}"]
+                    | Delete
+      .modal-footer
+        .row#delete_error_message[style="text-align:left; color:red; margin-left:0px"]
+        .row
+          -if (current_user.operator? || current_user.admin?)
+            .col-md-6.assign-guard-block
+              - if trip.is_guard_required?
+                a.btn.btn-sm.btn-primary#assing-guard[href="/trips/guards_list?trip_id=#{trip.id}" data-remote="true"]
+                  | Add Guard
+              - else
+                a.btn.btn-primary.btn-sm#assign-trip-roster-modal[type="button" data-dismiss="modal" aria-hidden="true"]
+                  | Assign Driver
+            .col-md-6
+              .action-button
+                a.btn.btn-sm.btn-danger#delete-roster[type="button" data-roster-action="delete_all" data-dismiss="modal" aria-hidden="true"]
+                  | Delete Roster
+                a.btn.btn-sm.btn-primary.disabled-default#assign-roster[type="button" aria-hidden="true" data-roster-action="delete"]
+                  | Save Changes
+          -else
+            -if (current_user.employer?)
+              .col-md-6.assign-guard-block
+                - if trip.is_guard_required?
+                  a.btn.btn-sm.btn-primary#assing-guard[href="/trips/guards_list?trip_id=#{trip.id}" data-remote="true"]
+                    | Add Guard
+            .col-md-6.pull-right
+              .action-button                
+                a.btn.btn-sm.btn-primary.disabled-default#assign-roster[type="button" data-dismiss="modal" aria-hidden="true" data-roster-action="delete"]
+                  | Save Changes

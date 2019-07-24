@@ -1,0 +1,22 @@
+#stats-employee-satisfaction.stats-panel.panel.panel-animated.panel-default.bg-primary.border-primary
+  .panel-heading.bg-transparent.no-border
+    h3.text-center
+      a[href="" data-toggle="modal" data-target="#stats-employee-satisfaction-modal"]
+        | Employee Satisfaction
+  .panel-body.text-center
+    .row
+      .col-xs-6.col-sm-5.col-sm-offset-1
+        p.chart-label.text-ellipsis.text-center
+          | Average Rating
+        .rating
+          span.rating-count
+            = @employee_satisfaction[:average_rating]
+          - for i in (1..@employee_satisfaction[:average_rating])
+            i.fa.fa-star
+          - if @employee_satisfaction[:average_rating] % 1 > 0.5
+            i.fa.fa-star-half-o
+      .col-xs-6.col-sm-5
+        p.chart-label.text-ellipsis.text-center
+          | Under Expectation
+        .easyPieChart[data-barcolor="#232332" data-trackcolor="#ecf0f1" data-lineWidth="2" data-scalecolor="#ecf0f1" data-percent="#{@employee_satisfaction[:under_expectation]}" data-size="80"]
+          span

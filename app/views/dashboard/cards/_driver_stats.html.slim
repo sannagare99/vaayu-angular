@@ -1,0 +1,17 @@
+.card.text-left
+  ul.list-group.list-group-flush
+    li.list-group-item[style='border-top: none;']
+      span= "Active Driver Per #{(params['period'] || 'day').capitalize}"
+      span.pull-right
+        span[class="glyphicon #{active_driver[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{active_driver[:trend] ? 'text-success' : 'text-danger'}"] &nbsp;
+        span= active_driver[:value]
+    li.list-group-item
+      span= "Distance Per #{(params['period'] || 'day').capitalize}"
+      span.pull-right
+        span[class="glyphicon #{distance[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{distance[:trend] ? 'text-success' : 'text-danger'}"] &nbsp;
+        span= "#{(distance[:value] / 1000).round} km"
+    li.list-group-item
+      span= "Duration Per #{(params['period'] || 'day').capitalize}"
+      span.pull-right
+        span[class="glyphicon #{duration[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{duration[:trend] ? 'text-success' : 'text-danger'}"] &nbsp;
+        span= "#{(duration[:value] / 1.minutes).round} min"

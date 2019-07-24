@@ -1,0 +1,32 @@
+.card.text-center
+  .card-body
+    .card-title
+      .col-md-6 On Time Arrival
+      .col-md-6 On Time Departure
+    .card-text
+      .col-md-6.border-right
+        .easyPieChart[data-barcolor="#{on_time_check_in[:trend] ? '#13A89E' : '#DA4F49'}" data-trackcolor='white' data-scalecolor='white' data-lineWidth="5" data-percent="#{on_time_check_in[:value].round}" data-size="90" data-lineCap="square"]
+          span.count.xsmall
+        .count.small
+          div[class="glyphicon #{on_time_check_in[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{on_time_check_in[:trend] ? 'text-success' : 'text-danger'}"]
+      .col-md-6
+        .easyPieChart[data-barcolor="#{on_time_check_out[:trend] ? '#13A89E' : '#DA4F49'}" data-trackcolor='white' data-scalecolor='white' data-lineWidth="5" data-percent="#{on_time_check_out[:value].round}" data-size="90" data-lineCap="square"]
+          span.count.xsmall
+        .count.small
+          div[class="glyphicon #{on_time_check_out[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{on_time_check_out[:trend] ? 'text-success' : 'text-danger'}"]
+  ul.list-group.list-group-flush.text-left
+    li.list-group-item
+      span Average Delay
+      span.pull-right
+        span[class="glyphicon #{average_delay[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{average_delay[:trend] ? 'text-danger' : 'text-success'}"] &nbsp;
+        span= "#{(average_delay[:value] / 1.minutes).round(2)} min"
+    li.list-group-item
+      span Total Delayed Trips
+      span.pull-right
+        span[class="glyphicon #{total_delayed_trips[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{total_delayed_trips[:trend] ? 'text-danger' : 'text-success'}"] &nbsp;
+        span= total_delayed_trips[:value]
+    li.list-group-item
+      span Total Logins Affected
+      span.pull-right
+        span[class="glyphicon #{total_affected_logins[:trend] ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'} #{total_affected_logins[:trend] ? 'text-danger' : 'text-success'}"] &nbsp;
+        span= total_affected_logins[:value]

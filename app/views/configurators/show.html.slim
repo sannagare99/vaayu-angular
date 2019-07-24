@@ -1,0 +1,53 @@
+= content_for :body_class, 'provisioning'
+.content-header
+  h2.content-title
+    | Configurator
+.content-body
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom.nav-actions-block
+      ul.nav.nav-tabs
+        /!
+          -if can?(:read, Configurator)
+            li.configurators
+              a[href="#configurators" data-toggle="tab"]
+                | Configurator
+        li.general_settings
+          a[href="#general_settings" data-toggle="tab"]
+            | General Settings
+        li.system_settings
+          a[href="#system_settings" data-toggle="tab"]
+            | System Settings
+        li.compliance
+          a[href="#compliances" data-toggle="tab" data-source="/compliances/new"]
+            | Compliances
+      .nav-actions
+        .edit-buttons
+          a.btn.btn-sm.btn-default.cancel.btn-fixed-width[type="button" data-action="cancel"]
+            | Cancel
+          button.btn.btn-sm.btn-primary.submit-btn[type="submit" data-action="submit" form=""]
+            | Save changes
+        .action-buttons
+          a.editor_create.add-new-item.btn.btn-sm.btn-primary.btn-fixed-width[href="" data-toggle="modal" data-remote="" data-target=""]
+            | Add
+        .save-button[style="display:none"]
+          button.btn.btn-sm.btn-primary.submit-btn[type="submit" data-action="submit" form=""]
+            | Save changes
+        .action-buttons
+    .tab-content
+      = render partial: 'configurators/general_settings'
+      = render partial: 'configurators/compliances'
+      = render partial: 'configurators/system_settings'
+
+      #configurators.tab-pane.fade
+        .col-md-12.table-content-edit
+        .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+          table#configurators-table.table.table-hover.table-bordered.table-no-modal[style="width: 100%;"]
+            thead
+              th
+                | S.No#
+              th
+                | Site Name
+              th
+                | Action
+            tbody

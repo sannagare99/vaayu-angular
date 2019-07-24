@@ -1,0 +1,12 @@
+-if !@trip.book_ola.blank? && (@trip.status != 'completed' && @trip.status != 'canceled') && (current_user.operator? || current_user.admin?)
+	| $("#m-operator-book-ola-uber").html('');
+	| $("#m-operator-book-ola-uber").html('
+	= j render :partial => 'trips/modals/book_ola_uber',:locals => {:trip => @trip, :driver_id => @driver_id, :employee_trips => @employee_trips, :show_cost => true}
+	| ');
+	| $("#book-ola-uber-modal").modal('show');
+- else
+	| $("#m-trip-info").html('');
+	| $("#m-trip-info").html('
+	= j render :partial => 'trips/modals/modal_trip_info',:locals => {:trip => @trip, :employee_trips => @employee_trips, :notification => @notification, :driver => @driver, :vehicle => @vehicle}
+	| ');
+	| $("#modal-trip-info").modal('show');

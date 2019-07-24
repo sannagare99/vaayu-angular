@@ -1,0 +1,57 @@
+<tr>
+  <td style="background-color:#ffffff;border-top:0;border-bottom:0;padding-top:9px;padding-bottom:9px" align="center" valign="top">
+    <table style="border-collapse:collapse;max-width:600px!important" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <table style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <td style="padding-top:9px" valign="top">
+                    <table style="max-width:100%;min-width:100%;border-collapse:collapse" align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="padding-top:0;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left" valign="top">
+                            <h1 style="display:block;margin:0;padding:0;color:#202020;font-family:Helvetica;font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:normal;text-align:left">
+                              <div>
+                                <p>Ingest Job Status - <%= @ingest_job.status %></p>
+                              </div>
+                              <div>
+                                <div>
+                                  <div class="row">
+                                    <%= @ingest_job.processed_row_count %> records processed
+                                  </div>
+                                  <div class="row">
+                                    <%= @ingest_job.schedule_updated_count %> schedules updated
+                                  </div>
+                                  <div class="row">
+                                    <%= @ingest_job.employee_provisioned_count %> new employees provisioned
+                                  </div>
+                                  <div class="row">
+                                    <%= @ingest_job.schedule_assigned_count %> employees assigned new schedules
+                                  </div>
+                                  <div class="row">
+                                    <%= @ingest_job.schedule_provisioned_count %> new schedules provisioned
+                                  </div>
+                                  <div class="row">
+                                    <%= @ingest_job.failed_row_count %> bad records
+                                  </div>
+                                </div>
+                              </div>
+                              <div>&nbsp;</div>
+                              <div>&nbsp;</div>
+                              <div>&nbsp;- VAAYU Team</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>

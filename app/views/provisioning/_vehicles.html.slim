@@ -1,0 +1,37 @@
+#vehicles.tab-pane.fade
+  .col-md-12.table-content-edit
+  .col-md-12.table-responsive.table-responsive-datatables.table-wrap
+    a.reload-button  Reload
+    table#vehicles-table.table.table-hover.table-bordered.table-no-modal[style="width: 100%;"]
+      .search-section
+        input#vehicles-table-search-input.form-control.string name="user[search_text]" type="text" /
+        select#vehicles-table-field-name.form-control.select name="field_name"
+          option value="plate_number"  Plate Number
+          option value="make"  Make
+          option value="model"  Model
+          option value="colour"  Color
+          option value="seats"  Seat
+        a#vehicles-table_search.btn.btn-sm href="#"
+          i.fa.fa-search aria-hidden="true"
+      thead
+        tr
+          th
+            | Licence Plate
+          th
+            | Make
+          th
+            | Model
+          th
+            | Color
+          th
+            | Seat
+          th
+            | Compliance
+          th
+            | Status
+          th
+            | Driver
+          th
+            | Action
+      tbody
+#vehicle-checklist-modal

@@ -1,0 +1,145 @@
+.content-header
+  - if current_user.operator?
+    h2.content-title
+      | Jobs
+  -else
+    h2.content-title
+      | Trips
+.content-body
+  #error-placement
+  .row.margin-top
+    .col-md-12.margin-bottom.nav-actions-block
+      ul.nav.nav-tabs.trips-tabs
+        - if ENV["ENABLE_LINE_MANAGER_APPROVE"] == "true" && current_user.line_manager?
+          li
+            a[href="#employee-change-request" data-toggle="tab"]
+              | Requests
+        - if current_user.employer? || current_user.transport_desk_manager? || current_user.employer_shift_manager?
+          li
+            a[href="#operator-trip-board" data-toggle="tab"]
+              | Trip Board
+          li
+            a[href="#employee-trip-request" data-toggle="tab"]
+              | Queue
+          li
+            a[href="#operator-assigned-trips" data-toggle="tab"]
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]
+              |  Manifest
+          li
+            a[href="#trips-notifications" data-toggle="tab"]
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-danger" id="badge-unresolved-notification"]
+              |  Status
+              sup#new-notification.hidden
+                | *New
+          li
+            a[href="#employee-change-request" data-toggle="tab"]
+              | Requests
+          .nav-actions
+            a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
+              | Export Clusters
+            a#ingest-manifest.hidden.btn.btn-sm.btn-primary[type="button" data-toggle="modal" data-target="#modal-ingest-job-form"]
+              | Import Manifest
+
+        - if current_user.operator? || current_user.operator_shift_manager?
+          li
+            a[href="#operator-trip-board" data-toggle="tab"]
+              | Trip Board
+          li
+            a[href="#operator-assigned-trips" data-toggle="tab"]
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]
+              |  Manifest
+          /!
+            li
+              a[href="#operator-unassigned-rosters" data-toggle="tab"]
+                span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-unassigned-trips"]
+                |  Unassigned Rosters
+            li
+              a[href="#operator-assigned-trips" data-toggle="tab"]
+                span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]              
+                |  Assigned Trips
+            li
+              a[href="#operator-active-trips" data-toggle="tab"]
+                span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-active-trips"]
+                |  Active Trips
+            li
+              a[href="#operator-completed-trips" data-toggle="tab"]
+                span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-completed-trips"]
+                |  Completed Trips
+          li
+            a[href="#trips-notifications" data-toggle="tab"]
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-danger" id="badge-unresolved-notification"]
+              |  Status
+              sup#new-notification.hidden
+                | *New
+        - if current_user.admin?
+          li
+            a[href="#operator-trip-board" data-toggle="tab"]
+              | Trip Board
+          li
+            a[href="#employee-trip-request" data-toggle="tab"]
+              | Queue         
+          li
+            a[href="#operator-assigned-trips" data-toggle="tab"]       
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]                     
+              |  Manifest
+          li
+            a[href="#trips-notifications" data-toggle="tab"]
+              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-danger" id="badge-unresolved-notification"]
+              |  Status
+              sup#new-notification.hidden
+                | *New
+          li
+            a[href="#employee-change-request" data-toggle="tab"]
+              | Requests
+          .nav-actions
+            a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
+              | Export Clusters
+            a#ingest-manifest.hidden.btn.btn-sm.btn-primary[type="button" data-toggle="modal" data-target="#modal-ingest-job-form"]
+              | Import Manifest
+
+
+    .tab-content
+      - if ENV["ENABLE_LINE_MANAGER_APPROVE"] == "true" && current_user.line_manager?
+        = render 'trips/employer/adhoc_trips'
+      - if current_user.employer? || current_user.transport_desk_manager? || current_user.employer_shift_manager?
+        = render 'trips/operator/trip_board'
+        = render 'trips/employer/trip_requests'
+        = render 'trips/operator/assigned_trips'
+        = render 'trips/trips_notifications'
+        = render 'trips/employer/adhoc_trips'
+
+      - if current_user.operator? || current_user.operator_shift_manager?
+        = render 'trips/operator/trip_board'
+        = render 'trips/operator/assigned_trips'
+        = render 'trips/trips_notifications'
+
+      - if current_user.admin?
+        = render 'trips/operator/trip_board'
+        = render 'trips/employer/trip_requests'
+        = render 'trips/operator/assigned_trips'
+        = render 'trips/trips_notifications'
+        = render 'trips/employer/adhoc_trips'
+
+
+  - if current_user.employer? || current_user.transport_desk_manager? || current_user.admin?
+    #m-operator-unassigned-rosters
+    = render 'trips/employer/modal_trip_roster_confirm'
+
+  - if current_user.operator? || current_user.admin?
+    #m-operator-unassigned-rosters
+    #m-operator-available-drivers
+    #m-operator-complete-with-exception
+    #m-operator-book-ola-uber
+    = render 'trips/operator/modal_driver_checklist'
+    = render 'trips/operator/modal_active_trip1'
+    = render 'trips/operator/modal_active_trip2'
+    = render 'trips/operator/modal_roster2'
+    = render 'trips/operator/modal_auto_assign_summary'
+    = render 'trips/operator/modal_auto_assign_guard_summary'
+    = render 'trips/modals/annotate_trip'
+
+  #m-trip-info
+  #guard-list-modal
+  #annotate-trip-modal
+  script type="text/javascript"
+    | window.cluster_algorithm = "#{ENV['CLUSTER_ALGORITHM']}";

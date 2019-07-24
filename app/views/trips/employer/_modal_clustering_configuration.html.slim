@@ -1,0 +1,107 @@
+#modal-clustering-configuration.modal.fade[tabindex="-1" role="dialog"
+  aria-hidden="true"]
+  .modal-dialog.modal
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+          | ×
+        h4.modal-title
+          | Configure Auto-Clustering
+      .modal-body
+        .row
+          .col-md-12
+            h4 Tune Clustering Parameters:
+
+            .col-md-12.bottom-padding
+              .col-md-5
+                label Choose Method:
+              .col-md-5
+                select#clustering-strategy.form-control.selectboxit[placeholder='']
+                  option[value='proximity' selected] Proximity
+                  option[value='routing'] Routing
+                  option[value='hybrid'] Hybird
+                  option[value='historical'] Historical
+
+            #clustering-threshold-wrapper.col-md-12.bottom-padding
+              .col-md-5
+                label Cluster Radius
+              .col-md-5
+                input#clustering-threshold.form-control[
+                  type='text'
+                  style='width: 100%'
+                  data-provide='slider'
+                  data-slider-min=0
+                  data-slider-max=5000
+                  data-slider-step=100
+                  data-slider-value=1500
+                  data-slider-tooltip='Offset'
+                ]
+
+            #clustering-route-deviation-wrapper.col-md-12.hide.bottom-padding
+              .col-md-5
+                label Route Deviation
+              .col-md-5
+                input#clustering-route-deviation.form-control[
+                  type='text'
+                  style='width: 100%'
+                  data-provide='slider'
+                  data-slider-min=0
+                  data-slider-max=5000
+                  data-slider-step=100
+                  data-slider-value=1500
+                  data-slider-tooltip='Offset'
+                ]
+
+            #clustering-large-vehicle-wrapper.col-md-12.bottom-padding
+              .col-md-5
+                label Large Vehicle Threshold
+              .col-md-5
+                input#clustering-large-vehicle.form-control[
+                  type='text'
+                  style='width: 100%'
+                  data-provide='slider'
+                  data-slider-min=0 data-slider-max=20000
+                  data-slider-step=2000
+                  data-slider-value=12000
+                  data-slider-tooltip='Large Vehicle Threshold'
+                ]
+
+            #clustering-cluster-alone-threshold-wrapper.col-md-12.hide.bottom-padding
+              .col-md-5
+                label Cluster Alone Threshold
+              .col-md-5
+                input#clustering-cluster-alone-threshold.form-control[
+                  type='text'
+                  style='width: 100%'
+                  data-provide='slider'
+                  data-slider-min=0
+                  data-slider-max=100000
+                  data-slider-step=1000
+                  data-slider-value=60000
+                  data-slider-tooltip='Cluster Alone Threshold'
+                ]
+
+          .col-md-12
+            h4 Configure Available Fleet
+
+            .col-md-12
+              .hide.vehicle-class-template
+                span.vehicle-class-capacity 4
+                span -
+                span seater
+                span x
+                span.vehicle-class-quantity 1
+                span.actions
+                  a.vehicle-class-edit[href='#'] Edit
+                  a.hide.vehicle-class-save[href='#'] Save
+                  a.vehicle-class-remove[href='#'] Remove
+
+            .col-md-12
+              button#add-vehicle-class.btn.btn-default[type='button']
+                | Add Vehicle Class
+
+          / .col-md-12
+          /   h4 Configure Seating Capacity
+      .modal-footer
+        button.btn.btn-sm.btn-primary[type='button' data-dismiss='modal']
+          | Ok

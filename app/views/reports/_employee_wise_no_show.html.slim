@@ -1,0 +1,26 @@
+#employee-wise-no-show.tab-pane.fade.reports-section
+  .col-md-12
+    .row
+      .col-md-6
+        ul.date-filter
+          li.filter-block.date-filter
+            input#employee-wise-no-show-picker[class="form-control" type="text" name="employee-wise-no-show-date" value=""]
+      .col-md-6.
+        -if @can_perform_download
+          a.btn.btn-sm.report-download-button.btn-fixed-width[href="#{download_reports_path(report_name: 'employee_wise_no_shows')}" type="button"]
+            | Download
+        button.btn.btn-sm.report-modal-button data-toggle="modal" type="button"  Send Email
+  .col-md-12.table-responsive.table-responsive-datatables
+    table#reports-employee-wise-no-show-table.table.table-striped
+      thead
+        tr.reports-table
+          th
+            | Employee ID
+          th
+            | Employee Name
+          th
+            | # Rides
+          th
+            | # No Shows
+      tbody
+  = render :partial => 'report_download_modal', locals: { report_name: 'employee_wise_no_shows'}

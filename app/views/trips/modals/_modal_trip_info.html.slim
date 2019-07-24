@@ -1,0 +1,82 @@
+#modal-trip-info.modal.fade[tabindex="-1" role="dialog" aria-hidden="true"]
+  - if trip.status != 'canceled' || trip.status != 'completed'
+    - if (driver =trip.driver).blank?
+      = render :partial => 'trips/modals/trip_info_content_driver', :locals => {:trip => @trip, :driver => @driver, :employee_trips => @employee_trips, :submit => false, :notification => @notification}
+    - else
+      = render :partial => 'trips/modals/trip_info_content_driver', :locals => {:trip => @trip, :employee_trips => @employee_trips, :submit => false, :driver => @driver, :notification => @notification}
+  - else
+    .modal-dialog[style="width: 80%; max-width: 1100px;"]
+      .modal-content
+        .modal-header
+          button.close[type="button" data-dismiss="modal" aria-hidden="true"]
+            | ×
+          h4.modal-title
+            -if trip.check_in?
+              | Trip# #{employee_trips.first.date.strftime("%d/%m")} IN #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}
+            -else
+              | Trip# #{employee_trips.first.date.strftime("%d/%m")} OUT #{employee_trips.first.date.strftime("%H:%M")} - #{trip.id}            
+      .modal-body
+        .row
+          .col-sm-4
+            .card
+              .card-body
+                table.table.table-bordered.employee-trip-info-table
+                  thead
+                    tr
+                      th
+                        | Employee
+                      th
+                        | Process Code
+                  tbody
+                    - employee_trips.each do |employee_trip|
+                      tr
+                        td
+                          span.employee-name
+                            | #{employee_trip.employee.f_name} #{employee_trip.employee.l_name}
+                        td.text-center
+                          -if employee_trip.employee.process_code.blank?
+                            | --
+                          -else
+                            | #{employee_trip.employee.process_code}
+              .card-footer
+                .card-footer-row
+                  span.cf-label
+                    | Check-in Time
+                  span.cf-label-value
+                    | #{(trip.approximate_trip_end_date + trip.time_to_arrive)&.strftime("%I:%M%p")}
+                .card-footer-row
+                  span.cf-label
+                    | Arrival Time
+                  span.cf-label-value
+                    | #{trip.approximate_trip_end_date&.strftime("%I:%M%p")}
+          .col-sm-4
+            .card
+              .card-body
+                #map-trip-info[style="width: 100%; height: 250px;"]
+              .card-footer
+                .card-footer-row
+                  span.cf-label
+                    | Duration
+                  span
+                    | #{trip.scheduled_approximate_duration} min
+                .card-footer-row
+                  span.cf-label
+                    | Distance
+                  span
+                    | #{number_to_human(trip.scheduled_approximate_distance, units: :distance, precision: 2)}
+          .col-sm-4
+            .card
+              .card-body
+                = image_tag 'driver-img.png', :class => 'img-responsive'
+              .card-footer.driver-contact-wrap
+                .driver-contact
+                  div
+                    span.driver-name.cf-label
+                      | #{trip.driver.f_name} #{trip.driver.l_name}
+                  div
+                    - unless @trip.vehicle.blank?
+                      span.driver-id
+                        | #{trip.vehicle.plate_number}
+      .modal-footer
+        button.btn.btn-sm[data-dismiss="modal"]
+          | Close

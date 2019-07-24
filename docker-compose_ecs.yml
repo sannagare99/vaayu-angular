@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    image: '766964217053.dkr.ecr.ap-southeast-1.amazonaws.com/moove/webapp:JenkinsBuild-17'
+    ports:
+      - 80:80
+    depends_on:
+      - redis
+  redis:
+    image: 'redis:3.2.9-alpine'
+    command: redis-server
+    ports:
+      - 6379
+    sysctls:
+      - net.core.somaxconn=1024
+    volumes:
+      - ~/redis-data:/data
+  sidekiq:
+    image: '766964217053.dkr.ecr.ap-southeast-1.amazonaws.com/moove/webapp:JenkinsBuild-17'
+    command: bundle exec sidekiq -C /home/app/webapp/config/sidekiq.yml
+    depends_on:
+      - redis
