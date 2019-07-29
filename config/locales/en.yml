@@ -99,6 +99,7 @@ en:
       complete_with_exception: 'Complete With Exception'
       operator_assigned_trip: 'Trip Assigned'
       driver_accepted_trip: 'Driver accepted the Trip'
+      driver_face_detection: 'driver face detection'
       female_first_or_last_in_trip: 'Female first / last exception'
       book_ola_uber: 'Book Ola/Uber'
       first_pickup_delayed: 'First Pickup Delayed'

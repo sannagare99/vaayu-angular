@@ -174,6 +174,7 @@ $(function () {
     // notification depend on message type    
     switch (status) {
       case 'panic':
+      case 'driver_face_detection':
       case 'employee_no_show':
       case 'driver_no_show':
       case 'car_break_down':

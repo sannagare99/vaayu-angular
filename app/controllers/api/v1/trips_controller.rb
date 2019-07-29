@@ -483,6 +483,23 @@ module API::V1
       end
     end
 
+    def verify_driver_image
+      if params[:data][:result].to_i.present? and params[:data][:trip_id].present?
+        if params[:data][:result].zero?
+          data = {
+            "result": 0
+          }
+          render json: { status: 404}
+        else
+          data = {
+            "push_type": :driver_face_detection
+          }
+          VerifiedDriverImage.perform_async(params)
+          render json: { status: 200}
+        end
+      end
+    end
+
     protected
     def set_trip
       @trip = Trip.find(params[:id])
