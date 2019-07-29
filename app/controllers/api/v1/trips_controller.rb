@@ -495,6 +495,12 @@ module API::V1
             "push_type": :driver_face_detection
           }
           VerifiedDriverImage.perform_async(params)
+          trip = Trip.find (params[:data][:trip_id]) if params[:data][:trip_id].present?
+          employees =  trip.employees.pluck(:id)
+          employees.each do |employee|
+          Notification.create!(:trip_id=> trip.id,:employee_id=> employee,:driver_id=> trip.driver.id,:message => 'driver_face_detection', :new_notification => true, :resolved_status => true, :reporter => "Vaayu System").send_notifications
+          PushNotificationWorker.perform_async(employee, :driver_face_detection, data, :employee) if employee.present?
+        end
           render json: { status: 200}
         end
       end
