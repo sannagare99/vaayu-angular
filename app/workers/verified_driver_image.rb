@@ -3,8 +3,8 @@ class VerifiedDriverImage
   sidekiq_options :retry => 3, :dead => false
 
   def perform(params)
-    trip = Trip.find(params["data"]["trip_id"]) if params["data"]["trip_id"].present? and params["data"].present?
-    if trip.present? and params["data"]["result"] == 1
+    trip = Trip.find(params[:id]) if params[:id].present?
+    if trip.present? and params[:result].to_i == 1
       trip.update_attributes(verified_driver_image: true)
       return trip
     end
