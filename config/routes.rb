@@ -336,6 +336,7 @@ Rails.application.routes.draw do
           get 'accept_trip_request'
           get 'decline_trip_request'
           get 'start'
+          post 'verify_driver_image'
           post 'change_status_request_assigned'
           scope :trip_routes do
             post 'on_board'

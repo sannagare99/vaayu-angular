@@ -483,9 +483,32 @@ module API::V1
       end
     end
 
+    def verify_driver_image
+      if params[:result].to_i.present? and params[:id].present? and params[:employee_trip_id].present?
+        if params[:result].to_i.zero?
+          render json: { status: 200}
+        else
+          render json: { status: 404}
+          send_notification(params)
+        end
+      end
+    end
+
     protected
     def set_trip
       @trip = Trip.find(params[:id])
+    end
+
+    def send_notification(params)
+      data = { employee_trip_id: params[:employee_trip_id] } if params[:employee_trip_id].present?
+      data = data.merge!(push_type: :driver_arrived)
+      data.merge!(notification: { title: I18n.t("push_notification.driver_face_verified.title"), body: I18n.t("push_notification.driver_face_verified.body") })
+        VerifiedDriverImage.perform_async(params)
+        trip = Trip.find (params[:id]) if params[:id].present?
+        employees =  trip.employees.pluck(:id)
+        employees.each do |employee|
+          PushNotificationWorker.perform_async(employee, :driver_face_detection, data, :user) if employee.present?
+        end
     end
 
     def set_trip_routes
