@@ -484,24 +484,12 @@ module API::V1
     end
 
     def verify_driver_image
-      if params[:result].to_i.present? and params[:id].present?
+      if params[:result].to_i.present? and params[:id].present? and params[:employee_trip_id].present?
         if params[:result].to_i.zero?
-          data = {
-            "result": 0
-          }
-          render json: { status: 404}
-        else
-          data = {
-            "push_type": :driver_face_detection
-          }
-          VerifiedDriverImage.perform_async(params)
-          trip = Trip.find (params[:id]) if params[:id].present?
-          employees =  trip.employees.pluck(:id)
-          employees.each do |employee|
-          Notification.create!(:trip_id=> trip.id,:employee_id=> employee,:driver_id=> trip.driver.id,:message => 'driver_face_detection', :new_notification => true, :resolved_status => true, :reporter => "Vaayu System").send_notifications
-          PushNotificationWorker.perform_async(employee, :driver_face_detection, data, :employee) if employee.present?
-        end
           render json: { status: 200}
+          send_notification(params)
+        else
+          render json: { status: 404}
         end
       end
     end
@@ -509,6 +497,18 @@ module API::V1
     protected
     def set_trip
       @trip = Trip.find(params[:id])
+    end
+
+    def send_notification(params)
+      data = { employee_trip_id: params[:employee_trip_id] } if params[:employee_trip_id].present?
+      data = data.merge!(push_type: :driver_arrived)
+      data.merge!(notification: { title: I18n.t("push_notification.driver_face_verified.title"), body: I18n.t("push_notification.driver_face_verified.body") })
+        VerifiedDriverImage.perform_async(params)
+        trip = Trip.find (params[:id]) if params[:id].present?
+        employees =  trip.employees.pluck(:id)
+        employees.each do |employee|
+          PushNotificationWorker.perform_async(employee, :driver_face_detection, data, :user) if employee.present?
+        end
     end
 
     def set_trip_routes

@@ -174,7 +174,6 @@ $(function () {
     // notification depend on message type    
     switch (status) {
       case 'panic':
-      case 'driver_face_detection':
       case 'employee_no_show':
       case 'driver_no_show':
       case 'car_break_down':
@@ -213,6 +212,7 @@ $(function () {
         return 'warning-trip'
         break;
       case 'driver_started_trip':
+      case 'driver_face_detection':
       case 'trip_completed':
       case 'driver_accepted_trip':
       case 'operator_assigned_trip':
@@ -310,6 +310,7 @@ $(function () {
     "driver_arrived_check_in": "Arrived at Employee Location",
     "driver_arrived_check_out": "Arrived at Site Name",
     "employee_on_board_check_in": "Picked Up Employee",
+    "driver_face_detection" : "Driver Face Detection"
     "employee_on_board_check_out": "Picked Up Employee",
     "employee_drop_off_check_in": "Dropped Off at Site",
     "employee_drop_off_check_out": "Dropped Off Employee Name",
