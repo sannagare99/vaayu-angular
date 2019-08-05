@@ -487,9 +487,9 @@ module API::V1
       if params[:result].to_i.present? and params[:id].present? and params[:employee_trip_id].present?
         if params[:result].to_i.zero?
           render json: { status: 200}
-          send_notification(params)
         else
           render json: { status: 404}
+          send_notification(params)
         end
       end
     end
