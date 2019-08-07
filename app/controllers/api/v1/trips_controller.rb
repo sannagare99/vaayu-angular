@@ -500,15 +500,15 @@ module API::V1
     end
 
     def send_notification(params)
-      data = { employee_trip_id: params[:employee_trip_id] } if params[:employee_trip_id].present?
-      data = data.merge!(push_type: :driver_arrived)
+      data = { employee_trip_id: params[:employee_trip_id].to_i } if params[:employee_trip_id].present?
+      data = data.merge!(push_type: :driver_face_detection)
       data.merge!(notification: { title: I18n.t("push_notification.driver_face_verified.title"), body: I18n.t("push_notification.driver_face_verified.body") })
         VerifiedDriverImage.perform_async(params)
         trip = Trip.find (params[:id]) if params[:id].present?
-        employees =  trip.employees.pluck(:id)
-        employees.each do |employee|
-          PushNotificationWorker.perform_async(employee, :driver_face_detection, data, :user) if employee.present?
-        end
+        trip.employees.each do |employee|
+          user = employee.user.id
+          PushNotificationWorker.perform_async(user, :driver_face_detection, data, :user) if employee.present?
+       end 
     end
 
     def set_trip_routes
