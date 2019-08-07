@@ -6,7 +6,7 @@ pipeline {
         echo 'Building Image'
         sh '''echo "Git Commit :: ${GIT_COMMIT}"
 #docker system prune -a -f
-docker build -t moove/webapp:"build-6.$BUILD_NUMBER" -t moove/webapp:latest -t 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-2.${BUILD_NUMBER} .'''
+docker build -t moove/webapp:"build-2.$BUILD_NUMBER" -t moove/webapp:latest -t 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-2.${BUILD_NUMBER} .'''
         echo '''\n BUILD COMPLETED'''
       }
     }
@@ -102,7 +102,7 @@ docker build -t moove/webapp:"build-6.$BUILD_NUMBER" -t moove/webapp:latest -t 4
         // echo "Down the test env"
         // sh 'docker-compose down -v'
         echo 'Push To ECS'
-        sh 'docker push 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-6.${BUILD_NUMBER}'
+        sh 'docker push 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-2.${BUILD_NUMBER}'
         echo '''\n PUSH TO ECS COMPLETED'''
       }
     }
