@@ -207,10 +207,9 @@ function createOrSelectShift(objVal, currentForm, tripType) {
   }
 }
 
-function dateFormatter(date, dateFormat) {
-  // dateFormat="YYYY-MM-DD"
+function dateFormatter(date, dateFormat="YYYY-MM-DD") {
   // ES5
- dateFormat = typeof dateFormat !== 'undefined' ? dateFormat : "MM/DD/YYYY";
+  // dateFormat = typeof dateFormat !== 'undefined' ? dateFormat : "MM/DD/YYYY";
   return moment(new Date(date)).format(dateFormat);
 }
 
