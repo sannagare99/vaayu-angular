@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo 'Building Image'
         sh '''echo "Git Commit :: ${GIT_COMMIT}"
-docker system prune -a -f
+#docker system prune -a -f
 docker build -t moove/webapp:"build-2.$BUILD_NUMBER" -t moove/webapp:latest -t 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-2.${BUILD_NUMBER} .'''
         echo '''\n BUILD COMPLETED'''
       }
@@ -102,6 +102,9 @@ docker build -t moove/webapp:"build-2.$BUILD_NUMBER" -t moove/webapp:latest -t 4
         // echo "Down the test env"
         // sh 'docker-compose down -v'
         echo 'Push To ECS'
+        sh '''
+        #!/bin/bash
+        eval $(aws ecr get-login --no-include-email | sed "s|https://||\")'''
         sh 'docker push 482532497705.dkr.ecr.ap-south-1.amazonaws.com/webapp:build-2.${BUILD_NUMBER}'
         echo '''\n PUSH TO ECS COMPLETED'''
       }
