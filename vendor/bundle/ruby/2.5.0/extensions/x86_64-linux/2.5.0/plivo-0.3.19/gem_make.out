@@ -1,5 +1,0 @@
-current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/plivo-0.3.19/ext
-/usr/bin/ruby2.5 mkrf_conf.rb
-
-current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/plivo-0.3.19/ext
-/usr/bin/ruby2.5 -rrubygems /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/rake-12.0.0/exe/rake RUBYARCHDIR=/home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/extensions/x86_64-linux/2.5.0/plivo-0.3.19 RUBYLIBDIR=/home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/extensions/x86_64-linux/2.5.0/plivo-0.3.19
