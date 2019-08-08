@@ -1,0 +1,165 @@
+have_func: checking for rb_postponed_job_register_one()... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:13:57: error: ‘rb_postponed_job_register_one’ undeclared (first use in this function)
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_postponed_job_register_one; return !p; }
+                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+conftest.c:13:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_postponed_job_register_one; return !p; }
+/* end */
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: extern void rb_postponed_job_register_one();
+14: int t(void) { rb_postponed_job_register_one(); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_profile_frames()... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:13:57: error: ‘rb_profile_frames’ undeclared (first use in this function); did you mean ‘rb_proc_times’?
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_profile_frames; return !p; }
+                                                         ^~~~~~~~~~~~~~~~~
+                                                         rb_proc_times
+conftest.c:13:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_profile_frames; return !p; }
+/* end */
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: extern void rb_profile_frames();
+14: int t(void) { rb_profile_frames(); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_tracepoint_new()... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:13:57: error: ‘rb_tracepoint_new’ undeclared (first use in this function); did you mean ‘rb_time_nano_new’?
+ int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_tracepoint_new; return !p; }
+                                                         ^~~~~~~~~~~~~~~~~
+                                                         rb_time_nano_new
+conftest.c:13:57: note: each undeclared identifier is reported only once for each function it appears in
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_tracepoint_new; return !p; }
+/* end */
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.5  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     printf("%p", &t);
+ 9:   }
+10: 
+11:   return 0;
+12: }
+13: extern void rb_tracepoint_new();
+14: int t(void) { rb_tracepoint_new(); return 0; }
+/* end */
+
+--------------------
+
+have_const: checking for RUBY_INTERNAL_EVENT_NEWOBJ... -------------------- yes
+
+"gcc -I/usr/include/x86_64-linux-gnu/ruby-2.5.0 -I/usr/include/ruby-2.5.0/ruby/backward -I/usr/include/ruby-2.5.0 -I. -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fdebug-prefix-map=/build/ruby2.5-EpWdKF/ruby2.5-2.5.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: typedef int conftest_type;
+5: conftest_type conftestval = (int)RUBY_INTERNAL_EVENT_NEWOBJ;
+/* end */
+
+--------------------
+

@@ -1,0 +1,24 @@
+current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/fast_stack-0.2.0/ext/fast_stack
+/usr/bin/ruby2.5 -r ./siteconf20190527-3806-ecfore.rb extconf.rb
+checking for backtrace_symbols_fd()... yes
+checking for CreateTimerQueueTimer()... no
+checking for timeBeginPeriod() in -lwinmm... no
+creating Makefile
+
+current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/fast_stack-0.2.0/ext/fast_stack
+make "DESTDIR=" clean
+
+current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/fast_stack-0.2.0/ext/fast_stack
+make "DESTDIR="
+compiling fast_stack.c
+compiling fast_stack_linux.c
+fast_stack_linux.c: In function ‘alrm_handler’:
+fast_stack_linux.c:23:8: warning: ignoring return value of ‘write’, declared with attribute warn_unused_result [-Wunused-result]
+        write(backtrace_fd, "__SEP__\n", 8);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compiling fast_stack_windows.c
+linking shared-object fast_stack/fast_stack.so
+
+current directory: /home/administrator/Desktop/workspace/moove_repos/moove-webapp/vendor/bundle/ruby/2.5.0/gems/fast_stack-0.2.0/ext/fast_stack
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 fast_stack.so ./.gem.20190527-3806-8t6bvk/fast_stack
