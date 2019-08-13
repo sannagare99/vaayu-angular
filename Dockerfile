@@ -1,8 +1,8 @@
-FROM phusion/passenger-ruby23:0.9.35 
+FROM phusion/passenger-ruby23:0.9.35
 ENV HOME /home/app/webapp
 
-
 # Add the nginx site and config
+
 ADD webapp.conf /etc/nginx/sites-enabled/webapp.conf
 ADD nginx.conf /etc/nginx/nginx.conf
 ADD rails-env.conf /etc/nginx/main.d/rails-env.conf
@@ -11,7 +11,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log
 # Start Nginx / Passenger
 RUN rm -f /etc/service/nginx/down
 
-# Remove the default site
+# Remove the default site/
 RUN rm /etc/nginx/sites-enabled/default
 
 # install and use ruby-2.3.1
@@ -79,7 +79,7 @@ RUN npm install && bower --allow-root install
 #RUN cp config/initializers/devise_token_auth.rb config/initializers/devise_token_auth_tmp.txt
 #RUN cat config/initializers/devise_token_fix_assets_precomiple.txt > config/initializers/devise_token_auth.rb
 #RUN cat config/initializers/devise_token_auth_tmp.txt >> config/initializers/devise_token_auth.rb
-RUN RAILS_ENV=production PRECOMPILE=true bundle exec rake assets:precompile
+#RUN RAILS_ENV=production PRECOMPILE=true bundle exec rake assets:precompile
 
 RUN chown -R app:app /home/app/webapp
 EXPOSE 80
