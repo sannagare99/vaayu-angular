@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   resources :devices do
     post :validate, on: :collection
   end
@@ -375,6 +377,17 @@ Rails.application.routes.draw do
   # ------------------------- api v2 ----------------------------------
   namespace :api, defaults: {format: 'json'} do
     scope :v2, module: 'v2' do
+      resources :business_associates
+      resources :drivers do
+      collection do
+        get :search
+      end
+    end
+      resources :vehicles do
+        collection do
+          get :search
+        end
+      end
       resources :drivers, only: :show do
         member do
           post 'update_current_location'
