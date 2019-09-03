@@ -52,6 +52,14 @@ class API::V2::VehiclesController < ApplicationController
     render json: {status: "SUCCESS" , message: "Deleted vehicle", data: @vehicle},status: :ok
   end
 
+  def find_category_seat_by_vehicle
+    vehicle = VehicleModel.find_by_make_model(params[:make_model]) if params[:make_model].present?
+    vehicle_data = { capacity: vehicle.capacity.to_i , vehicle_category: vehicle.vehicle_category.category_name } if vehicle.present? && vehicle.vehicle_category.present?
+    success =  {status: "SUCCESS" , message: "Get vehicle data ", status: :ok, data: vehicle_data }
+    not_found = {status: "ERROR" , message: "Not found vehicle data", status: :unprocessable_entity }
+    render json: vehicle_data.present? ? success : not_found
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_vehicle
