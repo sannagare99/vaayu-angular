@@ -42,27 +42,31 @@ class Driver < ApplicationRecord
   validates :bank_no  , uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_no, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :licence_number, format: { with: /[a-zA-Z0-9]/, message: "Please enter alphanumeric and number." }
-  validates :bank_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :bank_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates_format_of :bank_name, { :with => /^[A-Za-z0-9 ]*$/ , message: "Please enter only Number or char." }
   validates :verified_by_police, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :site, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :business_associate, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :logistics_company, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :driver_image_url, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
-  has_attached_file :driver_image_url,
-    storage: :s3,
-    s3_credentials: {
-        access_key_id: ENV.fetch("S3_ACCESS_KEY_ID"),
-        secret_access_key: ENV.fetch('S3_SECRET_KEY'),
-        s3_region: ENV.fetch('S3_REGION'),
-        bucket: ENV.fetch('S3_BUCKET')
-    },
-    path: ":driver/:driver_image_url/:id/:filename",
-    url: "https://s3.us-east-2.amazonaws.com"
-  validates :date_of_birth, presence: true
-  before_save :validate_birth_date
-  before_save :validate_licence_expiry_date
-  before_save :validate_badge_expire_date
+
+  ### Upload Docs ##
+  has_attached_file :driving_license_doc
+   validates_attachment :driving_license_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :driver_badge_doc
+   validates_attachment :driver_badge_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :id_proof_doc
+   validates_attachment :id_proof_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :driving_registration_form_doc
+   validates_attachment :driving_registration_form_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+  validates :date_of_birth, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  before_save :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  before_save :validate_licence_expiry_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  before_save :validate_badge_expire_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
 
   after_update :update_notification
 
