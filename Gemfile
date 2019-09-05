@@ -19,6 +19,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'tzinfo-data'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+gem 'rswag'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # gem 'turbolinks', '~> 5'
 # app now returns a 200 from /healthcheck.
