@@ -33,6 +33,7 @@ class API::V2::DriversController < ApplicationController
       user =  User.new
       user.role = 3
       set_driver_user_field(user,params)
+      user.entity.update(profile_picture_url: user.avatar.url) if user.avatar.url.present?
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
         if @driver.update(driver_params)
@@ -148,6 +149,7 @@ class API::V2::DriversController < ApplicationController
       user.phone = params[:aadhaar_mobile_number].present? ? params[:aadhaar_mobile_number] : nil
       user.entity.licence_number = params[:licence_number].present? ? params[:licence_number] : nil
       user.entity.date_of_birth = params[:date_of_birth] if params[:date_of_birth].present?
+      user.avatar = params[:profile_picture_url] if params[:profile_picture_url].present?
       # user.entity.licence_validity = params[:licence_validity] if params[:licence_validity].present?
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
