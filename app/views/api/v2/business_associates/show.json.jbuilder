@@ -1,0 +1,1 @@
+json.partial! "api_v2_business_associates/api_v2_business_associate", api_v2_business_associate: @api_v2_business_associate

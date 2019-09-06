@@ -4,7 +4,7 @@ class API::V2::DriversController < ApplicationController
   # GET /api/v2/drivers.json
   def index
     @drivers = Driver.all
-    render json: {status: "True" , message: "Loaded drivers", data: @drivers},status: :ok
+    render json: {status: "True" , message: "Loaded drivers", data: @drivers, errors: {}},status: :ok
   end
 
   # GET /api/v2/drivers/1

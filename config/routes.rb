@@ -385,6 +385,7 @@ Rails.application.routes.draw do
       resources :vehicles do
         collection do
           get :search
+          get :find_category_seat_by_vehicle
         end
       end
       resources :drivers, only: :show do

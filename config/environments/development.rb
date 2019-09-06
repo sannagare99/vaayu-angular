@@ -84,7 +84,7 @@ Rails.application.configure do
       :url => ':s3_domain_url',
       :path => '/:class/:attachment/:id_partition/:style/:filename',
       :storage => :s3,
-      :s3_region => 'us-east-1',
+      :s3_region => 'ap-south-1',
       :s3_credentials => {
         :access_key_id => ENV['S3_ACCESS_KEY_ID'],
         :secret_access_key => ENV['S3_SECRET_KEY'],

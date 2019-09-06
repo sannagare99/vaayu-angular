@@ -1,0 +1,19 @@
+h1 Listing api_v2_business_associates
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @api_v2_business_associates.each do |api_v2_business_associate|
+      tr
+        td = link_to 'Show', api_v2_business_associate
+        td = link_to 'Edit', edit_api_v2_business_associate_path(api_v2_business_associate)
+        td = link_to 'Destroy', api_v2_business_associate, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Business associate', new_api_v2_business_associate_path
