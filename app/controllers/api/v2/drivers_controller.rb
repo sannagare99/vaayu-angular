@@ -1,5 +1,6 @@
 class API::V2::DriversController < ApplicationController
-  before_action :set_driver, only: [:show, :edit, :update, :destroy, :create]
+  before_action :set_driver, only: [:edit, :update, :destroy]
+  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
@@ -11,9 +12,9 @@ class API::V2::DriversController < ApplicationController
   # GET /api/v2/drivers/1.json
   def show
     if @driver.present?
-      render json: {status: "True" , message: "Loaded driver", data: @driver, errors: {} },status: :ok
+      render json: { status: "True" , message: "Loaded driver", data: @driver, errors: {} },status: :ok
     else
-      render json: {status: "False" , message: "No driver found", data: {}, errors: {} }, status: :not_found
+      render json: { status: "False" , message: "No driver found", data: {}, errors: {} }, status: :not_found
     end
   end
 
@@ -53,7 +54,7 @@ class API::V2::DriversController < ApplicationController
           render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors },status: :unprocessable_entity if @driver.id.blank?
         end
     else 
-      render json: {status: "True" , message: "Noy used", data: @driver},status: :ok
+      render json: {status: "True" , message: "You have not used ", data: @driver},status: :ok
     end
   end
 
@@ -170,7 +171,7 @@ class API::V2::DriversController < ApplicationController
       @errors = user.errors.full_messages.to_sentence
       @datatable_name = "drivers"
       if @errors.present?
-        render json: {status: "False" , message: "Fail First step", data: {}, errors: @errors },status: :unprocessable_entity
+        render json: {status: "False" , message: "Fail First step", data: {}, errors: @errors.split(",") },status: :unprocessable_entity
       else
         render json: { status: "True" , message: "Success First step", data: user.entity.id, errors: {} }, status: :ok
       end

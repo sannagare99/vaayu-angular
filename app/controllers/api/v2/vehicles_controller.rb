@@ -1,5 +1,6 @@
 class API::V2::VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   respond_to :json
   # GET /api/v2/vehicles
   # GET /api/v2/vehicles.json
@@ -92,16 +93,16 @@ class API::V2::VehiclesController < ApplicationController
               else
                 render json: {status: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors },status: :unprocessable_entity if @vehicle.id.blank?
             end
-      elsif params[:registration_steps] == "Step_3"
-        @vehicle = Vehicle.find(params[:vehicle_id])
-        if @vehicle.update(vehicle_params)
-          upload_insurance_doc(@vehicle) if @vehicle.present?
-          upload_rc_book_doc(@vehicle) if @vehicle.present?
-          upload_puc_doc(@vehicle) if @vehicle.present?
-          upload_commercial_permit_doc(@vehicle) if @vehicle.present?
-          upload_road_tax_doc(@vehicle) if @vehicle.present?
-          @vehicle.update(induction_status: "Registered") if @vehicle.present?
-          render json: {status: "True" , message: "Success Final step", data: @vehicle.id, errors: {} }, status: :ok if @vehicle.id.present?
+        elsif params[:registration_steps] == "Step_3"
+          @vehicle = Vehicle.find(params[:vehicle_id])
+          if @vehicle.update(vehicle_params)
+            upload_insurance_doc(@vehicle) if @vehicle.present?
+            upload_rc_book_doc(@vehicle) if @vehicle.present?
+            upload_puc_doc(@vehicle) if @vehicle.present?
+            upload_commercial_permit_doc(@vehicle) if @vehicle.present?
+            upload_road_tax_doc(@vehicle) if @vehicle.present?
+            @vehicle.update(induction_status: "Registered") if @vehicle.present?
+            render json: {status: "True" , message: "Success Final step", data: @vehicle.id, errors: {} }, status: :ok if @vehicle.id.present?
         else
           render json: {status: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors },status: :unprocessable_entity if @vehicle.id.blank?
         end
