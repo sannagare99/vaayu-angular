@@ -47,7 +47,7 @@ class User < ApplicationRecord
   end
 
   validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true , :if => Proc.new{|user| user.role == "driver" } 
   validates :phone, presence: true, uniqueness: true
   validates :f_name, presence: true
   validates :l_name, presence: true
@@ -99,6 +99,29 @@ class User < ApplicationRecord
       UserNotifierMailer.user_create(self, raw).deliver_now! unless self.driver? || (self.employee? && self.entity.is_guard?)
       self.update_invite_count
       send_sms if self.driver? or self.employee?
+    end
+    result
+  end
+
+  def save_with_notify_for_driver
+    if self.driver?
+      generated_password = self.entity.licence_number.last(6) if self.entity.present? && self.entity.licence_number.present?
+      self.username = self.phone if self.username.blank?
+      self.password = self.entity.licence_number.last(6) if self.entity.present? && self.entity.licence_number.present?
+    end
+    # @TODO - refactoring: probably duplicated code with generate_reset_password_token method
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc
+    self.skip_password_validation = true unless self.driver?
+    # self.created_at = Time.now
+    self.email = self.phone + '@gmail.com'  if self.phone.present?
+    result = save
+    # result = false
+    if result
+      # UserNotifierMailer.user_create(self, raw).deliver_now! unless self.driver? || (self.employee? && self.entity.is_guard?)
+      self.update_invite_count
+      # send_sms if self.driver? or self.employee?
     end
     result
   end
@@ -222,7 +245,8 @@ class User < ApplicationRecord
   # Validates if there should not be any duplicates in login fields
   def login_credentials_cannot_duplicate
     # define fields that should be unique
-    login_columns = [:username, :phone, :email]
+    # login_columns = [:username, :phone, :email]
+    login_columns = [:phone, :email]
     values = []
 
     login_columns.each do |column|

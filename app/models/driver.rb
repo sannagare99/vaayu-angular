@@ -23,15 +23,50 @@ class Driver < ApplicationRecord
   has_many   :checklists
   has_many   :compliance_notifications
 
-  validates :permanent_address, presence: true
-  validates :local_address, presence: true
-  validates :badge_number, presence: true
-  validates :aadhaar_number, uniqueness: true, allow_blank: true
-  validates :licence_number, presence: true, length: { is: 15 }
-  validates :verified_by_police, presence: true
-  validates :site, presence: true
-  validates :business_associate, presence: true
-  validates :logistics_company, presence: true
+  validates :permanent_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :local_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :aadhaar_number, uniqueness: true, allow_blank: true, :if => Proc.new{|f| f.registration_steps.blank? }
+  validates :licence_number, presence: true, length: { is: 15 }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates_uniqueness_of :licence_number, :message=>"Licence Number is already taken", :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates_uniqueness_of :aadhaar_mobile_number, :message=>"Mobile Number is already taken" , :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :aadhaar_mobile_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :ifsc_code, length: { is: 11 }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  ###validation for upload docs
+  # validates :profile_picture_url, attachment_presence: true
+  # validates :driver_badge_doc_url, attachment_presence: true
+  # validates :driving_license_doc_url, attachment_presence: true
+  # validates :id_proof_doc_url, attachment_presence: true
+  # validates :driving_registration_form_doc_url, attachment_presence: true
+
+  validates :bank_no  , uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :bank_no, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :licence_number, format: { with: /[a-zA-Z0-9]/, message: "Please enter alphanumeric and number." }
+  validates :bank_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  # validates_format_of :bank_name, { :with => /^[A-Za-z0-9 ]*$/ , message: "Please enter only Number or char." }
+  validates :verified_by_police, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :site, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :business_associate, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :logistics_company, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  validates :driver_image_url, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+
+  ### Upload Docs ##
+  has_attached_file :driving_license_doc
+   validates_attachment :driving_license_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :driver_badge_doc
+   validates_attachment :driver_badge_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :id_proof_doc
+   validates_attachment :id_proof_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :driving_registration_form_doc
+   validates_attachment :driving_registration_form_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+  validates :date_of_birth, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  before_save :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  before_save :validate_licence_expiry_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  before_save :validate_badge_expire_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
 
   after_update :update_notification
 
@@ -39,6 +74,7 @@ class Driver < ApplicationRecord
 
   after_update :update_driver_sort_status
   
+
   aasm column: :status do
     state :off_duty, initial: true
     state :on_duty
@@ -54,6 +90,32 @@ class Driver < ApplicationRecord
 
     event :go_on_leave do
       transitions to: :on_leave, after: :unassign_vehicle
+    end
+  end
+
+  def first_registration_steps
+    true if self.registration_steps.present? && self.registration_steps == "Step_1"
+  end
+
+  def last_registration_steps
+    true if self.registration_steps.present? && self.registration_steps == "Step_2"
+  end
+
+  def validate_birth_date
+    if  self.date_of_birth.present? && self.date_of_birth > Date.today
+        errors.add(:birth_date, 'Birth date  should less then today date.')
+    end
+  end
+
+  def validate_licence_expiry_date
+    if self.licence_validity.present? && Date.today > self.licence_validity 
+        errors.add(:licence_validity, 'Your Licence has expired.')
+    end
+  end
+
+  def validate_badge_expire_date
+    if self.badge_expire_date.present? && self.badge_expire_date > Date.today
+        errors.add(:badge_expire_date, 'Your badge has expired.')
     end
   end
 
@@ -376,5 +438,9 @@ class Driver < ApplicationRecord
     route_data = route.first[:legs]
 
     eta = (route_data[0][:duration_in_traffic][:value] / 60).ceil    
+  end
+
+  def s3_credentials
+    {:bucket => "vaayu-dev", :access_key_id => "AKIAXAWJNTEUVGAJJD62", :secret_access_key => "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"}
   end
 end
