@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
-# gem 'aws-sdk-s3'
+gem 'aws-sdk-s3'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
