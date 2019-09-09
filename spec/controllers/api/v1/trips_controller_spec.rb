@@ -413,4 +413,12 @@ describe API::V1::TripsController, type: :controller do
     end
   end
 
+  context '#verify_driver_image' do
+    before do
+      request.headers.merge! driver.create_new_auth_token
+      post :verify_driver_image, request_params_verify_driver
+      it { is_expected.to respond_with :ok }
+    end
+  end
+
 end

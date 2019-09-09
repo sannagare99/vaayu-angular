@@ -385,4 +385,3 @@ function loadLocation(i, obj) {
   currentForm = $(".schedule-form")[i]
   $(currentForm).find(".check_out_location_select").val(obj.site_id);
 }
-

@@ -388,6 +388,19 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    rswag (2.0.5)
+      rswag-api (= 2.0.5)
+      rswag-specs (= 2.0.5)
+      rswag-ui (= 2.0.5)
+    rswag-api (2.0.5)
+      railties (>= 3.1, < 6.0)
+    rswag-specs (2.0.5)
+      activesupport (>= 3.1, < 6.0)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 6.0)
+    rswag-ui (2.0.5)
+      actionpack (>= 3.1, < 6.0)
+      railties (>= 3.1, < 6.0)
     ruby-jmeter (3.1.08)
       nokogiri
       rest-client
@@ -546,6 +559,7 @@ DEPENDENCIES
   roo
   rspec
   rspec-rails (~> 3.5)
+  rswag
   ruby-jmeter
   sass-rails (~> 5.0)
   secure_headers
@@ -568,4 +582,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.16.0
+   1.17.3
