@@ -46,15 +46,19 @@ class API::V2::DriversController < ApplicationController
       end
     elsif params[:registration_steps] == "Step_3"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
-        if @driver.update(driver_params)
-            upload_driver_badge_doc(@driver) if @driver.present?
-            upload_driving_license_doc(@driver) if @driver.present?
-            upload_id_proof_doc(@driver) if @driver.present?
-            upload_driving_registration_form_doc(@driver) if @driver.present?
-          render json: {status: "True" , message: "Success Final step", data: { driver: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
-        else
-          render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
-        end
+       if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank?
+        render json: {status: "False" , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
+      else
+          if @driver.update(driver_params)
+              upload_driver_badge_doc(@driver) if @driver.present?
+              upload_driving_license_doc(@driver) if @driver.present?
+              upload_id_proof_doc(@driver) if @driver.present?
+              upload_driving_registration_form_doc(@driver) if @driver.present?
+            render json: {status: "True" , message: "Success Final step", data: { driver: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
+          else
+            render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
+          end
+      end
     else 
       render json: {status: "True" , message: "You have not used ", data: { driver: @driver }},status: :ok
     end
@@ -219,7 +223,7 @@ class API::V2::DriversController < ApplicationController
 
     def check_badge_expire_date
       if params[:registration_steps] == "Step_2"
-        if params[:badge_expire_date].present? && params[:badge_expire_date].to_date >= Date.today 
+        if params[:badge_expire_date].present? && params[:badge_expire_date].to_date < Date.today 
           render json: {status: "False" , message: "Your Badge has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
         end
       end

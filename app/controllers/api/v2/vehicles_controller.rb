@@ -1,6 +1,10 @@
 class API::V2::VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
+  before_action :validate_plate_number, only: [:create]
+  before_action :check_insurance_date, only: [:create]
+  before_action :check_puc_validity_date, only: [:create] 
+  before_action :check_permit_validity_date, :check_authorization_certificate_validity_date, :check_fitness_validity_date, :check_road_tax_validity_date, only: [:create]
   respond_to :json
   # GET /api/v2/vehicles
   # GET /api/v2/vehicles.json
@@ -109,7 +113,7 @@ class API::V2::VehiclesController < ApplicationController
         if @vehicle.save
             render json: { status: "True" , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
           else
-            render json: {status: "False" , message: "Fail First step", data: {}, errors: @vehicle.errors.split(",") },status: :unprocessable_entity
+            render json: {status: "False" , message: "Fail First step", data: {}, errors: {},status: :unprocessable_entity }
           end
        elsif params[:registration_steps] == "Step_2"
           @vehicle = Vehicle.find(params[:vehicle_id])
@@ -120,17 +124,21 @@ class API::V2::VehiclesController < ApplicationController
             end
         elsif params[:registration_steps] == "Step_3"
           @vehicle = Vehicle.find(params[:vehicle_id])
-          if @vehicle.update(vehicle_params)
-            upload_insurance_doc(@vehicle) if @vehicle.present?
-            upload_rc_book_doc(@vehicle) if @vehicle.present?
-            upload_puc_doc(@vehicle) if @vehicle.present?
-            upload_commercial_permit_doc(@vehicle) if @vehicle.present?
-            upload_road_tax_doc(@vehicle) if @vehicle.present?
-            @vehicle.update(induction_status: "Registered") if @vehicle.present?
-            render json: {status: "True" , message: "Success Final step", data:{vehicle: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
+          if params[:insurance_date].blank? or params[:puc_validity_date].blank? or params[:authorization_certificate_validity_date].blank? or  params[:fitness_validity_date].blank? or params[:road_tax_validity_date].blank? or params[:permit_validity_date].blank?
+              render json: {status: "False" , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
+          else
+            if @vehicle.update(vehicle_params)
+              upload_insurance_doc(@vehicle) if @vehicle.present?
+              upload_rc_book_doc(@vehicle) if @vehicle.present?
+              upload_puc_doc(@vehicle) if @vehicle.present?
+              upload_commercial_permit_doc(@vehicle) if @vehicle.present?
+              upload_road_tax_doc(@vehicle) if @vehicle.present?
+              @vehicle.update(induction_status: "Registered") if @vehicle.present?
+              render json: {status: "True" , message: "Success Final step", data:{vehicle: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
         else
           render json: {status: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors.split(",") },status: :unprocessable_entity if @vehicle.id.blank?
         end
+      end
       else
         render json: { status: "False" , message: "You have not assign registration steps", data: {}, errors: {} },status: :unprocessable_entity 
       end
@@ -170,6 +178,54 @@ class API::V2::VehiclesController < ApplicationController
       logger.info "road_tax done"
     end 
   end 
+
+  def check_insurance_date
+    if params[:registration_steps] == "Step_2"
+      if params[:insurance_date].present? && params[:insurance_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your insurance date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def check_puc_validity_date
+    if params[:registration_steps] == "Step_2"
+      if params[:puc_validity_date].present? && params[:puc_validity_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your puc validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def check_permit_validity_date
+    if params[:registration_steps] == "Step_2"
+      if params[:permit_validity_date].present? && params[:permit_validity_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your permit validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def check_authorization_certificate_validity_date
+    if params[:registration_steps] == "Step_2"
+      if params[:authorization_certificate_validity_date].present? && params[:authorization_certificate_validity_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your authorization certificate validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def check_fitness_validity_date
+    if params[:registration_steps] == "Step_2"
+      if params[:fitness_validity_date].present? && params[:fitness_validity_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your fitness validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def check_road_tax_validity_date
+    if params[:registration_steps] == "Step_2"
+      if params[:road_tax_validity_date].present? && params[:road_tax_validity_date].to_date < Date.today 
+        render json: {status: "False" , message: "Your road tax validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+      end
+    end
+  end
 end
 
 
