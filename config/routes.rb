@@ -381,12 +381,16 @@ Rails.application.routes.draw do
       resources :drivers do
       collection do
         get :search
+        get :validate_licence_number
+        get :validate_contact_number
       end
     end
       resources :vehicles do
         collection do
           get :search
           get :find_category_seat_by_vehicle
+          get :validate_plate_number
+          get :get_vehicle_model_data
         end
       end
       resources :drivers, only: :show do

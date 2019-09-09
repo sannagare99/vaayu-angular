@@ -1,6 +1,6 @@
 class API::V2::BusinessAssociatesController < ApplicationController
   before_action :set_business_associate, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   # GET /api/v2/business_associates
   # GET /api/v2/business_associates.json
   def index

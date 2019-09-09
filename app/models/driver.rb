@@ -24,11 +24,13 @@ class Driver < ApplicationRecord
   has_many   :compliance_notifications
 
   validates :permanent_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  # validates :driver_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :local_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :aadhaar_number, uniqueness: true, allow_blank: true, :if => Proc.new{|f| f.registration_steps.blank? }
+  validates :aadhaar_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps.blank? }
+  validates_format_of :aadhaar_number, with: /\A\+?[1-9]\d{1,14}\z/, :if => Proc.new{|f| f.registration_steps.blank? }
   validates :licence_number, presence: true, length: { is: 15 }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
-  validates_uniqueness_of :licence_number, :message=>"Licence Number is already taken", :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  #validates_uniqueness_of :licence_number, :message=>"Licence Number is already taken", :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates_uniqueness_of :aadhaar_mobile_number, :message=>"Mobile Number is already taken" , :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates :aadhaar_mobile_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :ifsc_code, length: { is: 11 }, :if => Proc.new{|f| f.registration_steps == "Step_2"}

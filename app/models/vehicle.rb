@@ -18,7 +18,7 @@ class Vehicle < ApplicationRecord
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 
   validates :business_associate_id, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
-  validates :plate_number, presence: true, uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :plate_number, presence: true, uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :plate_number, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :make, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :model, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
