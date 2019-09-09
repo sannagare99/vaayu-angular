@@ -1,18 +1,20 @@
 class API::V2::DriversController < ApplicationController
   before_action :set_driver, only: [:edit, :update, :destroy]
   skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
+  before_action :check_date_validation, only: [:create]
+  before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
     @drivers = Driver.all
-    render json: {status: "True" , message: "Loaded drivers", data: @drivers, errors: {}},status: :ok
+    render json: {status: "True" , message: "Loaded drivers", data: { drivers: @drivers } , errors: {}},status: :ok
   end
 
   # GET /api/v2/drivers/1
   # GET /api/v2/drivers/1.json
   def show
     if @driver.present?
-      render json: { status: "True" , message: "Loaded driver", data: @driver, errors: {} },status: :ok
+      render json: { status: "True" , message: "Loaded driver", data: { driver: @driver } , errors: {} },status: :ok
     else
       render json: { status: "False" , message: "No driver found", data: {}, errors: {} }, status: :not_found
     end
@@ -38,9 +40,9 @@ class API::V2::DriversController < ApplicationController
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
         if @driver.update(driver_params)
-          render json: {status: "True" , message: "Success Second step", data: @driver.id, errors: {} }, status: :ok if @driver.id.present?
+          render json: {status: "True" , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
         else
-          render json: {status: "False" , message: "Fail Second step", data: {}, errors: @driver.errors },status: :unprocessable_entity if @driver.id.blank?
+          render json: {status: "False" , message: "Fail Second step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
       end
     elsif params[:registration_steps] == "Step_3"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
@@ -49,12 +51,12 @@ class API::V2::DriversController < ApplicationController
             upload_driving_license_doc(@driver) if @driver.present?
             upload_id_proof_doc(@driver) if @driver.present?
             upload_driving_registration_form_doc(@driver) if @driver.present?
-          render json: {status: "True" , message: "Success Final step", data: @driver.id, errors: {} }, status: :ok if @driver.id.present?
+          render json: {status: "True" , message: "Success Final step", data: { driver: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
         else
-          render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors },status: :unprocessable_entity if @driver.id.blank?
+          render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
         end
     else 
-      render json: {status: "True" , message: "You have not used ", data: @driver},status: :ok
+      render json: {status: "True" , message: "You have not used ", data: { driver: @driver }},status: :ok
     end
   end
 
@@ -62,16 +64,16 @@ class API::V2::DriversController < ApplicationController
   # PATCH/PUT /api/v2/drivers/1.json
   def update
     if @driver.update(driver_params)
-      render json: {status: "True" , message: "UPDATE SUCCESS", data: @driver},status: :ok
+      render json: {status: "True" , message: "UPDATE SUCCESS", data: { driver: @driver} },status: :ok
     else
-      render json: {status: "False" , message: "UPDATE FAIL", data: @driver.errors},status: :unprocessable_entity
+      render json: {status: "False" , message: "UPDATE FAIL", data: @driver.errors.split(",")},status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v2/drivers/1.json
   def destroy
     @driver.destroy
-    render json: {status: "True" , message: "Deleted driver", data: @driver},status: :ok
+    render json: {status: "True" , message: "Deleted driver", data: { driver: @driver } },status: :ok
   end
 
     api :POST, '/drivers/:id/update_current_location'
@@ -154,6 +156,14 @@ class API::V2::DriversController < ApplicationController
       end
     end
 
+    def validate_licence_number
+      if params[:licence_number].present?
+        result = Driver.pluck(:licence_number).include? params[:licence_number]
+        render json: {status: "True" , message: "license number should not be duplicate", data: { licence_number: params[:licence_number] }  , errors: {} }, status: :not_found if result
+        render json: { status: "False" , message: "License number is unique", data: { licence_number: params[:licence_number] }, errors: {} }, status: :ok if result == false
+      end
+    end
+
   protected
     # Never trust parameters from the scary internet, only allow the white list through.
 
@@ -173,7 +183,7 @@ class API::V2::DriversController < ApplicationController
       if @errors.present?
         render json: {status: "False" , message: "Fail First step", data: {}, errors: @errors.split(",") },status: :unprocessable_entity
       else
-        render json: { status: "True" , message: "Success First step", data: user.entity.id, errors: {} }, status: :ok
+        render json: { status: "True" , message: "Success First step", data: { driver_id: user.entity.id } , errors: {} }, status: :ok
       end
 
     end
@@ -207,9 +217,34 @@ class API::V2::DriversController < ApplicationController
       render json: {status: :not_found} unless @driver
     end
 
+    def check_badge_expire_date
+      if params[:registration_steps] == "Step_2"
+        if params[:badge_expire_date].present? && params[:badge_expire_date].to_date >= Date.today 
+          render json: {status: "False" , message: "Your Badge has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        end
+      end
+    end
+
+  ### Step1 date validation 
+    def validate_birth_date
+      if params[:registration_steps] == "Step_1"
+        if params[:date_of_birth].present? && params[:date_of_birth].to_date >= Date.today 
+          render json: {status: "False" , message: "Your DOB is wrong", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def check_date_validation
+      if params[:registration_steps] == "Step_2"
+        if params[:licence_validity].present? && params[:licence_validity].to_date < Date.today 
+          render json: {status: "False" , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        end
+      end
+    end
+
     def driver_params
       # params.permit(:business_associate_id, :licence_number, :aadhaar_mobile_number,:date_of_birth,:marital_status,:gender,:blood_group, :driver_name, :father_spouse_name, :alternate_number, :licence_type, :licence_validity, :local_address, :permanent_address, :total_experience,:business_state, :business_city, :qualification, :date_of_registration, :badge_number, :badge_issue_date,:badge_expiry_date, :verified_by_police, :police_verification_vailidty,:date_of_police_verification, :criminal_offence, :bgc_date, :bgc_agency_id, :medically_certified_date, :sexual_policy, :bank_name, :bank_no, :ifsc_code, :status, :blacklisted, :driving_license_doc_url, :driver_badge_doc_url, :id_proof_doc_url, :sexual_policy_doc_url,:police_verification_vailidty_doc_url,:medically_certified_doc_url, :bgc_doc_url,:profile_picture_url,:other_docs_url,:driving_registration_form_doc_url, :created_by, :updated_by,
       #   :site_id )
-      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_numbe,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc )
+      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_number,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc )
     end
 end
