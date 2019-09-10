@@ -24,7 +24,7 @@ class Driver < ApplicationRecord
   has_many   :compliance_notifications
 
   validates :permanent_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
-  # validates :driver_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :f_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :local_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :aadhaar_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps.blank? }

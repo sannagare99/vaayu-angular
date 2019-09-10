@@ -179,8 +179,9 @@ class API::V2::DriversController < ApplicationController
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
       user.entity.registration_steps = params[:registration_steps] if params[:registration_steps].present?
-      user.f_name = params[:driver_name].split().first if params[:driver_name].present?
-      user.l_name = params[:driver_name].split().last if params[:driver_name].present?
+      user.f_name = params[:f_name] if params[:f_name].present?
+      user.l_name = params[:l_name] if params[:l_name].present?
+      user.entity.driver_name = params[:f_name] + (params[:l_name].present? ? params[:l_name] : '')
       user.save_with_notify_for_driver
       @errors = user.errors.full_messages.to_sentence
       @datatable_name = "drivers"
@@ -249,6 +250,6 @@ class API::V2::DriversController < ApplicationController
     def driver_params
       # params.permit(:business_associate_id, :licence_number, :aadhaar_mobile_number,:date_of_birth,:marital_status,:gender,:blood_group, :driver_name, :father_spouse_name, :alternate_number, :licence_type, :licence_validity, :local_address, :permanent_address, :total_experience,:business_state, :business_city, :qualification, :date_of_registration, :badge_number, :badge_issue_date,:badge_expiry_date, :verified_by_police, :police_verification_vailidty,:date_of_police_verification, :criminal_offence, :bgc_date, :bgc_agency_id, :medically_certified_date, :sexual_policy, :bank_name, :bank_no, :ifsc_code, :status, :blacklisted, :driving_license_doc_url, :driver_badge_doc_url, :id_proof_doc_url, :sexual_policy_doc_url,:police_verification_vailidty_doc_url,:medically_certified_doc_url, :bgc_doc_url,:profile_picture_url,:other_docs_url,:driving_registration_form_doc_url, :created_by, :updated_by,
       #   :site_id )
-      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_number,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc )
+      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_number,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc, :f_name, :l_name )
     end
 end
