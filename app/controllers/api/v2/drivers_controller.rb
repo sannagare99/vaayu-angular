@@ -54,7 +54,7 @@ class API::V2::DriversController < ApplicationController
               upload_driving_license_doc(@driver) if @driver.present?
               upload_id_proof_doc(@driver) if @driver.present?
               upload_driving_registration_form_doc(@driver) if @driver.present?
-            render json: {status: "True" , message: "Success Final step", data: { driver: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
+            render json: {status: "True" , message: "Success Final step", data: { driver_id: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
           else
             render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
           end

@@ -10,7 +10,7 @@ class API::V2::VehiclesController < ApplicationController
   # GET /api/v2/vehicles.json
   def index
     @vehicles = Vehicle.all
-    render json: { status: "True" , message: "Loaded vehicles", data: @vehicles, errors: {} }, status: :ok
+    render json: { status: "True" , message: "Loaded vehicles", data: { Vehicle: @vehicles }, errors: {} }, status: :ok
   end
 
   # GET /api/v2/vehicles/1
@@ -118,7 +118,7 @@ class API::V2::VehiclesController < ApplicationController
        elsif params[:registration_steps] == "Step_2"
           @vehicle = Vehicle.find(params[:vehicle_id])
           if @vehicle.update(vehicle_params)
-              render json: {status: "True" , message: "Success second step", data: { vehicle:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
+              render json: {status: "True" , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
               else
                 render json: {status: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors.split(",") },status: :unprocessable_entity if @vehicle.id.blank?
             end
@@ -134,7 +134,7 @@ class API::V2::VehiclesController < ApplicationController
               upload_commercial_permit_doc(@vehicle) if @vehicle.present?
               upload_road_tax_doc(@vehicle) if @vehicle.present?
               @vehicle.update(induction_status: "Registered") if @vehicle.present?
-              render json: {status: "True" , message: "Success Final step", data:{vehicle: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
+              render json: {status: "True" , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
         else
           render json: {status: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors.split(",") },status: :unprocessable_entity if @vehicle.id.blank?
         end
