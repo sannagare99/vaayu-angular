@@ -381,8 +381,8 @@ Rails.application.routes.draw do
       resources :drivers do
       collection do
         get :search
-        get :validate_licence_number
-        get :validate_contact_number
+        post :validate_licence_number
+        post :validate_contact_number
       end
     end
       resources :vehicles do

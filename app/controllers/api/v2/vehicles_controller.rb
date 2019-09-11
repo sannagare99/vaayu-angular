@@ -75,7 +75,7 @@ class API::V2::VehiclesController < ApplicationController
       @vehicle_data = { make_model: vehicle_model.make_model, capacity: vehicle_model.capacity.to_i , vehicle_category: vehicle_model.vehicle_category.category_name }
         result << @vehicle_data
       end
-      success =  {status: "True" , message: "Listing of VehicleModel", status: :ok, data: result , errors: {} }
+      success =  {status: "True" , message: "Listing of VehicleModel", status: :ok, data: { model_list: result } , errors: {} }
       render json: success
     else
       not_found = {status: "False" , message: "Not found VehicleModel data", status: :not_found, errors: {} }
