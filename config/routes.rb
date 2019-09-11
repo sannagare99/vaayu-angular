@@ -377,7 +377,11 @@ Rails.application.routes.draw do
   # ------------------------- api v2 ----------------------------------
   namespace :api, defaults: {format: 'json'} do
     scope :v2, module: 'v2' do
-      resources :business_associates
+      resources :business_associates do 
+        collection do
+          get :search
+        end
+      end
       resources :drivers do
       collection do
         get :search

@@ -5,7 +5,7 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # GET /api/v2/business_associates.json
   def index
     @business_associates = BusinessAssociate.all
-    render json: {status: "SUCCESS" , message: "Loaded business associates", data: @business_associates},status: :ok
+    render json: {status: "SUCCESS" , message: "Loaded business associates", data: { business_associates: @business_associates } }  ,status: :ok
   end
 
   # GET /api/v2/business_associate/1
@@ -49,6 +49,21 @@ class API::V2::BusinessAssociatesController < ApplicationController
   def destroy
     @business_associate.destroy
     render json: {status: "SUCCESS" , message: "Deleted business associate", data: @business_associate},status: :ok
+  end
+
+
+  def search
+    if params["name"].present?
+      search = params["name"]
+        @result = BusinessAssociate.where('name LIKE ?', "%#{search}%")
+        if @result.present?
+          render json: { status: "True" , message: "Business Associate found", data: { driver: @result } , errors: {} },status: :ok
+        else
+          render json: { status: "False" , message: "No Business Associate found", data: {}, errors: {} }, status: :not_found
+        end
+    else
+      render json: { status: "False" , message: "Please search business associate name", data: {}, errors: {} }, status: :not_found
+    end
   end
 
   private
