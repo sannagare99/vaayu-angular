@@ -5,13 +5,13 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # GET /api/v2/business_associates.json
   def index
     @business_associates = BusinessAssociate.all
-    render json: {status: "SUCCESS" , message: "Loaded business associates", data: { business_associates: @business_associates } }  ,status: :ok
+    render json: {status: "True" , message: "Loaded business associates", data: { business_associates: @business_associates } }  ,status: :ok
   end
 
   # GET /api/v2/business_associate/1
   # GET /api/v2/business_associate/1.json
   def show
-    render json: {status: "SUCCESS" , message: "Loaded business associate", data: @business_associate},status: :ok
+    render json: {status: "True" , message: "Loaded business associate", data: { business_associate: @business_associate } } ,status: :ok
   end
 
   # GET /api/v2/business_associate/new
@@ -28,9 +28,9 @@ class API::V2::BusinessAssociatesController < ApplicationController
   def create
     @business_associate = BusinessAssociate.new(business_associate_params)
       if @business_associate.save(validate: false)
-        render json: {status: "SUCCESS" , message: "saved business associate", data: @business_associate},status: :ok
+        render json: {status: "True" , message: "saved business associate", data: @business_associate , errors: {} }, status: :ok
       else
-        render json: {status: "ERROR" , message: "business associate not saved", data: @business_associate.errors},status: :unprocessable_entity
+        render json: {status: "False" , message: "business associate not saved", data: @business_associate.errors, errors: {} },status: :unprocessable_entity
       end
   end
 
@@ -38,9 +38,9 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # PATCH/PUT /api/v2/business_associate/1.json
   def update
    if @business_associate.update(business_associate_params)
-      render json: {status: "SUCCESS" , message: "UPDATE SUCCESS", data: @business_associate},status: :ok
+      render json: {status: "True" , message: "UPDATE SUCCESS", data: @business_associate, errors: {}},status: :ok
     else
-      render json: {status: "ERROR" , message: "UPDATE FAIL", data: @business_associate.errors},status: :unprocessable_entity
+      render json: {status: "False" , message: "UPDATE FAIL", data: @business_associate.errors, errors: {}},status: :unprocessable_entity
     end
   end
 
@@ -48,7 +48,7 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # DELETE /api/v2/vehicles/1.json
   def destroy
     @business_associate.destroy
-    render json: {status: "SUCCESS" , message: "Deleted business associate", data: @business_associate},status: :ok
+    render json: {status: "True" , message: "Deleted business associate", data: @business_associate, errors: {}},status: :ok
   end
 
 
@@ -57,7 +57,7 @@ class API::V2::BusinessAssociatesController < ApplicationController
       search = params["name"]
         @result = BusinessAssociate.where('name LIKE ?', "%#{search}%")
         if @result.present?
-          render json: { status: "True" , message: "Business Associate found", data: { driver: @result } , errors: {} },status: :ok
+          render json: { status: "True" , message: "Business Associate found", data: { business_associates: @result } , errors: {} },status: :ok
         else
           render json: { status: "False" , message: "No Business Associate found", data: {}, errors: {} }, status: :not_found
         end
