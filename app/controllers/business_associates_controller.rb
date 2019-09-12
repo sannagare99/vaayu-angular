@@ -93,6 +93,12 @@ class BusinessAssociatesController < ApplicationController
     # redirect_to provisioning_path(anchor: 'business-associates')
   end
 
+  def show
+    @business_associate = BusinessAssociate.find(params[:id])
+    respond_to do |format|
+      format.json { render json: @business_associate }
+    end
+  end
 
   def edit
     @ba = BusinessAssociate.find_by_prefix(params[:id])

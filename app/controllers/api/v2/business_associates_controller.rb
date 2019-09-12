@@ -5,13 +5,14 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # GET /api/v2/business_associates.json
   def index
     @business_associates = BusinessAssociate.all
-    render json: {status: "True" , message: "Loaded business associates", data: { business_associates: @business_associates } }  ,status: :ok
+    render json: {status: "True" , message: "Loaded business associates", data: { business_associates: @business_associates }, errors: {} }  ,status: :ok
   end
 
   # GET /api/v2/business_associate/1
   # GET /api/v2/business_associate/1.json
   def show
-    render json: {status: "True" , message: "Loaded business associate", data: { business_associate: @business_associate } } ,status: :ok
+    @business_associate = BusinessAssociate.find(params[:id])
+    render json: {status: "True" , message: "Loaded business associate", data: { business_associate: @business_associate }, errors: {} } ,status: :ok
   end
 
   # GET /api/v2/business_associate/new
@@ -75,7 +76,7 @@ class API::V2::BusinessAssociatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def business_associate_params
-      params.permit(:sap_code, :esic_code,:category,:esic_code,:pf_number,:service_tax_no,:pan,:aadhar_number,:credit_days,:credit_amount,:bgc_date,:credit_days_start,:owned_fleet,:managed_fleet,
+      params.permit(:sap_code, :esic_code,:esic_code,:pf_number,:service_tax_no,:pan,:aadhar_number,:credit_days,:credit_amount,:bgc_date,:credit_days_start,:owned_fleet,:managed_fleet,
         :turn_over,:partnership_status,:business_area_id,:address_1,:address_2,:admin_phone,:alternate_phone,:admin_email,:fax_no,:website,:hq_address,:status,:agreement_date,:bank_name,:bank_no,:ifsc_code,:city_of_operation,:ba_status,:cancelled_cheque_doc_url,:updated_by,:created_by,:owner_photo_url,:photo_url,:cin_doc_url,:MSA_doc_url,:pan_card_doc_url,:msmed_certificate_doc_url)
     end
 end
