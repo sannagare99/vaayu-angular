@@ -6,6 +6,8 @@ class Vehicle < ApplicationRecord
   DATATABLE_PREFIX = 'vehicle'
   NOTIFICATION_FIELDS = {insurance_date: "Insurance", puc_validity_date: "PUC", permit_validity_date: "Permit", fc_validity_date: "FC"}
 
+  STEP_VEHICLE = { Step_1: [:business_associate_id,:plate_number, :model, :category, :fuel_type, :colour, :seats, :ac], Step_2: [:insurance_date, :puc_validity_date, :authorization_certificate_validity_date, :fitness_validity_date, :road_tax_validity_date,:permit_validity_date ] }
+
   belongs_to :driver
   belongs_to :business_associate
   has_many :trips
@@ -24,11 +26,17 @@ class Vehicle < ApplicationRecord
   validates :model, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :colour, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :category, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :fuel_type, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :seats, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :ac, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
 
   # validates :rc_book_no, presence: true , :if => Proc.new{|f| f.registration_steps != "Step_1" or f.registration_steps != "Step_2" }
   # validates :registration_date, presence: true , :if => Proc.new{|f| f.registration_steps != "Step_1" or f.registration_steps != "Step_2" }
   validates :insurance_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :puc_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :authorization_certificate_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :fitness_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :road_tax_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates :permit_type, presence: true, :if => Proc.new{|f| f.registration_steps != "Step_1" or f.registration_steps != "Step_2" }
   validates :permit_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
 
@@ -110,7 +118,7 @@ class Vehicle < ApplicationRecord
   end
 
   def validate_puc_expiry_date
-    if self.registration_steps.present? && (self.registration_steps == "Step_1" ||  self.registration_steps == "Step_2")
+    if self.registration_steps.present? && self.registration_steps == "Step_2"
       if self.puc_validity_date.present? && Date.today > self.puc_validity_date 
           errors.add(:puc_validity_date, 'Your Puc expiry has expired.')
       end

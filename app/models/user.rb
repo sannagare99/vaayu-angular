@@ -46,11 +46,11 @@ class User < ApplicationRecord
     state :operator_shift_manager    
   end
 
-  validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true , :if => Proc.new{|user| user.role == "driver" } 
-  validates :phone, presence: true, uniqueness: true
-  validates :f_name, presence: true
-  validates :l_name, presence: true
+  # validates :username, presence: true, uniqueness: true
+  # validates :email, presence: true, uniqueness: true , :if => Proc.new{|user| user.role == "driver" } 
+  # validates :phone, presence: true, uniqueness: true
+  # validates :f_name, presence: true
+  # validates :l_name, presence: true
   validate :login_credentials_cannot_duplicate
 
   before_save :update_username
@@ -95,6 +95,7 @@ class User < ApplicationRecord
     self.skip_password_validation = true unless self.driver?
 
     result = save
+    result = self.update_attribute("f_name",self.f_name)
     if result
       UserNotifierMailer.user_create(self, raw).deliver_now! unless self.driver? || (self.employee? && self.entity.is_guard?)
       self.update_invite_count
@@ -212,7 +213,7 @@ class User < ApplicationRecord
   # Sign in through username or email or phone
   def self.find_for_database_authentication(conditions={})
     login = conditions[:username]
-    find_by(username: login) || find_by(email: login) || find_by(phone: login)
+    find_by(username: login) || find_by(email: login)
   end
 
   def self.generate_random_password
@@ -257,7 +258,7 @@ class User < ApplicationRecord
 
       # make where query and check if there are any columns with the same item in db
       where_clause = compare_columns.map{|col| "#{col} = '#{values.last}'"}.join(' OR ')
-      errors.add(column, 'has already been taken') if User.where(where_clause).exists?
+      errors.add('', 'email or phone has already been taken') if User.where(where_clause).exists?
     end
 
     # check if we're trying to save any

@@ -3,20 +3,21 @@ class API::V2::DriversController < ApplicationController
   skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   before_action :check_date_validation, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
+  before_action :check_f_name_validate, only: [:create]
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
     @drivers = Driver.all
-    render json: {status: "True" , message: "Loaded drivers", data: { drivers: @drivers } , errors: {}},status: :ok
+    render json: {success: "True" , message: "Loaded drivers", data: { drivers: @drivers } , errors: {}},status: :ok
   end
 
   # GET /api/v2/drivers/1
   # GET /api/v2/drivers/1.json
   def show
     if @driver.present?
-      render json: { status: "True" , message: "Loaded driver", data: { driver: @driver } , errors: {} },status: :ok
+      render json: { success: "True" , message: "Loaded driver", data: { driver: @driver } , errors: {} },status: :ok
     else
-      render json: { status: "False" , message: "No driver found", data: {}, errors: {} }, status: :not_found
+      render json: { success: "False" , message: "No driver found", data: {}, errors: {} }, status: :not_found
     end
   end
 
@@ -38,29 +39,37 @@ class API::V2::DriversController < ApplicationController
       set_driver_user_field(user,params)
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
-        if @driver.update(driver_params)
-          render json: {status: "True" , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
+      if validate_first_step(@driver).values.all?(true)
+        if @driver.update(driver_params.except!(:registration_steps))
+          render json: {success: "True" , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
         else
-          render json: {status: "False" , message: "Fail Second step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
+          render json: {success: "False" , message: "Fail Second step", data: {}, errors: @driver.errors.full_messages },status: :unprocessable_entity
+        end
+      else
+        render json: {success: "False" , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@driver).reject {|i,j| j == true  }.keys },status: :unprocessable_entity
       end
     elsif params[:registration_steps] == "Step_3"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
        if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank? or params[:profile_picture].blank?
         render json: {status: "False" , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
       else
+        if validate_first_and_second_step(@driver).values.all?(true)
           if @driver.update(driver_params)
             upload_driver_badge_doc(@driver) if @driver.present?
             upload_driving_license_doc(@driver) if @driver.present?
             upload_id_proof_doc(@driver) if @driver.present?
             upload_driving_registration_form_doc(@driver) if @driver.present?
             upload_profile_picture_url(@driver) if @driver.present?
-            render json: {status: "True" , message: "Success Final step", data: { driver_id: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
+            render json: {success: "True" , message: "Success Final step", data: { driver_id: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
           else
-            render json: {status: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity if @driver.id.blank?
+            render json: {success: "False" , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :unprocessable_entity 
           end
+      else
+        render json: {success: "False" , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@driver).reject {|i,j| j == true  }.keys },status: :unprocessable_entity
       end
+    end
     else 
-      render json: {status: "True" , message: "You have not used ", data: { driver: @driver }},status: :ok
+      render json: {success: "True" , message: "You have not used ", data: { driver: @driver }},status: :ok
     end
   end
 
@@ -68,16 +77,16 @@ class API::V2::DriversController < ApplicationController
   # PATCH/PUT /api/v2/drivers/1.json
   def update
     if @driver.update(driver_params)
-      render json: {status: "True" , message: "UPDATE SUCCESS", data: { driver: @driver} },status: :ok
+      render json: {success: "True" , message: "UPDATE SUCCESS", data: { driver: @driver} },status: :ok
     else
-      render json: {status: "False" , message: "UPDATE FAIL", data: @driver.errors.split(",")},status: :unprocessable_entity
+      render json: {success: "False" , message: "UPDATE FAIL", data: @driver.errors.split(",")},status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v2/drivers/1.json
   def destroy
     @driver.destroy
-    render json: {status: "True" , message: "Deleted driver", data: { driver: @driver } },status: :ok
+    render json: {success: "True" , message: "Deleted driver", data: { driver: @driver } },status: :ok
   end
 
     api :POST, '/drivers/:id/update_current_location'
@@ -163,8 +172,8 @@ class API::V2::DriversController < ApplicationController
     def validate_licence_number
       if params[:licence_number].present?
         result = Driver.pluck(:licence_number).include? params[:licence_number]
-        render json: {status: "True" , message: "license number should not be duplicate", data: { licence_number: params[:licence_number] }  , errors: {} }, status: :not_found if result
-        render json: { status: "False" , message: "License number is unique", data: { licence_number: params[:licence_number] }, errors: {} }, status: :ok if result == false
+        render json: {success: "True" , message: "license number should not be duplicate", data: { licence_number: params[:licence_number] }  , errors: {} }, status: :not_found if result
+        render json: { success: "False" , message: "License number is unique", data: { licence_number: params[:licence_number] }, errors: {} }, status: :ok if result == false
       end
     end
 
@@ -175,20 +184,27 @@ class API::V2::DriversController < ApplicationController
       user.phone = params[:aadhaar_mobile_number].present? ? params[:aadhaar_mobile_number] : nil
       user.entity.licence_number = params[:licence_number].present? ? params[:licence_number] : nil
       user.entity.date_of_birth = params[:date_of_birth] if params[:date_of_birth].present?
+      user.entity.aadhaar_mobile_number = params[:aadhaar_mobile_number].present? ? params[:aadhaar_mobile_number] : nil
+      user.entity.father_spouse_name = params[:father_spouse_name] if params[:date_of_birth].present?
+      user.entity.blood_group = params[:blood_group] if params[:date_of_birth].present?
+      user.entity.business_associate_id = params[:business_associate_id] if params[:date_of_birth].present?
+      user.entity.gender = params[:gender] if params[:date_of_birth].present?
       user.avatar = params[:profile_picture_url] if params[:profile_picture_url].present?
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
-      user.entity.registration_steps = params[:registration_steps] if params[:registration_steps].present?
+      # user.entity.registration_steps = params[:registration_steps] if params[:registration_steps].present?
       user.f_name = params[:f_name] if params[:f_name].present?
       user.l_name = params[:l_name] if params[:l_name].present?
-      user.entity.driver_name = params[:f_name] + (params[:l_name].present? ? params[:l_name] : '')
+      user.entity.f_name = params[:f_name] if params[:f_name].present?
+      user.entity.l_name =  params[:l_name] if params[:l_name].present?
+      # user.entity.driver_name = params[:f_name] + (params[:l_name].present? ? params[:l_name] : '')
       user.save_with_notify_for_driver
       @errors = user.errors.full_messages.to_sentence
       @datatable_name = "drivers"
       if @errors.present?
-        render json: {status: "False" , message: "Fail First step", data: {}, errors: @errors.split(",") },status: :unprocessable_entity
+        render json: {success: "False" , message: "Fail First step", data: {}, errors: @errors.split(",") },status: :unprocessable_entity
       else
-        render json: { status: "True" , message: "Success First step", data: { driver_id: user.entity.id } , errors: {} }, status: :ok
+        render json: { success: "True" , message: "Success First step", data: { driver_id: user.entity.id } , errors: {} }, status: :ok
       end
 
     end
@@ -231,7 +247,7 @@ class API::V2::DriversController < ApplicationController
     def check_badge_expire_date
       if params[:registration_steps] == "Step_2"
         if params[:badge_expire_date].present? && params[:badge_expire_date].to_date < Date.today 
-          render json: {status: "False" , message: "Your Badge has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+          render json: {success: "False" , message: "Your Badge has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
         end
       end
     end
@@ -239,8 +255,8 @@ class API::V2::DriversController < ApplicationController
   ### Step1 date validation 
     def validate_birth_date
       if params[:registration_steps] == "Step_1"
-        if params[:date_of_birth].present? && params[:date_of_birth].to_date >= Date.today 
-          render json: {status: "False" , message: "Your DOB is wrong", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        if params[:date_of_birth].present? && params[:date_of_birth].to_date > Date.today 
+          render json: {success: "False" , message: "Your DOB is wrong", data: {}, errors: "Record not updated",status: :unprocessable_entity }
         end
       end
     end
@@ -248,9 +264,36 @@ class API::V2::DriversController < ApplicationController
     def check_date_validation
       if params[:registration_steps] == "Step_2"
         if params[:licence_validity].present? && params[:licence_validity].to_date < Date.today 
-          render json: {status: "False" , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+          render json: {success: "False" , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
         end
       end
+    end
+
+    def check_f_name_validate
+      if params[:registration_steps] == "Step_1"
+        if params[:f_name].blank?
+          render json: {success: "False" , message: "First name can't be blank", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def validate_first_step(driver)
+      result = {}
+      Driver::STEP_DRIVER[:Step_1].each do |i|
+        other_result = { i => driver[i].present? } 
+        result.merge!(other_result)
+      end
+      return result
+    end
+
+    def validate_first_and_second_step(driver)
+      result = {}
+      drivers_step = Driver::STEP_DRIVER[:Step_1].concat Driver::STEP_DRIVER[:Step_2]
+      drivers_step.each do |i|
+        other_result = { i => driver[i].present? } 
+        result.merge!(other_result)
+      end
+      return result
     end
 
     def driver_params
