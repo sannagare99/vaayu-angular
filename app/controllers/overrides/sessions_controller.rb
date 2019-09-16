@@ -50,7 +50,6 @@ module Overrides
         sign_in(:user, @resource, store: false, bypass: false)
 
         yield @resource if block_given?
-
         render_create_success
       elsif @resource and not @resource.has_access_to_app?(resource_params[:app])
         render_create_error_use_other_app
@@ -65,7 +64,7 @@ module Overrides
     # Changes:
     # - removed data from response structure
     def render_create_success
-      render json: resource_data(resource_json: @resource.token_validation_response)
+      render json: { permissions: 'dummy', assets: 'dummy', data: @resource.token_validation_response }
     end
 
     # User tries to log in to incorrect app
