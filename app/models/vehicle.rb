@@ -21,7 +21,8 @@ class Vehicle < ApplicationRecord
 
   validates :business_associate_id, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates :plate_number, presence: true, uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
-  validates :plate_number, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :plate_number, format: { with: /[a-zA-Z0-9]/, message: " only alphanumeric." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates_length_of :plate_number, minimum: 10, maximum: 12
   validates :make, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   validates :model, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :colour, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}

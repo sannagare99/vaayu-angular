@@ -27,25 +27,37 @@ class Driver < ApplicationRecord
   # validates :f_name, presence: true#, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates :local_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   # validates :badge_number, presence: true#, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :badge_number, format: { with: /\A\d+\z/, message: "Integer only. No sign allowed." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  # validates :badge_number, numericality: { only_integer: true }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  # validates :badge_number, numericality: { only_integer: true }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :badge_number, length: { is: 10 }, format: { with: /\A\d+\z/, message: "Integer only. No sign allowed." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  # validates_numericality_of :badge_number, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates :aadhaar_mobile_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps.blank? }
   # validates_format_of :aadhaar_mobile_number, with: /\A\+?[1-9]\d{1,14}\z/, :if => Proc.new{|f| f.registration_steps.blank? }
-  # validates :licence_number, presence: true, length: { is: 15 }#, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :licence_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   #validates_uniqueness_of :licence_number, :message=>"Licence Number is already taken", :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates_uniqueness_of :aadhaar_mobile_number, :message=>"Mobile Number is already taken" , :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validates :aadhaar_mobile_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :aadhaar_mobile_number, uniqueness: true, length: { is: 10 }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :ifsc_code, length: { is: 11 }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :ifsc_code, format: { with: /[a-zA-Z0-9]/, message: "only allows alphanumeric" }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :licence_number, format: { with: /[a-zA-Z0-9]/, message: "licence number only allows alphanumeric" }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   ###validation for upload docs
   # validates :profile_picture_url, attachment_presence: true
   # validates :driver_badge_doc_url, attachment_presence: true
   # validates :driving_license_doc_url, attachment_presence: true
   # validates :id_proof_doc_url, attachment_presence: true
   # validates :driving_registration_form_doc_url, attachment_presence: true
-  # validates :blood_group, presence: true
+  validates :badge_expire_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :blood_group, presence: true
+  validates :ifsc_code, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :gender, presence: true
   validates :licence_type, :licence_validity, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_no  , uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_no, length: { is: 12 }, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :licence_number, format: { with: /[a-zA-Z0-9]/, message: "Please enter alphanumeric and number." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :licence_number, format: { with: /\A(?=.*[a-z])[a-z\d]+\Z/i, message: "Please enter alphanumeric ." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :licence_number, format: { with: ^[a-zA-Z0-9]+$ }
+  validates_length_of :licence_number, minimum: 15, maximum: 15 , :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :bank_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_name, format: { with: /[a-zA-Z0-9]/, message: "Please enter alphanumeric" }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates_format_of :bank_name, { :with => /^[A-Za-z0-9 ]*$/ , message: "Please enter only Number or char." }
@@ -72,7 +84,7 @@ class Driver < ApplicationRecord
    validates_attachment :profile_picture, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
   validates :date_of_birth, presence: true
-  before_save :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  validate :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   before_save :validate_licence_expiry_date#, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   before_save :validate_badge_expire_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
 
@@ -328,7 +340,7 @@ class Driver < ApplicationRecord
         @driver_first_pickup = DriverFirstPickup.where(:trip => trip, :driver => self).first
         
         if @driver_first_pickup.present?
-          @driver_first_pickup.update!(:pickup_time => initial_duration, :time => Time.now)
+          @driver_first_pickup.update(:pickup_time => initial_duration, :time => Time.now)
         else
           DriverFirstPickup.create!(:pickup_time => initial_duration, :time => Time.now, :trip => trip, :driver => self)
         end
@@ -447,6 +459,7 @@ class Driver < ApplicationRecord
 
     eta = (route_data[0][:duration_in_traffic][:value] / 60).ceil    
   end
+
 
   def s3_credentials
     {:bucket => "vaayu-dev", :access_key_id => "AKIAXAWJNTEUVGAJJD62", :secret_access_key => "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"}

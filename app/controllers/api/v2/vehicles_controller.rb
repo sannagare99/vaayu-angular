@@ -10,16 +10,16 @@ class API::V2::VehiclesController < ApplicationController
   # GET /api/v2/vehicles.json
   def index
     @vehicles = Vehicle.all
-    render json: { success: "True" , message: "Loaded vehicles", data: { Vehicle: @vehicles }, errors: {} }, status: :ok
+    render json: { success: true , message: "Loaded vehicles", data: { Vehicle: @vehicles }, errors: {} }, status: :ok
   end
 
   # GET /api/v2/vehicles/1
   # GET /api/v2/vehicles/1.json
   def show
     if @vehicle.present?
-      render json: {success: "True" , message: "Loaded vehicles", data: { vehicle: @vehicle }, errors: {} },status: :ok
+      render json: {success: true , message: "Loaded vehicles", data: { vehicle: @vehicle }, errors: {} },status: :ok
     else
-      render json: {success: "False" , message: "No vehicle found", data: {}, errors: {} }, status: :not_found
+      render json: {success: false , message: "No vehicle found", data: {}, errors: {} }, status: :ok
     end
   end
 
@@ -42,9 +42,9 @@ class API::V2::VehiclesController < ApplicationController
   # PATCH/PUT /api/v2/vehicles/1.json
   def update
    if @vehicle.update(vehicle_params)
-      render json: {success: "True" , message: "UPDATE SUCCESS", data: { vehicle: @vehicle } , errors: {} },status: :ok
+      render json: {success: true , message: "UPDATE SUCCESS", data: { vehicle: @vehicle } , errors: {} },status: :ok
     else
-      render json: {success: "False" , message: "UPDATE FAIL", data: {}, errors: @vehicle.errors.full_messages  },status: :unprocessable_entity
+      render json: {success: false , message: "UPDATE FAIL", data: {}, errors: @vehicle.errors.full_messages  },status: :ok
     end
   end
 
@@ -52,17 +52,17 @@ class API::V2::VehiclesController < ApplicationController
   # DELETE /api/v2/vehicles/1.json
   def destroy
     if @vehicle.destroy
-      render json: {success: "True" , message: "Deleted vehicle", data: { vehicle: @vehicle }},status: :ok
+      render json: {success: true , message: "Deleted vehicle", data: { vehicle: @vehicle }},status: :ok
     else
-      render json: {success: "False" , message: "DELETE FAIL", data: {}, errors: @vehicle.errors },status: :unprocessable_entity
+      render json: {success: false , message: "DELETE FAIL", data: {}, errors: @vehicle.errors },status: :ok
     end
   end
 
   def find_category_seat_by_vehicle
     vehicle = VehicleModel.find_by_make_model(params[:make_model]) if params[:make_model].present?
     vehicle_data = { capacity: vehicle.capacity.to_i , vehicle_category: vehicle.vehicle_category.category_name } if vehicle.present? && vehicle.vehicle_category.present?
-    success =  {success: "True" , message: "Get vehicle data ", status: :ok, data: vehicle_data , errors: {} }
-    not_found = {success: "False" , message: "Not found vehicle data", status: :not_found, errors: {} }
+    success =  {success: true , message: "Get vehicle data ", status: :ok, data: vehicle_data , errors: {} }
+    not_found = {success: false , message: "Not found vehicle data", status: :not_found, errors: {} }
     render json: vehicle_data.present? ? success : not_found
   end
 
@@ -75,10 +75,10 @@ class API::V2::VehiclesController < ApplicationController
       @vehicle_data = { make_model: vehicle_model.make_model, capacity: vehicle_model.capacity.to_i , vehicle_category: vehicle_model.vehicle_category.category_name }
         result << @vehicle_data
       end
-      success =  {success: "True" , message: "Listing of VehicleModel", status: :ok, data: { model_list: result } , errors: {} }
+      success =  {success: true , message: "Listing of VehicleModel", status: :ok, data: { model_list: result } , errors: {} }
       render json: success
     else
-      not_found = {success: "False" , message: "Not found VehicleModel data", status: :not_found, errors: {} }
+      not_found = {success: false , message: "Not found VehicleModel data", status: :not_found, errors: {} }
       render json: not_found
     end
   end
@@ -86,8 +86,8 @@ class API::V2::VehiclesController < ApplicationController
   def validate_plate_number
     if params[:plate_number].present?
       result = Vehicle.pluck(:plate_number).include? params[:plate_number]
-      render json: {success: "True" , message: "Vehicle registration number should not be duplicate", data:{ plate_number: params[:plate_number] }, errors: {} }, status: :not_found if result
-      render json: { success: "False" , message: "Plate number is unique", data: { plate_number: params[:plate_number] } , errors: {} }, status: :ok if result == false
+      render json: {success: true , message: "Vehicle registration number should not be duplicate", data:{ plate_number: params[:plate_number] }, errors: {} }, status: :not_found if result
+      render json: { success: false , message: "Plate number is unique", data: { plate_number: params[:plate_number] } , errors: {} }, status: :ok if result == false
     end
   end
 
@@ -110,44 +110,47 @@ class API::V2::VehiclesController < ApplicationController
         @vehicle.make_year = @vehicle.make_year.present? ? @vehicle.make_year : 2015
         @vehicle.induction_status = "Draft"
         if @vehicle.save
-            render json: { success: "True" , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
+          @vehicle.update_attribute('registration_steps', nil)
+            render json: { success: true , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
           else
-            render json: {success: "False" , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :unprocessable_entity }
+            render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
           end
        elsif params[:registration_steps] == "Step_2"
           @vehicle = Vehicle.find(params[:vehicle_id])
           if validate_first_step(@vehicle).values.all?(true)
             if @vehicle.update(vehicle_params)
-                render json: {success: "True" , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
+              @vehicle.update_attribute('registration_steps', nil)
+                render json: {success: true , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
                 else
-                  render json: {success: "False" , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :unprocessable_entity
+                  render json: {success: false , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :ok
               end
             else
-              render json: {success: "False" , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys },status: :unprocessable_entity
+              render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
             end
         elsif params[:registration_steps] == "Step_3"
           @vehicle = Vehicle.find(params[:vehicle_id])
           if params[:insurance_doc].blank? or params[:rc_book_doc].blank? or params[:puc_doc].blank? or  params[:commercial_permit_doc].blank? or params[:road_tax_doc].blank?
-              render json: {success: "False" , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
+              render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
           else
             if validate_first_and_second_step(@vehicle).values.all?(true)
               if @vehicle.update(vehicle_params)
+                @vehicle.update_attribute('registration_steps', nil)
                 upload_insurance_doc(@vehicle) if @vehicle.present?
                 upload_rc_book_doc(@vehicle) if @vehicle.present?
                 upload_puc_doc(@vehicle) if @vehicle.present?
                 upload_commercial_permit_doc(@vehicle) if @vehicle.present?
                 upload_road_tax_doc(@vehicle) if @vehicle.present?
                 @vehicle.update(induction_status: "Registered") if @vehicle.present?
-                render json: {success: "True" , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
+                render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
             else
-              render json: {success: "False" , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :unprocessable_entity if @vehicle.id.blank?
+              render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
             end
           else
-            render json: {success: "False" , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys },status: :unprocessable_entity
+            render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
           end
       end
       else
-        render json: { success: "False" , message: "You have not assign registration steps", data: {}, errors: {} },status: :unprocessable_entity 
+        render json: { success: false , message: "You have not assign registration steps", data: {}, errors: {} },status: :ok
       end
     end
 
@@ -189,7 +192,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_insurance_date
     if params[:registration_steps] == "Step_2"
       if params[:insurance_date].present? && params[:insurance_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your insurance date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your insurance date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
@@ -197,7 +200,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_puc_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:puc_validity_date].present? && params[:puc_validity_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your puc validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your puc validity date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
@@ -205,7 +208,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_permit_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:permit_validity_date].present? && params[:permit_validity_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your permit validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your permit validity date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
@@ -213,7 +216,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_authorization_certificate_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:authorization_certificate_validity_date].present? && params[:authorization_certificate_validity_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your authorization certificate validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your authorization certificate validity date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
@@ -221,7 +224,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_fitness_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:fitness_validity_date].present? && params[:fitness_validity_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your fitness validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your fitness validity date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
@@ -229,7 +232,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_road_tax_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:road_tax_validity_date].present? && params[:road_tax_validity_date].to_date < Date.today 
-        render json: {success: "False" , message: "Your road tax validity date has expired", data: {}, errors: "Record not updated",status: :unprocessable_entity }
+        render json: {success: false , message: "Your road tax validity date has expired", data: {}, errors: "Record not updated",status: :ok }
       end
     end
   end
