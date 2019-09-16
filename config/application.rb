@@ -14,5 +14,12 @@ module Moove
     config.middleware.use Rack::Attack
     config.exceptions_app = self.routes
     config.eager_load_paths << "#{Rails.root}/lib"
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options], expose: ['client', 'access-token', 'uid']
+      end
+    end
   end
 end
