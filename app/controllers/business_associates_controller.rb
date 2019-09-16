@@ -1,6 +1,6 @@
 class BusinessAssociatesController < ApplicationController
   before_action :set_b_a, only: [:edit, :update, :destroy]
-
+  
   def index
     @business_associates = BusinessAssociate.all
     respond_to do |format|
@@ -95,9 +95,6 @@ class BusinessAssociatesController < ApplicationController
 
   def show
     @business_associate = BusinessAssociate.find(params[:id])
-    respond_to do |format|
-      format.json { render json: @business_associate }
-    end
   end
 
   def edit
