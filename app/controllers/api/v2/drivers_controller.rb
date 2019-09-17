@@ -56,13 +56,14 @@ class API::V2::DriversController < ApplicationController
       else
         if validate_first_and_second_step(@driver).values.all?(true)
           if @driver.update(driver_params)
-            @driver.update(induction_status: "Registered")
             @driver.update_attribute('registration_steps', nil)
             upload_driver_badge_doc(@driver) if @driver.present?
             upload_driving_license_doc(@driver) if @driver.present?
             upload_id_proof_doc(@driver) if @driver.present?
             upload_driving_registration_form_doc(@driver) if @driver.present?
             upload_profile_picture_url(@driver) if @driver.present?
+            @driver.update(induction_status: "Registered")
+            @driver.update(compliance_status: "Ready For Allocation")
             render json: {success: true , message: "Success Final step", data: { driver_id: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
           else
             render json: {success: false , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :ok
@@ -216,12 +217,14 @@ class API::V2::DriversController < ApplicationController
   def upload_driver_badge_doc(driver)
     if driver.driver_badge_doc.url.present?
       driver.update(driver_badge_doc_url: driver.driver_badge_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "7", document_URL: "https://#{driver.driver_badge_doc.url.gsub("//",'')}", expiry_date: driver.badge_expire_date , created_by: 0, resource_type: "Driver" ) if driver.badge_expire_date.present?
     end 
   end
 
   def upload_driving_license_doc(driver)
     if driver.driving_license_doc.url.present?
       driver.update(driving_license_doc_url: driver.driving_license_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "2", document_URL: "https://#{driver.driving_license_doc.url.gsub("//",'')}", expiry_date: driver.licence_validity , created_by: 0, resource_type: "Driver" ) if driver.licence_validity.present?
     end
   end
 
