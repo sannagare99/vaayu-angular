@@ -52,7 +52,7 @@ class API::V2::DriversController < ApplicationController
     elsif params[:registration_steps] == "Step_3"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
        if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank? or params[:profile_picture].blank?
-        render json: {status: false , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
+        render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :unprocessable_entity }
       else
         if validate_first_and_second_step(@driver).values.all?(true)
           if @driver.update(driver_params)
@@ -69,7 +69,7 @@ class API::V2::DriversController < ApplicationController
             render json: {success: false , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :ok
           end
       else
-        render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@driver).reject {|i,j| j == true  }.keys },status: :unprocessable_entity
+        render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@driver).reject {|i,j| j == true  }.keys },status: :ok
       end
     end
     else 

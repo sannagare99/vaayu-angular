@@ -6,14 +6,14 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # GET /api/v2/business_associates.json
   def index
     @business_associates = BusinessAssociate.all
-    render json: {status: true , message: "Loaded business associates", data: { business_associates: @business_associates }, errors: {} }  ,status: :ok
+    render json: {success: true , message: "Loaded business associates", data: { business_associates: @business_associates }, errors: {} }  ,status: :ok
   end
 
   # GET /api/v2/business_associate/1
   # GET /api/v2/business_associate/1.json
   def show
     @business_associate = BusinessAssociate.find(params[:id])
-    render json: {status: true , message: "Loaded business associate", data: { business_associate: @business_associate }, errors: {} } ,status: :ok
+    render json: {success: true , message: "Loaded business associate", data: { business_associate: @business_associate }, errors: {} } ,status: :ok
   end
 
   # GET /api/v2/business_associate/new
@@ -31,16 +31,16 @@ class API::V2::BusinessAssociatesController < ApplicationController
     if params[:ba_portal_id].present?
         @business_associate = BusinessAssociate.find_by_ba_portal_id(params[:ba_portal_id])
         if @business_associate.update(business_associate_params)
-          render json: {status: true , message: "Successfully updated business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
+          render json: {success: true , message: "Successfully updated business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
         else
-          render json: {status: false , message: "Business associate not updated", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
+          render json: {success: false , message: "Business associate not updated", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
         end
       else
         @business_associate = BusinessAssociate.new(business_associate_params)
           if @business_associate.save(validate: false)
-            render json: {status: true , message: "Successfully created business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
+            render json: {success: true , message: "Successfully created business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
           else
-            render json: {status: false , message: "Business associate not saved", data: {}, errors: @business_associate.errors }, status: :ok
+            render json: {success: false , message: "Business associate not saved", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
           end
       end
   end
@@ -49,9 +49,9 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # PATCH/PUT /api/v2/business_associate/1.json
   def update
    if @business_associate.update(business_associate_params)
-      render json: {status: true , message: "UPDATE SUCCESS", data: { business_associate_id: @business_associate.id } , errors: {} }  ,status: :ok 
+      render json: {success: true , message: "UPDATE SUCCESS", data: { business_associate_id: @business_associate.id } , errors: {} }  ,status: :ok 
     else
-      render json: {status: false , message: "UPDATE FAIL", data: {}, errors: @business_associate.errors },status: :ok
+      render json: {success: false , message: "UPDATE FAIL", data: {}, errors: @business_associate.errors },status: :ok
     end
   end
 
@@ -59,7 +59,7 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # DELETE /api/v2/vehicles/1.json
   def destroy
     @business_associate.destroy
-    render json: {status: true , message: "Deleted business associate", data: { business_associate_id: @business_associate.id }, errors: {} },status: :ok 
+    render json: {success: true , message: "Deleted business associate", data: { business_associate_id: @business_associate.id }, errors: {} },status: :ok 
   end
 
 
@@ -68,12 +68,12 @@ class API::V2::BusinessAssociatesController < ApplicationController
       search = params["name"]
         @result = BusinessAssociate.where('name LIKE ?', "%#{search}%")
         if @result.present?
-          render json: { status: true , message: "Business Associate found", data: { business_associates: @result } , errors: {} },status: :ok
+          render json: { success: true , message: "Business Associate found", data: { business_associates: @result } , errors: {} },status: :ok
         else
-          render json: { status: false , message: "No Business Associate found", data: {}, errors: {} }, status: :ok
+          render json: { success: false , message: "No Business Associate found", data: {}, errors: {} }, status: :ok
         end
     else
-      render json: { status: "False" , message: "Please search business associate name", data: {}, errors: {} }, status: :ok
+      render json: { success: "False" , message: "Please search business associate name", data: {}, errors: {} }, status: :ok
     end
   end
 
@@ -81,12 +81,12 @@ class API::V2::BusinessAssociatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_business_associate
       @business_associate = BusinessAssociate.find(params[:id])
-      render json: {status: :ok} unless @business_associate
+      render json: {success: :ok} unless @business_associate
     end
 
     def restrict_access
       auth  = Authentication.exists?(x_api_key: request.headers["x-api-key"], portal: request.headers[:portal])
-      render json: { status: :false ,head: :unauthorized, message: "Not authorized", data: {}, errors: {} } ,status: :ok unless auth
+      render json: { success: :false ,head: :unauthorized, message: "Not authorized", data: {}, errors: {} } ,status: :ok unless auth
     end
  
 
