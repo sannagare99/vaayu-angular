@@ -188,10 +188,10 @@ class API::V2::DriversController < ApplicationController
       user.entity.licence_number = params[:licence_number].present? ? params[:licence_number] : nil
       user.entity.date_of_birth = params[:date_of_birth] if params[:date_of_birth].present?
       user.entity.aadhaar_mobile_number = params[:aadhaar_mobile_number].present? ? params[:aadhaar_mobile_number] : nil
-      user.entity.father_spouse_name = params[:father_spouse_name] if params[:date_of_birth].present?
-      user.entity.blood_group = params[:blood_group] if params[:date_of_birth].present?
-      user.entity.business_associate_id = params[:business_associate_id] if params[:date_of_birth].present?
-      user.entity.gender = params[:gender] if params[:date_of_birth].present?
+      user.entity.father_spouse_name = params[:father_spouse_name] if params[:father_spouse_name].present?
+      user.entity.blood_group = params[:blood_group] if params[:blood_group].present?
+      user.entity.business_associate_id = params[:business_associate_id] if params[:business_associate_id].present?
+      user.entity.gender = params[:gender] if params[:gender].present?
       user.avatar = params[:profile_picture_url] if params[:profile_picture_url].present?
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
