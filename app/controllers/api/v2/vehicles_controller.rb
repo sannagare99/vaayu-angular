@@ -156,7 +156,7 @@ class API::V2::VehiclesController < ApplicationController
 
    def upload_insurance_doc(vehicle)
     if vehicle.insurance_doc.url.present?
-      vehicle.update!(insurance_doc_url: vehicle.insurance_doc.url.gsub("//",''))
+      vehicle.update(insurance_doc_url: vehicle.insurance_doc.url.gsub("//",''))
       logger.info "Insurance_doc done"
     end 
   end 

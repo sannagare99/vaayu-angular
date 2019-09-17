@@ -23,7 +23,7 @@ class Vehicle < ApplicationRecord
   # validates :plate_number, presence: true, uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :plate_number, format: { with: /[a-zA-Z0-9]/, message: " only alphanumeric." }, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates_length_of :plate_number, minimum: 10, maximum: 12
-  validates :make, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  # validates :make, presence: true, :unless => Proc.new{|f| f.registration_steps.present? }
   validates :model, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :colour, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :category, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
@@ -42,9 +42,9 @@ class Vehicle < ApplicationRecord
   validates :permit_validity_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
 
   validates :seats, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
-  validates :make_year, presence: true, unless: :first_registration_steps
+  # validates :make_year, presence: true, unless: :first_registration_steps
 
-  validates :device_id, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
+  # validates :device_id, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
 
   ### Upload Docs ##
   has_attached_file :insurance_doc
