@@ -62,7 +62,7 @@ class API::V2::VehiclesController < ApplicationController
     vehicle = VehicleModel.find_by_make_model(params[:make_model]) if params[:make_model].present?
     vehicle_data = { capacity: vehicle.capacity.to_i , vehicle_category: vehicle.vehicle_category.category_name } if vehicle.present? && vehicle.vehicle_category.present?
     success =  {success: true , message: "Get vehicle data ", status: :ok, data: vehicle_data , errors: {} }
-    not_found = {success: false , message: "Not found vehicle data", status: :not_found, errors: {} }
+    not_found = {success: false , message: "Not found vehicle data", status: :ok, errors: {} }
     render json: vehicle_data.present? ? success : not_found
   end
 
@@ -86,7 +86,7 @@ class API::V2::VehiclesController < ApplicationController
   def validate_plate_number
     if params[:plate_number].present?
       result = Vehicle.pluck(:plate_number).include? params[:plate_number]
-      render json: {success: true , message: "Vehicle registration number should not be duplicate", data:{ plate_number: params[:plate_number] }, errors: {} }, status: :not_found if result
+      render json: {success: true , message: "Vehicle registration number should not be duplicate", data:{ plate_number: params[:plate_number] }, errors: {} }, status: :ok if result
       render json: { success: false , message: "Plate number is unique", data: { plate_number: params[:plate_number] } , errors: {} }, status: :ok if result == false
     end
   end
@@ -141,6 +141,7 @@ class API::V2::VehiclesController < ApplicationController
                 upload_commercial_permit_doc(@vehicle) if @vehicle.present?
                 upload_road_tax_doc(@vehicle) if @vehicle.present?
                 @vehicle.update(induction_status: "Registered") if @vehicle.present?
+                @vehicle.update(compliance_status: "Ready For Allocation") if @vehicle.present?
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
             else
               render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
@@ -157,6 +158,7 @@ class API::V2::VehiclesController < ApplicationController
    def upload_insurance_doc(vehicle)
     if vehicle.insurance_doc.url.present?
       vehicle.update(insurance_doc_url: vehicle.insurance_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "5", document_URL: "https://#{vehicle.insurance_doc.url.gsub("//",'')}", expiry_date: vehicle.insurance_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.insurance_date.present?
       logger.info "Insurance_doc done"
     end 
   end 
@@ -164,6 +166,7 @@ class API::V2::VehiclesController < ApplicationController
   def upload_rc_book_doc(vehicle)
     if vehicle.rc_book_doc.url.present?
       vehicle.update(rc_book_doc_url: vehicle.rc_book_doc.url.gsub("//",''))
+      #DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "13", document_URL: "https://#{vehicle.rc_book_doc.url.gsub("//",'')}", expiry_date: driver.puc_validity_date , created_by: 0, resource_type: "Vehicle" ) if driver.puc_validity_date.present?
       logger.info "rc_book done"
     end 
   end 
@@ -171,6 +174,7 @@ class API::V2::VehiclesController < ApplicationController
   def upload_puc_doc(vehicle)
     if vehicle.puc_doc.url.present?
       vehicle.update(puc_doc_url: vehicle.puc_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "13", document_URL: "https://#{vehicle.puc_doc.url.gsub("//",'')}", expiry_date: vehicle.puc_validity_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.puc_validity_date.present?
       logger.info "puc_doc done"
     end 
   end 
@@ -178,6 +182,7 @@ class API::V2::VehiclesController < ApplicationController
   def upload_commercial_permit_doc(vehicle)
     if vehicle.commercial_permit_doc.url.present?
       vehicle.update(commercial_permit_doc_url: vehicle.commercial_permit_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "13", document_URL: "https://#{vehicle.commercial_permit_doc.url.gsub("//",'')}", expiry_date: vehicle.permit_validity_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.permit_validity_date.present?
       logger.info "commercial_permi done"
     end 
   end 
@@ -185,6 +190,7 @@ class API::V2::VehiclesController < ApplicationController
   def upload_road_tax_doc(vehicle)
     if vehicle.road_tax_doc.url.present?
       vehicle.update(road_tax_doc_url: vehicle.road_tax_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "15", document_URL: "https://#{vehicle.road_tax_doc.url.gsub("//",'')}", expiry_date: vehicle.road_tax_validity_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.road_tax_validity_date.present?
       logger.info "road_tax done"
     end 
   end 
