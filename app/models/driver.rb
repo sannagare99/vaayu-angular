@@ -49,9 +49,9 @@ class Driver < ApplicationRecord
   # validates :driving_registration_form_doc_url, attachment_presence: true
   validates :badge_expire_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :blood_group, presence: true
+  validates :blood_group, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :ifsc_code, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :gender, presence: true
+  validates :gender, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :licence_type, :licence_validity, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_no  , uniqueness: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_no, length: { is: 12 }, format: { with: /\A\d+\z/, message: "Please enter only Number." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
@@ -83,7 +83,7 @@ class Driver < ApplicationRecord
    has_attached_file :profile_picture
    validates_attachment :profile_picture, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
-  validates :date_of_birth, presence: true
+  validates :date_of_birth, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validate :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   before_save :validate_licence_expiry_date#, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   before_save :validate_badge_expire_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}
