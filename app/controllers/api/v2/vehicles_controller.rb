@@ -140,7 +140,7 @@ class API::V2::VehiclesController < ApplicationController
                 upload_puc_doc(@vehicle) if @vehicle.present?
                 upload_commercial_permit_doc(@vehicle) if @vehicle.present?
                 upload_road_tax_doc(@vehicle) if @vehicle.present?
-                @vehicle.update!(induction_status: "Registered") if @vehicle.present?
+                @vehicle.update(induction_status: "Registered") if @vehicle.present?
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
             else
               render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
