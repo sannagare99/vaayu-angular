@@ -62,7 +62,14 @@ class Vehicle < ApplicationRecord
   has_attached_file :road_tax_doc
     validates_attachment :road_tax_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
+  has_attached_file :authorization_certificate_doc
+    validates_attachment :authorization_certificate_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
+  has_attached_file :vehicle_picture_doc
+    validates_attachment :vehicle_picture_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+  has_attached_file :fitness_doc
+    validates_attachment :fitness_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
   after_update :update_notification
 

@@ -101,7 +101,7 @@ class API::V2::VehiclesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vehicle_params
       # params.permit(:business_associate_id, :plate_number, :model,:seats,:ac,:fuel_type,:colour,:registration_date, :fitness_doc_url, :insurance_date, :authorization_certificate_validity_date, :business_area_id, :make_year, :puc_validity_date, :fitness_validity_date, :permit_validity_date, :road_tax_validity_date, :ac,:fuel_type, :driver_id, :last_service_date, :last_service_km, :km_at_induction, :permit_type, :authorization_certificate_validity_date, :date_of_registration, :status, :device_id, :gps_provider_id, :insurance_doc_url, :rc_book_doc_url, :puc_doc_url, :commercial_permit_doc_url, :road_tax_doc_url, :vehicle_picture_url, :authorization_certificate_doc_url, :site_id, :created_by, :updated_by )
-      params.permit(:business_associate_id, :plate_number, :model,:category,:seats,:ac, :colour,:puc_validity_date,:insurance_date,:permit_validity_date,:road_tax_validity_date,:authorization_certificate_validity_date,:fitness_validity_date, :fuel_type, :induction_status, :registration_steps, :insurance_doc, :insurance_doc_url, :rc_book_doc, :rc_book_doc_url, :puc_doc_url, :puc_doc, :commercial_permit_doc_url, :commercial_permit_doc, :road_tax_doc_url, :road_tax_doc)
+      params.permit(:business_associate_id, :plate_number, :model,:category,:seats,:ac, :colour,:puc_validity_date,:insurance_date,:permit_validity_date,:road_tax_validity_date,:authorization_certificate_validity_date,:fitness_validity_date, :fuel_type, :induction_status, :registration_steps, :insurance_doc, :insurance_doc_url, :rc_book_doc, :rc_book_doc_url, :puc_doc_url, :puc_doc, :commercial_permit_doc_url, :commercial_permit_doc, :road_tax_doc_url, :road_tax_doc, :fitness_doc_url, :fitness_doc, :vehicle_picture_url, :vehicle_picture_doc, :authorization_certificate_doc, :authorization_certificate_doc_url)
     end
 
     def save_draft(params)
@@ -140,6 +140,11 @@ class API::V2::VehiclesController < ApplicationController
                 upload_puc_doc(@vehicle) if @vehicle.present?
                 upload_commercial_permit_doc(@vehicle) if @vehicle.present?
                 upload_road_tax_doc(@vehicle) if @vehicle.present?
+
+                upload_authorization_certificate_doc(@vehicle) if @vehicle.present?
+                upload_vehicle_picture_doc(@vehicle) if @vehicle.present?
+                upload_fitness_doc(@vehicle) if @vehicle.present?
+
                 @vehicle.update(induction_status: "Registered") if @vehicle.present?
                 @vehicle.update(compliance_status: "Ready For Allocation") if @vehicle.present?
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
@@ -194,6 +199,31 @@ class API::V2::VehiclesController < ApplicationController
       logger.info "road_tax done"
     end 
   end 
+
+  def upload_authorization_certificate_doc(vehicle)
+    if vehicle.authorization_certificate_doc.url.present?
+      vehicle.update(authorization_certificate_doc_url: vehicle.authorization_certificate_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "15", document_URL: "https://#{vehicle.authorization_certificate_doc.url.gsub("//",'')}", expiry_date: vehicle.road_tax_validity_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.authorization_certificate_validity_date.present?
+      logger.info "authorization certificate doc done"
+    end 
+  end 
+
+  def upload_vehicle_picture_doc(vehicle)
+    if vehicle.vehicle_picture_doc.url.present?
+      vehicle.update(vehicle_picture_url: vehicle.vehicle_picture_doc.url.gsub("//",''))
+      logger.info "vehicle picture doc done"
+    end 
+  end 
+
+  def upload_fitness_doc(vehicle)
+    if vehicle.fitness_doc.url.present?
+      vehicle.update(fitness_doc_url: vehicle.fitness_doc.url.gsub("//",''))
+      DocumentRenewalRequest.create(status: "Renew", resource_id: vehicle.id, document_id: "15", document_URL: "https://#{vehicle.fitness_doc.url.gsub("//",'')}", expiry_date: vehicle.fitness_validity_date , created_by: 0, resource_type: "Vehicle" ) if vehicle.fitness_validity_date.present?
+      logger.info "fitness doc done"
+    end 
+  end 
+
+
 
   def check_insurance_date
     if params[:registration_steps] == "Step_2"

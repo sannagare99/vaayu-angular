@@ -8,7 +8,7 @@ class Driver < ApplicationRecord
 
   DATATABLE_PREFIX = 'driver'
   NOTIFICATION_FIELDS = { badge_expire_date: "Badge", licence_validity: "Licence" }
-  STEP_DRIVER = { Step_1: [:business_associate_id,:licence_number, :f_name, :date_of_birth, :aadhaar_mobile_number, :gender, :blood_group], Step_2: [:licence_type, :badge_number, :badge_expire_date, :licence_validity, :ifsc_code,:bank_no,:bank_name], Step_3: [:driving_registration_form_doc,:driver_badge_doc,:driving_license_doc,:id_proof_doc,:profile_picture] }
+  STEP_DRIVER = { Step_1: [:business_associate_id,:licence_number, :f_name, :date_of_birth, :aadhaar_mobile_number, :gender, :blood_group, :profile_picture], Step_2: [:licence_type, :badge_number, :badge_expire_date, :licence_validity, :ifsc_code,:bank_no,:bank_name], Step_3: [:driving_registration_form_doc,:driver_badge_doc,:driving_license_doc,:id_proof_doc] }
   has_one :user, :as => :entity
   has_one    :vehicle
 
@@ -82,6 +82,18 @@ class Driver < ApplicationRecord
 
    has_attached_file :profile_picture
    validates_attachment :profile_picture, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :sexual_policy_doc
+   validates_attachment :sexual_policy_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :police_verification_vailidty_doc
+   validates_attachment :police_verification_vailidty_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :medically_certified_doc
+   validates_attachment :medically_certified_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
+
+   has_attached_file :bgc_doc
+   validates_attachment :bgc_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
   validates :date_of_birth, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validate :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
