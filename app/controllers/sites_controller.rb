@@ -115,12 +115,15 @@ class SitesController < ApplicationController
         latitude = coordinates[:lat]
         longitude = coordinates[:lng]
       end
-
       @site = Site.new(:name => params[:site]['name'], 
                       :employee_company_id => params[:site]['employee_company_id'],
                       :address  => params[:site]['address'],
                       :latitude => latitude,
-                      :longitude => longitude
+                      :longitude => longitude,
+                      :created_by => current_user.full_name,
+                      :phone => params[:site]['phone'],
+                      :admin_name => params[:site]['admin_name'],
+                      :admin_email_id => params[:site]['admin_email_id']
                       )
       if @site.save
         params[:services].each do |service|
@@ -191,7 +194,7 @@ class SitesController < ApplicationController
                     :latitude => latitude,
                     :longitude => longitude
                   )
-
+      @site.updated_by = current_user.full_name if current_user.full_name.present?
       if !params[:site]['logistics_company_id'].blank?
         @services = Service.where(:site_id => @site.id).where(:logistics_company_id => params[:site]['logistics_company_id'])
         @services.each do |service|
@@ -266,6 +269,6 @@ class SitesController < ApplicationController
       if params['data']
         params['site'] = params['data'].values.first
       end
-      params.require(:site).permit(:id, :name, :address, :latitude, :longitude, :employee_company_id)
+      params.require(:site).permit(:id, :name, :address, :latitude, :longitude, :employee_company_id, :admin_name, :admin_email_id, :created_by, :updated_by, :phone)
     end
 end

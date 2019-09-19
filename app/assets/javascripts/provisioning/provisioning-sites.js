@@ -153,7 +153,9 @@ $(function () {
                     'name': $("#siteName").val(),
                     'employee_company_id': $("#company").val(),
                     'address': $("#address").val(),
-                    'phone': $("#phone").val()
+                    'phone': $("#phone").val(),
+                    'admin_name': $("#admin_name").val(),
+                    'admin_email_id': $("#admin_email_id").val()
                 }
                 if(current_user == 'Operator'){
                     site['logistics_company_id'] = $("#operator_id").val()
