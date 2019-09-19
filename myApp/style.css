@@ -114,6 +114,16 @@
    background-color: #ffffff;
  }
 
+ .vayau-routing .vayau-sidebar.filter-sidebar {
+    position: fixed;
+    right:0;
+    top:0;
+    bottom: 0;
+    width:400px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+ }
+
 .vayau-routing .vayau-sidebar.vehical-sidebar {
   position: fixed;
   right:0;
@@ -651,7 +661,6 @@
 .btn-toolbar .btn-terniary-blue {
   /* opacity: 0.5; */
   height: 42px;
-  width:auto;
   border-radius: 4px;
   background-color: #394266 !important;
   font-family: "Roboto";
@@ -754,4 +763,17 @@
   background-color: #eee;
   margin-bottom: 10px;
   width: 100%;
+}
+
+.filter-label {
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.14;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+  margin-bottom: 25px;
 }

@@ -43,7 +43,7 @@
                         <button type="button" class="btn btn-terniary">Export CSV</button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-terniary-blue">Filter</button>
+                        <button type="button" ng-click="showFilterSidebar()" class="btn btn-terniary-blue">Filter</button>
                     </div>
                 </div>
             </div>
@@ -643,7 +643,7 @@
             </div>
         </section>
 
-        <div class="row vayau-sidebar  guard-sidebar" ng-if="isGuardSidebarDispaly">
+        <div class="row vayau-sidebar  guard-sidebar" ng-if="isGuardSidebarView">
             <div ng-repeat="list in guards" class="col-md-12">
                 <div class="vaayu-sidebar-panel">
                     <div class="vaayu-sidebar-heading">
@@ -691,7 +691,7 @@
             </div>
         </div>
             
-        <div class="row vayau-sidebar vehical-sidebar" ng-if="isVehicalSidebarDispaly">
+        <div class="row vayau-sidebar vehical-sidebar" ng-if="isVehicalSidebarView">
             <div ng-repeat="list in vehicals" class="col-md-12">
                 <div class="vaayu-sidebar-panel">
                     <div class="vaayu-sidebar-heading">
@@ -750,6 +750,68 @@
                 </div>
             </div>
         </div>
+
+        <div class="row vayau-sidebar filter-sidebar" ng-if="isFilterSidebarView">
+                <div ng-repeat="list in guards" class="col-md-12">
+                    <div class="vaayu-sidebar-panel">
+                        <div class="vaayu-sidebar-heading">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="float-left"><span class="vaayu-sidebar-title">Filter </span></h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" ng-click="hideFilterSidebar()" class="btn btn-close float-right">&#x2715;</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="vaayu-sidebar-body">
+                                <form class="">
+                                    <div class="form-group">
+                                        <label class="filter-label">Filter Based Shift And Time :</label>
+                                        <select id="disabledSelect" class="form-control" placeholder="Time">
+                                            <option>Time</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select id="disabledSelect" class="form-control" placeholder="Distance">
+                                            <option>Distance</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="filter-label">Filter Based Zone :</label>
+                                        <select id="disabledSelect" class="form-control" placeholder="Select Zone">
+                                            <option>Select Zone</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="filter-label">Filter Based On Total Employees In Routes :</label>
+                                        <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
+                                            rz-slider-options="slider.options"></rzslider>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="filter-label">Filter Based On Available Seats :</label>
+                                        <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
+                                            rz-slider-options="slider.options"></rzslider>
+                                    </div>
+
+                                    <div class="row mt-5 btn-toolbar">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-terniary-disable btn-block">NOT ALLOCATED</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-terniary btn-block">ALLOCATED</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
     
 </div>

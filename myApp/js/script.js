@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','dndLists']);
+var app = angular.module('app', ['ui.router','dndLists','rzSlider']);
 
 app.service('Map', function($q) {
     
@@ -41,6 +41,17 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map) {
 
     $scope.place = {};
     Map.init();
+
+    
+    $scope.slider = {
+        minValue: 1,
+        maxValue: 8,
+        options: {
+          floor: 0,
+          ceil: 10,
+          showTicksValues: true
+        }
+      };
 
     $scope.reset =function() {
         $state.reload(true);
@@ -277,25 +288,42 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map) {
         $scope.modelAsJson = angular.toJson(vehicals, true);
     }, true);
 
-    $scope.isVehicalSidebarDispaly=false;
+    
+    $scope.resetSidebar =function() {
+        $scope.isVehicalSidebarView=false;
+        $scope.isGuardSidebarView=false;
+        $scope.isFilterSidebarView=false;
+    }
+
+    $scope.resetSidebar();
 
     $scope.hideVehicalSidebar =function(){
-        $scope.isVehicalSidebarDispaly=false;
-    }
-    $scope.showVehicalSidebar =function(){
-        $scope.isGuardSidebarDispaly=false;
-        $scope.isVehicalSidebarDispaly=true;
+        $scope.isVehicalSidebarView=false;
     }
 
-    $scope.isGuardSidebarDispaly=false;
+    $scope.showVehicalSidebar =function(){
+        $scope.resetSidebar();
+        $scope.isVehicalSidebarView=true;
+    }
 
     $scope.hideGuardSidebar =function(){
-        $scope.isGuardSidebarDispaly=false;
+        $scope.resetSidebar();
     }
+
     $scope.showGuardSidebar =function(){
-        $scope.isVehicalSidebarDispaly=false;
-        $scope.isGuardSidebarDispaly=true;
+        $scope.resetSidebar();
+        $scope.isGuardSidebarView=true;
     }
+
+    $scope.hideFilterSidebar =function(){
+        $scope.resetSidebar();
+    }
+
+    $scope.showFilterSidebar =function(){
+        $scope.resetSidebar();
+        $scope.isFilterSidebarView=true;
+    }
+
 });
 
 // Define all the routes below
