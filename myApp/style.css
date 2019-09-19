@@ -125,10 +125,10 @@
 }
 
 .vayau-routing .employee-cluster-panel {
-  display: inline-grid;
+  /* display: inline-grid;
   margin-right: 20px;
   margin-bottom: 20px;
-  width: 260px;
+  width: 260px; */
   border-radius: 4px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
@@ -704,14 +704,54 @@
   border-radius: 4px;
   background-color: #14a89e;
 }
+
 .custom-panel-map {
   width:100% !important;
   margin-top: 15px;
 }
 
-#map { 
+.custom-panel-map #map { 
   height: 400px;
-  /* margin: 20px 0; */
   border-radius: 0;
   border: 1px solid silver;
+}
+
+.vayau-routing select {
+  /* width: 259px; */
+  height: 42px;
+  /* opacity: 0.5; */
+  color:#000;
+  border-radius: 4px;
+  border: solid 1px #707070;
+  background-color: #ffffff;
+  /* border: thin solid grey; */
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 5px 3.5em 0.5em 1em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:    url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA3klEQVRIS+3VMU9CMRTF8d8zBL+aizoQFhx0kUk33RzdYMNFXUFnYeGrYYyaJiUxJHDLSxodbNKpfeffc9/pbaPyaCrr+3OA++z4rtT5Pg5GuMnCY9yWQEoBE1xhlUUP8YDrCBIB0vojLvGO0yz4hm4JJAKcYYoPHGOZAUdYoIMBXrc5iQAHeMlzviFygj7O8dkWEJU4XI8chALRhn9AVKHf70VRTHu4wFfbmKZLNKt50dLBnna0imcMd/2I0phWa3Y/D1e1Xa9BCZJG0VuQNpaWKMx72xS1Fl5/WN3BN+AgJhnZQlq4AAAAAElFTkSuQmCC');
+  background-position: calc(100% - .5rem), 100% 0;
+  background-size:  1.5em 1.5em;
+  background-repeat: no-repeat;
+}
+
+.vayau-routing  select:focus {
+  outline: 0;
+}
+
+.dropzone {
+  column-count: 3;
+  column-gap: 1em;
+}
+
+.employee-cluster-panel { 
+  display: inline-block;
+  background-color: #eee;
+  margin-bottom: 10px;
+  width: 100%;
 }
