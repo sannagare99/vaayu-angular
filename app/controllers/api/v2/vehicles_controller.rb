@@ -129,7 +129,7 @@ class API::V2::VehiclesController < ApplicationController
             end
         elsif params[:registration_steps] == "Step_3"
           @vehicle = Vehicle.find(params[:vehicle_id])
-          if params[:insurance_doc].blank? or params[:rc_book_doc].blank? or params[:puc_doc].blank? or  params[:commercial_permit_doc].blank? or params[:road_tax_doc].blank?
+          if params[:insurance_doc].blank? or params[:rc_book_doc].blank? or params[:puc_doc].blank? or  params[:commercial_permit_doc].blank? or params[:road_tax_doc].blank? or params[:authorization_certificate_doc].blank?  or params[:vehicle_picture_doc].blank? or params[:fitness_doc].blank?
               render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
           else
             if validate_first_and_second_step(@vehicle).values.all?(true)
