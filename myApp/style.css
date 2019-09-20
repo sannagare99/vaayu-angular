@@ -658,7 +658,7 @@
   margin-left:10px;
 }
 
-.btn-toolbar .btn-terniary-blue {
+.vayau-routing .btn-terniary-blue {
   /* opacity: 0.5; */
   height: 42px;
   border-radius: 4px;
@@ -676,7 +676,7 @@
 
 .btn-terniary-disable {
   height: 42px;
-  width:auto;
+  /* width:auto; */
   opacity: 0.5;
   border-radius: 4px;
   background-color: #394266 !important;
@@ -691,10 +691,9 @@
   color: #FFF !important;
 }
 
-.btn-toolbar .btn-terniary {
+.vayau-routing .btn-terniary {
   /* opacity: 0.5; */
   height: 42px;
-  width:auto;
   border-radius: 4px;
   background-color: #14a89e !important;
   font-family: "Roboto";
@@ -706,6 +705,40 @@
   letter-spacing: normal;
   text-align: center;
   color: #ffffff !important;
+}
+.vayau-roster .table th {
+  font-family: "Roboto";
+  font-size: 13px;
+  padding: 19px !important;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.15;
+  letter-spacing: normal;
+  text-align: center;
+  color: #454d6f;
+}
+
+.text-color-blue {
+  color: #14a89e !important;
+  font-weight: 600 !important;
+}
+
+.vayau-roster .table td  {
+  padding: 9px 25px !important;
+  vertical-align: middle;
+  font-family: "Roboto";
+  font-size: 13px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
+  text-align: center;
+  color: #6c6c6c;
+}
+
+.btn-sm-vaayu {
+  height: 30px !important;
 }
 
 .btn-toolbar .btn-terniary.disabled {

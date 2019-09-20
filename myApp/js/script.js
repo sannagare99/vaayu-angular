@@ -37,6 +37,42 @@ app.service('Map', function($q) {
     
 });
 
+app.controller('rosterCtrl', function($scope){
+    $scope.rosters=[
+        {
+            shift:"shift1",
+            type:1,
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
+            vehicle_avialble:"23",
+            result:'GOOD TO GO'
+        },
+        {
+            shift:"shift1",
+            type:2,
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
+            vehicle_avialble:"23",
+            result:'GOOD TO GO'
+        },
+        {
+            shift:"shift1",
+            type:1,
+            shift_time:"09:00 AM",
+            shift_type:"Check Out",
+            no_of_employee:"236",
+            vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
+            vehicle_avialble:"2",
+            result:'REQUIRED MORE VEHICLE'
+        }
+    ]
+});
+
+
 app.controller('routeCtrl', function ($scope, $http, $state,Map) {
 
     $scope.place = {};
@@ -337,11 +373,11 @@ app.config(function (
             templateUrl: "route.html",
             controller: "routeCtrl"
         })
-        .state('Login', { 
-            url : '/login', 
-            template : "<h1>Login Page</h1>", 
-            controller : "routeCtrl"
+        .state('roster', { 
+            url : '/roster', 
+            templateUrl : "roster.html", 
+            controller : "rosterCtrl"
         }) 
 
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/roster");
 });
