@@ -414,6 +414,18 @@
   background-color: #eebe76;
 }
 
+.vayau-routing .card-analytic.pending {
+  border: solid 0.5px #b6b6b6;
+  background-color: #eebe76;
+}
+.vayau-routing .card-analytic.cancelled {
+  border: solid 0.5px #dc4e45;
+  background-color: #dc4e45;
+  color:#fff;
+}
+.vayau-routing .card-analytic.cancelled .text, .vayau-routing .card-analytic.cancelled .number {
+  color:#fff !important;
+}
 .vayau-routing .card-analytic.on-duty-vehical {
   border: solid 0.5px #b6b6b6;
   background-color: #82d7ad;

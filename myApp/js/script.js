@@ -72,6 +72,54 @@ app.controller('rosterCtrl', function($scope){
     ]
 });
 
+app.controller('tripboardCtrl', function($scope){
+    $scope.rosters=[
+        {
+            type:"1",
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_type:"SUV",
+            driver_name:'Rajpal Yadav',
+            vehicle_rc_no:"MH04DH4565",
+            live_tracking_in_eta:'08:45 AM',
+            current_status:'ON GOING'
+        },
+        {
+            type:"2",
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_type:"SUV",
+            driver_name:'Rajpal Yadav',
+            vehicle_rc_no:"MH04DH4565",
+            live_tracking_in_eta:'08:45 AM',
+            current_status:'PENDING'
+        },
+        {
+            type:"3",
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_type:"SUV",
+            driver_name:'Rajpal Yadav',
+            vehicle_rc_no:"MH04DH4565",
+            live_tracking_in_eta:'08:45 AM',
+            current_status:'CANCELLED'
+        },
+        {
+            type:"4",
+            shift_time:"09:00 AM",
+            shift_type:"Check In",
+            no_of_employee:"236",
+            vehicle_type:"SUV",
+            driver_name:'Rajpal Yadav',
+            vehicle_rc_no:"MH04DH4565",
+            live_tracking_in_eta:'08:45 AM',
+            current_status:'CANCELLED'
+        }
+    ]
+});
 
 app.controller('routeCtrl', function ($scope, $http, $state,Map) {
 
@@ -378,6 +426,11 @@ app.config(function (
             templateUrl : "roster.html", 
             controller : "rosterCtrl"
         }) 
+        .state('tripboard', { 
+            url : '/tripboard', 
+            templateUrl : "trip_board.html", 
+            controller : "tripboardCtrl"
+        }) 
 
-    $urlRouterProvider.otherwise("/roster");
+    $urlRouterProvider.otherwise("/tripboard");
 });
