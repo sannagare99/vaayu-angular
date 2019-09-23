@@ -1,9 +1,11 @@
 = simple_form_for @shift, html: {:'data-validate' => 'form', class: 'modal-form live-validation', :multipart => true, id: "form-shifts"}, :url => url, :method => meth, remote: remote do |f|
     .row
-      .col-md-4
+      .col-md-3
         = f.input :name, required: true
-      .col-md-4
+      .col-md-3
         = f.input :start_time, required: true, input_html: {:'data-mask' => 'time'}
-      .col-md-4
-        /= f.input :end_time, input_html: { :'data-input' => 'datepicker' }
+      .col-md-3
         = f.input :end_time, required: true, input_html: {:'data-mask' => 'time'}
+      .col-md-3
+        /!= f.association :site, label_method: :site_name, value_method: :id, prompt: false, required: true, prompt: "Choose a Site"
+        = f.input :site_id, collection: @site, label: "Site", prompt: "Choose a Site"

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   get 'users', to: 'user#index'
 
   get '/profile', to: 'home#profile_edit', as: :user_profile_edit
+  get '/site_list', to: 'sites#site_list'
   patch '/profile', to: 'home#profile_update', as: :user_profile_update
   get '/initiate_call', to: 'home#initiate_call'
   post '/update_last_active_time', to: 'home#update_last_active_time'
