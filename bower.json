@@ -59,7 +59,7 @@
     "typicons": "https://github.com/fontello/typicons.font",
     "wysihtml5": "~0.3.0",
     "wow": "^1.1.2",
-    "bootstrap": "3.3.7",
+    "bootstrap": "^4.3.1",
     "jquery.sparkline": "2.1.2",
     "jquery-mask-plugin": "jquery-mask#^1.14.0",
     "underscore": "1.8.3",
@@ -69,7 +69,9 @@
     "ladda": "^1.0.0",
     "seiyria-bootstrap-slider": "^10.0.0",
     "chart.js": "^2.7.1",
-    "chartjs-plugin-datalabels": "^0.2.0"
+    "chartjs-plugin-datalabels": "^0.2.0",
+    "angular": "^1.7.8",
+    "angular-ui-router": "^1.0.22"
   },
   "resolutions": {
     "get-size": "~1.1.7",

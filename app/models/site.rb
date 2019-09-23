@@ -9,6 +9,7 @@ class Site < ApplicationRecord
   has_many :drivers
   has_many :trips
   has_many :services, :dependent => :destroy
+  has_many :shifts
 
   validates :name, presence: true
   validates :latitude, presence: true
