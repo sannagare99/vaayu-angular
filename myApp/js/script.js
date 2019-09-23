@@ -83,9 +83,10 @@ app.controller('rosterCtrl', function($scope){
 
 app.controller('tripboardCtrl', function($scope,TripboardService){
     
-    var entry = TripboardService.get(function() {
+    var entry = TripboardService.get(function(data) {
         console.log("Here is APi Response");
         console.log(entry);
+        $scope.trips=data;
     });
 
     $scope.popup=function() {
