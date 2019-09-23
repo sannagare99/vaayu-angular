@@ -73,6 +73,42 @@ app.controller('rosterCtrl', function($scope){
 });
 
 app.controller('tripboardCtrl', function($scope){
+    $scope.popup=function() {
+        var mapProp= {
+            center:new google.maps.LatLng(51.508742,-0.120850),
+            zoom:5,
+          };
+          var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        
+        var modal = document.getElementById("myModal");
+    
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        
+        // Get the <span> element that closes the modal
+        var closepop = document.getElementsByClassName("closepop")[0];
+        
+        
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        closepop.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    
+     }
+     
     $scope.rosters=[
         {
             type:"1",
@@ -319,6 +355,50 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map) {
             "allowed": "all"
           },
           {
+            "vehical":[
+                // {
+                // "model": "SUV",
+                // "number": "MH 15 FB-1292",
+                // "type": "vehical"
+                // }
+            ],
+            "guard":[
+                {
+                    "model": "SUV",
+                    "number": "MH 15 FB-1292",
+                    "type": "guard"
+                }
+            ],
+            "items": [
+              {
+                "label": "all 10",
+                "effectAllowed": "all",
+                "gender":'male',
+                "type": "employee"
+              },
+              {
+                "label": "all 12",
+                "effectAllowed": "all",
+                "gender":'female',
+                "type": "employee"
+              },
+              {
+                "label": "all 14",
+                "effectAllowed": "all",
+                "gender":'male',
+                "type": "employee"
+              },
+              {
+                "label": "all 15",
+                "effectAllowed": "all",
+                "gender":'female',
+                "type": "employee"
+              }
+            ],
+            "allowed": "all"
+          },
+          
+          {
               "items":[],
               "vehical":[],
               "guard":[],
@@ -429,6 +509,16 @@ app.config(function (
         .state('tripboard', { 
             url : '/tripboard', 
             templateUrl : "trip_board.html", 
+            controller : "tripboardCtrl"
+        }) 
+        .state('constraints', { 
+            url : '/constraint', 
+            templateUrl : "Constraint.html", 
+            controller : "tripboardCtrl"
+        }) 
+        .state('contract', { 
+            url : '/contract', 
+            templateUrl : "contract.html", 
             controller : "tripboardCtrl"
         }) 
 
