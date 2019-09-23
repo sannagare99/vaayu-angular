@@ -1,4 +1,12 @@
-var app = angular.module('app', ['ui.router','dndLists','rzSlider']);
+var app = angular.module('app', ['ui.router','dndLists','rzSlider','ngResource']);
+
+
+// Services 
+app.constant('BASE_URL', 'http://google.com/');
+
+angular.module('app').factory('TripboardService', function($resource,BASE_URL) {
+    return $resource(BASE_URL+'api/entries');
+});
 
 app.service('Map', function($q) {
     
@@ -37,6 +45,7 @@ app.service('Map', function($q) {
     
 });
 
+
 app.controller('rosterCtrl', function($scope){
     $scope.rosters=[
         {
@@ -72,7 +81,13 @@ app.controller('rosterCtrl', function($scope){
     ]
 });
 
-app.controller('tripboardCtrl', function($scope){
+app.controller('tripboardCtrl', function($scope,TripboardService){
+    
+    var entry = TripboardService.get(function() {
+        console.log("Here is APi Response");
+        console.log(entry);
+    });
+
     $scope.popup=function() {
         var mapProp= {
             center:new google.maps.LatLng(51.508742,-0.120850),
@@ -108,7 +123,7 @@ app.controller('tripboardCtrl', function($scope){
         }
     
      }
-     
+
     $scope.rosters=[
         {
             type:"1",
