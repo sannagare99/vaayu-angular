@@ -30,7 +30,7 @@ $(function () {
                     {
                         data: "name",
                         render: function (data) {
-                            return '<a href="" class="modal_edit">' + data + '</a>'
+                            return '<a href="" class="modal_view">' + data + '</a>'
                         }
                     },
                     {data: 'hq_address'},
@@ -39,8 +39,8 @@ $(function () {
                     {data: 'service_tax_no'},
                     {
                         data: null,
-                        render: function (data) {
-                            return '<a href="" class="editor_remove text-danger">Delete</a>'
+                        render: function (data) {   
+                            return '<a href="" class="modal_edit">Edit</a>&nbsp<a href="" class="modal_view">View</a>&nbsp<a href="" class="editor_remove text-danger">Delete</a>' //Rushikesh made changes here
                         }
                     }
                 ],
@@ -73,7 +73,8 @@ $(function () {
             label: "Name",
             className: "col-md-4",
             name: "name"
-        }, {
+        },
+        {
             label: "HQ Address",
             className: "col-md-4",
             name: "hq_address"
@@ -89,7 +90,14 @@ $(function () {
             label: 'Service Tax No.',
             className: "col-md-4",
             name: "service_tax_no"
-        }]
+        },
+        {   //Rushikesh made changes here
+            label: "Zone",
+            className: "col-md-4",
+            name: "zone"
+        }
+    
+    ]
     });
 
     // set selectboxes
@@ -141,6 +149,25 @@ $(function () {
                     }
                 }])
             .edit($(this).closest('tr'));
+            $('input').removeAttr('disabled'); //Rushikesh added code here
+            $('.btn-primary').removeAttr('disabled'); //Rushikesh added code here
+    });
+    //Rushikesh made changes here, added View Record function
+    $(table).on('click', 'a.modal_view', function (e) {
+        e.preventDefault();
+
+        employeeCompaniesTableEditor
+            .title('View Company')
+            .edit($(this).closest('tr'));
+            $('input').attr('disabled','disabled'); //Rushikesh added code here
+            $('.btn-primary').attr('disabled','disabled');//Rushikesh added code here
+            //$('input').css({
+            // 'background-color': 'red',
+            //'color': 'white',
+            // 'font-size': '44px'
+             // }); 
+        
+       
     });
 
     // New record
@@ -163,6 +190,7 @@ $(function () {
                 }
             }])
             .create();
+            $('input').removeAttr('disabled'); //Rushikesh added code here
     });
 
     // Delete record

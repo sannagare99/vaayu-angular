@@ -18,6 +18,7 @@ class EmployeeCompanyDatatable
        :business_type => @employee_company.business_type,
        :pan => @employee_company.pan,
        :service_tax_no => @employee_company.service_tax_no,
+       :zone => @employee_company.zone, #Rushikesh made changes here
        :logistics_company_id => @employee_company.logistics_company&.id,
        :logistics_company => @employee_company.logistics_company&.name,
        :standard_price => @employee_company.standard_price,

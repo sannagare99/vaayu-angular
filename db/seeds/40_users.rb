@@ -1,12 +1,7 @@
 l_comp = LogisticsCompany.create! name:'Mahindra Logistics Limited'
 e_comp = EmployeeCompany.create! name: 'PwC India Limited', logistics_company: l_comp
-site = Site.create!(
-    name: 'PwC - DLF Cyber City',
-    latitude: '28.493719',
-    longitude: '77.087908',
-    address: 'GURGAON, HARYANA, 122002',
-    employee_company: e_comp
-)
+
+ 
 
 operator = Operator.create!(
     pan: 'BKYPB4114M',

@@ -108,6 +108,7 @@ class DriversController < ApplicationController
   end    
 
   def validate
+    byebug
     driver_params['email'] = "driver-#{(Time.now.to_f * 1000).to_i}@moove.com" if driver_params['email'].blank?
     if params[:id].present?
       driver = Driver.find_by_prefix(params[:id])

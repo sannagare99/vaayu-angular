@@ -34,6 +34,7 @@
           li
             a[href="#employee-change-request" data-toggle="tab"]
               | Requests
+         
           .nav-actions
             a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
               | Export Clusters
@@ -91,6 +92,9 @@
           li
             a[href="#employee-change-request" data-toggle="tab"]
               | Requests
+          li
+            a[href="#routing-angular" data-toggle="tab"]
+              | Routing
           .nav-actions
             a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
               | Export Clusters
@@ -107,6 +111,7 @@
         = render 'trips/operator/assigned_trips'
         = render 'trips/trips_notifications'
         = render 'trips/employer/adhoc_trips'
+        
 
       - if current_user.operator? || current_user.operator_shift_manager?
         = render 'trips/operator/trip_board'
@@ -119,6 +124,7 @@
         = render 'trips/operator/assigned_trips'
         = render 'trips/trips_notifications'
         = render 'trips/employer/adhoc_trips'
+        = render 'trips/temp'
 
 
   - if current_user.employer? || current_user.transport_desk_manager? || current_user.admin?

@@ -70,11 +70,11 @@ class EmployeeCompaniesController < ApplicationController
     def set_company
       @employee_company = EmployeeCompany.find_by_prefix(params[:id])
     end
-
+# Rushikesh made changes below , added zone
     def company_params
       params['company'] = params['data'].values.first
       params.require(:company).permit(
-          :id, :name, :hq_address, :business_type, :pan, :service_tax_no, :logistics_company_id,
+          :id, :name, :hq_address, :business_type, :pan, :service_tax_no, :zone , :logistics_company_id,
           :standard_price, :pay_period, :time_on_duty_limit, :distance_limit, :rate_by_time, :service_tax_percent,
           :rate_by_distance, :agreement_date, :swachh_bharat_cess, :krishi_kalyan_cess, :profit_centre, :invoice_frequency
       )

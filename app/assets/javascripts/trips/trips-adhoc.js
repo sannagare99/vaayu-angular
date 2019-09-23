@@ -18,7 +18,7 @@ $(function () {
     $('a[href="#employee-change-request"]').on('shown.bs.tab', function (e) {
         if (loadedTabs['employee-change-request']) return;
 
-        // set loaded state
+        // set loaded states
         loadedTabs['employee-change-request'] = true;
 
         if (!loadedDatatables[table]) {

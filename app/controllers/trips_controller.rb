@@ -11,6 +11,8 @@ class TripsController < ApplicationController
       format.html
       format.json { render json: TripRostersDatatable.new(view_context, current_user)}
     end
+
+    #render 'index.html'
   end
 
   def create

@@ -11,7 +11,7 @@ $(function () {
 
         // set loaded state
         loadedTabs['shifts'] = true;
-
+        
         if (!loadedDatatables[table]) {
 
             shiftsTable = $(table).DataTable({
@@ -26,7 +26,6 @@ $(function () {
                 language: {
                     emptyTable: "No result"
                 },
-
                 columns: [
                     {
                         data: null,
@@ -50,7 +49,7 @@ $(function () {
                 initComplete: function () {
                     loadedDatatables[table] = true;
                 }
-            });
+            }); 
 
         }
 
@@ -72,7 +71,7 @@ $(function () {
     $("#shifts").on("focusout", ".live-validation input.required, select.required", function(e){
         var _this = this;
         focusOutTimer = setTimeout(function () {
-            var fields = ['shift[name]', 'shift[start_time]', 'shift[end_time]'];
+            var fields = ['shift[name]', 'shift[start_time]', 'shift[end_time]','sift[name_2]']; // Rushikesh made changes here add field here
             $.validate($(_this), _this.name, fields, "/shifts/validate", $("#form-shifts"))
         }, 200)
     });
