@@ -32,3 +32,4 @@ angular.module('app').factory('DriverService', ['$resource','BASE_URL_RUBY',
             update: { method: "PUT"}
         });
 }]);
+
