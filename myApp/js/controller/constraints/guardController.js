@@ -4,7 +4,7 @@
 angular.
   module('app').
   component('createGuard', {
-    templateUrl: './views/guard.html',
+    templateUrl: './views/add_guard.html',
     controller: function GuardController() {
         this.$onInit = () => {
             console.log('onInit called createGuard');
