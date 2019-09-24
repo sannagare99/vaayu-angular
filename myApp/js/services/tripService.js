@@ -10,3 +10,4 @@ angular.module('app').factory('ShiftService', ['$resource','BASE_URL',
         });
  
 }]);
+
