@@ -6,7 +6,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Sh
             "site_id":8,
             "to_date":"2019-09-23"
         }
-        RosterService.post(postData, function(data) {
+        RosterService.get(postData, function(data) {
             $scope.rosters=data;
             console.log($scope.rosters)
         });
