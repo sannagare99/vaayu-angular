@@ -278,20 +278,13 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
         $scope.modelAsJson = angular.toJson(guards, true);
     }, true);
 
-
-  DriverService.query().$promise.then(function(data) {
-      alert('inside res')
-  }, function(error) {
-      alert("inside error")
-  });
-
-    // DriverService.get(function(res) {
-    //   $scope.drivers=res.data.drivers;
-    //   console.log(res);
-    // }, function(error) {
-    //   // $scope.drivers=res.data.drivers;
-    //   alert('i am in error');
-    // });
+    DriverService.get(function(res) {
+      $scope.drivers=res.data.drivers;
+      console.log(res);
+    }, function(error) {
+      // $scope.drivers=res.data.drivers;
+      alert('i am in error');
+    });
 
     $scope.vehicals = [
         {
