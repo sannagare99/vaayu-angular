@@ -1,4 +1,4 @@
-app.controller('rosterCtrl', function($scope){
+angular.module('app').controller('rosterCtrl', function($scope){
     $scope.rosters=[
         {
             shift:"shift1",

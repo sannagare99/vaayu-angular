@@ -1,5 +1,5 @@
 
-app.service('Map', function($q) {
+angular.module('app').service('Map', function($q) {
     
     this.init = function() {
         var options = {
