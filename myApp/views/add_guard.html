@@ -22,7 +22,15 @@
             </select>
         </div>
         <div class="col-md-6 ">
-
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Site Name</label>
+                    <select class="custom-select" ng-model="$ctrl.siteID">
+                        <option value="">Select here</option>
+                        <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
     <div class=" guard">

@@ -9,7 +9,7 @@ app.controller('constraintController', function ($scope, $http, $state) {
 
 
     this.$onInit = () => {
-        
+        $scope.fetchSiteList ()
     }
     
 
@@ -44,13 +44,16 @@ app.controller('constraintController', function ($scope, $http, $state) {
            })
         .then(function(res) { 
             if (res.data['success']) {
-                $scope.siteNames = res.data.data.list;
+                // $scope.siteNames = res.data.data.list;
+                $scope.$broadcast('onSiteListReceived',res.data.data.list);
                 console.log(JSON.stringify($scope.siteNames))
             } else {
                 alert(res.data['message']);
             }
 
-         });
+        }).catch(err => {
+            console.log(err)
+        });
     };
 
 

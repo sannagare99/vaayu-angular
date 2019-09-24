@@ -5,9 +5,16 @@ angular.
   module('app').
   component('addDistance', {
     templateUrl: './views/add_distance.html',
-    controller: function GuardController() {
+    controller: function GuardController($scope) {
+
+        this.siteID = "";
+
         this.$onInit = () => {
             console.log('onInit called addDistance' );
         }
+
+        $scope.$on("onSiteListReceived", (evt,list) => { 
+            this.siteNames = list;
+        });
     }
   });
