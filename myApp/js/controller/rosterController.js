@@ -1,4 +1,9 @@
-angular.module('app').controller('rosterCtrl', function($scope){
+angular.module('app').controller('rosterCtrl', function($scope,TripService){
+
+    var entry = TripService.get(function(data) {
+        $scope.trips=data;
+    });
+
     $scope.rosters=[
         {
             shift:"shift1",

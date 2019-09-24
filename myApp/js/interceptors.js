@@ -3,7 +3,9 @@ angular.module('app').factory('sessionInjector', ['SessionService', function(Ses
     var sessionInjector = {
         request: function(config) {
             if (!SessionService.isAnonymus) {
-                config.headers['x-session-token'] = SessionService.token;
+                config.headers['uid'] = SessionService.uid;
+                config.headers['access_token'] = SessionService.access_token;
+                config.headers['client'] = SessionService.client;
             }
             return config;
         }
