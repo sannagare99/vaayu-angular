@@ -1,7 +1,7 @@
 
 
 <div class="container">
-  <h2 class="main-title">Constraint</h2>
+  <h2 class="main-title">Constraints</h2>
   <ul class="nav nav-tabs">
     <li class="nav-item nav-link " ng-class="{active:isSet(1)}" ng-click="setTab(1)">Guard</li>
     <li class="nav-item nav-link " ng-class="{active:isSet(2)}"  ng-click="setTab(2)">Distance</li>
@@ -11,81 +11,9 @@
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade  bg" ng-class="{'in active show':isSet(1)}">
-      <div class="tab-content-area ">
-        <div class="row margin-b-20 ">
-
-          <div class="col-md-2">
-            <!-- Default unchecked -->
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-              <label class="custom-control-label" for="defaultUnchecked">Last Drop</label>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="pick">
-              <label class="custom-control-label" for="pick">First Pick</label>
-            </div>
-          </div>
-          <div class="col-md-2 ">
-            <select class="custom-select">
-              <option value="1">Female</option>
-              <option value="2">Male</option>
-              <option value="3">Both</option>
-            </select>
-          </div>
-          <div class="col-md-6 ">
-
-          </div>
-        </div>
-        <div class=" guard">
-          <div class="row padding-20 bg">
-            <div class="col-md-3">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Time</label>
-                <div class="input-group-append">
-                  <span class="input-group-text">FROM</span>
-                </div>
-                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text">TO</span>
-                </div>
-                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
-              </div>
-            </div>
-          </div>
-          <div class="row bg">
-            <div class="col-md-3">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Time</label>
-                <div class="input-group-append">
-                  <span class="input-group-text">FROM</span>
-                </div>
-                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text">TO</span>
-                </div>
-                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
-
-
-
-
-        </div>
-      </div>
-
+      <create-guard></create-guard>
     </div>
+    
 
 
 
@@ -156,60 +84,7 @@
 
     
     <div id="menu3" class="tab-pane  " ng-class="{'in active show':isSet(4)}">
-      <form novalidate class="zone-form">
-        <div class="tab-content-area">
-          <div class="row ">
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Zone Name</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                ng-model="siteName"
-                >
-              </div>
-            </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                  <label class="text-label" for="basic-url">Site Name</label>
-                  <select class="custom-select" ng-model="siteID" >
-                    <!-- <option value="null">Select here</option> -->
-                    <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
-                </select>
-              </div>
-            </div>
-
-
-
-          </div>
-          <div class="row ">
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Latitude</label>
-                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLat" >
-
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Longitude</label>
-                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLong">
-
-              </div>
-            </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                  <label class="text-label" for="basic-url">Zipcode</label>
-                  <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="zipcode">
-  
-                </div>
-            </div>
-          
-          </div>
-          <hr>
-          <button type="button" class="btn btn-primary main-submit-btn" ng-click="submitForm()">Submit</button>
-        </div>
-      </form>
+      <add-zone></add-zone>
     </div>
   </div>
 </div>

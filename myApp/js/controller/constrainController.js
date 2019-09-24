@@ -9,7 +9,7 @@ app.controller('constraintController', function ($scope, $http, $state) {
 
 
     this.$onInit = () => {
-        $scope.fetchSiteList();
+        
     }
     
 
@@ -42,25 +42,24 @@ app.controller('constraintController', function ($scope, $http, $state) {
             },
             data: { test: 'test' }
            })
-        .then(function(res){ 
-            
+        .then(function(res) { 
             if (res.data['success']) {
                 $scope.siteNames = res.data.data.list;
                 console.log(JSON.stringify($scope.siteNames))
             } else {
                 alert(res.data['message']);
             }
-            $scope.siteNames
+
          });
     };
 
 
     $scope.submitForm = () => {
-        console.log($scope.zipcode);
-        console.log($scope.siteName);
-        console.log($scope.siteID);
-        console.log($scope.siteLat);
-        console.log($scope.siteLong);
+        // console.log($scope.zipcode);
+        // console.log($scope.siteName);
+        // console.log($scope.siteID);
+        // console.log($scope.siteLat);
+        // console.log($scope.siteLong);
     }
    
 });
