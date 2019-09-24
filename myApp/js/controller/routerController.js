@@ -2,8 +2,8 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
 
     $scope.place = {};
     Map.init();
-    
-    SiteService.get(function(res) {
+  
+    SiteService.get().$promise.then(function(res) {
       $scope.sites=res.data.list;
     });
     
@@ -257,8 +257,6 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
 
-
-
     
     $scope.guards = [
         {
@@ -277,11 +275,11 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
     $scope.$watch('guards', function(guards) {
         $scope.modelAsJson = angular.toJson(guards, true);
     }, true);
-
-    DriverService.get(function(res) {
+    
+    DriverService.get().$promise.then(function(res) {
       $scope.drivers=res.data.drivers;
-      console.log(res);
     }, function(error) {
+      console.log(error)
       // $scope.drivers=res.data.drivers;
       // alert('i am in error');
     });
