@@ -5,8 +5,9 @@ angular.module('app').factory('VehicleService', ['$resource','BASE_URL','Session
             query: { method: "GET", isArray: true },
             create: { method: "POST"},
             get: { 
-                method: "POST",
+                method: "GET",
                 headers: { 
+                    'Content-Type':'application/json',
                     'uid': SessionService.uid,
                     'access_token': SessionService.access_token,
                     'client':SessionService.client

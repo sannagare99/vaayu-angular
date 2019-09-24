@@ -1,4 +1,4 @@
-app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,SiteService) {
+app.controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService) {
 
     $scope.place = {};
     Map.init();
@@ -276,8 +276,8 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
         $scope.modelAsJson = angular.toJson(guards, true);
     }, true);
     
-    DriverService.get().$promise.then(function(res) {
-      $scope.drivers=res.data.drivers;
+    VehicleService.get().$promise.then(function(res) {
+      $scope.vehicles=res.data.vehicles;
     }, function(error) {
       console.log(error)
       // $scope.drivers=res.data.drivers;
