@@ -4,14 +4,14 @@
 // });
 
 
-angular.module('app').factory('RosterService',['$resource', 'BASE_URL',
-  function($resource,BASE_URL) {
-    return $resource('allocation', {
-        //subDivisionId: '@_id'
-      },{
+
+angular.module('app').factory('RosterService',['$resource', 'BASE_URL', 'BASE_URL_8002',
+  function($resource,BASE_URL, BASE_URL_8002) {
+    return $resource('allocation', {},{
     post:{
-        url: BASE_URL+'allocation/autoallocate' ,
-        method: 'POST'
+        url: BASE_URL_8002 + 'roasterlist' ,
+        method: 'POST',
+        isArray: false
     },
   });
   },
