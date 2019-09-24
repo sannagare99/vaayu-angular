@@ -163,17 +163,18 @@
             <div class="col">
               <div class="input-group mb-3">
                 <label class="text-label" for="basic-url">Zone Name</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                ng-model="siteName"
+                >
               </div>
             </div>
             <div class="col">
                 <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Site Name</label>
-              <select class="custom-select" ng-model="selectedSite" >
-                <!-- <option value="null">Select here</option> -->
-                <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
-              </select>
+                  <label class="text-label" for="basic-url">Site Name</label>
+                  <select class="custom-select" ng-model="siteID" >
+                    <!-- <option value="null">Select here</option> -->
+                    <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
+                </select>
               </div>
             </div>
 
@@ -185,23 +186,28 @@
             <div class="col">
               <div class="input-group mb-3">
                 <label class="text-label" for="basic-url">Latitude</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLat" >
 
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <label class="text-label" for="basic-url">Longitude</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLong">
 
               </div>
             </div>
-
-
-
+            <div class="col">
+                <div class="input-group mb-3">
+                  <label class="text-label" for="basic-url">Zipcode</label>
+                  <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="zipcode">
+  
+                </div>
+            </div>
+          
           </div>
           <hr>
-          <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
+          <button type="button" class="btn btn-primary main-submit-btn" ng-click="submitForm()">Submit</button>
         </div>
       </form>
     </div>

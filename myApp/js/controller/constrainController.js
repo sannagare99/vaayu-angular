@@ -1,7 +1,13 @@
 app.controller('constraintController', function ($scope, $http, $state) {
 
-    $scope.siteNames = []
-    $scope.selectedSite = 'Select Site Name'
+    $scope.siteNames = [];
+    $scope.siteID = null;
+    $scope.siteName = null;
+    $scope.siteLat = null;
+    $scope.siteLong = null;
+    $scope.zipcode = null;
+
+
     this.$onInit = () => {
         $scope.fetchSiteList();
     }
@@ -48,5 +54,13 @@ app.controller('constraintController', function ($scope, $http, $state) {
          });
     };
 
+
+    $scope.submitForm = () => {
+        console.log($scope.zipcode);
+        console.log($scope.siteName);
+        console.log($scope.siteID);
+        console.log($scope.siteLat);
+        console.log($scope.siteLong);
+    }
    
 });
