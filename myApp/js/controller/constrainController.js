@@ -1,6 +1,8 @@
 app.controller('constraintController', function ($scope, $http, $state) {
 
-    
+    this.$onInit = () => {
+        $scope.fetchSiteList();
+    }
     
 
     $scope.reset =function() {
@@ -19,7 +21,7 @@ app.controller('constraintController', function ($scope, $http, $state) {
         return $scope.tab === tabId;
     };
 
-    fetchSiteList = () => {
+    $scope.fetchSiteList = () => {
        
         $http({
             method: 'POST',
@@ -35,5 +37,7 @@ app.controller('constraintController', function ($scope, $http, $state) {
         .then(function(response){ 
             console.log(JSON.stringify(response))
          });
-    }
+    };
+
+   
 });
