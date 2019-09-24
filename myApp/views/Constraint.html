@@ -18,67 +18,13 @@
 
 
     <div id="menu1" class="tab-pane fade " ng-class="{'in active show':isSet(2)}">
-      <div class="tab-content-area">
-        <div class="row ">
-
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Max Trip Distance</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-              <div class="input-group-append">
-                <span class="input-group-text">Km</span>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Between Two Points</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-              <div class="input-group-append">
-                <span class="input-group-text">Km</span>
-              </div>
-            </div>
-          </div>
-
-
-
-        </div>
-        <hr>
-        <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
-      </div>
+      <add-distance></add-distance>
     </div>
 
 
 
     <div id="menu2" class="tab-pane fade " ng-class="{'in active show':isSet(3)}">
-      <div class="tab-content-area">
-        <div class="row ">
-
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Max Trip Time</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-              <div class="input-group-append">
-                <span class="input-group-text">MINS</span>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Between Two Points</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-              <div class="input-group-append">
-                <span class="input-group-text">MINS</span>
-              </div>
-            </div>
-          </div>
-
-
-
-        </div>
-        <hr>
-        <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
-      </div>
+      <add-time></add-time>
     </div>
 
 

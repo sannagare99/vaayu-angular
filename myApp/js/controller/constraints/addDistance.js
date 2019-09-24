@@ -3,11 +3,11 @@
 // Register `phoneList` component, along with its associated controller and template
 angular.
   module('app').
-  component('createGuard', {
-    templateUrl: './views/guard.html',
+  component('addDistance', {
+    templateUrl: './views/add_distance.html',
     controller: function GuardController() {
         this.$onInit = () => {
-            console.log('onInit called createGuard');
+            console.log('onInit called addDistance' );
         }
     }
   });

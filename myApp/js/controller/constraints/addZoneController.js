@@ -7,7 +7,7 @@ angular.
     templateUrl: './views/add_zone.html',
     controller: function AddZoneController($http) {
         this.$onInit = () => {
-            console.log('onInit called');
+            console.log('onInit called addZone');
             this.fetchSiteList();
         }
 
