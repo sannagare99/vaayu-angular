@@ -22,9 +22,9 @@ app.config(function (
             templateUrl : "./views/trip_board.html", 
             controller : "tripboardCtrl"
         }) 
-        .state('constraints', { 
+        .state('constraint', { 
             url : '/constraint', 
-            templateUrl : "./views/Constraint.html", 
+            templateUrl : "./views/constraint.html", 
             controller : "tripboardCtrl"
         }) 
         .state('contract', { 
