@@ -1,4 +1,4 @@
-angular.module('app').controller('rosterCtrl', function($scope,Shift,ShiftService){
+angular.module('app').controller('rosterCtrl', function($scope,ShiftService){
 
     ShiftService.get(function(data) {
         console.log(data);
