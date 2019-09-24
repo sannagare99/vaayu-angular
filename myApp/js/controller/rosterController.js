@@ -1,8 +1,7 @@
-angular.module('app').controller('rosterCtrl', function($scope,ShiftService){
+angular.module('app').controller('rosterCtrl', function($scope,SiteService){
 
-    ShiftService.get(function(data) {
-        $scope.shifts=data.data.list;
-        console.log(data);
+    SiteService.get(function(data) {
+        $scope.sites = data.data.list;
     });
    
     $scope.rosters=[

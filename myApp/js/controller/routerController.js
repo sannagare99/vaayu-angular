@@ -1,8 +1,11 @@
-app.controller('routeCtrl', function ($scope, $http, $state,Map) {
+app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,SiteService) {
 
     $scope.place = {};
     Map.init();
-
+    
+    SiteService.get(function(res) {
+      $scope.sites=res.data.list;
+    });
     
     $scope.slider = {
         minValue: 1,
@@ -274,6 +277,14 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map) {
     $scope.$watch('guards', function(guards) {
         $scope.modelAsJson = angular.toJson(guards, true);
     }, true);
+
+    DriverService.get(function(res) {
+      $scope.drivers=res.data.drivers;
+      console.log(res);
+    }, function(error) {
+      // $scope.drivers=res.data.drivers;
+      // alert('i am in error');
+    });
 
     $scope.vehicals = [
         {
