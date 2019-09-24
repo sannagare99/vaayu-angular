@@ -9,27 +9,27 @@ app.config(function (
     $stateProvider
         .state("routing", {
             url: "/route",
-            templateUrl: "route.html",
+            templateUrl: "./views/route.html",
             controller: "routeCtrl"
         })
         .state('roster', { 
             url : '/roster', 
-            templateUrl : "roster.html", 
+            templateUrl : "./views/roster.html", 
             controller : "rosterCtrl"
         }) 
         .state('tripboard', { 
             url : '/tripboard', 
-            templateUrl : "trip_board.html", 
+            templateUrl : "./views/trip_board.html", 
             controller : "tripboardCtrl"
         }) 
         .state('constraints', { 
             url : '/constraint', 
-            templateUrl : "Constraint.html", 
+            templateUrl : "./views/Constraint.html", 
             controller : "tripboardCtrl"
         }) 
         .state('contract', { 
             url : '/contract', 
-            templateUrl : "contract.html", 
+            templateUrl : "./views/contract.html", 
             controller : "tripboardCtrl"
         }) 
 
