@@ -822,3 +822,11 @@
   color: #000000;
   margin-bottom: 25px;
 }
+
+.fa-search-custom {
+  background-color: #00ab9d !important;
+}
+
+.custom-date {
+  margin:0px !important;, height: 42px !important;
+}

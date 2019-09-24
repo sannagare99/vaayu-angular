@@ -5,36 +5,46 @@
             <div class="row">
                 <div class="col-md-8">
                     <form class="form-inline">
-                        <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
-                                <option ng-repeat="shift in shifts" >{{shift.name}}</option>
+                        <!-- <div class="form-group pr-2">
+                            <select ng-model="shift" class="form-control" placeholder="Select Shift">
+                                <option ng-repeat="shift in shifts">{{shift.name}}</option>
                             </select>
+                        </div> -->
+                        <div class="form-group pr-2">
+                            <p class="input-group custom-date" >
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
+                            />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            </p>
                         </div>
                         <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
+                            <select class="form-control">
                                 <option>Check In</option>
                                 <option>Check Out</option>
                             </select>
                         </div>
-                        <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
+                        <!-- <div class="form-group pr-2">
+                            <select class="form-control">
                                 <option>Shift 1</option>
                                 <option>Shift 2</option>
                                 <option>Shift 3</option>
                                 <option>Shift 4</option>
                             </select>
-                        </div>
-                        <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
+                        </div> -->
+                        <!-- <div class="form-group pr-2">
+                            <select class="form-control">
                                 <option>Disabled select</option>
                             </select>
-                        </div>
+                        </div> -->
     
-                        <button type="submit" class="btn btn-terniary-disable">Genrate</button>
+                        <button type="submit" class="btn btn-terniary-disable fa-search-custom"><i class="fa fa-search fa-search-custom" aria-hidden="true"></i>
+                        </button>
                     </form>
                 </div>
     
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="btn-toolbar float-right" role="toolbar">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-terniary-blue">Finalize</button>
@@ -46,7 +56,7 @@
                             <button type="button" ng-click="showFilterSidebar()" class="btn btn-terniary-blue">Filter</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
     
             <div class="row analytic-panel">

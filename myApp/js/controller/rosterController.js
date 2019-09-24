@@ -1,19 +1,36 @@
-angular.module('app').controller('rosterCtrl', function($scope,RosterService, ShiftService, $http){
+angular.module('app').controller('rosterCtrl', function($scope,RosterService, SiteService, $http){
+
 
     $scope.init = function(){
-        console.log('init called');
+       
+          $scope.today();
+        
+          $scope.toggleMin();
+        
+          
+          $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+          };
+        
+          $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+          $scope.format = $scope.formats[0];
+
         let postData = {
             "site_id":8,
-            "to_date":"2019-09-23"
+            "to_date": $scope.filterDate
         }
-        RosterService.get(postData, function(data) {
-            $scope.rosters=data;
-            console.log($scope.rosters)
-        });
-        // $scope.fetchRoasterList(postData);
-        ShiftService.get(function(data) {
-            $scope.shifts=data.data.list;
-        });
+        // RosterService.get(postData, function(data) {
+        //     $scope.rosters=data;
+        //     console.log($scope.rosters)
+        // }
+        // , function (error) {
+        //     console.error(error);
+        // });;
+        $scope.fetchRoasterList(postData);
+        // SiteService.get(function(data) {
+        //     $scope.shifts=data.data.list;
+        // });
 
         $scope.rosters=[
             {
@@ -49,6 +66,32 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Sh
         ]
     }
 
+    $scope.today = function() {
+        $scope.filterDate = new Date();
+      };
+    
+      $scope.clear = function () {
+        $scope.filterDate = null;
+      };
+    
+      // Disable weekend selection
+      $scope.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+      };
+    
+      $scope.toggleMin = function() {
+        $scope.minDate = $scope.minDate ? null : new Date();
+      };
+
+      $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    
+        $scope.opened = true;
+      };
+    
+      
+
     $scope.fetchRoasterList = (data) => {
        
         $http({
@@ -57,14 +100,15 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Sh
             headers: {
               'Content-Type': 'application/json',
               'uid': 'deekshithmech@gmail.com',
-              'access_token': 'h-Hen_PE9YDkOTa-HLjMVw',
-              'client': 'A50BtzCIieAvpcTk2450ew'
+            //   'access_token': 'h-Hen_PE9YDkOTa-HLjMVw',
+            //   'client': 'A50BtzCIieAvpcTk2450ew'
             },
             data: data
            })
         .then(res =>  { 
+            console.log(res);
             if (res.data['success']) {
-                this.siteNames = res.data.data.list;
+                $scope.rosters= res.data.data.list;
                 console.log(JSON.stringify(this.siteNames))
             } else {
                 alert(res.data['message']);
