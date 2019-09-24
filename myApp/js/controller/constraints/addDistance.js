@@ -7,14 +7,14 @@ angular.
     templateUrl: './views/add_distance.html',
     controller: function GuardController($scope) {
 
-        this.siteID = "";
+      this.siteID = "";
 
-        this.$onInit = () => {
-            console.log('onInit called addDistance' );
-        }
+      this.$onInit = () => {
+        console.log('onInit called addDistance');
+      }
 
-        $scope.$on("onSiteListReceived", (evt,list) => { 
-            this.siteNames = list;
-        });
+      $scope.$on("onSiteListReceived", (evt, list) => {
+        this.siteNames = list;
+      });
     }
   });

@@ -10,14 +10,14 @@ angular.
       this.siteID = "";
 
       this.$onInit = () => {
-          console.log('onInit called createGuard');
+        console.log('onInit called createGuard');
       }
 
 
-      $scope.$on("onSiteListReceived", (evt,list) => { 
+      $scope.$on("onSiteListReceived", (evt, list) => {
         this.siteNames = list;
       });
     }
 
-    
+
   });
