@@ -7,7 +7,7 @@
                 <form class="form-inline">
                     <div class="form-group pr-2">
                         <select id="disabledSelect" class="form-control">
-                            <option>L&T Defence, Pune</option>
+                            <option ng-repeat="site in sites">{{site.name}}</option>
                         </select>
                     </div>
                     <div class="form-group pr-2">
@@ -21,7 +21,6 @@
                             <option>Shift 1</option>
                             <option>Shift 2</option>
                             <option>Shift 3</option>
-                            <option>Shift 4</option>
                         </select>
                     </div>
                     <div class="form-group pr-2">
