@@ -1,10 +1,17 @@
 
-angular.module('app').factory('SiteService', ['$resource','BASE_URL',
-    function ($resource,BASE_URL) {
+angular.module('app').factory('SiteService', ['$resource','BASE_URL','SessionService',
+    function ($resource,BASE_URL,SessionService) {
         return $resource(BASE_URL+'getAllSiteList', {}, {
             query: { method: "GET", isArray: true },
             create: { method: "POST"},
-            get: { method: "POST"},
+            get: { 
+                method: "POST",
+                headers: { 
+                    'uid': SessionService.uid,
+                    'access_token': SessionService.access_token,
+                    'client':SessionService.client
+                }
+            },
             remove: { method: "DELETE"},
             update: { method: "PUT"}
         });

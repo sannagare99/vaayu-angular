@@ -283,7 +283,7 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,Si
       console.log(res);
     }, function(error) {
       // $scope.drivers=res.data.drivers;
-      alert('i am in error');
+      // alert('i am in error');
     });
 
     $scope.vehicals = [
