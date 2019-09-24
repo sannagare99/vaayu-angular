@@ -25,7 +25,7 @@ app.config(function (
         .state('constraint', { 
             url : '/constraint', 
             templateUrl : "./views/constraint.html", 
-            controller : "tripboardCtrl"
+            controller : "constraintController"
         }) 
         .state('contract', { 
             url : '/contract', 
