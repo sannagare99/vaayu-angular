@@ -1,7 +1,7 @@
 app.controller('routeCtrl', function ($scope, $http, $state,Map,DriverService,SiteService) {
 
     $scope.place = {};
-    // Map.init();
+    Map.init();
     
     SiteService.get(function(res) {
       $scope.sites=res.data.list;
