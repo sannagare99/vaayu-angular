@@ -1,5 +1,7 @@
 app.controller('constraintController', function ($scope, $http, $state) {
 
+    $scope.siteNames = []
+    $scope.selectedSite = 'Select Site Name'
     this.$onInit = () => {
         $scope.fetchSiteList();
     }
@@ -34,8 +36,15 @@ app.controller('constraintController', function ($scope, $http, $state) {
             },
             data: { test: 'test' }
            })
-        .then(function(response){ 
-            console.log(JSON.stringify(response))
+        .then(function(res){ 
+            
+            if (res.data['success']) {
+                $scope.siteNames = res.data.data.list;
+                console.log(JSON.stringify($scope.siteNames))
+            } else {
+                alert(res.data['message']);
+            }
+            $scope.siteNames
          });
     };
 

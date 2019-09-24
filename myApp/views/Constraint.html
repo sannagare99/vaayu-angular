@@ -156,50 +156,54 @@
 
     
     <div id="menu3" class="tab-pane  " ng-class="{'in active show':isSet(4)}">
-      <div class="tab-content-area">
-        <div class="row ">
+      <form novalidate class="zone-form">
+        <div class="tab-content-area">
+          <div class="row ">
 
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Zone Name</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-
+            <div class="col">
+              <div class="input-group mb-3">
+                <label class="text-label" for="basic-url">Zone Name</label>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                
+              </div>
             </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                <label class="text-label" for="basic-url">Site Name</label>
+              <select class="custom-select" ng-model="selectedSite" >
+                <!-- <option value="null">Select here</option> -->
+                <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
+              </select>
+              </div>
+            </div>
+
+
+
           </div>
-          <div class="col">
-            <select class="custom-select">
-              <option value="1">Site Name </option>
-              <option value="2">Option1 </option>
-              <option value="3">Option2</option>
-            </select>
+          <div class="row ">
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <label class="text-label" for="basic-url">Latitude</label>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <label class="text-label" for="basic-url">Longitude</label>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+
+              </div>
+            </div>
+
+
+
           </div>
-
-
-
+          <hr>
+          <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
         </div>
-        <div class="row ">
-
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Latitude</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="text-label" for="basic-url">Longitude</label>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-
-            </div>
-          </div>
-
-
-
-        </div>
-        <hr>
-        <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
-      </div>
+      </form>
     </div>
   </div>
 </div>
