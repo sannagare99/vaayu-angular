@@ -52,40 +52,40 @@
             <div class="col-md-2 pad-8">
                 <div class="card-analytic routes">
                     <div class="card-inner-wrapper">
-                        <div class="col-md-8 text">Routes</div>
-                        <div class="col-md-4 number">86</div>
+                        <div class="text">Routes</div>
+                        <div class="number">86</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 pad-8">
                 <div class="card-analytic kilometers">
                     <div class="card-inner-wrapper">
-                        <div class="col-md-8 text">KILOMETRES</div>
-                        <div class="col-md-4 number">234</div>
+                        <div class="text">KILOMETRES</div>
+                        <div class="number">234</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 pad-8">
                 <div class="card-analytic male">
                     <div class="card-inner-wrapper">
-                        <div class="col-md-8 text">Male</div>
-                        <div class="col-md-4 number">134</div>
+                        <div class="text">Male</div>
+                        <div class="number">134</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 pad-8">
                 <div class="card-analytic female">
                     <div class="card-inner-wrapper">
-                        <div class="col-md-8 text">FEMALE</div>
-                        <div class="col-md-4 number">99</div>
+                        <div class="text">FEMALE</div>
+                        <div class="number">99</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 pad-8">
                 <div class="card-analytic special">
                     <div class="card-inner-wrapper">
-                        <div class="col-md-8 text">SPECIAL</div>
-                        <div class="col-md-4 number">34</div>
+                        <div class="text">SPECIAL</div>
+                        <div class="number">34</div>
                     </div>
                 </div>
             </div>
@@ -660,7 +660,7 @@
                         <ul class="emplyoee-list-group" dnd-list="list.guard" dnd-effect-allowed="copy" dnd-allowed-types="list.allowedTypes" dnd-disable-if="list.guard.length >= list.max">
                             <li ng-repeat="guard in list.guard"  no-drop
                                 dnd-draggable="guard"
-                                dnd-effect-allowed="link"
+                                dnd-effect-allowed="move"
                                 dnd-type="guard.type"
                                 dnd-disable-if="guard.type == 'unknown'"
                                 dnd-moved="list.guard.splice($index, 1)"
@@ -719,7 +719,7 @@
                         <ul class="employee-list-group" dnd-list="list.vehical" dnd-effect-allowed="copy" dnd-allowed-types="list.allowedTypes" dnd-disable-if="list.vehical.length >= list.max">
                             <li ng-repeat="vehical in list.vehical"
                                 dnd-draggable="vehical" no-drop
-                                dnd-effect-allowed="link"
+                                dnd-effect-allowed="move"
                                 dnd-type="vehical.type"
                                 dnd-disable-if="vehical.type == 'unknown'"
                                 dnd-moved="list.vehical.splice($index, 1)"
