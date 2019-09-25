@@ -830,3 +830,49 @@
 .custom-date {
   margin:0px !important;, height: 42px !important;
 }
+
+.input-group-btn-datePicket:last-child>.btn, .input-group-btn:last-child>.btn-group {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  position: relative;
+  cursor: pointer;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+
+}
+
+.dropdown-menu {
+  padding: 10px !important;
+}
+
+.add-vehicle-card {
+    padding: 20px 10px 5px 5px !important;
+    background: #e3e3e3  !important;
+    border-bottom: 1px solid #b9b5b5 !important;
+}
+
+.add-vehicle-plus-minus-button{
+    margin-top: 10px;
+    /* size: 5em; */
+    font-size: 1.5em;
+    color: #fff;
+    background: #000000;
+    border-radius: 21px;
+    border: 3px solid #000000;
+}
+
+.add-vehicle-card-border{
+  border-bottom: 1px solid #b9b5b5 !important;
+}
+
+.btn-cancel{
+  color: #fff;
+  background-color: gray;
+  border-color: gray;
+}
+
+.add-vehicle-btn-done{
+  background-color: #14a89e
+}

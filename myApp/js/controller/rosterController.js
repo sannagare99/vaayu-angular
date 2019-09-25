@@ -2,7 +2,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
 
     $scope.init = function(){
-       
+          $scope.isAddMenuOpen = false;
           $scope.today();
           // date picket
           $scope.toggleMin();
@@ -25,6 +25,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
        
         RosterService.get(postData, function(data) {
             $scope.rosters=data.data.shiftdetails;
+            $scope.stats = data.data.stats;
             console.log($scope.rosters)
         }
         , function (error) {
@@ -82,10 +83,25 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
       };
     
       //date picker function
-      
+
       $scope.addVehicleToRoster = function(roster){
         $scope.currentRoster = roster;
         // Open Side View
+        $scope.isAddMenuOpen = true;
+      }
+
+      $scope.hideAddMenu = function(){
+        $scope.isAddMenuOpen = false;
+
+      }
+
+      $scope.plusVehicle = function(key){
+        $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) + 1
+      }
+
+      $scope.minusVehicle = function(key){
+        $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) - 1
+
       }
 
     

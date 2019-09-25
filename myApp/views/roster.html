@@ -14,8 +14,9 @@
                             <p class="input-group custom-date" >
                             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
                             />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <span class="input-group-btn-datePicket">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
                             </span>
                             </p>
                         </div>
@@ -65,7 +66,7 @@
                     <div class="card-analytic routes">
                         <div class="card-inner-wrapper">
                             <div class="col-md-8 text">TOTAL SHIFT</div>
-                            <div class="col-md-4 number">86</div>
+                            <div class="col-md-4 number">{{stats.shift_count}}</div>
                         </div>
                     </div>
                 </div>
@@ -73,7 +74,7 @@
                     <div class="card-analytic kilometers">
                         <div class="card-inner-wrapper">
                             <div class="col-md-8 text">TOTAL EMPLOYEE</div>
-                            <div class="col-md-4 number">234</div>
+                            <div class="col-md-4 number">{{stats.tot_emp}}</div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +82,7 @@
                     <div class="card-analytic male">
                         <div class="card-inner-wrapper">
                             <div class="col-md-8 text">LEFT FOR ALLOCATION</div>
-                            <div class="col-md-4 number">134</div>
+                            <div class="col-md-4 number">{{stats.left_for_allocation}}</div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +90,7 @@
                     <div class="card-analytic female">
                         <div class="card-inner-wrapper">
                             <div class="col-md-8 text">ON DUTY VEHICLE</div>
-                            <div class="col-md-4 number">99</div>
+                            <div class="col-md-4 number">{{stats.on_duty}}</div>
                         </div>
                     </div>
                 </div>
@@ -97,7 +98,7 @@
                     <div class="card-analytic special">
                         <div class="card-inner-wrapper">
                             <div class="col-md-8 text">OFF DUTY VEHICLE</div>
-                            <div class="col-md-4 number">34</div>
+                            <div class="col-md-4 number">{{stats.off_duty}}</div>
                         </div>
                     </div>
                 </div>
@@ -132,10 +133,10 @@
                                 <td>{{roster.start_time}}</td>
                                 <td>{{roster.shift_type}}</td>
                                 <td>{{roster.no_of_emp}}</td>
-                                <td>
-                                    <span ng-if="roster.vehicle.HATCHBACK">{{ roster.vehicle.HATCHBACK }} HATCHBACK </span>
-                                    <span ng-if="roster.vehicle.SUV"> | {{ roster.vehicle.SUV }} SUV </span>
-                                    <span ng-if="roster.vehicle.TT"> | {{ roster.vehicle.TT }} TT </span>
+                                <td >
+                                    <span ng-repeat="(key, value) in roster.vehicle" roster > {{key}}:{{ value }} | </span>
+                                    
+                                    <span><strong>{{roster.total_vehicles}} VEHICLE</strong> </span>
 
                                     
                                 </td>
@@ -143,8 +144,8 @@
                                 <td class="text-color-blue">{{roster.result}}</td>
                                 <td>
                                     <div class="">
-                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
-                                        <button ng-if="roster.result=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
+                                        <button ng-if="roster.result=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
+                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
                                     </div>
                                 </td>
                                 </tr>
@@ -161,6 +162,73 @@
             </section>
     
         </div>
+        <div class="row vayau-sidebar filter-sidebar" ng-if="isAddMenuOpen">
+                <div class="col-md-12">
+                    <div class="vaayu-sidebar-panel">
+                        <div class="vaayu-sidebar-heading">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="float-left"><span class="vaayu-sidebar-title">Adding vehicle </span></h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" ng-click="hideAddMenu()" class="btn btn-close float-right">&#x2715;</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vaayu-sidebar-body">
+                            <form class="" ng-submit="submitAddVehicle()">
+                                    <div class="row form-group pr-2">
+                                        <!-- <div class="col-md-5"> -->
+                                        <div class="col-md-6 col-lg-6 form-group pr-2">
+                                            <select aria-placeholder="Shift TIme" ng-model="shift" class="form-control" placeholder="Select Shift">
+                                                <option ng-repeat="shift in shifts">{{shift.name}}</option>
+                                            </select>
+                                        </div>
+                                        <!-- </div> -->
+                                        <!-- <div class=""> -->
+                                        <div class="col-md-6 col-lg-6 form-group pr-2">
+                                                <select aria-placeholder="On Duty" ng-model="shift" class="form-control" placeholder="Select Shift">
+                                                    <option ng-repeat="shift in shifts">{{shift.name}}</option>
+                                                </select>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+
+                                    <div class="row add-vehicle-card" ng-repeat="(key, value) in currentRoster.vehicle" >
+                                        <div class="col-md-5">
+                                            <img ng-if="key== 'SUV'" src="../assets/img/suv.png">
+                                            <img ng-if="key== 'TT'" src="../assets/img/tt.png">
+                                            <img ng-if="key== 'SEDAN'" src="../assets/img/sedan.png">
+                                            <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png">
+                                        </div>
+                                        <div class="col-md-2" ng-click="minusVehicle(key)"><i class="fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
+
+                                        <div class="col-md-2"><h5 style="margin-top: 15px">{{value}}</h5></div>
+                                        <div class="col-md-2" ng-click="plusVehicle(key)"><i class="fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row add-vehicle-card-border" style="margin-top: 2em">
+                                        <h5 class="text-center" style="    margin: auto">Employee Count       <span>{{currentRoster.no_of_emp}} </span>        </h5>
+                                    </div>
+                                    <div class="row add-vehicle-card-border" style="margin-top: 2em">
+                                            <h5 class="text-center" style="    margin: auto">Setting Capacity       <span>{{currentRoster.total_seats}} </span>        </h5>
+                                    </div>
+
+                                    <div class="row" style="margin:10px">
+                                        <div class="col-md-6 pr-2" >
+                                            <button type="button" style="width:100%" ng-click="hideAddMenu()" class="btn btn-cancel ">Cancel</button>
+                                        </div>
+                                        <div class="col-md-6 pr-2"><button style="width:100%" type="button" class="btn btn-primary ">DONE</button>
+                                        </div>
+                                    </div>
+
+                                   
+                                <!-- </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
     </div>
     
