@@ -72,7 +72,7 @@ angular.
           .then(function (res) {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
-              alert('record inserted successfully.');
+              alert('Guard inserted successfully.');
               $scope.$parent.fetchConstraintList($scope.$parent.siteID);
               console.log(JSON.stringify(res.data))
             } else {

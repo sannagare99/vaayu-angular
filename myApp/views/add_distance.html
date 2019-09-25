@@ -1,3 +1,4 @@
+<form name="form" ng-submit="submitForm(form.$valid)" novalidate>
 <div class="tab-content-area">
     <div class="row ">
 
@@ -14,11 +15,14 @@
         <div class="col">
             <div class="input-group mb-3">
                 <label class="text-label" for="basic-url">Max Trip Distance</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                name='distance' ng-model='distance' required>
                 <div class="input-group-append">
                     <span class="input-group-text">Km</span>
                 </div>
             </div>
+            <span ng-show="hasError('distance', 'required')" class="help-block">
+                    required.</span>
         </div>
         <div class="col">
             <div class="input-group mb-3">
@@ -34,5 +38,7 @@
 
     </div>
     <hr>
-    <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
+    <button type="button" class="btn btn-primary main-submit-btn"
+    ng-click="submitForm(form.$valid)">Submit</button>
 </div>
+</form>
