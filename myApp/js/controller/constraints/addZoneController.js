@@ -5,7 +5,7 @@ angular.
   module('app').
   component('addZone', {
     templateUrl: './views/add_zone.html',
-    controller: function AddZoneController($scope, $http) {
+    controller: function AddZoneController($scope, $http, toaster) {
       this.$onInit = () => {
         console.log('onInit called addZone');
         this.fetchSiteList();
@@ -41,42 +41,34 @@ angular.
         //     });
       };
 
-
-      this.submitForm = (isValid) => {
-        console.log(isValid)
-        if (!isValid) {
-          alert('form is not valid');
-        }
-        // console.log(this.zipcode);
-        // console.log(this.zoneName);
-        // console.log(this.siteID);
-        // console.log(this.siteLat);
-        // console.log(this.siteLong);
-      }
-
       $scope.$on("onSiteListReceived", (evt, list) => {
         this.siteNames = list;
       });
 
-      $scope.hasError = function(field, validation){
-        if(validation){
+      $scope.hasError = function (field, validation) {
+        if (validation) {
           return ($scope.form[field].$dirty && $scope.form[field].$error[validation]) || ($scope.submitted && $scope.form[field].$error[validation]);
         }
         return ($scope.form[field].$dirty && $scope.form[field].$invalid) || ($scope.submitted && $scope.form[field].$invalid);
       };
-    
-      
-      $scope.submitZone = function(isValid) {
+
+
+      $scope.submitZone = function (isValid) {
+        console.log($scope.$parent.siteID)
         $scope.submitted = true;
-        console.log(isValid)
-        // alert('submit clicked');
-        console.log(isValid);
-         // check to make sure the form is completely valid
-        //  if (isValid) {
-        //    alert('our form is amazing');
-        //  }
-      
-       };
+      //   toaster.pop({
+      //     type: 'error',
+      //     title: 'Title text',
+      //     body: 'Body text',
+      //     timeout: 100000
+      // });
+
+        // check to make sure the form is completely valid
+        if (isValid) {
+          
+        }
+
+      };
 
     }
   });
