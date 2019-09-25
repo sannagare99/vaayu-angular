@@ -1,4 +1,13 @@
-app.controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService) {
+
+angular.module('app').directive('setHeight', function($window){
+  return{
+    link: function(scope, element, attrs){
+        element.css('height', $window.innerHeight/2 + 'px');
+    }
+  }
+})
+
+angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService) {
 
     $scope.place = {};
     Map.init();
