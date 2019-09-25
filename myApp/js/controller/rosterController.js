@@ -4,7 +4,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
     $scope.init = function(){
        
           $scope.today();
-        
+          // date picket
           $scope.toggleMin();
         
           
@@ -15,6 +15,8 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         
           $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
           $scope.format = $scope.formats[0];
+
+          // date function
 
         let postData = {
             "site_id":30,
@@ -28,43 +30,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         , function (error) {
             console.error(error);
         });;
-        // $scope.fetchRoasterList(postData);
-        // SiteService.get(function(data) {
-        //     $scope.shifts=data.data.list;
-        // });
-
-        // $scope.rosters=[
-        //     {
-        //         shift:"shift1",
-        //         type:1,
-        //         shift_time:"09:00 AM",
-        //         shift_type:"Check In",
-        //         no_of_employee:"236",
-        //         vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
-        //         vehicle_avialble:"23",
-        //         result:'GOOD TO GO'
-        //     },
-        //     {
-        //         shift:"shift1",
-        //         type:2,
-        //         shift_time:"09:00 AM",
-        //         shift_type:"Check In",
-        //         no_of_employee:"236",
-        //         vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
-        //         vehicle_avialble:"23",
-        //         result:'GOOD TO GO'
-        //     },
-        //     {
-        //         shift:"shift1",
-        //         type:1,
-        //         shift_time:"09:00 AM",
-        //         shift_type:"Check Out",
-        //         no_of_employee:"236",
-        //         vehicle_required:"4 SUV | 2 TT | 3HB : 22VEHICLE",
-        //         vehicle_avialble:"2",
-        //         result:'REQUIRED MORE VEHICLE'
-        //     }
-        // ]
+        
     }
 
     $scope.updateDirectionData = function(directionData){
@@ -89,6 +55,8 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         console.error(error);
     });;
     }
+
+    // datepicker function
     $scope.today = function() {
         $scope.filterDate = new Date();
       };
@@ -113,6 +81,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         $scope.opened = true;
       };
     
+      //date picker function
       
       $scope.addVehicleToRoster = function(roster){
         $scope.currentRoster = roster;
