@@ -1,46 +1,30 @@
-
 <form name="form" ng-submit="submitZone(form.$valid)" novalidate>
     <div class="tab-content-area">
         <div class="row ">
+            
             <div class="col">
                 <div class="input-group mb-3">
-                    <label class="text-label" for="basic-url">Site Name</label>
-                    <select class="custom-select" ng-model="$ctrl.siteID" name="site_name"  
-                         required>
-                         <!-- ng-options="site.id as site.name for site in $ctrl.siteNames" -->
-                        <option value="">Select Site Name</option>
-                        <option ng-repeat="site in $ctrl.siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
-
-                    </select>
-                    <span ng-show="hasError('site_name', 'required')" class="help-block">Site is required.
-                        </span>
-                </div>
-            </div>
-            <div class="col">
-                <div class="input-group mb-3">
+                    <toaster-container></toaster-container>
                     <label class="text-label" for="basic-url">Zone Name *</label>
-                    <input type="text" class="form-control" 
-                        ng-model="$ctrl.zoneName" 
-                        name="zoneName"   required>
-                        <span ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
-                                is required.</span>
+                    <input type="text" class="form-control" ng-model="$ctrl.zoneName" name="zoneName" required>
+                    <span ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
+                        is required.</span>
                     <!-- <p ng-show="form.zoneName.$invalid && (form.zoneName.$dirty || form.zoneName.$touched  )" class="help-block">Zone name
                             is required.</p> -->
                 </div>
             </div>
-           
+
         </div>
         <div class="row ">
 
             <div class="col">
                 <div class="input-group mb-3">
-                    <label class="text-label" for="basic-url"></label>
-                    <input type="number" class="form-control" 
-                        ng-model="latitude" name="latitude"
-                        class="form-control" required>
-                    
-                        <span ng-show="hasError('latitude', 'required')" class="help-block">Latitude is
-                                required.</span>
+                    <label class="text-label" for="basic-url">Latitude</label>
+                    <input type="number" class="form-control" ng-model="latitude" name="latitude" class="form-control"
+                        required>
+
+                    <span ng-show="hasError('latitude', 'required')" class="help-block">Latitude is
+                        required.</span>
                     <!-- <p ng-show="form.latitude.$error.required && form.latitude.$dirty" class="help-block">Latitude is
                             required.</p> -->
 
@@ -49,30 +33,26 @@
             <div class="col">
                 <div class="input-group mb-3">
                     <label class="text-label" for="basic-url">Longitude</label>
-                    <input type="number" class="form-control" 
-                        name="longitude" 
-                        ng-model="$ctrl.longitude" required>
-                    
+                    <input type="number" class="form-control" name="longitude" ng-model="$ctrl.longitude" required>
+
                     <span ng-show="hasError('longitude', 'required')" class="help-block">Longitude
-                            is required.</span>
+                        is required.</span>
 
                 </div>
             </div>
             <div class="col">
                 <div class="input-group mb-3">
                     <label class="text-label" for="basic-url">Zipcode {{}}</label>
-                    <input type="number" class="form-control" 
-                        name="zipcode" required
-                        ng-model="$ctrl.zipcode">
+                    <input type="number" class="form-control" name="zipcode" required ng-model="$ctrl.zipcode">
                     <span ng-show="hasError('zipcode', 'required')" class="help-block">Zipcode
-                            is required.</span>
+                        is required.</span>
                 </div>
             </div>
 
         </div>
         <hr>
-        <button type="submit" class="btn btn-primary main-submit-btn" ng-click="$ctrl.submitZone(form.$valid)"
-            >Submit</button>
-         
+        <button type="submit" class="btn btn-primary main-submit-btn"
+            ng-click="$ctrl.submitZone(form.$valid)">Submit</button>
+
     </div>
 </form>

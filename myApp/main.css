@@ -171,7 +171,16 @@
   .callIcon{
     transform: rotate(90deg);
   }
+
+
+  /* for constraintListing */
+  .constraintListMenu> a {
+    border: solid 1px #dddddd;padding: 10px;
+    color: black;
+      margin: -2px;
+    }
   
+    
   /* Add Animation */
   @keyframes animatetop {
     from {top: -300px; opacity: 0}
