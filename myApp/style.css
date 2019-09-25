@@ -459,7 +459,7 @@
 /* Sidebar STyle goes here  */
 
 .vaayu-sidebar-panel .vaayu-sidebar-heading {
-  padding: 30px 10px 24px 0;
+  padding: 20px 10px 20px 0px;
 }
 
 .vaayu-sidebar-panel .vaayu-sidebar-heading .vaayu-sidebar-title {
@@ -876,4 +876,15 @@
 
 .add-vehicle-btn-done{
   background-color: #14a89e
+}
+
+.text-key-name{
+  padding: 15px 15px 0px 15px;
+  font-weight: 900;
+  color: grey
+}
+.add-vehicle-card-container{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 54vh;
 }
