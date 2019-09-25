@@ -17,7 +17,39 @@ angular.
       $scope.$on("onSiteListReceived", (evt, list) => {
         this.siteNames = list;
       });
+
+
+      $scope.contracts = [{
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+      {
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+      {
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+      {
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+      {
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+      {
+        cust_id: "23412355-2",
+        site: "Adam Denisov",
+        file_name: "File Name.csv",
+      },
+
+      ]
     }
-
-
   });

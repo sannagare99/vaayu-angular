@@ -17,7 +17,7 @@ app.controller('constraintController', function ($scope, $http, $state) {
         $state.reload(true);
     }
 
-    $scope.tab = 1;
+    $scope.tab = 4;
 
     $scope.setTab = function (tabId) {
         console.log('set tabbed');

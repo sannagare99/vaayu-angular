@@ -13,9 +13,9 @@ angular.
 
       this.siteNames = [];
       this.siteID = "";
-      this.siteName = null;
-      this.siteLat = null;
-      this.siteLong = null;
+      this.zoneName = null;
+      this.latitude = null;
+      this.longitude = null;
       this.zipcode = null;
 
       this.fetchSiteList = () => {
@@ -42,9 +42,13 @@ angular.
       };
 
 
-      this.submitForm = () => {
+      this.submitForm = (isValid) => {
+        console.log(isValid)
+        if (!isValid) {
+          alert('form is not valid');
+        }
         // console.log(this.zipcode);
-        // console.log(this.siteName);
+        // console.log(this.zoneName);
         // console.log(this.siteID);
         // console.log(this.siteLat);
         // console.log(this.siteLong);
@@ -53,6 +57,26 @@ angular.
       $scope.$on("onSiteListReceived", (evt, list) => {
         this.siteNames = list;
       });
+
+      $scope.hasError = function(field, validation){
+        if(validation){
+          return ($scope.form[field].$dirty && $scope.form[field].$error[validation]) || ($scope.submitted && $scope.form[field].$error[validation]);
+        }
+        return ($scope.form[field].$dirty && $scope.form[field].$invalid) || ($scope.submitted && $scope.form[field].$invalid);
+      };
+    
+      
+      $scope.submitZone = function(isValid) {
+        $scope.submitted = true;
+        console.log(isValid)
+        // alert('submit clicked');
+        console.log(isValid);
+         // check to make sure the form is completely valid
+        //  if (isValid) {
+        //    alert('our form is amazing');
+        //  }
+      
+       };
 
     }
   });
