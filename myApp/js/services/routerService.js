@@ -1,19 +1,31 @@
 
-angular.module('app').factory('VehicleService', ['$resource','BASE_URL','SessionService',
-    function ($resource,BASE_URL,SessionService) {
-        return $resource(BASE_URL+'vehicles', {}, {
+angular.module('app').factory('VehicleService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'getVehicleData', {}, {
             query: { method: "GET", isArray: true },
             create: { method: "POST"},
             get: { 
-                method: "GET",
-                headers: { 
-                    'Content-Type':'application/json',
-                    'uid': SessionService.uid,
-                    'access_token': SessionService.access_token,
-                    'client':SessionService.client
-                }
+                method: "GET"
             },
             remove: { method: "DELETE"},
             update: { method: "PUT"}
         });
 }]);
+
+angular.module('app').factory('GuardsService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'getAllGuards', {}, {
+            query: { 
+                method: "GET"
+            },
+            create: { method: "POST"},
+            get: { 
+                method: "GET"
+            },
+            remove: { method: "DELETE"},
+            update: { method: "PUT"}
+        });
+}]);
+
+
+
