@@ -196,8 +196,8 @@
                                             <img ng-if="key== 'SUV'" src="../assets/img/suv.png">
                                             <img ng-if="key== 'TT'" src="../assets/img/tt.png">
                                             <img ng-if="key== 'SEDAN'" src="../assets/img/sedan.png">
-                                            <!-- <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png"> -->
-                                            <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV')">{{key}}</span>
+                                            <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png">
+                                            <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV' || key== 'HATCHBACK')">{{key}}</span>
                                         </div>
                                         <div class="col-md-2" ng-click="minusVehicle(key)"><i class="fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
 
