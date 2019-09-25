@@ -18,7 +18,8 @@ class SiteDatatable
        :latitude => @site.latitude,
        :longitude => @site.longitude,
        :address => @site.address,
-       :phone => @site.phone.blank? ? '' : @site.phone
+       :phone => @site.phone.blank? ? '' : @site.phone,
+       :admin_name => @site.admin_name
     }
   end
 end

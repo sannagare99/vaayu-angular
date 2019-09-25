@@ -116,7 +116,8 @@ class API::V2::VehiclesController < ApplicationController
             render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
           end
        elsif params[:registration_steps] == "Step_2"
-          @vehicle = Vehicle.find(params[:vehicle_id])
+          @vehicle = Vehicle.find(params[:vehicle_id].to_i)
+          render json: {success: false , message: "Vehicle ID not found", data: {}, errors: {}, status: :ok } if @Vehicle.nil?
           if validate_first_step(@vehicle).values.all?(true)
             if @vehicle.update(vehicle_params)
               @vehicle.update_attribute('registration_steps', nil)
@@ -147,6 +148,7 @@ class API::V2::VehiclesController < ApplicationController
 
                 @vehicle.update(induction_status: "Registered") if @vehicle.present?
                 @vehicle.update(compliance_status: "Ready For Allocation") if @vehicle.present?
+                @vehicle.update(date_of_registration: Time.now )
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
             else
               render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?

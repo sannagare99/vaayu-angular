@@ -2,7 +2,6 @@ var employeeCompaniesTableEditor;
 
 $(function () {
     'use strict';
-
     /**
      * Employee Companies Operator Table
      */
@@ -30,7 +29,7 @@ $(function () {
                     {
                         data: "name",
                         render: function (data) {
-                            return '<a href="" class="modal_edit">' + data + '</a>'
+                            return '<a href="" class="modal_view">' + data + '</a>'
                         }
                     },
                     {data: 'hq_address'},
@@ -40,7 +39,7 @@ $(function () {
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="" class="editor_remove text-danger">Delete</a>'
+                            return '<a href="" class="modal_edit">Edit</a>&nbsp<a href="" class="modal_view">View</a>&nbsp<a href="" class="editor_remove text-danger">Delete</a>' //Rushikesh made changes here
                         }
                     }
                 ],
@@ -89,7 +88,143 @@ $(function () {
             label: 'Service Tax No.',
             className: "col-md-4",
             name: "service_tax_no"
-        }]
+        }, {
+            label: 'Zone',
+            className: "col-md-4",
+            name: "zone"
+        }, {
+            label: 'Category',
+            className: "col-md-4",
+            name: "category"
+         } , {
+            label: 'Billing To',
+            className: "col-md-4",
+            name: "billing_to"
+         } ,
+
+          {
+            label: 'Contact Name',
+            className: "col-md-4",
+            name: "home_address_contact_name"
+          },
+          {
+            label: 'Address 1',
+            className: "col-md-4",
+            name: "home_address_address_1"
+          },
+          {
+            label: 'Address 2',
+            className: "col-md-4",
+            name: "home_address_address_2"
+          },
+          {
+            label: 'Address 3',
+            className: "col-md-4",
+            name: "home_address_address_3"
+          },
+          {
+            label: 'PIN',
+            className: "col-md-4",
+            name: "home_address_pin"
+          },
+          {
+            label: 'State',
+            className: "col-md-4",
+            name: "home_address_state"
+          },
+          {
+            label: 'City',
+            className: "col-md-4",
+            name: "home_address_city"
+          },
+          {
+            label: 'Phone 1',
+            className: "col-md-4",
+            name: "home_address_phone_1"
+          },
+          {
+            label: 'Phone 2',
+            className: "col-md-4",
+            name: "home_address_phone_2"
+          },
+          {
+            label: 'Business Area ',
+            className: "col-md-4",
+            name: "home_address_business_area"
+          },
+          {
+            label: 'PAN No ',
+            className: "col-md-4",
+            name: "home_address_pan_no"
+          },
+          {
+            label: 'GSTIN No ',
+            className: "col-md-4",
+            name: "home_address_gstin_no"
+          },
+
+          {
+            label: 'Registered Contact Name',
+            className: "col-md-4",
+            name: "registered_contact_name"
+          },
+          {
+            label: 'Registered Address 1',
+            className: "col-md-4",
+            name: "registered_address1"
+          },
+          {
+            label: 'Registered Address 2',
+            className: "col-md-4",
+            name: "registered_address2"
+          },
+          {
+            label: 'Registered Address 3',
+            className: "col-md-4",
+            name: "registered_address3"
+          },
+          {
+            label: 'Registered Pin',
+            className: "col-md-4",
+            name: "registered_pin"
+          },
+          {
+            label: 'Registered State',
+            className: "col-md-4",
+            name: "registered_state"
+          },
+          {
+            label: 'Registered City',
+            className: "col-md-4",
+            name: "registered_city"
+          },
+          {
+            label: 'Registered Phone1',
+            className: "col-md-4",
+            name: "registered_phone1"
+          },
+          {
+            label: 'Registered Phone2',
+            className: "col-md-4",
+            name: "registered_phone2"
+          },
+          {
+            label: 'Registered Phone2',
+            className: "col-md-4",
+            name: "registered_phone3"
+          },
+          {
+            label: 'Registered Business Area',
+            className: "col-md-4",
+            name: "registered_business_area"
+          },
+          {
+            label: 'Registered GSTIN No',
+            className: "col-md-4",
+            name: "registered_gstin_no"
+          }
+
+        ]
     });
 
     // set selectboxes
@@ -141,6 +276,23 @@ $(function () {
                     }
                 }])
             .edit($(this).closest('tr'));
+            $('input').removeAttr('disabled'); //Rushikesh added code here
+            $('.btn-primary').removeAttr('disabled'); //Rushikesh added code here
+    });
+        //Rushikesh made changes here, added View Record function
+        $(table).on('click', 'a.modal_view', function (e) {
+            e.preventDefault();
+
+            employeeCompaniesTableEditor
+                .title('View Company')
+                .edit($(this).closest('tr'));
+                $('input').attr('disabled','disabled'); //Rushikesh added code here
+                $('.btn-primary').attr('disabled','disabled');//Rushikesh added code here
+                //$('input').css({
+                // 'background-color': 'red',
+                //'color': 'white',
+                // 'font-size': '44px'
+                 // });
     });
 
     // New record
@@ -163,6 +315,7 @@ $(function () {
                 }
             }])
             .create();
+            $('input').removeAttr('disabled'); //Rushikesh added code here
     });
 
     // Delete record

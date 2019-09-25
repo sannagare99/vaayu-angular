@@ -472,8 +472,4 @@ class Driver < ApplicationRecord
     eta = (route_data[0][:duration_in_traffic][:value] / 60).ceil    
   end
 
-
-  def s3_credentials
-    {:bucket => "vaayu-dev", :access_key_id => "AKIAXAWJNTEUVGAJJD62", :secret_access_key => "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"}
-  end
 end

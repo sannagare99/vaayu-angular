@@ -5,6 +5,8 @@ $(function () {
 
     var allCompanies = []
     var logisticsCompanies = []
+    var cities = []
+    var states = []
     var siteTable = $()
     var site_id = ''
     var edit_site = false
@@ -56,7 +58,8 @@ $(function () {
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="editor_remove text-danger" data-toggle="modal" data-target="#modal-confirm-remove-site" data-site_id="' + data.id + '">Delete</a>';
+                            // return '<a href="#" class="editor_remove text-danger" data-toggle="modal" data-target="#modal-confirm-remove-site" data-site_id="' + data.id + '">Delete</a>';
+                            return '<a style="cursor:pointer" id="viewSite" class="editor_edit" data-remote="true" data-site_id="' + data.id + '">View</a>'
                         }
                     }
                 ],
@@ -112,8 +115,9 @@ $(function () {
             // }
             return validationError
         }
-
         $(document).on('click', '#editSite', function(e){
+          $('input').removeAttr('disabled');
+          $('.btn-primary').removeAttr('disabled'); 
             if(current_user == 'Operator'){
                 $(".provisioning .edit-buttons .submit-btn").fadeOut()
                 $(".provisioning .edit-buttons").fadeIn()                
@@ -146,6 +150,42 @@ $(function () {
                 })            
             });        
         });
+        $(document).on('click', '#viewSite', function(e){
+            if(current_user == 'Operator'){
+                $(".provisioning .edit-buttons .submit-btn").fadeOut()
+                $(".provisioning .edit-buttons").fadeIn()                
+            }
+
+            site_id = e.target.dataset.site_id
+            // $("#site_html").html('')
+            $.ajax({
+                type: "GET",
+                url: '/sites/' + site_id + '/edit'
+            }).done(function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: '/sites/details',
+                    data: {
+                        'id': site_id
+                    }
+                }).done(function(response){
+                    console.log(response)
+                    orig_service_html = $("#services").html()
+                    edit_site = true
+                    var html = generate_edit(response, 'site', response.logistics_company_id, orig_service_html)
+                    $("#site_html").html(html)
+                    if(response.logistics_company_id == null){
+                        $("#cgst_1").parent().css("display", "none")
+                        $("#sgst_1").parent().css("display", "none")
+                        $("#addServicesDiv").css("display", "none")
+                        $("#services").css("display", "none")
+                        $('input').attr('disabled','disabled');
+                        $('.btn-primary').attr('disabled','disabled');
+                        $('#company').attr('disabled','disabled');
+                    }
+                })            
+            });        
+        });
 
         $(document).on('click', ".submit-btn", function(e){
             if(e.target.baseURI.indexOf("sites") != -1){
@@ -155,7 +195,44 @@ $(function () {
                     'address': $("#address").val(),
                     'phone': $("#phone").val(),
                     'admin_name': $("#admin_name").val(),
-                    'admin_email_id': $("#admin_email_id").val()
+                    'admin_email_id': $("#admin_email_id").val(),
+
+                    'site_code': $("#site_code").val(),
+                    'branch_name': $("#branch_name").val(),
+                    'contact_name': $("#contact_name").val(),
+                    'address_1': $("#address_1").val(),
+
+                    'address_2': $("#address_2").val(),
+                    'address_3': $("#address_3").val(),
+                    'pin': $("#pin").val(),
+                    'city': $("#city").val(),
+                    'phone_1': $("#phone_1").val(),
+
+                    'phone_2': $("#phone_2").val(),
+                    'pan_no': $("#pan_no").val(),
+                    'business_area': $("#business_area").val(),
+                    'gstin_no': $("#gstin_no").val(),
+                    'cost_centre': $("#cost_centre").val(),
+
+                    'profit_centre': $("#profit_centre").val(),
+                    'gl_acc_no': $("#gl_acc_no").val(),
+                    'party_code': $("#party_code").val(),
+                    'party_contact_name': $("#party_contact_name").val(),
+                    'party_address_1': $("#party_address_1").val(),
+
+                    'party_address_3': $("#party_address_3").val(),
+                    'party_address_2': $("#party_address_2").val(),
+                    'party_pin': $("#party_pin").val(),
+                    'party_city': $("#party_city").val(),
+
+                    'party_state': $("#party_state").val(),
+                    'party_phone_1': $("#party_phone_1").val(),
+                    'party_phone_2': $("#party_phone_2").val(),
+                    'party_business_area': $("#party_business_area").val(),
+
+                    'party_pan_no': $("#party_pan_no").val(),
+                    'party_gstin_no': $("#party_gstin_no").val()
+
                 }
                 if(current_user == 'Operator'){
                     site['logistics_company_id'] = $("#operator_id").val()
@@ -266,6 +343,61 @@ $(function () {
                 });        
             }
         })
+
+//  listing for state
+        $(document).on('click', '.editor_create ', function(e){
+            if(e.target.baseURI.indexOf("sites") != -1){
+                $.ajax({
+                    type: "GET",
+                    url: '/employee_companies/get_all'
+                }).done(function (response) {
+                    orig_service_html = $("#site_html").html()
+                    states = response.states
+                    setTimeout(function(){                     
+                        for(var i = 0; i < states.length; i++){
+                            $('#state, #party_state').append($('<option>', {
+                                value: states[i].state,
+                                text: states[i].state
+                            }));
+                        }
+                        if(current_user == 'Operator') {
+                            $("#cgst_1").parent().css("display", "block")
+                            $("#sgst_1").parent().css("display", "block")
+                            $("#addServicesDiv").css("display", "block")
+                            $("#services").css("display", "block")
+                        }
+                    }, 500);            
+                });        
+            }
+        })
+
+      //  listing for city
+        $(document).on('click', '.editor_create ', function(e){
+            if(e.target.baseURI.indexOf("sites") != -1){
+                $.ajax({
+                    type: "GET",
+                    url: '/employee_companies/get_all'
+                }).done(function (response) {
+                    orig_service_html = $("#site_html").html()
+                    cities = response.cities
+                    setTimeout(function(){                     
+                        for(var i = 0; i < cities.length; i++){
+                            $('#city, #party_city, #party_business_area, #business_area ').append($('<option>', {
+                                value: cities[i].city_name,
+                                text: cities[i].city_name
+                            }));
+                        }
+                        if(current_user == 'Operator') {
+                            $("#cgst_1").parent().css("display", "block")
+                            $("#sgst_1").parent().css("display", "block")
+                            $("#addServicesDiv").css("display", "block")
+                            $("#services").css("display", "block")
+                        }
+                    }, 500);            
+                });        
+            }
+        })
+
 
         $(document).on('change', '#operator', function(e){
             choose_operator = false

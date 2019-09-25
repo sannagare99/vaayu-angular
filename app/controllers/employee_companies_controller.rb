@@ -16,10 +16,14 @@ class EmployeeCompaniesController < ApplicationController
   def get_all
     @employee_companies = EmployeeCompany.all
     @logistics_companies = LogisticsCompany.all
+    @states = State.all
+    @cities = City.all
     render :json => {
       employee_companies: @employee_companies,
       logistics_companies: @logistics_companies,
-      current_user: current_user
+      current_user: current_user,
+      states: @states,
+      cities: @cities
     }
   end
 
@@ -76,7 +80,7 @@ class EmployeeCompaniesController < ApplicationController
       params.require(:company).permit(
           :id, :name, :hq_address, :business_type, :pan, :service_tax_no, :logistics_company_id,
           :standard_price, :pay_period, :time_on_duty_limit, :distance_limit, :rate_by_time, :service_tax_percent,
-          :rate_by_distance, :agreement_date, :swachh_bharat_cess, :krishi_kalyan_cess, :profit_centre, :invoice_frequency
+          :rate_by_distance, :agreement_date, :swachh_bharat_cess, :krishi_kalyan_cess, :profit_centre, :invoice_frequency,:zone, :category,:billing_to, :home_address_contact_name, :home_address_address_1, :home_address_address_2, :home_address_address_3, :home_address_pin, :home_address_state, :home_address_city, :home_address_phone_1, :home_address_phone_2, :home_address_business_area, :home_address_pan_no, :home_address_gstin_no, :registered_contact_name, :registered_address1, :registered_address2, :registered_address3, :registered_pin, :registered_state, :registered_city, :registered_phone1, :registered_phone2, :registered_phone2, :registered_business_area, :registered_pan_no, :registered_gstin_no
       )
     end
 end

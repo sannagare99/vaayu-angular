@@ -1,5 +1,5 @@
 class API::V2::DriversController < ApplicationController
-  before_action :set_driver, only: [:edit, :update, :destroy]
+  before_action :set_driver, only: [:edit, :update, :destroy, :show]
   skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   before_action :check_date_validation, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
@@ -69,6 +69,7 @@ class API::V2::DriversController < ApplicationController
             upload_medically_certified_doc(@driver) if @driver.present?
             @driver.update(induction_status: "Registered")
             @driver.update(compliance_status: "Ready For Allocation")
+            @driver.update(date_of_registration: Time.now )
             render json: {success: true , message: "Success Final step", data: { driver_id: @driver.id } , errors: {} }, status: :ok if @driver.id.present?
           else
             render json: {success: false , message: "Fail Final step", data: {}, errors: @driver.errors.split(",") },status: :ok
