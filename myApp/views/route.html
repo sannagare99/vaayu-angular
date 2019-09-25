@@ -28,8 +28,8 @@
                             <p class="input-group custom-date" >
                             <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
                             />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <span class="input-group-btn-datePicket">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
                             </span>
                             </p>
                         </div>
@@ -338,9 +338,8 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="input-group form-group">
-                                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="name" placeholder="Find with keyword">
                                     </div>
                                 </div>
                             </div>
@@ -378,7 +377,7 @@
                         </div>
 
                         <ul class="emplyoee-list-group" dnd-list="list.guard" dnd-effect-allowed="copy" dnd-allowed-types="list.allowedTypes" dnd-disable-if="list.guard.length >= list.max">
-                            <li ng-repeat="guard in list.guard"  no-drop
+                            <li ng-repeat="guard in list.guard | filter: { firstName: name,userName:name  }"  no-drop
                                 dnd-draggable="guard"
                                 dnd-effect-allowed="move"
                                 dnd-type="guard.type"
@@ -393,7 +392,7 @@
 
                                 <div class="inner-text">
                                     <div class="text-small">On Duty</div>
-                                    <div class="text-big"> {{guard.name}}</div>
+                                    <div class="text-big"> {{guard.firstName}} {{guard.lastName}}</div>
                                 </div>                                                 
 
                                 <div class="input-group-addon addon-append">
@@ -428,9 +427,8 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="input-group form-group">
-                                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="vehicleModel" placeholder="Find with keyword">
                                     </div>
                                 </div>
                             </div>
@@ -468,7 +466,7 @@
                         </div>
 
                         <ul class="employee-list-group" dnd-list="list.vehical" dnd-effect-allowed="copy" dnd-allowed-types="list.allowedTypes" dnd-disable-if="list.vehical.length >= list.max">
-                            <li ng-repeat="vehical in list.vehical"
+                            <li ng-repeat="vehical in list.vehical | filter:{ model: vehicleModel }"
                                 dnd-draggable="vehical" no-drop
                                 dnd-effect-allowed="move"
                                 dnd-type="vehical.type"
@@ -484,7 +482,7 @@
 
                                 <div class="inner-text">
                                     <div class="text-small">On Duty</div>
-                                    <div class="text-big"> {{vehical.name}}</div>
+                                    <div class="text-big"> {{vehical.model}}</div>
                                 </div>                                                 
 
                                 <div class="input-group-addon addon-append">
