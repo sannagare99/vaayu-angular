@@ -56,12 +56,12 @@ angular.
       $scope.submitZone = function (isValid) {
         console.log($scope.$parent.siteID)
         $scope.submitted = true;
-        toaster.pop({
-          type: 'error',
-          title: 'Title text',
-          body: 'Body text',
-          timeout: 100000
-      });
+      //   toaster.pop({
+      //     type: 'error',
+      //     title: 'Title text',
+      //     body: 'Body text',
+      //     timeout: 100000
+      // });
 
         // check to make sure the form is completely valid
         if (isValid) {
