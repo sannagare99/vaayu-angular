@@ -1,4 +1,68 @@
 <div class="tab-content-area ">
+        <div class="row margin-b-20 ">
+            <div class="col-md-3 ">
+                <label class="radio-inline" style="padding: 5px;">
+                    <input type="radio" name="optradio" checked style="margin-right:5px">Last Drop
+                </label>
+                <label class="radio-inline" style="padding: 5px;">
+                    <input type="radio" name="optradio"  style="margin-right:5px">First Pick
+                </label>
+    
+    
+            </div>
+            <!-- <div class="col-md-5">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Site Name</label>
+                        <select class="custom-select" ng-model="$ctrl.siteID">
+                            <option value="">Select here</option>
+                            <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">
+                                {{site.name.toUpperCase()}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-4 ">
+                <select class="custom-select">
+                    <option value="1">Female</option>
+                    <option value="2">Male</option>
+                    <option value="3">Both</option>
+                </select>
+            </div>
+    
+        </div>
+        <div class=" guard">
+            <div class="row padding-20 bg">
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Time</label>
+                        <div class="input-group-append">
+                            <span class="input-group-text">FROM</span>
+                        </div>
+                        <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text">TO</span>
+                        </div>
+                        <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                    </div>
+                </div>
+            </div>
+    
+            <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
+    
+    
+    
+    
+        </div>
+    
+    </div>
+    
+
+<!-- <div class="tab-content-area ">
     <div class="row margin-b-20 ">
         <div class="col-md-6 ">
             <div class="col">
@@ -12,7 +76,6 @@
             </div>
         </div>
         <div class="col-md-2">
-            <!-- Default unchecked -->
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
                 <label class="custom-control-label" for="defaultUnchecked">Last Drop</label>
@@ -28,7 +91,6 @@
             <select class="custom-select">
                 <option value="1">Female</option>
                 <option value="2">Male-Female</option>
-                <!-- <option value="3">Both</option> -->
             </select>
         </div>
        
@@ -78,4 +140,4 @@
 
 
     </div>
-</div>
+</div> -->

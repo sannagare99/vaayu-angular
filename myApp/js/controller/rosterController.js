@@ -96,12 +96,17 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
       }
 
       $scope.plusVehicle = function(key){
-        $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) + 1
+        $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) + 1;
+        if( $scope.currentRoster.vehicle_capacity[key]){
+          $scope.currentRoster.total_seats = $scope.currentRoster.total_seats + $scope.currentRoster.vehicle_capacity[key];
+        }
       }
 
       $scope.minusVehicle = function(key){
         $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) - 1
-
+        if( $scope.currentRoster.vehicle_capacity[key]){
+          $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
+        }
       }
 
     
