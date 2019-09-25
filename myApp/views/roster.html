@@ -4,7 +4,7 @@
         <div class="container-fluid mt-4" ng-init ="init()">
             <div class="row">
                 <div class="col-md-8">
-                    <form class="form-inline">
+                    <form class="form-inline" ng-submit="updateFilters()">
                         <!-- <div class="form-group pr-2">
                             <select ng-model="shift" class="form-control" placeholder="Select Shift">
                                 <option ng-repeat="shift in shifts">{{shift.name}}</option>
@@ -20,9 +20,9 @@
                             </p>
                         </div>
                         <div class="form-group pr-2">
-                            <select class="form-control">
-                                <option>Check In</option>
-                                <option>Check Out</option>
+                            <select class="form-control" ng-model="directionData"  ng-change="updateDirectionData(directionData)">
+                                <option value="0">Check In</option>
+                                <option value="1">Check Out</option>
                             </select>
                         </div>
                         <!-- <div class="form-group pr-2">
@@ -124,23 +124,35 @@
                                 </tr>
                             </thead>
                             
-                            <tbody>
+                            <tbody ng-show="rosters.length">
                                 <tr class="active" ng-repeat="roster in rosters">
                                 <th scope="row">
-                                    <a href="">{{roster.shift}}</a>
+                                    <a href="">{{roster.name}}</a>
                                 </th>
-                                <td>{{roster.shift_time}}</td>
+                                <td>{{roster.start_time}}</td>
                                 <td>{{roster.shift_type}}</td>
-                                <td>{{roster.no_of_employee}}</td>
-                                <td>{{roster.vehicle_required}}</td>
-                                <td class="text-color-blue">{{roster.vehicle_avialble}}</td>
+                                <td>{{roster.no_of_emp}}</td>
+                                <td>
+                                    <span ng-if="roster.vehicle.HATCHBACK">{{ roster.vehicle.HATCHBACK }} HATCHBACK </span>
+                                    <span ng-if="roster.vehicle.SUV"> | {{ roster.vehicle.SUV }} SUV </span>
+                                    <span ng-if="roster.vehicle.TT"> | {{ roster.vehicle.TT }} TT </span>
+
+                                    
+                                </td>
+                                <td class="text-color-blue">{{roster.total_vehicles}}</td>
                                 <td class="text-color-blue">{{roster.result}}</td>
                                 <td>
                                     <div class="">
-                                        <button ng-if="roster.type==1" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
-                                        <button ng-if="roster.type==2" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
+                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
+                                        <button ng-if="roster.result=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
                                     </div>
                                 </td>
+                                </tr>
+                            </tbody>
+
+                            <tbody ng-show="!rosters.length">
+                                <tr>
+                                    <td colspan="8"> No Data Available</td>
                                 </tr>
                             </tbody>
                         </table>

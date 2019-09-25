@@ -1,6 +1,16 @@
 <div class="tab-content-area ">
     <div class="row margin-b-20 ">
-
+        <div class="col-md-6 ">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Site Name</label>
+                    <select class="custom-select" ng-model="$ctrl.siteID">
+                        <option value="">Select here</option>
+                        <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="col-md-2">
             <!-- Default unchecked -->
             <div class="custom-control custom-checkbox">
@@ -21,13 +31,11 @@
                 <option value="3">Both</option>
             </select>
         </div>
-        <div class="col-md-6 ">
-
-        </div>
+       
     </div>
     <div class=" guard">
         <div class="row padding-20 bg">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="input-group mb-3">
                     <label class="text-label" for="basic-url">Time</label>
                     <div class="input-group-append">
@@ -36,7 +44,7 @@
                     <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="input-group mb-3">
                     <div class="input-group-append">
                         <span class="input-group-text">TO</span>
@@ -46,7 +54,7 @@
             </div>
         </div>
         <div class="row bg">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="input-group mb-3">
                     <label class="text-label" for="basic-url">Time</label>
                     <div class="input-group-append">
@@ -55,7 +63,7 @@
                     <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="input-group mb-3">
                     <div class="input-group-append">
                         <span class="input-group-text">TO</span>

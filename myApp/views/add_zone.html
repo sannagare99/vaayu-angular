@@ -1,54 +1,53 @@
 <form novalidate class="zone-form">
-        <div class="tab-content-area">
-          <div class="row ">
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Zone Name</label>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                ng-model="siteName"
-                >
-              </div>
-            </div>
+    <div class="tab-content-area">
+        <div class="row ">
             <div class="col">
                 <div class="input-group mb-3">
-                  <label class="text-label" for="basic-url">Site Name</label>
-                  <select class="custom-select" ng-model="siteID" >
-                    <!-- <option value="null">Select here</option> -->
-                    <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}</option>
-                </select>
-              </div>
-            </div>
-
-
-
-          </div>
-          <div class="row ">
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Latitude</label>
-                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLat" >
-
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <label class="text-label" for="basic-url">Longitude</label>
-                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="siteLong">
-
-              </div>
-            </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                  <label class="text-label" for="basic-url">Zipcode</label>
-                  <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" ng-model="zipcode">
-  
+                    <label class="text-label" for="basic-url">Site Name</label>
+                    <select class="custom-select" ng-model="$ctrl.siteID">
+                        <option value="">Select here</option>
+                        <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                    </select>
                 </div>
             </div>
-          
-          </div>
-          <hr>
-          <button type="button" class="btn btn-primary main-submit-btn" ng-click="submitForm()">Submit</button>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Zone Name</label>
+                    <input type="text" class="form-control" 
+                        ng-model="$ctrl.siteName">
+                </div>
+            </div>
+           
         </div>
-      </form>
+        <div class="row ">
+
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Latitude</label>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"
+                        ng-model="siteLat">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Longitude</label>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"
+                        ng-model="$ctrl.siteLong">
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="text-label" for="basic-url">Zipcode</label>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"
+                        ng-model="$ctrl.zipcode">
+
+                </div>
+            </div>
+
+        </div>
+        <hr>
+        <button type="button" class="btn btn-primary main-submit-btn" ng-click="$ctrl.submitForm()">Submit</button>
+    </div>
+</form>
