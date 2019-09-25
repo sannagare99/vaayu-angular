@@ -1,12 +1,96 @@
-app.controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService) {
+app.controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService) {
 
     $scope.place = {};
     Map.init();
   
-    SiteService.get().$promise.then(function(res) {
-      $scope.sites=res.data.list;
-    });
+   
+
+    $scope.init = function(){
+       
+      SiteService.get().$promise.then(function(res) {
+        $scope.sites=res.data.list;
+      });
+
+      $scope.today();
+      // date picket
+      $scope.toggleMin();
     
+      
+      $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
+    
+      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+      $scope.format = $scope.formats[0];
+
+      // date function
+
+     
+    GuardsService.get({ "siteId":"8","shiftId":"105"}, function(res){
+        $scope.guardList=res.data;
+
+        angular.forEach($scope.guardList,function(item){
+          item.type="guard";
+      })
+
+        $scope.guards = [
+          {
+              label: "Guard",
+              allowedTypes: ['guard'],
+              guard:$scope.guardList
+          }
+      ];
+    }, function (error) {
+      console.error(error);
+    });
+
+    VehicleService.get({ "siteId":"8","shiftId":"130"}, function(res){
+        $scope.vehicleList=res.data;
+       angular.forEach($scope.vehicleList,function(item){
+          item.type="vehical";
+       })
+      $scope.vehicals = [
+        {
+            label: "Vehical",
+            allowedTypes: ['vehical'],
+            max: 4,
+            vehical:$scope.vehicleList
+        }
+      ];
+    }, function (error) {
+      console.error(error);
+    });
+
+   
+ 
+  }
+
+  // datepicker function
+  $scope.today = function() {
+    $scope.filterDate = new Date();
+  };
+
+  $scope.clear = function () {
+    $scope.filterDate = null;
+  };
+
+  // Disable weekend selection
+  $scope.disabled = function(date, mode) {
+    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+  };
+
+  $scope.toggleMin = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
     $scope.slider = {
         minValue: 1,
         maxValue: 8,
@@ -257,45 +341,16 @@ app.controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,S
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
 
+
     
-    $scope.guards = [
-        {
-            label: "Guard",
-            allowedTypes: ['guard'],
-            max: 4,
-            guard: [
-                {name: "Bob", type: "guard"},
-                {name: "Charlie", type: "guard"},
-                {name: "Dave", type: "guard"}
-            ]
-        }
-    ];
 
     // Model to JSON for demo purpose
     $scope.$watch('guards', function(guards) {
         $scope.modelAsJson = angular.toJson(guards, true);
     }, true);
     
-    VehicleService.get().$promise.then(function(res) {
-      $scope.vehicles=res.data.vehicles;
-    }, function(error) {
-      console.log(error)
-      // $scope.drivers=res.data.drivers;
-      // alert('i am in error');
-    });
 
-    $scope.vehicals = [
-        {
-            label: "Vehical",
-            allowedTypes: ['vehical'],
-            max: 4,
-            vehical: [
-                {name: "Bob", type: "vehical"},
-                {name: "Charlie", type: "vehical"},
-                {name: "Dave", type: "vehical"}
-            ]
-        }
-    ];
+
 
     // Model to JSON for demo purpose
     $scope.$watch('vehicals', function(vehicals) {
