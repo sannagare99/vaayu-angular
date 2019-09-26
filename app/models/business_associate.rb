@@ -8,15 +8,16 @@ class BusinessAssociate < ApplicationRecord
   has_many :invoices, :as => :company
   has_many :drivers
   has_many :vehicles
+  # serialize :gstDocs, JSON
 
   belongs_to :logistics_company
 
-  validates :pan, presence: true, uniqueness: true, length: { is: 10 }
-  validates :tan, presence: true, uniqueness: true, length: { is: 10 }
-  validates :name, presence: true
-  validates :legal_name, presence: true
-  validates :hq_address, presence: true
-  validates :service_tax_no, length: { is: 15 }
+  # validates :pan, presence: true, uniqueness: true, length: { is: 10 }
+  # validates :tan, presence: true, uniqueness: true, length: { is: 10 }
+  # validates :name, presence: true
+  # validates :legal_name, presence: true
+  # validates :hq_address, presence: true
+  # validates :service_tax_no, length: { is: 15 }
   # validates :pay_period, numericality: { less_than: 31 }
 
   def self.invoice_frequency_type
