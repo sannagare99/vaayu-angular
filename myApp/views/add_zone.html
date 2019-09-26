@@ -4,11 +4,11 @@
             
             <div class="col">
                 <div class="input-group mb-3">
-                    <toaster-container></toaster-container>
+                    
                     <label class="text-label" for="basic-url">Zone Name *</label>
                     <input type="text" class="form-control" ng-model="$ctrl.zoneName" name="zoneName" required>
-                    <span ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
-                        is required.</span>
+                    <div ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
+                        is required.</div>
                     <!-- <p ng-show="form.zoneName.$invalid && (form.zoneName.$dirty || form.zoneName.$touched  )" class="help-block">Zone name
                             is required.</p> -->
                 </div>
@@ -20,11 +20,11 @@
             <div class="col">
                 <div class="input-group mb-3">
                     <label class="text-label" for="basic-url">Latitude</label>
-                    <input type="number" class="form-control" ng-model="latitude" name="latitude" class="form-control"
+                    <input type="number" class="form-control" ng-model="$ctrl.latitude" name="latitude" class="form-control"
                         required>
 
-                    <span ng-show="hasError('latitude', 'required')" class="help-block">Latitude is
-                        required.</span>
+                    <div ng-show="hasError('latitude', 'required')" class="help-block">Latitude is
+                        required.</div>
                     <!-- <p ng-show="form.latitude.$error.required && form.latitude.$dirty" class="help-block">Latitude is
                             required.</p> -->
 

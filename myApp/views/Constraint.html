@@ -5,9 +5,10 @@
    </div>
    <div class="col-md-3">
         <div class="input-group mb-3 " style="margin-top: 30px">
+                <toaster-container></toaster-container>
                 <select class="custom-select" ng-model="siteID" name="site_name" required ng-change="fetchConstraintList(siteID)">
                     <!-- ng-options="site.id as site.name for site in $ctrl.siteNames" -->
-                    <option value="">Select Site Name</option>
+                    <!-- <option value="">Select Site Name</option> -->
                     <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}
                     </option>
         

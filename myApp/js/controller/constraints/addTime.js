@@ -5,7 +5,7 @@ angular.
   module('app').
   component('addTime', {
     templateUrl: './views/add_time.html',
-    controller: function GuardController($http, $scope, SessionService) {
+    controller: function GuardController($http, $scope, SessionService, ToasterService) {
 
       this.siteID = "";
 
@@ -24,7 +24,7 @@ angular.
 
         $scope.submitted = true;
         if ($scope.$parent.siteID == null) {
-          alert('Select Site Name');
+          ToasterService.showError('Error', 'Select Site Name');
           return true;
         }
         if (isValid) {
@@ -62,11 +62,11 @@ angular.
           .then(function (res) {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
-              alert('Time inserted successfully.');
+              ToasterService.showSuccess('Success', 'Constraint added successfully');
               $scope.$parent.fetchConstraintList($scope.$parent.siteID);
               console.log(JSON.stringify(res.data))
             } else {
-              alert(res.data['message']);
+              ToasterService.showError('Error', res.data['message']);
             }
           }).catch(err => {
             console.log(err)
