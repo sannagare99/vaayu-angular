@@ -32,6 +32,7 @@
                           span.check_out --
                         p --
                       = f.input :id, :as =>'hidden'
+                      = f.input :employee_id, :as =>'hidden'
                       tr
                         - @new_employee_trips.each_slice(2).each do |sch|
                             th
@@ -49,13 +50,15 @@
                               .schedule-form style=("display: none;")
                                 = f.simple_fields_for "check_in_attributes[#{i}]", sch.first do |ui|
                                   = ui.input :id, :as => 'hidden'
+                                  = ui.input :employee_id, :as => 'hidden', :value => @employee.id, input_html: { class: "check_in_employee_select" }
                                   = ui.input :schedule_date, as: 'hidden', input_html: { class: "selected_date" }
                                   = ui.input :check_in, as: 'hidden', input_html: {:'data-mask' => 'time', :value => sch.first.check_in_formatted}
                                   = ui.input :site_id, as: 'hidden', input_html: { class: "check_in_location_select" }
                                   = ui.input :shift_id, collection: @employee.shifts.active.map {|x| [x.start_time, x.id]}, label: "Check in", input_html: { class: "check_in_shift_select" }, prompt: "Clear"
-
+                                  = ui.input :is_leave, collection: ['Yes','No'], label: "On Leave", input_html: { class: "check_in_leave_select" }
                                 = f.simple_fields_for "check_out_attributes[#{i}]", sch.last do |ui|
                                   = ui.input :id, :as => 'hidden'
+                                  = ui.input :employee_id, :as => 'hidden', :value => @employee.id, input_html: { class: "check_in_employee_select" }
                                   = ui.input :schedule_date, :as => 'hidden', input_html: { class: "selected_date" }
                                   = ui.input :check_out, as: 'hidden', input_html: {:'data-mask' => 'time', :value => sch.last.check_out_formatted }
                                   = ui.input :shift_id, collection: @employee.shifts.active.map {|x| [x.end_time, x.id]}, label: "Check out", input_html: { class: "check_out_shift_select" }, prompt: "Clear"

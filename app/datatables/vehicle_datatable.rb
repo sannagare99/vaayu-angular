@@ -10,10 +10,11 @@ class VehicleDatatable
   end
 
   def data
+    vehicle_model = @vehicle.make.present? ? @vehicle.make : ''
     {
         "DT_RowId" => "#{Vehicle::DATATABLE_PREFIX}-#{@vehicle.id}",
         :id => @vehicle.id,
-        :name => @vehicle.colour + ' ' + @vehicle.make + ' ' + @vehicle.model,
+        :name => @vehicle.colour + ' ' + vehicle_model + ' ' + @vehicle.model  ,
         :plate_number => @vehicle.plate_number,
         :ba => @vehicle.business_associate&.name,
         :driver => get_driver,

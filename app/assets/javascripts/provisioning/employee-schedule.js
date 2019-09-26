@@ -267,12 +267,15 @@ function updateEmployeeTripObjects(weekNo) {
       obj = $.grep(currentObject, function(e){
         return (e[scheduleType] == trip_type || e[trip_type] !== undefined) && (dateFormatter(e.schedule_date) == currentValues.schedule_date)
       })[0];
-
       if (obj !== undefined) {
+        console.log(currentValues)
         obj.site_id = currentValues.site_id;
         obj.shift_id = currentValues.shift_id;
         obj[trip_type] = currentValues[trip_type];
         obj.schedule_date = currentValues.schedule_date;
+        obj.is_leave = currentValues.is_leave ;
+        // obj.employee_id = currentValues.employee_id ;
+        console.log(obj.is_leave)
       } else {
         obj = createNewObject(currentForm, trip_type)
         currentObject.push(obj)
@@ -300,13 +303,18 @@ function getCurrentFormValues(currentForm, tripType) {
   currentForm = $(currentForm)
   if (tripType == "check_out") {
     obj.site_id = currentForm.find(".check_out_location_select").val();
+    // obj.employee_id = currentForm.find(selectorNameConstructor(tripType, "employee_id")).val();
     obj.shift_id = currentForm.find(".check_out_shift_select").val();
   }else {
     obj.site_id = currentForm.find(selectorNameConstructor(tripType, "site_id")).val();
     obj.shift_id = currentForm.find(".check_in_shift_select").val();
+    obj.is_leave = currentForm.find(".check_in_leave_select").val();
+    // obj.employee_id = currentForm.find(selectorNameConstructor(tripType, "employee_id")).val();
+
   }
 
   obj.id = currentForm.find(selectorNameConstructor(tripType, "id")).val();
+  // obj.employee_id = currentForm.find(selectorNameConstructor(tripType, "employee_id")).val();
   obj[tripType] = currentForm.find(selectorNameConstructor(tripType, tripType)).val();
   obj.schedule_date = currentForm.find(selectorNameConstructor(tripType, "schedule_date")).val();
   return obj;

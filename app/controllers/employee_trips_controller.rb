@@ -259,8 +259,10 @@ class EmployeeTripsController < TripValidationController
     @employee = Employee.find(params[:id])
     return_data[:status] = 400 and raise RuntimeError unless params[:employee].present?
     return_data[:status] = 400 and raise RuntimeError if params[:employee][:check_in_attributes].blank? || params[:employee][:check_out_attributes].blank?
-
     EmployeeTrip.create_or_update(@employee, employee_trip_params)
+    # Update Status
+    update_check_in_status(params) if params.present?
+    update_check_out_status(params) if params.present?
     flash[:notice] = 'Employee Trips are successfully updated'
     return_data[:message] = "Employee Trips are successfully updated"
     return_data[:status] = 200
@@ -391,6 +393,37 @@ class EmployeeTripsController < TripValidationController
 
   def employee_trip_params
     params.require(:employee).permit!
+  end
+
+
+  def update_check_in_status(params)
+    (0..params[:employee][:check_in_attributes].count - 1).to_a.each do |check_in|
+      if params[:employee][:check_in_attributes][check_in.to_s]["is_leave"] == "Yes"
+        id = params[:employee][:check_in_attributes][check_in.to_s]["id"]
+        employee_trip = EmployeeTrip.find_by_id(id)
+          employee_trip.update(is_leave: true) if employee_trip.present?  
+      end
+    end
+  end
+
+  def update_check_out_status(params)
+    (0..params[:employee][:check_out_attributes].count - 1).to_a.each do |check_out|
+      if params[:employee][:check_out_attributes][check_out.to_s]["is_leave"] == "Yes"
+        id = params[:employee][:check_out_attributes][check_out.to_s]["id"]
+        employee_trip = EmployeeTrip.find_by_id(id)
+          employee_trip.update(is_leave: true) if employee_trip.present?  
+      end
+    end
+  end
+
+  def set_emp_trip_ids(params)
+    ids = []
+    (0..params[:employee][:check_in_attributes].count - 1).to_a.each do |check_in|
+      ids <<  params[:employee][:check_out_attributes][check_in.to_s]["id"]
+    end
+     ids = ids.reject { |c| c.empty? }
+    result = EmployeeTrip.where('id IN (?), date ', ids)
+    return result
   end
 
   def protect_destroy
