@@ -5,7 +5,7 @@ angular.
   module('app').
   component('addDistance', {
     templateUrl: './views/add_distance.html',
-    controller: function GuardController($http, $scope) {
+    controller: function GuardController($http, $scope, SessionService, ToasterService) {
 
       this.siteID = "";
 
@@ -26,7 +26,7 @@ angular.
 
         $scope.submitted = true;
         if ($scope.$parent.siteID == null) {
-          alert('Select Site Name');
+          ToasterService.showError('Error', 'Select Site Name');
           return true;
         }
         if (isValid) {
@@ -49,9 +49,9 @@ angular.
           url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'constraint/insert',
           headers: {
             'Content-Type': 'application/json',
-            'uid': 'deekshithmech@gmail.com',
-            'access_token': '8HP_3YQagGCUoWCXiCR_cg',
-            'client': 'DDCqul04WXTRkxBHTH3udA',
+            'uid': SessionService.uid,
+            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
           },
           data: { 
             siteId: parseInt($scope.$parent.siteID),
@@ -64,11 +64,11 @@ angular.
           .then(function (res) {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
-              alert('Distance inserted successfully.');
+              ToasterService.showSuccess('Success', 'Constraint added successfully');
               $scope.$parent.fetchConstraintList($scope.$parent.siteID);
               console.log(JSON.stringify(res.data))
             } else {
-              alert(res.data['message']);
+              ToasterService.showError('Error', res.data['message']);
             }
           }).catch(err => {
             console.log(err)
