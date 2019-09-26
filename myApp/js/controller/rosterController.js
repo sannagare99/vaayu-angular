@@ -18,44 +18,62 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
           // date function
 
-        let postData = {
-            "site_id":30,
+        
+       
+        
+
+        RosterService.getAllSiteList( function(data) {
+          $scope.siteList=data.data.list;
+          $scope.selectedSite = $scope.siteList[0].name;
+          let postData = {
+            "site_id":$scope.siteList[0].id,
             "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
         }
-       
-        RosterService.get(postData, function(data) {
-            $scope.rosters=data.data.shiftdetails;
-            $scope.stats = data.data.stats;
-            console.log($scope.rosters)
+          
+          RosterService.get(postData, function(data) {
+            if(data.data){
+              $scope.rosters=data.data.shiftdetails;
+              $scope.stats = data.data.stats;
+            }
         }
         , function (error) {
             console.error(error);
-        });;
+        });
+      } 
+      , function (error) {
+          console.error(error);
+      });;
         
     }
 
     $scope.updateDirectionData = function(directionData){
-      console.log(directionData);
     }
 
     $scope.updateFilters = function(){
+      let selectedSiteId = 0;
+      for(i = 0; i < $scope.siteList.length; i++){
+        if($scope.siteList[i].name == $scope.selectedSite) {
+          selectedSiteId = $scope.siteList[i].id;
+        }
+      }
       let postData = {
-        "site_id":30,
+        "site_id": selectedSiteId,
         "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
     if($scope.directionData){
       postData.shift_type = $scope.directionData;
     }
-   
     RosterService.get(postData, function(data) {
         $scope.rosters=data.data.shiftdetails;
-        console.log($scope.rosters)
     }
     , function (error) {
         console.error(error);
     });;
-    }
+    
+    
+  }
+    
 
     // datepicker function
     $scope.today = function() {
