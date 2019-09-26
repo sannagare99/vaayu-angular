@@ -7,12 +7,11 @@ angular.module('app').directive('setHeight', function($window){
   }
 })
 
-angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService) {
+angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService,RosterService,RouteService) {
 
     $scope.place = {};
-    Map.init(1);
+    Map.init();
      
-
     $scope.init = function(){
        
       SiteService.get().$promise.then(function(res) {
@@ -33,6 +32,28 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       $scope.format = $scope.formats[0];
 
       // date function
+
+      
+      RosterService.getAllSiteList( function(data) {
+        $scope.siteList=data.data.list;
+        $scope.siteId = $scope.siteList[0].id;
+
+        let postData = {
+          "site_id":$scope.siteList[0].id,
+          "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
+        }
+        
+        RosterService.get(postData, function(data) {
+          if(data.data){
+            $scope.shifts=data.data.shiftdetails;
+            $scope.stats = data.data.stats;
+          }
+      }, function (error) {
+          console.error(error);
+      });
+    } , function (error) {
+        console.error(error);
+    });
 
      
     GuardsService.get({ "siteId":"8","shiftId":"105"}, function(res){
@@ -73,6 +94,45 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
    
  
   }
+
+  $scope.updateFilters = function(){
+    let postData = {
+      "site_id": $scope.siteId,
+      "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
+    }
+
+    if($scope.shiftType){
+      postData.shift_type = $scope.shiftType;
+    }
+    RosterService.get(postData, function(data) {
+        $scope.shifts=data.data.shiftdetails;
+        $scope.stats = data.data.stats;
+    }
+    , function (error) {
+        console.error(error);
+    });;
+  }
+
+  $scope.genrateRoute = function() {
+    
+
+    let postData = {
+      "site_id": $scope.siteId,
+      "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
+    }
+
+    if($scope.shiftType){
+      postData.shift_type = $scope.shiftType;
+    }
+    RouteService.getRoutes(function(data) {
+      console.log(data)
+    }
+    , function (error) {
+        console.error(error);
+    });
+  }
+
+
 
   // datepicker function
   $scope.today = function() {
@@ -152,6 +212,191 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     $scope.allowedGuardTypes=['guard'];
 
     // // Initialize model
+    $scope.routes = { 
+      "statusCode":200,
+      "responseBody": {
+          "customerID": 234234,
+          "siteId":1234,
+          "shiftId":4563,
+          "shiftType":"checkout",
+          "tripStart" :"site",
+          "siteLat":"123131231.23",
+          "siteLong":"123123342342.345",
+          "tripEnd" : "",
+          "routes":[
+                  {
+                    "routeId": 234234,
+                    "total_time":90,      //90mins
+                    "total_distabce":40,  //40 km
+                    "tripStartTime":"",   
+                    "tripEndTime" :"",  
+                    "vehicle_type":"SUV",
+                    "total_seats": 5,
+                    "empty_seats": 2,
+                    "guard_required": "Y / N",
+                    "vehicle_allocated": "Y/N",
+                    "trip_cost": 100,
+                    "route_final_path": [
+                         {"lat":"123131231.23","long":"123131231.23","time":""},
+                         {"lat":"123131231.23","long":"123131231.23","time":""},
+                         {"lat":"123131231.23","long":"123131231.23","time":""},        
+                         {"lat":"123123123.23","long":"23423423423.234","time":""}
+                    ],
+                    "guard":{
+                      "guardId":12312,
+                      "guardName" : "Rushikesh Indulkar",
+                      "gender":"M"
+                    },
+                    "vehicle":{
+                        "vehicleId":12312,
+                        "vehicleNumber":"MH47L5609",
+                        "driverName" : "Rushikesh Indulkar",
+                        "driverID":232423,
+                        "vehicleType":"HB"
+                    },
+                    "employees_nodes_addresses":[
+                            {
+                              "rank": 1,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 2,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 3,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 4,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            }
+                    ]
+                  },
+                  {
+                    "routeId": 23423232342344,
+                    "total_time":90,      //90mins
+                    "total_distabce":40,  //40 km
+                    "tripStartTime":"",   
+                    "tripEndTime" :"",  
+                    "vehicle_type":"SUV",
+                    "total_seats": 5,
+                    "empty_seats": 2,
+                    "guard_required": "Y / N",
+                    "vehicle_allocated": "Y/N",
+                    "trip_cost": 100,
+                    "route_final_path": [
+                        {"lat":"123131231.23","long":"123131231.23","time":""},
+                        {"lat":"123131231.23","long":"123131231.23","time":""},
+                        {"lat":"123131231.23","long":"123131231.23","time":""},        
+                        {"lat":"123123123.23","long":"23423423423.234","time":""}
+                    ],
+                    "employees_nodes_addresses":[
+                            {
+                              "rank": 1,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 2,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 3,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            },
+                            {
+                              "rank": 4,
+                              "empId":12312,
+                              "empName" : "Rushikesh Indulkar",
+                              "lat": "123123123.23",
+                              "long": "23423423423.234",
+                              "gender":"M",
+                              "special" : "Yes"   //Yes/NO
+                            }
+                    ]
+                  }
+                ] 
+      },
+      "msg":"success",
+      "errors":[]
+   };
+   
+   angular.forEach($scope.routes.responseBody.routes, function(route,index, routeArray){
+      route.allowed="all";
+      if(route.guard){
+        let guard = route.guard;
+        guard.type = 'guard';
+        route.guard = [guard]
+      }else{
+        route.guard =[];
+      }
+      if(route.vehicle){
+        let vehical = route.vehicle;
+        vehical.type = 'vehical';
+        route.vehicle = [vehical]
+      }else{
+        route.vehicle =[];
+      }
+     
+      angular.forEach(route.employees_nodes_addresses, function(employee,idx,emmplyeeArray){
+        employee.type="employee";
+        employee.effectAllowed="all";
+      })
+
+      route.employees = route.employees_nodes_addresses;
+   })
+
+    $scope.routes.responseBody.routes.push(
+      {
+        "employees" :[],
+        "vehicle":[],
+        "guard":[],
+        "allowed":"all"
+      }
+    )
+
+  
+   
+   
+    console.log($scope.routes);
+
+    $scope.model2 =[$scope.routes.responseBody.routes]
+
     $scope.model = [
         [
           {
@@ -345,7 +590,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       ]
 
 
-    $scope.$watch('model', function(model) {
+    $scope.$watch('model2', function(model) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
 
