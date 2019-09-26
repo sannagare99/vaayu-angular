@@ -69,11 +69,11 @@ angular.
       $scope.addZone = () => {
 
         let data  = {
-            site_id: $scope.$parent.siteID,
+            site_id: parseInt($scope.$parent.siteID),
             name: this.zoneName,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            zipcode: this.zipcode
+            latitude: this.latitude+'',
+            longitude: this.longitude+'',
+            zipcode: this.zipcode+''
 
             // "name":"Dombivali",
             // "site_id":10,
@@ -96,12 +96,6 @@ angular.
           .then(function (res) {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
-              toaster.pop({
-                type: 'success',
-                title: 'Success',
-                body: 'Zone added successfully.',
-                timeout: 2000
-              });
               ToasterService.showSuccess('Success', 'Zone added successfully.');
               console.log(JSON.stringify(res.data))
             } else {
