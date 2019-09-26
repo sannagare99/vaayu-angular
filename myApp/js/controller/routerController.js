@@ -7,6 +7,15 @@ angular.module('app').directive('setHeight', function($window){
   }
 })
 
+angular.module('app')
+  .filter('range', function(){
+    return function(items, property, min, max) {
+      return items.filter(function(item){
+        return item[property] >= min && item[property] <= max;
+      });
+    };
+  });
+
 angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService,RosterService,RouteService) {
 
     $scope.place = {};
@@ -159,15 +168,25 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     $scope.opened = true;
   };
 
-    $scope.slider = {
-        minValue: 1,
-        maxValue: 8,
-        options: {
-          floor: 0,
-          ceil: 10,
-          showTicksValues: true
-        }
-      };
+  $scope.slider_occupied = {
+      minValue: 1,
+      maxValue: 8,
+      options: {
+        floor: 0,
+        ceil: 10,
+        showTicksValues: true
+      }
+    };
+
+    $scope.slider_empty = {
+      minValue: 1,
+      maxValue: 8,
+      options: {
+        floor: 0,
+        ceil: 10,
+        showTicksValues: true
+      }
+    };
 
     $scope.reset =function() {
         $state.reload(true);
@@ -175,13 +194,26 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     $scope.tab = 1;
 
+    $scope.search='';
+
     $scope.setTab = function (tabId) {
+      if (tabId == 2) {// non allocated 
+        $scope.search = "Y";
+      }else if (tabId == 3) {// non allocated 
+        $scope.search = "N";
+      }else {
+        $scope.search='';
+      }
+
         $scope.tab = tabId;
     };
 
+   
     $scope.isSet = function (tabId) {
+      
         return $scope.tab === tabId;
     };
+
 
     $scope.dragoverCallback = function(index, external, type, callback) {
         $scope.logListEvent('dragged over', index, external, type);
@@ -234,7 +266,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                     "total_seats": 5,
                     "empty_seats": 2,
                     "guard_required": "Y / N",
-                    "vehicle_allocated": "Y/N",
+                    "vehicle_allocated": "Y",
                     "trip_cost": 100,
                     "route_final_path": [
                          {"lat":"123131231.23","long":"123131231.23","time":""},
@@ -303,7 +335,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                     "total_seats": 5,
                     "empty_seats": 2,
                     "guard_required": "Y / N",
-                    "vehicle_allocated": "Y/N",
+                    "vehicle_allocated": "N",
                     "trip_cost": 100,
                     "route_final_path": [
                         {"lat":"123131231.23","long":"123131231.23","time":""},
@@ -356,6 +388,9 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       "errors":[]
    };
    
+   $scope.filterModel=function(){
+
+   }
    angular.forEach($scope.routes.responseBody.routes, function(route,index, routeArray){
       route.allowed="all";
       if(route.guard){
@@ -383,6 +418,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     $scope.routes.responseBody.routes.push(
       {
+        "vehicle_allocated":'',
         "employees" :[],
         "vehicle":[],
         "guard":[],
@@ -395,7 +431,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
    
     console.log($scope.routes);
 
-    $scope.model2 =[$scope.routes.responseBody.routes]
+    $scope.fullModel =[$scope.routes.responseBody.routes];
+    $scope.model2 = $scope.fullModel;
 
     $scope.model = [
         [
