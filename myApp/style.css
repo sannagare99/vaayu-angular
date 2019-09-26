@@ -1,4 +1,4 @@
-.vayau-routing .card-panel .dropzone .dndPlaceholder {
+.vayau-routing .card-panel .vaayu-dropzone .dndPlaceholder {
   display: block;
   height: 36px;
   opacity: 0.5;
@@ -799,7 +799,7 @@
   outline: 0;
 }
 
-.dropzone {
+.vaayu-dropzone {
   column-count: 3;
   column-gap: 1em;
 }

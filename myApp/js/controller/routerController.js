@@ -10,9 +10,8 @@ angular.module('app').directive('setHeight', function($window){
 angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService) {
 
     $scope.place = {};
-    Map.init();
-  
-   
+    Map.init(1);
+     
 
     $scope.init = function(){
        

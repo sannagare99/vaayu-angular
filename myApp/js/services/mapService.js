@@ -10,7 +10,7 @@ angular.module('app').service('Map', function($q) {
         this.map = new google.maps.Map(
             document.getElementById("map"), options
         );
-        this.places = new google.maps.places.PlacesService(this.map);
+        this.places = new google.maps.places.PlacesService(this.map);  
     }
     
     this.search = function(str) {
