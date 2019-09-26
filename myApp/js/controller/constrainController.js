@@ -42,15 +42,16 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
       data: { test: 'test' }
     })
       .then(function (res) {
+        //console.log(JSON.stringify(res.data))
         if (res.data['success']) {
           $scope.constraintList = res.data.data;
-          console.log(JSON.stringify(res.data))
+          
         } else {
           alert(res.data['message']);
         }
-
       }).catch(err => {
         console.log(err)
+        ToasterService.showError('Error', 'Something went wrong, Try again later.');
       });
   }
 
@@ -73,11 +74,12 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
           $scope.$broadcast('onSiteListReceived', res.data.data.list);
           console.log(JSON.stringify($scope.siteNames))
         } else {
-          alert(res.data['message']);
+          ToasterService.showError('Error', res.data['message']);
         }
 
       }).catch(err => {
         console.log(err)
+        ToasterService.showError('Error', 'Something went wrong, Try again later.');
       });
   };
 
