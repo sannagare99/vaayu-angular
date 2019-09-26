@@ -32,6 +32,12 @@ app.config(function (
             templateUrl : "./views/contractList.html", 
             controller : "contractListCtrl"
         })
+        .state('constraint', { 
+            url : '/constraint', 
+            templateUrl : "./views/Constraint.html", 
+            controller : "constraintController"
+        }) 
+
 
     $urlRouterProvider.otherwise("/tripboard");
 });
