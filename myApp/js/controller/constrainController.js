@@ -1,4 +1,4 @@
-app.controller('constraintController', function ($scope, $http, $state) {
+app.controller('constraintController', function ($scope, $http, $state, SessionService) {
 
   $scope.siteNames = [];
   $scope.siteID = null;
@@ -35,9 +35,9 @@ app.controller('constraintController', function ($scope, $http, $state) {
       url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'constraint/getall/site/'+id,
       headers: {
         // 'Content-Type': 'application/json',
-        'uid': 'deekshithmech@gmail.com',
-        'access_token': '8HP_3YQagGCUoWCXiCR_cg',
-        'client': 'DDCqul04WXTRkxBHTH3udA',
+        'uid': SessionService.uid,
+        'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+        'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
       },
       data: { test: 'test' }
     })
@@ -61,9 +61,9 @@ app.controller('constraintController', function ($scope, $http, $state) {
       url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8001/api/v1/getAllSiteList',
       headers: {
         'Content-Type': 'application/json',
-        'uid': 'deekshithmech@gmail.com',
-        'access_token': 'h-Hen_PE9YDkOTa-HLjMVw',
-        'client': 'A50BtzCIieAvpcTk2450ew'
+        'uid': SessionService.uid,
+            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
       },
       data: { test: 'test' }
     })

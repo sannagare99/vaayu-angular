@@ -5,7 +5,7 @@ angular.
   module('app').
   component('addTime', {
     templateUrl: './views/add_time.html',
-    controller: function GuardController($http, $scope) {
+    controller: function GuardController($http, $scope, SessionService) {
 
       this.siteID = "";
 
@@ -47,9 +47,9 @@ angular.
           url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'constraint/insert',
           headers: {
             'Content-Type': 'application/json',
-            'uid': 'deekshithmech@gmail.com',
-            'access_token': '8HP_3YQagGCUoWCXiCR_cg',
-            'client': 'DDCqul04WXTRkxBHTH3udA',
+            'uid': SessionService.uid,
+            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
           },
           data: { 
             siteId: parseInt($scope.$parent.siteID),

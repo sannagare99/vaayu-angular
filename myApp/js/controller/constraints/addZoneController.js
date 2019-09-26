@@ -5,7 +5,7 @@ angular.
   module('app').
   component('addZone', {
     templateUrl: './views/add_zone.html',
-    controller: function AddZoneController($scope, $http, toaster) {
+    controller: function AddZoneController($scope, $http, toaster, SessionService) {
       this.$onInit = () => {
         console.log('onInit called addZone');
         this.fetchSiteList();
@@ -54,7 +54,7 @@ angular.
 
 
       $scope.submitZone = function (isValid) {
-        console.log($scope.$parent.siteID)
+        console.log(SessionService.uid)
         $scope.submitted = true;
       //   toaster.pop({
       //     type: 'error',
@@ -65,10 +65,41 @@ angular.
 
         // check to make sure the form is completely valid
         if (isValid) {
-          
+          $scope.addZone();
         }
-
       };
+
+      $scope.addZone = () => {
+        $http({
+          method: 'POST',
+          url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'createZones',
+          headers: {
+            'Content-Type': 'application/json',
+            'uid': SessionService.uid,
+            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
+          },
+          data: { 
+            siteId: parseInt($scope.$parent.siteID),
+            zone_name: this.zoneName,
+            lng: this.latitude,
+            lat: this.longitude,
+            zipcode: this.zipcode
+          }
+        })
+          .then(function (res) {
+            console.log(JSON.stringify(res));
+            if (res.data['success']) {
+              alert('Zone inserted successfully.');
+              // $scope.$parent.fetchConstraintList($scope.$parent.siteID);
+              console.log(JSON.stringify(res.data))
+            } else {
+              alert(res.data['message']);
+            }
+          }).catch(err => {
+            console.log(err)
+          });
+      }
 
     }
   });
