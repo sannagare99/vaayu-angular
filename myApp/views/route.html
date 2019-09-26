@@ -131,170 +131,175 @@
                     <div class="tab-content-panel">
                         <div ng-show="isSet(1)">
                             <div class="card-panel row">
-                                    <div class="col-md-12">
-                                            <div ng-repeat="containers in model">
-                                                    <div class="dropzone">
-                                                        <div ng-repeat="container in containers" no-drag
-                                                            dnd-callback="container.items.length" class="employee-cluster-panel">
-                                                                <div class="employee-cluster-panel-heading">
-                                                                    <div class="employee-cluster-panel-title">
-                                                                        <input type="checkbox" class="tick"> 
-                                                                        <span class="travel-group-name">Travel Group 5 HB</span>
+                                <div class="col-md-12">
+                                    <div ng-repeat="containers in model">
+                                        <div class="vaayu-dropzone">
+                                            <div ng-repeat="container in containers" no-drag
+                                                dnd-callback="container.items.length" class="employee-cluster-panel">
+                                                    <div class="employee-cluster-panel-heading">
+                                                        <div class="employee-cluster-panel-title">
+                                                            <input type="checkbox" class="tick"> 
+                                                            <span class="travel-group-name">Travel Group 5 HB</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="employee-cluster-panel-body">
+                                                        <div class="employee-cluster-panel-heading-meta">
+                                                            <div class="employee-cluster-panel-title">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 align-center">
+                                                                        <span class="kilometer_time_duration">
+                                                                            <i class="fa fa-road" aria-hidden="true"></i>
+                                                                            60.4 Km
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-6 align-center">
+                                                                        <span class="kilometer_time_duration"> 
+                                                                            <i class="fa fa-clock" aria-hidden="true"></i>
+                                                                            2Hrs 45Min
+                                                                        </span>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+            
+                                                        <ul class="employee-list-group" dnd-list="container.items"
+                                                            dnd-allowed-types="['item']"
+                                                            dnd-horizontal-list="true"
+                                                            dnd-external-sources="true"
+                                                            dnd-effect-allowed="all"
+                                                            dnd-dragover="dragoverCallback(index, external, type)"
+                                                            dnd-drop="dropCallback(index, item, external, type)"
+                                                            dnd-inserted="logListEvent('inserted at', index, external, type)"
+                                                            class="itemlist">
+                                                            <li ng-if="container.items.length" class="input-group employee-list-group-item" ng-repeat="item in container.items"
+                                                                dnd-draggable="item"
+                                                                dnd-type="'item'"
+                                                                dnd-dragstart="logEvent('Started to drag an item')"
+                                                                dnd-moved="container.items.splice($index, 1)"
+                                                                dnd-dragend="logEvent('Drag operation ended. Drop effect: ' + dropEffect)">
                                                                 
-                                                                <div class="employee-cluster-panel-body">
-                                                                    <div class="employee-cluster-panel-heading-meta">
-                                                                        <div class="employee-cluster-panel-title">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6 align-center">
-                                                                                        <span class="kilometer_time_duration">60.4 Km</span>
-                                                                                </div>
-                                                                                <div class="col-md-6 align-center">
-                                                                                    <span class="kilometer_time_duration">2Hrs 45Min</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                <span class="input-group-addon addon-prepend female" ng-class="{'male': item.gender=='male', 'female': item.gender=='female'}">
+                                                                    <div class="inner-addon">
+                                                                        <span ng-if="item.gender=='male'">M</span> 
+                                                                        <span ng-if="item.gender=='female'">F</span> 
                                                                     </div>
-                        
-                                                                    <ul class="employee-list-group" dnd-list="container.items"
-                                                                        dnd-allowed-types="['item']"
-                                                                        dnd-horizontal-list="true"
-                                                                        dnd-external-sources="true"
-                                                                        dnd-effect-allowed="all"
-                                                                        dnd-dragover="dragoverCallback(index, external, type)"
-                                                                        dnd-drop="dropCallback(index, item, external, type)"
-                                                                        dnd-inserted="logListEvent('inserted at', index, external, type)"
-                                                                        class="itemlist">
-                                                                        <li ng-if="container.items.length" class="input-group employee-list-group-item" ng-repeat="item in container.items"
-                                                                            dnd-draggable="item"
-                                                                            dnd-type="'item'"
-                                                                            dnd-dragstart="logEvent('Started to drag an item')"
-                                                                            dnd-moved="container.items.splice($index, 1)"
-                                                                            dnd-dragend="logEvent('Drag operation ended. Drop effect: ' + dropEffect)">
-                                                                            
-                                                                            <span class="input-group-addon addon-prepend female" ng-class="{'male': item.gender=='male', 'female': item.gender=='female'}">
+                                                                </span>
+            
+                                                                <div class="inner-text">
+                                                                    {{item.label}}
+                                                                </div>                                                 
+            
+                                                                <div class="input-group-addon addon-append">
+                                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                                </div>
+                                                                                                                        
+                                                            </li>
+                                                            <li ng-if="!container.items.length">
+                                                                <div class="drop-box">
+                                                                    <div class="drop-box-label">
+                                                                        <div>Drop here you employee and</div>
+                                                                        <div>We i will make your work easy</div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dndPlaceholder">
+                                                                Drop any <strong>Employee</strong> here
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="vayau-panel-footer" ng-if="container.items.length">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pad-right-0">
+                                                                <ul class="employee-list-group" dnd-list="container.vehical"
+                                                                    dnd-allowed-types="allowedVehicalTypes"
+                                                                    dnd-disable-if="container.vehical.length >= 1">
+                                                                    <dnd-nodrag>
+                                                                        <li ng-repeat="person in container.vehical"
+                                                                            dnd-type="person.type"
+                                                                            dnd-disable-if="person.type == 'unknown'"
+                                                                            dnd-moved="list.vehical.splice($index, 1)"
+                                                                            class="input-group background-{{person.type}} employee-list-group-item vehicle-assign"
+                                                                            ng-if="container.vehical.length">
+                                                                            <span class="input-group-addon addon-prepend vehicle_assign">
                                                                                 <div class="inner-addon">
-                                                                                    <span ng-if="item.gender=='male'">M</span> 
-                                                                                    <span ng-if="item.gender=='female'">F</span> 
+                                                                                    <i class="fas fa-car-side"></i>
                                                                                 </div>
                                                                             </span>
                         
-                                                                            <div class="inner-text">
-                                                                                {{item.label}}
+                                                                            <div class="vehicle_no">
+                                                                                <div class="text-small">Vehical No:</div>
+                                                                                <div class="text-big">{{person.number}}</div>
                                                                             </div>                                                 
-                        
-                                                                            <div class="input-group-addon addon-append">
-                                                                                    |||
-                                                                            </div>
-                                                                                                                                    
+                            
                                                                         </li>
-                                                                        <li ng-if="!container.items.length">
-                                                                            <div class="drop-box">
-                                                                                <div class="drop-box-label">
-                                                                                    <div>Drop here you employee and</div>
-                                                                                    <div>We i will make your work easy</div>
+                                                                    </dnd-nodrag>
+                                
+                                                                    <li ng-if="!container.vehical.length" ng-click="showVehicalSidebar()" class="input-group employee-list-group-item vehicle-add">
+                                                                        <span class="input-group-addon addon-prepend vehicle_assign">
+                                                                            <div class="inner-addon">
+                                                                                <i class="fas fa-car-side"></i>
+                                                                            </div>
+                                                                        </span>
+                    
+                                                                        <div class="vehicle_no">
+                                                                            <div class="text-small">Add</div>
+                                                                            <div class="text-big">Vehicle</div>
+                                                                        </div>  
+                                                                    </li>
+                                                                    <li class="dndPlaceholder">
+                                                                        Drop any <strong>Vehical</strong> here
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                
+                                                            <div class="col-md-6 pad-left-0">
+                                                                <ul class="employee-list-group" dnd-list="container.guard"
+                                                                    dnd-allowed-types="allowedGuardTypes"
+                                                                    dnd-disable-if="container.guard.length >= 1">
+                                                                    <dnd-nodrag>
+                                                                        <li ng-repeat="person in container.guard"
+                                                                            dnd-type="person.type"
+                                                                            dnd-disable-if="person.type == 'unknown'"
+                                                                            dnd-moved="list.vehical.splice($index, 1)"
+                                                                            class="input-group background-{{person.type}} employee-list-group-item guard-assign" ng-if="container.guard.length">
+                                                                            
+                                                                            <span class="input-group-addon addon-prepend vehicle_assign">
+                                                                                <div class="inner-addon">
+                                                                                    <i class="fa fa-shield"></i>
                                                                                 </div>
+                                                                            </span>
+                        
+                                                                            <div class="vehicle_no">
+                                                                                <div class="text-small">Guard</div>
+                                                                                <div class="text-big">Assigned</div>
                                                                             </div>
                                                                         </li>
-                                                                        <li class="dndPlaceholder">
-                                                                            Drop any <strong>Employee</strong> here
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="vayau-panel-footer" ng-if="container.items.length">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6 pad-right-0">
-                                                                            <ul class="employee-list-group" dnd-list="container.vehical"
-                                                                                dnd-allowed-types="allowedVehicalTypes"
-                                                                                dnd-disable-if="container.vehical.length >= 1">
-                                                                                <dnd-nodrag>
-                                                                                    <li ng-repeat="person in container.vehical"
-                                                                                        dnd-type="person.type"
-                                                                                        dnd-disable-if="person.type == 'unknown'"
-                                                                                        dnd-moved="list.vehical.splice($index, 1)"
-                                                                                        class="input-group background-{{person.type}} employee-list-group-item vehicle-assign"
-                                                                                        ng-if="container.vehical.length">
-                                                                                        <span class="input-group-addon addon-prepend vehicle_assign">
-                                                                                            <div class="inner-addon">
-                                                                                                V
-                                                                                            </div>
-                                                                                        </span>
-                                    
-                                                                                        <div class="vehicle_no">
-                                                                                            <div class="text-small">Vehical No:</div>
-                                                                                            <div class="text-big">{{person.number}}</div>
-                                                                                        </div>                                                 
-                                        
-                                                                                    </li>
-                                                                                </dnd-nodrag>
-                                            
-                                                                                <li ng-if="!container.vehical.length" ng-click="showVehicalSidebar()" class="input-group employee-list-group-item vehicle-add">
-                                                                                    <span class="input-group-addon addon-prepend vehicle_assign">
-                                                                                        <div class="inner-addon">
-                                                                                            V
-                                                                                        </div>
-                                                                                    </span>
-                                
-                                                                                    <div class="vehicle_no">
-                                                                                        <div class="text-small">Add</div>
-                                                                                        <div class="text-big">Vehicle</div>
-                                                                                    </div>  
-                                                                                </li>
-                                                                                <li class="dndPlaceholder">
-                                                                                    Drop any <strong>Vehical</strong> here
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                            
-                                                                        <div class="col-md-6 pad-left-0">
-                                                                            <ul class="employee-list-group" dnd-list="container.guard"
-                                                                                dnd-allowed-types="allowedGuardTypes"
-                                                                                dnd-disable-if="container.guard.length >= 1">
-                                                                                <dnd-nodrag>
-                                                                                    <li ng-repeat="person in container.guard"
-                                                                                        dnd-type="person.type"
-                                                                                        dnd-disable-if="person.type == 'unknown'"
-                                                                                        dnd-moved="list.vehical.splice($index, 1)"
-                                                                                        class="input-group background-{{person.type}} employee-list-group-item guard-assign" ng-if="container.guard.length">
-                                                                                        
-                                                                                        <span class="input-group-addon addon-prepend vehicle_assign">
-                                                                                            <div class="inner-addon">
-                                                                                                G
-                                                                                            </div>
-                                                                                        </span>
-                                    
-                                                                                        <div class="vehicle_no">
-                                                                                            <div class="text-small">Guard</div>
-                                                                                            <div class="text-big">Assigned</div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </dnd-nodrag>
-                                                                                <li ng-if="!container.guard.length" ng-click="showGuardSidebar()" class="input-group employee-list-group-item guard-add">
-                                                                                    <span class="input-group-addon addon-prepend vehicle_assign">
-                                                                                        <div class="inner-addon">
-                                                                                            G
-                                                                                        </div>
-                                                                                    </span>
-                                
-                                                                                    <div class="vehicle_no">
-                                                                                        <div class="text-small">Add</div>
-                                                                                        <div class="text-big">Guard</div>
-                                                                                    </div>  
-                                                                                </li>
-                                                                                <li class="dndPlaceholder">
-                                                                                    Drop any <strong>Guard</strong> here
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                    </dnd-nodrag>
+                                                                    <li ng-if="!container.guard.length" ng-click="showGuardSidebar()" class="input-group employee-list-group-item guard-add">
+                                                                        <span class="input-group-addon addon-prepend vehicle_assign">
+                                                                            <div class="inner-addon">
+                                                                                <i class="fa fa-shield"></i>
+                                                                            </div>
+                                                                        </span>
+                    
+                                                                        <div class="vehicle_no">
+                                                                            <div class="text-small">Add</div>
+                                                                            <div class="text-big">Guard</div>
+                                                                        </div>  
+                                                                    </li>
+                                                                    <li class="dndPlaceholder">
+                                                                        Drop any <strong>Guard</strong> here
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                        
                                 </div>
+                            </div>
                         </div>
                         <div ng-show="isSet(2)">
                                 
@@ -388,7 +393,9 @@
                                 class="background-{{guard.type}} input-group employee-list-group-item">
                                 <span class="input-group-addon addon-prepend">
                                     <div class="inner-addon">
-                                        M 
+                                        <i class="fas fa-shield"></i>
+                                        <i class="fa fa-shield" aria-hidden="true"></i>
+
                                     </div>
                                 </span>
 
@@ -398,7 +405,7 @@
                                 </div>                                                 
 
                                 <div class="input-group-addon addon-append">
-                                        |||
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
                             </li>
         
@@ -487,7 +494,7 @@
                              
                                 <span class="input-group-addon addon-prepend">
                                     <div class="inner-addon">
-                                        M 
+                                        <i class="fas fa-car-side"></i>
                                     </div>
                                 </span>
 
@@ -497,7 +504,7 @@
                                 </div>                                                 
 
                                 <div class="input-group-addon addon-append">
-                                    |||
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
                             </li>
         
@@ -533,48 +540,48 @@
                         </div>
             
                         <div class="vaayu-sidebar-body">
-                                <form class="">
-                                    <div class="form-group">
-                                        <label class="filter-label">Filter Based Shift And Time :</label>
-                                        <select id="disabledSelect" class="form-control" placeholder="Time">
-                                            <option>Time</option>
-                                        </select>
-                                    </div>
+                            <form class="">
+                                <div class="form-group">
+                                    <label class="filter-label">Filter Based Shift And Time :</label>
+                                    <select id="disabledSelect" class="form-control" placeholder="Time">
+                                        <option>Time</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <select id="disabledSelect" class="form-control" placeholder="Distance">
-                                            <option>Distance</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <select id="disabledSelect" class="form-control" placeholder="Distance">
+                                        <option>Distance</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="filter-label">Filter Based Zone :</label>
-                                        <select id="disabledSelect" class="form-control" placeholder="Select Zone">
-                                            <option>Select Zone</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="filter-label">Filter Based Zone :</label>
+                                    <select id="disabledSelect" class="form-control" placeholder="Select Zone">
+                                        <option>Select Zone</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="filter-label">Filter Based On Total Employees In Routes :</label>
-                                        <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
-                                            rz-slider-options="slider.options"></rzslider>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="filter-label">Filter Based On Total Employees In Routes :</label>
+                                    <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
+                                        rz-slider-options="slider.options"></rzslider>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="filter-label">Filter Based On Available Seats :</label>
-                                        <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
-                                            rz-slider-options="slider.options"></rzslider>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="filter-label">Filter Based On Available Seats :</label>
+                                    <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
+                                        rz-slider-options="slider.options"></rzslider>
+                                </div>
 
-                                    <div class="row mt-5 btn-toolbar">
-                                        <div class="col-md-6">
-                                            <button type="button" class="btn btn-terniary-disable btn-block">NOT ALLOCATED</button>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <button type="button" class="btn btn-terniary btn-block">ALLOCATED</button>
-                                        </div>
+                                <div class="row mt-5 btn-toolbar">
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-terniary-disable btn-block">NOT ALLOCATED</button>
                                     </div>
-                                </form>
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-terniary btn-block">ALLOCATED</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="row vaayu-sidebar-footer">
                             <div class="col-md-6 pr-2" >
