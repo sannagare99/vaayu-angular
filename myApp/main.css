@@ -178,7 +178,15 @@
     border: solid 1px #dddddd;padding: 10px;
     color: black;
       margin: -2px;
-    }
+  }
+
+    /* contractList Page */
+  .contractListMenu> a {
+    border: solid 1px #dddddd;
+    padding: 10px;
+    color: black;
+    margin: -2px;
+  } 
   
     
   /* Add Animation */

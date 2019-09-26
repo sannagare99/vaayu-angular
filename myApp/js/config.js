@@ -22,16 +22,16 @@ app.config(function (
             templateUrl : "./views/trip_board.html", 
             controller : "tripboardCtrl"
         }) 
-        .state('constraint', { 
-            url : '/constraint', 
-            templateUrl : "./views/Constraint.html", 
-            controller : "constraintController"
-        }) 
         .state('contract', { 
             url : '/contract', 
             templateUrl : "./views/contract.html", 
-            controller : "tripboardCtrl"
+            controller : "contractCtrl"
         }) 
+        .state('contractList', { 
+            url : '/contract-list', 
+            templateUrl : "./views/contractList.html", 
+            controller : "contractListCtrl"
+        })
 
     $urlRouterProvider.otherwise("/tripboard");
 });
