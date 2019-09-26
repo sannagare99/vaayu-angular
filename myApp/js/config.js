@@ -34,7 +34,7 @@ app.config(function (
         })
         .state('constraint', { 
             url : '/constraint', 
-            templateUrl : "./views/Constraint.html", 
+            templateUrl : "./views/constraint.html", 
             controller : "constraintController"
         }) 
 
