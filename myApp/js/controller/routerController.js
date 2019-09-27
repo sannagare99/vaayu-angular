@@ -77,6 +77,15 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
      
     $scope.init = function(){
 
+      $scope.stats= {
+        "no_of_routes": 0,
+        "male_count": 0,
+        "female_count": 0,
+        "special": 0,
+        "on_duty_vehicle": 0,
+        "kilometres": 0
+      }
+
       $scope.initMap();
        
       SiteService.get().$promise.then(function(res) {
@@ -183,19 +192,12 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
   $scope.genrateRoute = function(siteId,shiftId,filterDate,shiftType) {
     
     let postData = {
-        "site_id":parseInt(siteId),
-        "shift_id":parseInt(shiftId),
-        "to_date":moment(filterDate).format('YYYY-MM-DD'),
-        "shift_type":1
-      }
+      "site_id":parseInt(siteId),
+      "shift_id":parseInt(shiftId),
+      "to_date":moment(filterDate).format('YYYY-MM-DD'),
+      "shift_type":1
+    }
 
-      // "site_id": $scope.siteId,
-      // "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
-    
-
-    // if($scope.shiftType){
-    //   postData.shift_type = $scope.shiftType;
-    // }
     RouteService.getRoutes(postData,function(data) {
       console.log(data)
 
@@ -379,9 +381,9 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         },
         "errors": {},
         "message": "routes listed successfully"
-    }
+      }
 
-      $scope.stats = $scope.routes.data.tats;
+      $scope.stats = $scope.routes.data.tats[0];
 
       angular.forEach($scope.routes.data.routes, function(route,index, routeArray){
         route.allowed="all";
@@ -406,7 +408,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         })
   
         route.employees = route.employees_nodes_addresses;
-     })
+      })
   
       $scope.routes.data.routes.push(
         {
