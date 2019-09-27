@@ -123,5 +123,27 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         }
       }
 
+      $scope.submitAddVehicle = function(){
+        console.log($scope.currentRoster);
+
+        let postData = {
+          id: $scope.currentRoster.id,
+          no_of_emp: $scope.currentRoster.no_of_emp,
+          vehicle: $scope.currentRoster.vehicle,
+          total_seats: $scope.currentRoster.total_seats,
+          vehicle_capacity: $scope.currentRoster.vehicle_capacity,
+          to_date:moment($scope.filterDate).format('YYYY-MM-DD'),
+          total_vehicles: $scope.currentRoster.total_vehicles
+
+        }
+        RosterService.addVehicle(postData, function(result){
+          console.log(result);
+          $scope.isAddMenuOpen = false;
+          $scope.updateFilters();
+          
+        });
+
+      }
+
     
 });
