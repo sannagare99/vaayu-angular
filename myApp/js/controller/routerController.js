@@ -22,27 +22,56 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     // Map.init();
 
     $scope.initMap = function() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
+      $scope.mymap = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
         center: {lat: 0, lng: -180},
         mapTypeId: 'terrain'
       });
 
-      var flightPlanCoordinates = [
-        {lat: 37.772, lng: -122.214},
-        {lat: 21.291, lng: -157.821},
-        {lat: -18.142, lng: 178.431},
-        {lat: -27.467, lng: 153.027}
-      ];
-      var flightPath = new google.maps.Polyline({
-        path: flightPlanCoordinates,
+      // $scope.drawMapPath([
+      //   {lat: 37.772, lng: -122.214},
+      //   {lat: 21.291, lng: -157.821},
+      //   {lat: -18.142, lng: 178.431},
+      //   {lat: -27.467, lng: 153.027}
+      // ])
+
+      // var flightPlanCoordinates = [
+        // {lat: 37.772, lng: -122.214},
+        // {lat: 21.291, lng: -157.821},
+        // {lat: -18.142, lng: 178.431},
+        // {lat: -27.467, lng: 153.027}
+      // ];
+    
+    }
+
+    $scope.drawMapPath = (coordinates) => {
+      var pt = new google.maps.LatLng(coordinates[0].lat, coordinates[0].lng);
+      // var pt = new google.maps.LatLng(19.184925, 72.8398173);
+      
+      $scope.mymap.setCenter(pt);
+      $scope.mymap.setZoom(13);
+      
+      let flightPath = new google.maps.Polyline({
+        path: coordinates,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 2
       });
 
-      flightPath.setMap(map);
+      flightPath.setMap($scope.mymap);
+    }
+
+
+    $scope.selectRoute = (container) => {
+      var coords = [];
+      angular.forEach(container.employees,function(emp,idx,empArray){
+        try {
+          coords.push({lat: parseFloat(emp.lat), lng: parseFloat(emp.long)})
+        } catch (er) { console.log(er) }
+      });
+
+      $scope.drawMapPath(coords)
     }
 
      
