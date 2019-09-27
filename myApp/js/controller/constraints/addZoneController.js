@@ -103,6 +103,7 @@ angular.
             }
           }).catch(err => {
             console.log(err)
+            ToasterService.showError('Error', 'Something went wrong, Try again later.');
           });
       }
 

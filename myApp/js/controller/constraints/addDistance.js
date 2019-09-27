@@ -66,12 +66,12 @@ angular.
             if (res.data['success']) {
               ToasterService.showSuccess('Success', 'Constraint added successfully');
               $scope.$parent.fetchConstraintList($scope.$parent.siteID);
-              console.log(JSON.stringify(res.data))
             } else {
               ToasterService.showError('Error', res.data['message']);
             }
           }).catch(err => {
-            console.log(err)
+            console.log(err);
+            ToasterService.showError('Error', 'Something went wrong, Try again later.');
           });
       }
     }

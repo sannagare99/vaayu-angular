@@ -1,188 +1,271 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <style>
-        body {
-            background: #f4f6f8
-        }
-
-        .tab-content-area {
-            padding: 50px;
-            border: solid 1px #dddddd;
-            background-color: #ffffff;
-        }
-
-        .guard {
-
-            background: #f4f6f8;
-        }
-
-        .bg {
-            background: #f4f6f8;
-        }
-
-        .text-label {
-            font-family: sans-serif;
-            font-size: 16px;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 1.13;
-            margin: 10px;
-            letter-spacing: normal;
-            text-align: left;
-            color: #55595c;
-        }
-
-        .main-submit-btn {
-            float: right;
-            margin-top: 10px
-        }
-
-        .main-title {
-            font-family: 'Roboto', sans-serif;
-            font-size: 19px;
-            font-weight: bold;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 2.21;
-            letter-spacing: normal;
-            text-align: left;
-            color: #253238;
-        }
-
-        .padding-20 {
-            padding-top: 20px
-        }
-
-        .margin-t20 {
-            margin-top: 20px;
-        }
-
-        .bg {
-            background: #f4f6f8;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <h2 class="main-title">Create Contract</h2>
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="/css/contract.css" rel="stylesheet">
+<div class="container">
+    <h2 class="main-title">Create Contract</h2>
+    
         <div class="tab-content-area">
+                
+
             <div class="row">
-                <div class="col-md-2 ">
-                    <select class="custom-select">
-                        <option value="0">Options</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
-                        <option value="3">Both</option>
-                    </select>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Unique Identifier<span
+                                class="required">*</span></label>
+                        <div class="multiselect">
+                            <div class="selectBox" ng-click="showCheckboxes()">
+                                <select class="custom-select">
+                                    <option>
+                                        {{totalSelectedUIDs}}
+                                    </option>
+                                </select>
+                                <div class="overSelect">
+
+                                </div>
+                            </div>
+                            <div id="checkboxes">
+                                <label for="{{uid.value}}" ng-repeat="uid in uniqueId" value="{{uid.value}}">
+                                    <input type="checkbox" id="{{uid.value}}"
+                                        ng-checked="selectedUIDs.indexOf(uid) > -1"
+                                        ng-click="toggleSelection(uid)" />{{uid.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-2 ">
-                    <select class="custom-select">
-                        <option value="0">Options</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
-                        <option value="3">Both</option>
-                    </select>
+                <div class="col-md-6 ">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Site Name<span class="required">*</span></label>
+                        <select class="custom-select" ng-model="selectedSiteId" ng-click="closeExpanded()">
+                            <option value="">Select Site</option>
+                            <option ng-repeat="site in siteList" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-2 ">
-                    <select class="custom-select">
-                        <option value="0">Options</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
-                        <option value="3">Both</option>
-                    </select>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <button ng-repeat="uid in selectedUIDs" class="btn selectedUIDs ">
+                        {{uid.name}}<i class="fa fa-close" ng-click="toggleSelection(uid)" style="margin: 5px"></i>
+                    </button>
                 </div>
-                <div class="col-md-2 ">
-                    <select class="custom-select">
-                        <option value="0">Options</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
-                        <option value="3">Both</option>
-                    </select>
+            </div>
+            <ul class="nav nav-tabs">
+                    <li class="nav-item nav-link " ng-class="{active:isSet('CUSTOMER')}" ng-click="setTab('CUSTOMER')">Customer</li>
+                    <li class="nav-item nav-link " ng-class="{active:isSet('BA')}" ng-click="setTab('BA')">BA</li>
+            
+                </ul>
+            <div class="tab-content">
+                    <div id="CUSTOMER" class="tab-pane fade  bg" ng-class="{'in active show':isSet('CUSTOMER')}">
+                            <div class="card margin-t20">
+                                    <div class="card-header">
+                                        Customer Contract Details
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="text-label" for="basic-url">Billing Cycle<span
+                                                        class="required">*</span></label>
+                                                <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
+                                                    <option value="">Select Billing Cycle</option>
+                                                    <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                                        {{bill.name.toUpperCase()}}</option>
+                    
+                                                </select>
+                                                <label class="text-label" for="basic-url">Download Sample File</label>
+                                                <div class="input-group mb-3" ng-click="closeExpanded()">
+                    
+                    
+                    
+                                                    <a href="http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile"
+                                                        class=" btn btn-primary main-submit-btn">Download Sample File</a>
+                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <label class="text-label" for="basic-url">Contract Type<span
+                                                        class="required">*</span></label>
+                                                <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                                    <option value="">Choose Options</option>
+                                                    <option value="Per km">PER KM</option>
+                                                    <option value="Per head">PER HEAD</option>
+                                                    <option value="Per zone">PER ZONE</option>
+                                                </select>
+                    
+                                                <label class="text-label" for="basic-url">Upload File<span class="required">*</span></label>
+                                                <div class="input-group mb-3" ng-click="closeExpanded()">
+                                                    <input type="file" accept=".csv, text/csv" id="file" name='file'
+                                                        onchange="angular.element(this).scope().fileNameChanged(this)" />
+                    
+                    
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                        <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                            {{submitResponse.message}}
+                                        </p>
+                                        <button href="#" ng-click="createContract()" class="btn btn-primary main-submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                    </div>
+                    <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
+                            <div class="card margin-t20">
+                                    <div class="card-header">
+                                        BA Contract Details
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <label class="text-label" for="basic-url">Billing Cycle<span
+                                                        class="required">*</span></label>
+                                                <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
+                                                    <option value="">Select Billing Cycle</option>
+                                                    <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                                        {{bill.name.toUpperCase()}}</option>
+                    
+                                                </select>
+                                                <label class="text-label" for="basic-url">Download Sample File</label>
+                                                <div class="input-group mb-3" ng-click="closeExpanded()">
+                    
+                    
+                    
+                                                    <a href="http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile"
+                                                        class=" btn btn-primary main-submit-btn">Download Sample File</a>
+                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <label class="text-label" for="basic-url">Contract Type<span
+                                                        class="required">*</span></label>
+                                                <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                                    <option value="">Choose Options</option>
+                                                    <option value="Per km">PER KM</option>
+                                                    <option value="Per head">PER HEAD</option>
+                                                    <option value="Per zone">PER ZONE</option>
+                                                </select>
+                    
+                                                <label class="text-label" for="basic-url">Upload File<span class="required">*</span></label>
+                                                <div class="input-group mb-3" ng-click="closeExpanded()">
+                                                    <input type="file" accept=".csv, text/csv" id="file" name='file'
+                                                        onchange="angular.element(this).scope().fileNameChanged(this)" />
+                    
+                    
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                        <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                            {{submitResponse.message}}
+                                        </p>
+                                        <button href="#" ng-click="createContract()" class="btn btn-primary main-submit-btn">Submit</button>
+                                    </div>
+                                </div>
+                    </div>
+            </div>
+
+           
+        </div>
+    
+    <!-- <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
+        <div class="tab-content-area">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Unique Identifier<span
+                                class="required">*</span></label>
+                        <div class="multiselect">
+                            <div class="selectBox" ng-click="showCheckboxes()">
+                                <select class="custom-select">
+                                    <option>
+                                        {{totalSelectedUIDs}}
+                                    </option>
+                                </select>
+                                <div class="overSelect">
+
+                                </div>
+                            </div>
+                            <div id="checkboxes">
+                                <label for="{{uid.value}}" ng-repeat="uid in uniqueId" value="{{uid.value}}">
+                                    <input type="checkbox" id="{{uid.value}}"
+                                        ng-checked="selectedUIDs.indexOf(uid) > -1"
+                                        ng-click="toggleSelection(uid)" />{{uid.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-2 ">
-                    <select class="custom-select">
-                        <option value="0">Options</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
-                        <option value="3">Both</option>
-                    </select>
+                <div class="col-md-6 ">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Site Name<span class="required">*</span></label>
+                        <select class="custom-select" ng-model="selectedSiteId" ng-click="closeExpanded()">
+                            <option value="">Select Site</option>
+                            <option ng-repeat="site in siteList" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <button ng-repeat="uid in selectedUIDs" class="btn selectedUIDs ">
+                        {{uid.name}}<i class="fa fa-close" ng-click="toggleSelection(uid)" style="margin: 5px"></i>
+                    </button>
                 </div>
             </div>
 
             <div class="card margin-t20">
                 <div class="card-header">
-                    Featured
+                    Contract Details
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 ">
-                            <label class="text-label" for="basic-url">Billing Cycle</label>
-                            <select class="custom-select">
-                                <option value="0">Choose Options</option>
-                                <option value="1">Female</option>
-                                <option value="2">Male</option>
-                                <option value="3">Both</option>
+                            <label class="text-label" for="basic-url">Billing Cycle<span
+                                    class="required">*</span></label>
+                            <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
+                                <option value="">Select Billing Cycle</option>
+                                <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                    {{bill.name.toUpperCase()}}</option>
+
                             </select>
                             <label class="text-label" for="basic-url">Download Sample File</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-3" ng-click="closeExpanded()">
 
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                        aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Download Sample File</label>
-                                </div>
+
+
+                                <a href="http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile"
+                                    class=" btn btn-primary main-submit-btn">Download Sample File</a>
+
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            <label class="text-label" for="basic-url">Contract Type</label>
-                            <select class="custom-select">
-                                <option value="0">Choose Options</option>
-                                <option value="1">Female</option>
-                                <option value="2">Male</option>
-                                <option value="3">Both</option>
+                            <label class="text-label" for="basic-url">Contract Type<span
+                                    class="required">*</span></label>
+                            <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                <option value="">Choose Options</option>
+                                <option value="Per km">PER KM</option>
+                                <option value="Per head">PER HEAD</option>
+                                <option value="Per zone">PER ZONE</option>
                             </select>
-                            <label class="text-label" for="basic-url">Upload File</label>
-                            <div class="input-group mb-3">
 
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                        aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">File.csv</label>
-                                </div>
+                            <label class="text-label" for="basic-url">Upload File<span class="required">*</span></label>
+                            <div class="input-group mb-3" ng-click="closeExpanded()">
+                                <input type="file" accept=".csv, text/csv" id="file" name='file'
+                                    onchange="angular.element(this).scope().fileNameChanged(this)" />
+
+
                             </div>
                         </div>
                     </div>
 
-
-                    <a href="#" class="btn btn-primary main-submit-btn">Submit</a>
+                    <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                        {{submitResponse.message}}
+                    </p>
+                    <button href="#" ng-click="createContract()" class="btn btn-primary main-submit-btn">Submit</button>
                 </div>
             </div>
-
         </div>
-    </div>
-
-</body>
-
-</html>
+    </div> -->
+</div>

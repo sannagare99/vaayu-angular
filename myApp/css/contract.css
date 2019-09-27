@@ -1,0 +1,118 @@
+body {
+  background: #f4f6f8;
+}
+
+.tab-content-area {
+  padding: 50px;
+  border: solid 1px #dddddd;
+  background-color: #ffffff;
+}
+
+.guard {
+  background: #f4f6f8;
+}
+
+.bg {
+  background: #f4f6f8;
+}
+
+.text-label {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.13;
+  margin: 10px;
+  letter-spacing: normal;
+  text-align: left;
+  color: #55595c;
+}
+
+.main-submit-btn {
+  float: right;
+  margin-top: 10px;
+}
+
+.main-title {
+  font-family: "Roboto", sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.21;
+  letter-spacing: normal;
+  text-align: left;
+  color: #253238;
+}
+
+.padding-20 {
+  padding-top: 20px;
+}
+
+.margin-t20 {
+  margin-top: 20px;
+}
+
+.bg {
+  background: #f4f6f8;
+}
+
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.selectedUIDs {
+    border: 1px solid gray;
+    padding: 3px;
+    font-size: 12px;
+    margin: 5px;
+}
+#checkboxes {
+  display: none;
+  border: 1px #dadadaad solid;
+  position: absolute;
+  z-index: 99999;
+  background: white;
+  max-height: 200px;
+  width: 200px;
+  overflow-y: scroll;
+}
+
+#checkboxes label {
+  display: block;
+  padding: 4px;
+  font-size: 14px;
+}
+.custom-select option {
+    display: block;
+    padding: 4px;
+    font-size: 14px;
+  }
+
+#checkboxes label:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+#checkboxes input {
+  margin: 5px;
+}
+.required{
+    color:red;
+}
