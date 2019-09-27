@@ -190,12 +190,15 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
   }
 
   $scope.genrateRoute = function(siteId,shiftId,filterDate,shiftType) {
-    
+   
+    // var shift = _.find($scope.shifts, function(shift){ return  shift.id == shiftId });
+    // console.log(shift);
+
     let postData = {
       "site_id":parseInt(siteId),
       "shift_id":parseInt(shiftId),
       "to_date":moment(filterDate).format('YYYY-MM-DD'),
-      "shift_type":1
+      "shift_type":1 // 0 -checkin 1-checout
     }
 
     RouteService.getRoutes(postData,function(data) {
@@ -269,10 +272,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                         {
                             "rank": 1,
                             "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
+                            "empName": "XYZ Indulkar",
                             "lat": "123123123.23",
                             "long": "23423423423.234",
-                            "gender": "M",
+                            "gender": "F",
                             "special": "Yes"
                         },
                         {
@@ -296,10 +299,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                         {
                             "rank": 4,
                             "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
+                            "empName": "ABC Indulkar",
                             "lat": "123123123.23",
                             "long": "23423423423.234",
-                            "gender": "M",
+                            "gender": "F",
                             "special": "Yes"
                         }
                     ]
@@ -351,10 +354,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                         {
                             "rank": 2,
                             "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
+                            "empName": "PQR Indulkar",
                             "lat": "123123123.23",
                             "long": "23423423423.234",
-                            "gender": "M",
+                            "gender": "F",
                             "special": "Yes"
                         },
                         {
@@ -369,10 +372,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                         {
                             "rank": 4,
                             "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
+                            "empName": "PRS Indulkar",
                             "lat": "123123123.23",
                             "long": "23423423423.234",
-                            "gender": "M",
+                            "gender": "F",
                             "special": "Yes"
                         }
                     ]

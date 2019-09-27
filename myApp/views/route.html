@@ -16,6 +16,11 @@
               </option>
             </select>
           </div>
+          <!-- <div class="form-group pr-2">
+              <select id="disabledSelect" class="form-control" ng-model="shiftId">
+                <option value="1"> Check In</option>
+              </select>
+            </div> -->
           <div class="form-group pr-2">
             <div class="form-group pr-2">
               <p class="input-group custom-date">
@@ -146,13 +151,13 @@
                                 <div class="col-md-6 align-center">
                                   <span class="kilometer_time_duration">
                                     <i class="fa fa-road" aria-hidden="true"></i>
-                                    60.4 Km
+                                    {{container.total_distabce}} Km
                                   </span>
                                 </div>
                                 <div class="col-md-6 align-center">
                                   <span class="kilometer_time_duration">
                                     <i class="fa fa-clock" aria-hidden="true"></i>
-                                    2Hrs 45Min
+                                    {{container.total_time}} 
                                   </span>
                                 </div>
                               </div>
