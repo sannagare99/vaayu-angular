@@ -1,36 +1,47 @@
 
 <div class="vayau-routing vayau-roster">
 
-        <div class="container-fluid mt-4">
+        <div class="container-fluid mt-4" ng-init ="init()">
             <div class="row">
                 <div class="col-md-8">
                     <form class="form-inline">
                         <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
-                                <option>L&T Defence, Pune</option>
-                            </select>
+                                <select ng-change="FilterTripBoard()" ng-model="selectedSite" class="form-control" placeholder="Select Shift">
+                                        <option ng-repeat="site in siteList" >{{site.name}}</option>
+                                    </select>
                         </div>
                         <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
+                            <select id="disabledSelect" class="form-control ng-hide">
                                 <option>Check In</option>
                                 <option>Check Out</option>
                             </select>
                         </div>
                         <div class="form-group pr-2">
-                            <select id="disabledSelect" class="form-control">
+                            <select id="disabledSelect" class="form-control ng-hide">
                                 <option>Shift 1</option>
                                 <option>Shift 2</option>
                                 <option>Shift 3</option>
                                 <option>Shift 4</option>
                             </select>
                         </div>
-                        <div class="form-group pr-2">
+                        <!-- <div class="form-group pr-2">
                             <select id="disabledSelect" class="form-control">
                                 <option>Disabled select</option>
                             </select>
-                        </div>
+                        </div> -->
+                        <div class="form-group pr-2">
+                                <div class="form-group pr-2">
+                                    <p class="input-group custom-date">
+                                    <input type="text" class="form-control" change="FilterTripBoard()" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
+                                    />
+                                    <span class="input-group-btn-datePicket">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                    </p>
+                                </div>
+                            </div>
     
-                        <button type="submit" class="btn btn-terniary-disable">Genrate</button>
+                        <button type="submit" class="btn btn-terniary-disable ng-hide" >Genrate</button>
                     </form>
                 </div>
     
