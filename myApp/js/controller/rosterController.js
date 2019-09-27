@@ -61,6 +61,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
     }
     RosterService.get(postData, function(data) {
         $scope.rosters=data.data.shiftdetails;
+        $scope.stats = data.data.stats;
     }
     , function (error) {
         console.error(error);
@@ -120,6 +121,28 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         if( $scope.currentRoster.vehicle_capacity[key]){
           $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
         }
+      }
+
+      $scope.submitAddVehicle = function(){
+        console.log($scope.currentRoster);
+
+        let postData = {
+          id: $scope.currentRoster.id,
+          no_of_emp: $scope.currentRoster.no_of_emp,
+          vehicle: $scope.currentRoster.vehicle,
+          total_seats: $scope.currentRoster.total_seats,
+          vehicle_capacity: $scope.currentRoster.vehicle_capacity,
+          to_date:moment($scope.filterDate).format('YYYY-MM-DD'),
+          total_vehicles: $scope.currentRoster.total_vehicles
+
+        }
+        RosterService.addVehicle(postData, function(result){
+          console.log(result);
+          $scope.isAddMenuOpen = false;
+          $scope.updateFilters();
+          
+        });
+
       }
 
     
