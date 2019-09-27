@@ -400,7 +400,7 @@ class EmployeeTripsController < TripValidationController
     (0..params[:employee][:check_in_attributes].count - 1).to_a.each do |check_in|
       if params[:employee][:check_in_attributes][check_in.to_s]["is_leave"] == "Yes"
         id = params[:employee][:check_in_attributes][check_in.to_s]["id"]
-        employee_trip = EmployeeTrip.find_by_id(id)
+        employee_trip = EmployeeTrip.where('id IN (?)', [id.to_i, id.to_i + 1] )
           employee_trip.update(is_leave: true) if employee_trip.present?  
       end
     end
