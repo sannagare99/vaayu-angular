@@ -61,6 +61,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
     }
     RosterService.get(postData, function(data) {
         $scope.rosters=data.data.shiftdetails;
+        $scope.stats = data.data.stats;
     }
     , function (error) {
         console.error(error);
