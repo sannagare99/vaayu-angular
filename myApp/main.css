@@ -195,4 +195,8 @@
     to {top: 0; opacity: 1}
   }
   
-  
+  .truncate, .inner-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
