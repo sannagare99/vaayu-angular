@@ -29,7 +29,7 @@ angular.module('app').factory('GuardsService', ['$resource','BASE_URL_8002','Ses
 
 angular.module('app').factory('RouteService', ['$resource','BASE_URL_8002','SessionService',
     function ($resource,BASE_URL_8002,SessionService) {
-        return $resource(BASE_URL_8002+'generateroutes', {}, {
+        return $resource(BASE_URL_8002+'generateRoutes', {}, {
             query: { method: "GET", isArray: true },
             create: { method: "POST"},
             getRoutes: { 
