@@ -1,14 +1,14 @@
 <form name="form" ng-submit="submitForm(form.$valid)" novalidate>
     <div class="tab-content-area ">
-        <div class="row margin-b-20 ">
-            <div class="col-md-3 ">
-                <label class="radio-inline" style="padding: 5px;">
-                    <input type="radio" name="radioWhen"  
+        <div class="row mb-2 ">
+            <div class="col-md-3 d-flex;">
+                <label class="radio-inline mb-0 mr-2" >
+                    <input type="radio" name="radioWhen"  class="mr-2"
                     ng-model="when" checked value='first'
-                    style="margin-right:5px" required >First
+                     required >First
                 </label>
-                <label class="radio-inline" style="padding: 5px;">
-                    <input type="radio" name="radioWhen" style="margin-right:5px" 
+                <label class="radio-inline  mb-0 mr-2" >
+                    <input type="radio" name="radioWhen" class="mr-2" " 
                     ng-model="when" value='last' required>Last
                 </label>
                 <span ng-show="hasError('radioWhen', 'required')" class="help-block">
@@ -16,13 +16,13 @@
             </div>
 
             <div class="col-md-3 ">
-                <label class="radio-inline" style="padding: 5px;">
+                <label class="radio-inline mb-0 mr-2" >
                     <input type="radio"
-                    ng-model="event" name="radioEvent"  value='pick' checked style="margin-right:5px" required>Pick
+                    ng-model="event" name="radioEvent" class="mr-2" value='pick' checked " required>Pick
                 </label>
-                <label class="radio-inline" style="padding: 5px;">
+                <label class="radio-inline mb-0 mr-2" >
                     <input type="radio" 
-                    ng-model="event" name="radioEvent"  value='drop' style="margin-right:5px" required>Drop
+                    ng-model="event" name="radioEvent" class="mr-2"  value='drop' " required>Drop
                 </label>
                 <span ng-show="hasError('radioEvent', 'required')" class="help-block">
                         required.</span>
@@ -76,11 +76,11 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-12">
             <button type="button" class="btn btn-primary main-submit-btn"
                 ng-click="submitForm(form.$valid)">Submit</button>
 
-
+</div>
 
 
         </div>
