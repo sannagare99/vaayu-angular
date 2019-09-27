@@ -24,7 +24,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
         RosterService.getAllSiteList( function(data) {
           $scope.siteList=data.data.list;
-          $scope.selectedSite = $scope.siteList[0].name;
+          $scope.selectedSite = $scope.siteList[0];
           let postData = {
             "site_id":$scope.siteList[0].id,
             "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
@@ -50,14 +50,9 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
     }
 
     $scope.updateFilters = function(){
-      let selectedSiteId = 0;
-      for(i = 0; i < $scope.siteList.length; i++){
-        if($scope.siteList[i].name == $scope.selectedSite) {
-          selectedSiteId = $scope.siteList[i].id;
-        }
-      }
+     
       let postData = {
-        "site_id": selectedSiteId,
+        "site_id": $scope.selectedSite.id,
         "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
