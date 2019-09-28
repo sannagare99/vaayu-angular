@@ -10,6 +10,7 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
 
   this.$onInit = () => {
     $scope.fetchSiteList();
+    console.log('constraintController');
   }
 
 

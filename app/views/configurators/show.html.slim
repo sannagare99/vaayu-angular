@@ -21,6 +21,12 @@
         li.compliance
           a[href="#compliances" data-toggle="tab" data-source="/compliances/new"]
             | Compliances
+        li.system_constraints
+          a[href="#system_constraints" data-toggle="tab"]
+            | Constraints
+        li.system_zones
+          a[href="#system_zones" data-toggle="tab"]
+            | Zones        
       .nav-actions
         .edit-buttons
           a.btn.btn-sm.btn-default.cancel.btn-fixed-width[type="button" data-action="cancel"]
@@ -38,6 +44,8 @@
       = render partial: 'configurators/general_settings'
       = render partial: 'configurators/compliances'
       = render partial: 'configurators/system_settings'
+      = render 'configurators/constraint'
+      = render 'configurators/addzone'
 
       #configurators.tab-pane.fade
         .col-md-12.table-content-edit
