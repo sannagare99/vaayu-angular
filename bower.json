@@ -80,7 +80,8 @@
     "angular-toastr": "^2.1.1",
     "lodash": "^4.17.15",
     "swiper": "^5.0.3",
-    "AngularJS-Toaster": "angularjs-toaster#^3.0.0"
+    "AngularJS-Toaster": "angularjs-toaster#^3.0.0",
+    "angular-bootstrap": "^2.5.0"
   },
   "resolutions": {
     "get-size": "~1.1.7",
