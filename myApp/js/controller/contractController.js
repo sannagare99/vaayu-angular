@@ -123,7 +123,7 @@ this.$onInit = function () {
     $scope.fetchSiteList();
     
 
-    console.log('onit');
+    console.log('onit '+ $state.paramOne);
   };
 $scope.closeExpanded=()=>{
   console.log('exp')

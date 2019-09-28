@@ -6,8 +6,8 @@
                 <div class="col-md-8">
                     <form class="form-inline" ng-submit="updateFilters()">
                         <div class="form-group pr-2">
-                            <select ng-model="selectedSite" class="form-control" placeholder="Select Shift">
-                                <option ng-repeat="site in siteList" >{{site.name}}</option>
+                            <select ng-model="selectedSite" ng-options="site.name for site in siteList track by site.id" class="form-control" placeholder="Select Shift">
+                                <!-- <option value="" >Site</option> -->
                             </select>
                         </div>
                         <div class="form-group pr-2">
@@ -27,7 +27,6 @@
                             </select>
                         </div>
                         <!-- <div class="form-group pr-2">
-                            <select class="form-control">
                                 <option>Shift 1</option>
                                 <option>Shift 2</option>
                                 <option>Shift 3</option>
@@ -136,7 +135,7 @@
                                 <td >
                                     <span ng-repeat="(key, value) in roster.vehicle" roster > {{key}}:{{ value }} | </span>
                                     
-                                    <span><strong>{{roster.total_vehicles}} VEHICLE</strong> </span>
+                                    <span ng-if="roster.total_vehicles"><strong>{{roster.total_vehicles}} VEHICLE</strong> </span>
 
                                     
                                 </td>
@@ -144,8 +143,8 @@
                                 <td class="text-color-blue">{{roster.result}}</td>
                                 <td>
                                     <div class="">
-                                        <button ng-if="roster.result=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
-                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
+                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
+                                        <button ng-if="roster.result=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
                                     </div>
                                 </td>
                                 </tr>
@@ -219,7 +218,7 @@
                                         <div class="col-md-6 pr-2" >
                                             <button type="button" style="width:100%" ng-click="hideAddMenu()" class="btn btn-cancel ">Cancel</button>
                                         </div>
-                                        <div class="col-md-6 pr-2"><button style="width:100%" type="button" class="btn btn-primary add-vehicle-btn-done">DONE</button>
+                                        <div class="col-md-6 pr-2"><button style="width:100%" type="submit" class="btn btn-primary add-vehicle-btn-done">DONE</button>
                                         </div>
                                     </div>
 

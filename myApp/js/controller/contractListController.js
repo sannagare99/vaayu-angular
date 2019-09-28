@@ -60,38 +60,7 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
 
 
   };
-  $scope.contracts = [{
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-  {
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-  {
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-  {
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-  {
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-  {
-    cust_id: "23412355-2",
-    site: "Adam Denisov",
-    file_name: "File Name.csv",
-  },
-
-  ]
+ 
   
   $scope.reset = function () {
     $state.reload(true);
@@ -109,4 +78,9 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
   $scope.isSet = function (tabId) {
     return $scope.tab === tabId;
   };
+
+  $scope.openNewContract = () => {
+    console.log($scope.tab)
+    $state.go('contract', {paramOne: $scope.tab });
+  }
 });
