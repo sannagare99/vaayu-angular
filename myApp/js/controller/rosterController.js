@@ -6,7 +6,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
           $scope.today();
           // date picket
           $scope.toggleMin();
-        
+          $scope.isDoneDisabled = true;
           
           $scope.dateOptions = {
             formatYear: 'yy',
@@ -100,6 +100,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       $scope.addVehicleToRoster = function(roster){
         $scope.currentRoster = roster;
+        $scope.disableDone(roster);
         // Open Side View
         $scope.isAddMenuOpen = true;
       }
@@ -114,6 +115,8 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         if( $scope.currentRoster.vehicle_capacity[key]){
           $scope.currentRoster.total_seats = $scope.currentRoster.total_seats + $scope.currentRoster.vehicle_capacity[key];
         }
+        $scope.disableDone($scope.currentRoster);
+
       }
 
       $scope.minusVehicle = function(key){
@@ -121,10 +124,11 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         if( $scope.currentRoster.vehicle_capacity[key]){
           $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
         }
+
+        $scope.disableDone($scope.currentRoster);
       }
 
       $scope.submitAddVehicle = function(){
-        console.log($scope.currentRoster);
 
         let postData = {
           id: $scope.currentRoster.id,
@@ -137,7 +141,6 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
         }
         RosterService.addVehicle(postData, function(result){
-          console.log(result);
           $scope.isAddMenuOpen = false;
           $scope.updateFilters();
           
@@ -145,5 +148,16 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       }
 
+      $scope.disableDone = roster =>{
+        
+        if(!roster.total_seats){
+            $scope.isDoneDisabled =true;
+        }
+        else if(roster.total_seats < roster.no_of_emp){
+          $scope.isDoneDisabled =true;
+        }else{
+           $scope.isDoneDisabled =false;
+        }
+      }
     
 });
