@@ -191,14 +191,19 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
   $scope.genrateRoute = function(siteId,shiftId,filterDate,shiftType) {
    
-    // var shift = _.find($scope.shifts, function(shift){ return  shift.id == shiftId });
-    // console.log(shift);
+    var shift_type='';
+
+    angular.forEach($scope.shifts,function(shift,idx,shiftArray){
+        if(shift.id == shiftId){
+          shift_type=shift.shift_type;
+        }
+    });
 
     let postData = {
       "site_id":parseInt(siteId),
       "shift_id":parseInt(shiftId),
       "to_date":moment(filterDate).format('YYYY-MM-DD'),
-      "shift_type":1 // 0 -checkin 1-checout
+      "shift_type":shift_type // 0 -checkin 1-checout
     }
 
     RouteService.getRoutes(postData,function(data) {
