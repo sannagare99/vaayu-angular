@@ -16,10 +16,11 @@
 //= require angular
 //= require angular-ui-router
 //= require angular-drag-and-drop-lists
+//= require angular-google-maps
+//= require angular-resource
+//= require angular-simple-logger
+//= require AngularJS-Toaster
 //= require angular/rzslider
-//= require angular/app.module
-//= require angular/app.config
-//= require angular/controller/routeCtrl
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
@@ -82,6 +83,7 @@
 //= require_tree ./trips
 //= require_tree ./reports
 //= require_tree ./jobs
+//= require_tree ./angular
 //= require_tree .
 
 

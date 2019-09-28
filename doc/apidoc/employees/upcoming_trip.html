@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type='text/css' rel='stylesheet' href='../../apidoc/stylesheets/bundled/bootstrap.min.css'/>
+<link type='text/css' rel='stylesheet' href='../../apidoc/stylesheets/bundled/prettify.css'/>
+<link type='text/css' rel='stylesheet' href='../../apidoc/stylesheets/bundled/bootstrap-responsive.min.css'/>
+  <link type='text/css' rel='stylesheet' href='../../apidoc/stylesheets/application.css'/>
+  <!-- IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id='container'>
+        <ul class='breadcrumb'>
+  <li>
+    <a href='../../apidoc.html'>Moove 1.0</a>
+    <span class='divider'>/</span>
+  </li>
+  <li>
+    <a href='../../apidoc/employees.html'>
+      Employees
+      
+    </a>
+    <span class='divider'>/</span>
+  </li>
+  <li class='active'>upcoming_trip</li>
+  
+
+</ul>
+
+  <div class='page-header'>
+    <h1>
+      GET /api/v1/employees/:id/upcoming_trip
+      <br>
+      <small></small>
+    </h1>
+  </div>
+
+<div>
+
+  
+<p>Returns employee&#39;s most recent upcoming trip</p>
+
+
+  <h2>Supported Formats</h2>
+  json
+
+  <h2>Errors</h2>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Employee cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>No upcoming trips found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h2>Examples</h2>
+    <pre class="prettyprint">{
+      &quot;id&quot;: 10,
+      &quot;trip_type&quot;: &quot;check_out&quot;,
+      &quot;status&quot;: &quot;trip_created&quot;,
+      &quot;schedule_date&quot;: 1478538000,
+      &quot;driver_arrive_date&quot;: 1478538600,
+      &quot;driver&quot;: {
+        &quot;user_id&quot;: 6,
+        &quot;username&quot;: &quot;driver&quot;,
+        &quot;email&quot;: &quot;driver@n3wnormal.com&quot;,
+        &quot;f_name&quot;: &quot;Driver&quot;,
+        &quot;m_name&quot;: null,
+        &quot;l_name&quot;: &quot;Test&quot;,
+        &quot;phone&quot;: &quot;5554433&quot;,
+        &quot;profile_picture&quot;: null,
+        &quot;operating_organization&quot;: {
+          &quot;name&quot;: &quot;LogisticsCompany_test&quot;,
+          &quot;phone&quot;: null
+        }
+      },
+      &quot;trip_change_request&quot;: {
+          &quot;id&quot;: 1,
+          &quot;request_type&quot;: &quot;change&quot;,
+          &quot;reason&quot;: &quot;emergency&quot;,
+          &quot;request_state&quot;: &quot;created&quot;,
+          &quot;new_date&quot;: 1478636457
+        }
+    }</pre>
+
+  <h2>Params</h2>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+</div>
+
+
+        
+      </div>
+    </div>
+    <hr>
+    <footer></footer>
+  </div>
+  <script type='text/javascript' src='../../apidoc/javascripts/bundled/jquery.js'></script>
+<script type='text/javascript' src='../../apidoc/javascripts/bundled/bootstrap-collapse.js'></script>
+<script type='text/javascript' src='../../apidoc/javascripts/bundled/prettify.js'></script>
+<script type='text/javascript' src='../../apidoc/javascripts/apipie.js'></script>
+</body>
+</html>
