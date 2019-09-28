@@ -32,10 +32,10 @@
                         <div class="form-group pr-2">
                                 <div class="form-group pr-2">
                                     <p class="input-group custom-date">
-                                    <input type="text" class="form-control" change="FilterTripBoard()" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
+                                    <input type="text" class="form-control" ng-change="FilterTripBoard()" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
                                     />
                                     <span class="input-group-btn-datePicket">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+                                        <button type="button"  class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
                                     </span>
                                     </p>
                                 </div>
@@ -62,7 +62,7 @@
                         <div class="card-analytic kilometers">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ALl Trips</div>
-                                <div class="col-md-4 number">234</div>
+                                <div class="col-md-4 number">{{stats.all_trips}}</div>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <div class="card-analytic on-duty-vehical">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ON GOING</div>
-                                <div class="col-md-4 number">234</div>
+                                <div class="col-md-4 number">{{stats.ongoing_trips}}</div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="card-analytic special">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">DELYED</div>
-                                <div class="col-md-4 number">34</div>
+                                <div class="col-md-4 number">{{stats.delayed_trips}}</div>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <div class="card-analytic male">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ACCEPTED</div>
-                                <div class="col-md-4 number">134</div>
+                                <div class="col-md-4 number">{{stats.accepted_trips}}</div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                         <div class="card-analytic pending">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">PENDING ACCEPTENCE</div>
-                                <div class="col-md-4 number">86</div>
+                                <div class="col-md-4 number">{{stats.pending_acceptance_trips}}</div>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <div class="card-analytic cancelled">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">CANCELLED</div>
-                                <div class="col-md-4 number">99</div>
+                                <div class="col-md-4 number">{{stats.cancelled}}</div>
                             </div>
                         </div>
                     </div>
@@ -130,15 +130,15 @@
                            
                             <tbody>
                                 <tr class="active" ng-repeat="roster in rosters track by $index">
-                                    <td> {{$index}}</td>
+                                    <td> {{$index+1}}</td>
                                     <td>
-                                        <a href="">{{roster.shift_type}}</a>
+                                        <a href="">{{roster.trip_type}}</a>
                                     </td>
                                     <td>{{roster.shift_time}}</td>
                                     <td>{{roster.vehicle_type}}</td>
-                                    <td>{{roster.vehicle_rc_no}}</td>
+                                    <td>{{roster.vehicle_number}}</td>
                                     <td>{{roster.driver_name}}</td>
-                                    <td>{{roster.no_of_employee}}</td>
+                                    <td>{{roster.no_of_employees}}</td>
                                     <td>
                                         {{roster.live_tracking_in_eta}}
                                         <!-- <div class="progress" *ngIf="roster.type==1">

@@ -25,15 +25,17 @@ angular.module('app').controller('tripboardCtrl', function($scope,TripboardServi
         "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
       
-    //   TripboardService.get(postData, function(data) {
-    //     if(data.data){
-    //       $scope.rosters=data.data.shiftdetails;
-    //       $scope.stats = data.data.stats;
-    //     }
-    // }
-    // , function (error) {
-    //     console.error(error);
-    // });
+      TripboardService.get(postData, function(data) {
+        console.log(data);
+        if(data.data){
+          $scope.rosters=data.data.tripsdetails;
+          console.log($scope.rosters);
+          $scope.stats = data.data.stats;
+        }
+    }
+    , function (error) {
+        console.error(error);
+    });
   } 
   , function (error) {
       console.error(error);
@@ -75,8 +77,10 @@ angular.module('app').controller('tripboardCtrl', function($scope,TripboardServi
       "site_id": selectedSiteId,
       "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
   }
+  console.log(postData);
   TripboardService.get(postData, function(data) {
-      $scope.rosters=data.data.shiftdetails;
+      $scope.rosters=data.data.tripsdetails;
+      console.log($scope.rosters);
   }
   , function (error) {
       console.error(error);
@@ -121,50 +125,50 @@ angular.module('app').controller('tripboardCtrl', function($scope,TripboardServi
     
      }
 
-    $scope.rosters=[
-        {
-            type:"1",
-            shift_time:"09:00 AM",
-            shift_type:"Check In",
-            no_of_employee:"236",
-            vehicle_type:"SUV",
-            driver_name:'Rajpal Yadav',
-            vehicle_rc_no:"MH04DH4565",
-            live_tracking_in_eta:'08:45 AM',
-            current_status:'ON GOING'
-        },
-        {
-            type:"2",
-            shift_time:"09:00 AM",
-            shift_type:"Check In",
-            no_of_employee:"236",
-            vehicle_type:"SUV",
-            driver_name:'Rajpal Yadav',
-            vehicle_rc_no:"MH04DH4565",
-            live_tracking_in_eta:'08:45 AM',
-            current_status:'PENDING'
-        },
-        {
-            type:"3",
-            shift_time:"09:00 AM",
-            shift_type:"Check In",
-            no_of_employee:"236",
-            vehicle_type:"SUV",
-            driver_name:'Rajpal Yadav',
-            vehicle_rc_no:"MH04DH4565",
-            live_tracking_in_eta:'08:45 AM',
-            current_status:'CANCELLED'
-        },
-        {
-            type:"4",
-            shift_time:"09:00 AM",
-            shift_type:"Check In",
-            no_of_employee:"236",
-            vehicle_type:"SUV",
-            driver_name:'Rajpal Yadav',
-            vehicle_rc_no:"MH04DH4565",
-            live_tracking_in_eta:'08:45 AM',
-            current_status:'CANCELLED'
-        }
-    ]
+    // $scope.rosters=[
+    //     {
+    //         type:"1",
+    //         shift_time:"09:00 AM",
+    //         shift_type:"Check In",
+    //         no_of_employee:"236",
+    //         vehicle_type:"SUV",
+    //         driver_name:'Rajpal Yadav',
+    //         vehicle_rc_no:"MH04DH4565",
+    //         live_tracking_in_eta:'08:45 AM',
+    //         current_status:'ON GOING'
+    //     },
+    //     {
+    //         type:"2",
+    //         shift_time:"09:00 AM",
+    //         shift_type:"Check In",
+    //         no_of_employee:"236",
+    //         vehicle_type:"SUV",
+    //         driver_name:'Rajpal Yadav',
+    //         vehicle_rc_no:"MH04DH4565",
+    //         live_tracking_in_eta:'08:45 AM',
+    //         current_status:'PENDING'
+    //     },
+    //     {
+    //         type:"3",
+    //         shift_time:"09:00 AM",
+    //         shift_type:"Check In",
+    //         no_of_employee:"236",
+    //         vehicle_type:"SUV",
+    //         driver_name:'Rajpal Yadav',
+    //         vehicle_rc_no:"MH04DH4565",
+    //         live_tracking_in_eta:'08:45 AM',
+    //         current_status:'CANCELLED'
+    //     },
+    //     {
+    //         type:"4",
+    //         shift_time:"09:00 AM",
+    //         shift_type:"Check In",
+    //         no_of_employee:"236",
+    //         vehicle_type:"SUV",
+    //         driver_name:'Rajpal Yadav',
+    //         vehicle_rc_no:"MH04DH4565",
+    //         live_tracking_in_eta:'08:45 AM',
+    //         current_status:'CANCELLED'
+    //     }
+    // ]
 });
