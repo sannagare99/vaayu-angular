@@ -250,8 +250,8 @@
 
                             <div class="col-md-6 pad-left-0">
                               <ul class="employee-list-group" dnd-list="container.guard"
-                              dnd-dragover="dragoverVehicleCallback(container,index, external, type)"
-                              dnd-drop="dropVehicleCallback(container,index, item, external, type)"
+                              dnd-dragover="dragoverGuardCallback(container,index, external, type)"
+                              dnd-drop="dropGuardCallback(container,index, item, external, type)"
                                 dnd-allowed-types="allowedGuardTypes" dnd-disable-if="container.guard.length >= 1">
                                 <dnd-nodrag>
                                   <li ng-repeat="person in container.guard" dnd-type="person.type"
