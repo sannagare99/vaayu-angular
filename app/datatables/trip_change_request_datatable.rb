@@ -15,7 +15,7 @@ class TripChangeRequestDatatable
     else
       trip_type = @request&.employee_trip&.trip_type.humanize
     end
-
+     zone_result = @request.employee.zone.present? ? @request.employee.zone.name : ''
     {
        "DT_RowId" => "#{TripChangeRequest::DATATABLE_PREFIX}-#{@request.id}",
        :request_type => @request.request_type.humanize,
@@ -31,7 +31,7 @@ class TripChangeRequestDatatable
        :gender => @request.employee.gender.to_s.first.capitalize,
        :reason => @request.reason&.humanize,
        :phone => @request.employee.phone,
-       :zone => @request.employee.zone.name,
+       :zone => zone_result,
        :trip_status => @request.employee_trip&.trip&.status,
        :site_name => @request.employee&.site&.name
     }.merge(@request.employee.pick_up_lat_lng)

@@ -59,7 +59,7 @@ class TripChangeRequestsDatatable
           .where(:request_type => :new_trip)
           .where(:request_state => 'created')
           .where(:new_date => filter_params['startDate']..filter_params['endDate'])
-          .where(:trip_type => filter_params['trip_type'])
+          .where(:trip_type => filter_params['trip_type']).order('created_at DESC')
 
       change_trip_request_created = TripChangeRequest.joins(:employee_trip, :employee => [:zone, :user])
           .includes(:employee => [:zone, :site, :user])
@@ -68,7 +68,7 @@ class TripChangeRequestsDatatable
           .where(:request_type => :change)
           .where(:request_state => 'created')
           .where(:new_date => filter_params['startDate']..filter_params['endDate'])
-          .where('employee_trips.trip_type' => filter_params['trip_type'])
+          .where('employee_trips.trip_type' => filter_params['trip_type']).order('created_at DESC')
 
       cancel_trip_request_created = TripChangeRequest.joins(:employee_trip, :employee => [:zone, :user])
           .includes(:employee => [:zone, :site, :user])
@@ -78,7 +78,7 @@ class TripChangeRequestsDatatable
           .where(:request_state => 'created')
           .where('employee_trips.date > ?', filter_params['startDate'])
           .where('employee_trips.date < ?', filter_params['endDate'])
-          .where('employee_trips.trip_type' => filter_params['trip_type'])      
+          .where('employee_trips.trip_type' => filter_params['trip_type']).order('created_at DESC')      
 
       trip_request_created = new_trip_request_created + change_trip_request_created + cancel_trip_request_created
 
@@ -91,7 +91,7 @@ class TripChangeRequestsDatatable
           .where(:request_type => :new_trip)
           .where(:request_state => ['declined', 'approved'])
           .where(:new_date => filter_params['startDate']..filter_params['endDate'])
-          .where(:trip_type => filter_params['trip_type'])
+          .where(:trip_type => filter_params['trip_type']).order('created_at DESC')
 
       change_trip_request_actioned = TripChangeRequest.joins(:employee_trip, :employee => [:zone, :user])
           .includes(:employee => [:zone, :site, :user])
@@ -100,7 +100,7 @@ class TripChangeRequestsDatatable
           .where(:request_type => :change)
           .where(:request_state => ['declined', 'approved'])
           .where(:new_date => filter_params['startDate']..filter_params['endDate'])
-          .where('employee_trips.trip_type' => filter_params['trip_type'])
+          .where('employee_trips.trip_type' => filter_params['trip_type']).order('created_at DESC')
 
       cancel_trip_request_actioned = TripChangeRequest.joins(:employee_trip, :employee => [:zone, :user])
           .includes(:employee => [:zone, :site, :user])
@@ -110,7 +110,7 @@ class TripChangeRequestsDatatable
           .where(:request_state => ['declined', 'approved'])
           .where('employee_trips.date > ?', filter_params['startDate'])
           .where('employee_trips.date < ?', filter_params['endDate'])
-          .where('employee_trips.trip_type' => filter_params['trip_type'])      
+          .where('employee_trips.trip_type' => filter_params['trip_type']).order('created_at DESC')      
 
       trip_request_actioned = new_trip_request_actioned + change_trip_request_actioned + cancel_trip_request_actioned
       trip_request_actioned = sort_trips(trip_request_actioned)
