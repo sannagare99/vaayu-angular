@@ -53,5 +53,46 @@ angular.module('app').factory('RouteUpdateService', ['$resource','BASE_URL_8002'
         });
 }]);
 
+angular.module('app').factory('AutoAllocationService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'allocation/authenticate', {}, {
+            query: { method: "POST"},
+            create: { method: "POST"},
+            getRoutes: { 
+                method: "POST"
+            },
+            remove: { method: "DELETE"},
+            update: { method: "PUT"}
+        });
+}]);
+
+
+angular.module('app').factory('VehicleAssignService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'assignVehicleToTrip', {}, {
+            query: { method: "PATCH"},
+            create: { method: "POST"},
+            getRoutes: { 
+                method: "POST"
+            },
+            remove: { method: "DELETE"},
+            update: { method: "PUT"}
+        });
+}]);
+
+angular.module('app').factory('GuardAssignService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'addGuardInTrip', {}, {
+            query: { method: "PATCH"},
+            create: { method: "POST"},
+            getRoutes: { 
+                method: "POST"
+            },
+            remove: { method: "DELETE"},
+            update: { method: "PUT"}
+        });
+}]);
+
+
 
 
