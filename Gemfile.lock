@@ -305,6 +305,7 @@ GEM
     rack (2.0.3)
     rack-attack (5.0.1)
       rack
+    rack-cors (1.0.3)
     rack-mini-profiler (0.10.6)
       rack (>= 1.2.0)
     rack-protection (2.0.0)
@@ -549,6 +550,7 @@ DEPENDENCIES
   pry-rails
   puma
   rack-attack
+  rack-cors
   rack-mini-profiler
   rails (~> 5.0.0, >= 5.0.0.1)
   rails_12factor
