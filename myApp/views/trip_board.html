@@ -6,9 +6,9 @@
                 <div class="col-md-8">
                     <form class="form-inline">
                         <div class="form-group pr-2">
-                                <select ng-change="FilterTripBoard()" ng-model="selectedSite" class="form-control" placeholder="Select Shift">
-                                        <option ng-repeat="site in siteList" >{{site.name}}</option>
-                                    </select>
+                            <select ng-change="getAllTrips()" ng-model="selectedSiteID" class="form-control" placeholder="Select Shift"
+                            ng-options="site.id as site.name for site in siteList"  ></select>
+                                        
                         </div>
                         <div class="form-group pr-2">
                             <select id="disabledSelect" class="form-control ng-hide">
@@ -32,7 +32,7 @@
                         <div class="form-group pr-2">
                                 <div class="form-group pr-2">
                                     <p class="input-group custom-date">
-                                    <input type="text" class="form-control" ng-change="FilterTripBoard()" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
+                                    <input type="text" class="form-control" ng-change="getAllTrips()" datepicker-popup="{{format}}" ng-model="filterDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"
                                     />
                                     <span class="input-group-btn-datePicket">
                                         <button type="button"  class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
@@ -59,7 +59,7 @@
     
             <div class="row analytic-panel">
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic kilometers">
+                        <div class="card-analytic kilometers" ng-click="filterTrips('all_trips')">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ALl Trips</div>
                                 <div class="col-md-4 number">{{stats.all_trips}}</div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic on-duty-vehical">
+                        <div class="card-analytic on-duty-vehical" ng-click="filterTrips('ongoing_trips')">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ON GOING</div>
                                 <div class="col-md-4 number">{{stats.ongoing_trips}}</div>
@@ -75,15 +75,15 @@
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic special">
+                        <div class="card-analytic special" ng-click="filterTrips('delayed_trips')">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">DELYED</div>
+                                <div class="col-md-8 text">DELAYED</div>
                                 <div class="col-md-4 number">{{stats.delayed_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic male">
+                        <div class="card-analytic male" ng-click="filterTrips('accepted_trips')">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">ACCEPTED</div>
                                 <div class="col-md-4 number">{{stats.accepted_trips}}</div>
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic pending">
+                        <div class="card-analytic pending" ng-click="filterTrips('pending_acceptance_trips')">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">PENDING ACCEPTENCE</div>
                                 <div class="col-md-4 number">{{stats.pending_acceptance_trips}}</div>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic cancelled">
+                        <div class="card-analytic cancelled" ng-click="filterTrips('cancelled')">
                             <div class="card-inner-wrapper">
                                 <div class="col-md-8 text">CANCELLED</div>
                                 <div class="col-md-4 number">{{stats.cancelled}}</div>
