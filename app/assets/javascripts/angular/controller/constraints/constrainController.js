@@ -1,4 +1,4 @@
-app.controller('constraintController', function ($scope, $http, $state, SessionService) {
+app.controller('constraintController', function ($scope, $http, $state, SessionService, $location) {
 
   $scope.siteNames = [];
   $scope.siteID = null;
@@ -11,6 +11,7 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
   this.$onInit = () => {
     $scope.fetchSiteList();
     console.log('constraintController');
+    console.log($location);
   }
 
 
