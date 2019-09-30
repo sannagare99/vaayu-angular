@@ -55,7 +55,7 @@ angular.module('app').factory('RouteUpdateService', ['$resource','BASE_URL_8002'
 
 angular.module('app').factory('AutoAllocationService', ['$resource','BASE_URL_8002','SessionService',
     function ($resource,BASE_URL_8002,SessionService) {
-        return $resource(BASE_URL_8002+'allocation/authenticate', {}, {
+        return $resource(BASE_URL_8002+'allocateVehicles', {}, {
             query: { method: "POST"},
             create: { method: "POST"},
             getRoutes: { 

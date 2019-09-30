@@ -181,9 +181,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
-    if($scope.shiftType){
-      postData.shift_type = $scope.shiftType;
-    }
+  
     RosterService.get(postData, function(data) {
         $scope.shifts=data.data.shiftdetails;
     }
@@ -628,40 +626,23 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
      
     };
 
-    // $scope.dropGuardCallback = function(container,index, item, external, type) {
-      // if ($scope.routeChangedIds.indexOf(container.routeId) === -1){
-      //   $scope.routeChangedIds.push(container.routeId)
-      //   console.log( $scope.routeChangedIds);
-      //   $scope.isDisabled=false;
-      // }
-    //   return item;
-    // };
-
     $scope.dropGuardCallback =function(container,index, item, external, type) {
-      var postData ={
-        "guardId":item.id,
-        "routeId":container.routeId
-      };
+      
+      var isAssign =true;
+      if(isAssign){
+        var postData ={
+          "guardId":item.id,
+          "routeId":container.routeId
+        };
+  
+        GuardAssignService.query(postData, function(data){
+          console.log("Guard Assign");
+          $scope.resetRoute();
+        })
 
-      GuardAssignService.query(postData, function(data){
-        console.log("Guard Assign");
-      })
-
-      // return item;
+        return container;
+      }
     };
-
-    // $scope.dragoverVehicleCallback =function(container,index, item, external, type) {
-    //   var postData ={
-    //     "vehicleId":item.id,
-    //     "routeId":container.routeId
-    //   };
-
-    //   VehicleAssignService.query(postData, function(data){
-    //     console.log("Guard Assign");
-    //   })
-
-    //   return item;
-    // };
 
     $scope.logEvent = function(message) {
         // console.log(message);
@@ -679,8 +660,13 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     // // Initialize model
 
     $scope.autoAllocate =function() {
+      var postData ={
+        "site_id":$scope.siteId,
+        "shift_id_id":$scope.shiftId,
+      }
       AutoAllocationService.query(function(data){
          $scope.routes=data;
+         $scope.resetRoute();
       })
     }
    
