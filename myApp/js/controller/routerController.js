@@ -283,6 +283,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     RouteService.getRoutes(postData,function(data) {
 
+      // $scope.routes =data;
+
       $scope.routes ={
         "success": true,
         "data": {

@@ -69,8 +69,8 @@ angular.module('app').factory('AutoAllocationService', ['$resource','BASE_URL_80
 
 angular.module('app').factory('VehicleAssignService', ['$resource','BASE_URL_8002','SessionService',
     function ($resource,BASE_URL_8002,SessionService) {
-        return $resource(BASE_URL_8002+'addVehicleInTrip', {}, {
-            query: { method: "POST"},
+        return $resource(BASE_URL_8002+'assignVehicleToTrip', {}, {
+            query: { method: "PATCH"},
             create: { method: "POST"},
             getRoutes: { 
                 method: "POST"
@@ -83,7 +83,7 @@ angular.module('app').factory('VehicleAssignService', ['$resource','BASE_URL_800
 angular.module('app').factory('GuardAssignService', ['$resource','BASE_URL_8002','SessionService',
     function ($resource,BASE_URL_8002,SessionService) {
         return $resource(BASE_URL_8002+'addGuardInTrip', {}, {
-            query: { method: "POST"},
+            query: { method: "PATCH"},
             create: { method: "POST"},
             getRoutes: { 
                 method: "POST"
