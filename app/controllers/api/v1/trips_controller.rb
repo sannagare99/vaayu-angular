@@ -455,6 +455,30 @@ module API::V1
       @trip.reload      
     end
 
+    def assign_driver
+      @driver = Driver.find(params['driver_id'])
+      @vehicle = @driver.vehicle
+
+      if params['last_paired_vehicle'].present?
+        @last_paired_vehicle = Vehicle.where('plate_number' => params['last_paired_vehicle'])&.first&.id
+      end
+
+      if @vehicle.present? && @trip.employee_trips.count > @vehicle&.seats
+        render :json => { :error => 'To many people to one car' }
+        return
+      else
+        @employee_trips = EmployeeTrip.joins(:trip_route).where(:trip => @trip).order('trip_routes.scheduled_route_order ASC')
+        get_trip_data(@employee_trips)
+        if params[:exception] == 'true'
+          @exception = 1
+        else
+          @exception = 0
+        end
+        # render 'show_trip_on_dispatch'
+        render json: {:trip => @trip, :employee_trips => @employee_trips, :submit => true, :exception => @exception, :driver => @driver, :vehicle => @vehicle, :last_paired_vehicle => @last_paired_vehicle}
+      end
+    end
+
     def resolve_exception
       errors = []
       @trip_route_exception = TripRouteException.where(:trip_route => @trip_routes).where(:exception_type => 'employee_no_show').where(:status => 'open')
@@ -520,6 +544,97 @@ module API::V1
         current_user = User.find(params[:uid])
       end
       params[:is_from_sms] == "true"
+    end
+
+    def get_trip_data(employee_trips)
+      @address_mapping = {}
+      @eta_mapping = {}
+      @status_mapping = {}
+      @status_length_mapping = {}
+      @colspan_mapping = {}
+      @rowspan_mapping = {}
+      @last = nil
+      
+      last_checked = ''
+      reset = false
+      employee_trips.each do |et|
+        if @address_mapping.has_key? et&.trip_route&.scheduled_route_order
+          @address_mapping[et&.trip_route&.scheduled_route_order] << et
+        else
+          @address_mapping[et&.trip_route&.scheduled_route_order] = [et]
+        end
+      end
+
+      @address_mapping.each do |address, ets|
+        height = 0
+        total = ets.size
+        last = ets&.first&.employee&.id
+        @eta_mapping[last] = ets.size
+
+        ets.each do |et|
+
+          
+          if et.trip_route.status == 'missed' || et.trip_route.status == 'canceled'
+            if et.trip_route.status == 'canceled' && !et.trip_route.cancel_exception?
+              @status_mapping[et&.employee.id] = 'Canceled'                      
+            elsif et.trip_route.status == 'canceled' && et.trip_route.cancel_exception? && et.trip_route.cab_fare.blank?
+              @status_mapping[et&.employee.id] = 'CWE'
+            elsif et.trip_route.status == 'canceled' && et.trip_route.cancel_exception? && !et.trip_route.cab_fare.blank?
+              @status_mapping[et&.employee.id] = 'Booked Ola/Uber'
+            elsif et.trip_route.status == 'missed'
+              @status_mapping[et&.employee.id] = 'No Show'
+            end
+            @rowspan_mapping[et&.employee&.id] = 1
+            @colspan_mapping[et&.employee&.id] = 1
+            if !@last.nil?
+              @rowspan_mapping[last] = height
+            end
+            last = nil
+            height = 0
+            total = total - 1
+          else
+            height = height + 1
+            if last.nil?
+              last = et&.employee&.id
+            end
+            @rowspan_mapping[et&.employee&.id] = 0
+            @rowspan_mapping[last] = height
+          end
+
+
+
+          # if et.trip_route.status != 'canceled' && et.trip_route.status != 'missed'
+          #   if reset
+          #     last_checked = et&.employee.id
+          #   end
+          #   if @eta_mapping[last_checked].nil?
+          #     @eta_mapping[last_checked] = 1
+          #   else
+          #     @eta_mapping[last_checked] = @eta_mapping[last_checked] + 1  
+          #   end
+          #   reset = false
+          # else
+          #   if et.trip_route.status == 'canceled' && !et.trip_route.cancel_exception?
+          #     @status_length_mapping[et&.employee.id] = 1
+          #     @status_mapping[et&.employee.id] = 'Canceled'                      
+          #   elsif et.trip_route.status == 'canceled' && et.trip_route.cancel_exception? && et.trip_route.cab_fare.blank?
+          #     @status_length_mapping[et&.employee.id] = 1
+          #     @status_mapping[et&.employee.id] = 'CWE'
+          #   elsif et.trip_route.status == 'canceled' && et.trip_route.cancel_exception? && !et.trip_route.cab_fare.blank?
+          #     @status_length_mapping[et&.employee.id] = 1
+          #     @status_mapping[et&.employee.id] = 'Booked Ola/Uber'
+          #   elsif et.trip_route.status == 'missed'
+          #     @status_length_mapping[et&.employee.id] = 1
+          #     @status_mapping[et&.employee.id] = 'No Show'
+          #   end
+          #   if !reset
+          #     last_checked = et&.employee.id
+          #   end    
+          #   @eta_mapping[last_checked] = 1
+          #   reset = true
+          # end
+        end
+      end
     end
   end
 end
