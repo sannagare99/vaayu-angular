@@ -16,13 +16,13 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
           };
 
           $scope.defaultVehiclesCapacityList = {
-            HATCHBACK: 8,
-            SUV: 8,
-            TT: 10,
-            SEDAN:5,
-            BUS: 40,
-            'MINI VAN': 6,
-            TRUCK: 20,
+            SEDAN:8,
+            SUV:8,
+            BUS:10,
+            'MINI VAN':8,
+            HATCHBACK:5,
+            TRUCK:8,
+            TT:10
           }
           // date picket
           $scope.toggleMin();
@@ -152,6 +152,8 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
           'MINI VAN': 0,
           TRUCK: 0,
         };
+
+
 
       }
 
