@@ -63,8 +63,8 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
       headers: {
         'Content-Type': 'application/json',
         'uid': SessionService.uid,
-            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
-            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
+        'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+        'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
       },
       data: { test: 'test' }
     })

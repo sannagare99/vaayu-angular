@@ -81,6 +81,8 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
 
   $scope.openNewContract = () => {
     console.log($scope.tab)
-    $state.go('contract', {paramOne: $scope.tab });
+    $state.go('contract', {
+      paramOne:  $scope.tab 
+    });
   }
 });

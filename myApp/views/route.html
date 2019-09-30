@@ -42,7 +42,7 @@
       <div class="col-md-3">
         <div class="btn-toolbar float-right" role="toolbar">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-terniary-blue">Finalize</button>
+            <button type="button" ng-click="finalizeRoutes()" class="btn btn-terniary-blue">Finalize</button>
           </div>
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-terniary">Export CSV</button>
@@ -115,7 +115,7 @@
             <li ng-class="{active:isSet(3)}"><a href ng-click="setTab(3)">NOT ALLOCATED</a></li>
             <div class="btn-toolbar btn-group-toolbar" role="toolbar">
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-terniary">Auto Allocate</button>
+                <button type="button" ng-click="autoAllocate()" class="btn btn-terniary">Auto Allocate</button>
               </div>
               <div class="btn-group" role="group">
                 <button type="button" ng-click="saveRoutes()" ng-disabled="isDisabled" class="btn btn-terniary " ng-class="{'disabled': isDisabled}">SAVE</button>
@@ -139,7 +139,8 @@
                         no-drag dnd-callback="container.employees.length" class="employee-cluster-panel">
                         <div class="employee-cluster-panel-heading">
                           <div class="employee-cluster-panel-title">
-                            <input type="checkbox" ng-change="selectRoute(container)" ng-model="route" name="route" class="tick">
+                            {{container.selected}}
+                            <input type="checkbox" ng-change="selectRoute(container)" ng-model="container.selected" name="route" class="tick">
                             <span class="travel-group-name">Travel Group 5 HB</span>
                           </div>
                         </div>
@@ -207,7 +208,7 @@
                         <div class="vayau-panel-footer" ng-if="container.employees.length">
                           <div class="row">
                             <div class="col-md-6 pad-right-0">
-                              <ul class="employee-list-group" dnd-list="container.vehicle" dnd-dragover="dragoverVehicleCallback(container,index, external, type)"
+                              <ul class="employee-list-group" dnd-list="container.vehicle"
                               dnd-drop="dropVehicleCallback(container,index, item, external, type)"
                                 dnd-allowed-types="allowedVehicalTypes" dnd-disable-if="container.vehicle.length >= 1">
                                 <dnd-nodrag>
@@ -217,7 +218,7 @@
                                     ng-if="container.vehicle.length">
                                     <span class="input-group-addon addon-prepend vehicle_assign">
                                       <div class="inner-addon">
-                                        <i class="fas fa-car-side"></i>
+                                        <i class="fa fa-car"></i>
                                       </div>
                                     </span>
 
@@ -233,7 +234,7 @@
                                   class="input-group employee-list-group-item vehicle-add">
                                   <span class="input-group-addon addon-prepend vehicle_assign">
                                     <div class="inner-addon">
-                                      <i class="fas fa-car-side"></i>
+                                      <i class="fa fa-car"></i>
                                     </div>
                                   </span>
 
@@ -250,7 +251,6 @@
 
                             <div class="col-md-6 pad-left-0">
                               <ul class="employee-list-group" dnd-list="container.guard"
-                              dnd-dragover="dragoverGuardCallback(container,index, external, type)"
                               dnd-drop="dropGuardCallback(container,index, item, external, type)"
                                 dnd-allowed-types="allowedGuardTypes" dnd-disable-if="container.guard.length >= 1">
                                 <dnd-nodrag>
@@ -383,9 +383,7 @@
                 class="background-{{guard.type}} input-group employee-list-group-item">
                 <span class="input-group-addon addon-prepend">
                   <div class="inner-addon">
-                    <i class="fas fa-shield"></i>
                     <i class="fa fa-shield" aria-hidden="true"></i>
-
                   </div>
                 </span>
 
@@ -486,7 +484,7 @@
 
                 <span class="input-group-addon addon-prepend">
                   <div class="inner-addon">
-                    <i class="fas fa-car-side"></i>
+                    <i class="fa fa-car"></i>
                   </div>
                 </span>
 

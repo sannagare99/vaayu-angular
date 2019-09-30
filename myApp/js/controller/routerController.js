@@ -16,7 +16,7 @@ angular.module('app')
     };
   });
 
-angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService,RosterService,RouteService,RouteUpdateService) {
+angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Map,VehicleService,SiteService,GuardsService,RosterService,RouteService,RouteUpdateService,AutoAllocationService,VehicleAssignService,GuardAssignService,FinalizeService) {
 
     $scope.place = {};
     // Map.init();
@@ -62,8 +62,11 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       flightPath.setMap($scope.mymap);
     }
 
+    $scope.finalizeArray=[];
 
     $scope.selectRoute = (container) => {
+      $scope.finalizeArray.push(container);
+
       var coords = [];
       angular.forEach(container.employees,function(emp,idx,empArray){
         try {
@@ -120,12 +123,13 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         RosterService.get(postData, function(data) {
           if(data.data){
             $scope.shifts=data.data.shiftdetails;
-            if($scope.shifts.length){
+            if($scope.shifts && $scope.shifts.length){
               $scope.shiftId=$scope.shifts[0].id;
-              $scope.genrateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
+              $scope.resetRoute();
+              // $scope.genrateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
             }else{
-              $scope.genrateRoute($scope.siteId,'0',moment().format('YYYY-MM-DD'),1);
-              
+              $scope.shiftId=0;
+              $scope.resetRoute();
             }
           }
       }, function (error) {
@@ -181,9 +185,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
-    if($scope.shiftType){
-      postData.shift_type = $scope.shiftType;
-    }
+  
     RosterService.get(postData, function(data) {
         $scope.shifts=data.data.shiftdetails;
     }
@@ -198,10 +200,16 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
   $scope.isDisabled=true;
 
+  $scope.finalizeRoutes = function() {
+    FinalizeService.query($scope.finalizeArray,function(){
+       $scope.resetRoute();
+    });
+  }
+
   $scope.saveRoutes =function(){
 
     var changedRoutes = [];
-    // console.log($scope.routes.data.routes);
+   
     angular.forEach($scope.routes.data.routes, function(route){
       angular.forEach($scope.routeChangedIds, function(routeId){
         if (route.routeId === routeId){
@@ -209,6 +217,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         }
       })
     })
+
    
     var finalChangedRoutes=[];
     angular.forEach(changedRoutes, function(route){
@@ -222,6 +231,32 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         "employee_nodes":employee_nodes
       }
       finalChangedRoutes.push(data);
+    })
+
+    var original_routes =[];
+
+    
+    var originalChangedRoutes = [];
+   
+    angular.forEach($scope.originalRoutes, function(route){
+      angular.forEach($scope.routeChangedIds, function(routeId){
+        if (route.routeId === routeId){
+          originalChangedRoutes.push(route);
+        }
+      })
+    })
+
+    angular.forEach(originalChangedRoutes, function(originalRoute){
+      var employee_nodes=[];
+      angular.forEach(originalRoute.employees_nodes_addresses, function(orgEmp){
+        employee_nodes.push(orgEmp.empId);
+      })
+      var data = {
+        "route_id":originalRoute.routeId,
+        "vehicle_category": originalRoute.vehicle_type,
+        "employee_nodes":employee_nodes
+      }
+      original_routes.push(data);
     })
 
     if(finalChangedRoutes.length){
@@ -238,7 +273,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         "shift_id":parseInt($scope.shiftId),
         "to_date":moment($scope.filterDate).format('YYYY-MM-DD'),
         "shift_type":shift_type,
-        "updated_routes":finalChangedRoutes
+        "updated_routes":finalChangedRoutes,
+        "original_route":original_routes
       }
     
       $scope.isDisabled=true;
@@ -250,6 +286,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
   }
 
   $scope.resetRoute =function(){
+    $scope.finalizeArray=[];
     $scope.routeChangedIds =[];
     var shift_type='';
 
@@ -263,7 +300,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
   }
 
   $scope.genrateRoute = function(siteId,shiftId,filterDate,shiftType) {
-   
+  
     $scope.getVehicleAndGuardList(siteId,shiftId);
 
     var shift_type='';
@@ -283,6 +320,9 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     RouteService.getRoutes(postData,function(data) {
 
+      // $scope.routes =data;
+     
+
       $scope.routes ={
         "success": true,
         "data": {
@@ -301,91 +341,92 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
                 }
             ],
             "routes": [
-                {
-                    "routeId": 234234,
-                    "total_time": 90,
-                    "total_distabce": 40,
-                    "tripStartTime": "09:00",
-                    "tripEndTime": "10:00",
-                    "vehicle_type": "SUV",
-                    "total_seats": 5,
-                    "empty_seats": 2,
-                    "guard_required": "N",
-                    "vehicle_allocated": "Y",
-                    "trip_cost": 100,
-                    "guard":{
-                      "guardId":12312,
-                      "guardName" : "Rushikesh Indulkar",
-                      "gender":"M"
-                    },
-                    "vehicle":{
-                        "vehicleId":12312,
-                        "vehicleNumber":"MH47L5609",
-                        "driverName" : "Rushikesh Indulkar",
-                        "driverID":232423,
-                        "vehicleType":"HB"
-                    },
-                    "route_final_path": [
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "time": "09:00"
-                        }
-                    ],
-                    "employees_nodes_addresses": [
-                        {
-                            "rank": 1,
-                            "empId": 12312,
-                            "empName": "XYZ Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "F",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 2,
-                            "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "M",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 3,
-                            "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "M",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 4,
-                            "empId": 12312,
-                            "empName": "ABC Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "F",
-                            "special": "Yes"
-                        }
-                    ]
+               
+              {
+                "routeId": 234234,
+                "total_time": 90,
+                "total_distabce": 40,
+                "tripStartTime": "09:00",
+                "tripEndTime": "10:00",
+                "vehicle_type": "SUV",
+                "total_seats": 5,
+                "empty_seats": 2,
+                "guard_required": "N",
+                "vehicle_allocated": "Y",
+                "trip_cost": 100,
+                "guard":{
+                  "guardId":12312,
+                  "guardName" : "Rushikesh Indulkar",
+                  "gender":"M"
                 },
+                "vehicle":{
+                    "vehicleId":12312,
+                    "vehicleNumber":"MH47L5609",
+                    "driverName" : "Rushikesh Indulkar",
+                    "driverID":232423,
+                    "vehicleType":"HB"
+                },
+                "route_final_path": [
+                    {
+                        "lat": "123131231.23",
+                        "long": "123131231.23",
+                        "time": "09:00"
+                    },
+                    {
+                        "lat": "123131231.23",
+                        "long": "123131231.23",
+                        "time": "09:00"
+                    },
+                    {
+                        "lat": "123131231.23",
+                        "long": "123131231.23",
+                        "time": "09:00"
+                    },
+                    {
+                        "lat": "123123123.23",
+                        "long": "23423423423.234",
+                        "time": "09:00"
+                    }
+                ],
+                "employees_nodes_addresses": [
+                    {
+                        "rank": 1,
+                        "empId": 12312,
+                        "empName": "XYZ Indulkar",
+                        "lat": "123123123.23",
+                        "long": "23423423423.234",
+                        "gender": "F",
+                        "special": "Yes"
+                    },
+                    {
+                        "rank": 2,
+                        "empId": 12312,
+                        "empName": "Rushikesh Indulkar",
+                        "lat": "123123123.23",
+                        "long": "23423423423.234",
+                        "gender": "M",
+                        "special": "Yes"
+                    },
+                    {
+                        "rank": 3,
+                        "empId": 12312,
+                        "empName": "Rushikesh Indulkar",
+                        "lat": "123123123.23",
+                        "long": "23423423423.234",
+                        "gender": "M",
+                        "special": "Yes"
+                    },
+                    {
+                        "rank": 4,
+                        "empId": 12312,
+                        "empName": "ABC Indulkar",
+                        "lat": "123123123.23",
+                        "long": "23423423423.234",
+                        "gender": "F",
+                        "special": "Yes"
+                    }
+                ]
+            },
                 {
                     "routeId": 23423232342344,
                     "total_time": 90,
@@ -465,6 +506,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         "message": "routes listed successfully"
       }
 
+      $scope.originalRoutes = angular.copy($scope.routes.data.routes);
+
       $scope.stats = $scope.routes.data.tats[0];
 
       angular.forEach($scope.routes.data.routes, function(route,index, routeArray){
@@ -501,7 +544,6 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
           "allowed":"all"
         }
       )
-  
   
       $scope.fullModel =[$scope.routes.data.routes];
       $scope.model2 = $scope.fullModel;
@@ -609,27 +651,39 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     };
 
     $scope.dropVehicleCallback =function(container,index, item, external, type) {
-      console.log(container);
-      return item;
-    };
 
-    $scope.dropGuardCallback = function(container,index, item, external, type) {
-      if ($scope.routeChangedIds.indexOf(container.routeId) === -1){
-        $scope.routeChangedIds.push(container.routeId)
-        console.log( $scope.routeChangedIds);
-        $scope.isDisabled=false;
+      var isAssign =true;
+      if(isAssign){
+        var postData ={
+          "vehicleId":item.vehicleId,
+          "routeId":container.routeId
+        };
+  
+        VehicleAssignService.query(postData, function(data){
+          console.log("Guard Assign");
+          isAssign=false;
+        })
+        return container;
       }
-      return item;
+     
     };
 
     $scope.dropGuardCallback =function(container,index, item, external, type) {
-      console.log(container);
-      return item;
-    };
+      
+      var isAssign =true;
+      if(isAssign){
+        var postData ={
+          "guardId":item.id,
+          "routeId":container.routeId
+        };
+  
+        GuardAssignService.query(postData, function(data){
+          console.log("Guard Assign");
+          $scope.resetRoute();
+        })
 
-    $scope.dragoverVehicleCallback =function(container,index, item, external, type) {
-      console.log(container);
-      return item;
+        return container;
+      }
     };
 
     $scope.logEvent = function(message) {
@@ -647,9 +701,17 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     // // Initialize model
 
+    $scope.autoAllocate =function() {
+      var postData ={
+        "site_id":$scope.siteId,
+        "shift_id_id":$scope.shiftId,
+      }
+      AutoAllocationService.query(function(data){
+         $scope.routes=data;
+         $scope.resetRoute();
+      })
+    }
    
-  
-
     $scope.$watch('model2', function(model) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);

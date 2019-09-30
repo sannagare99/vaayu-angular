@@ -1,4 +1,6 @@
-app.controller('contractCtrl', function ($scope, $http, $state) {
+app.controller('contractCtrl', function ($scope, $http, $state, $stateParams) {
+  
+  $scope.tab = $stateParams.paramOne;
   $scope.fileObject;
   $scope.ctype;
   $scope.bcycle;
@@ -116,14 +118,17 @@ app.controller('contractCtrl', function ($scope, $http, $state) {
   $scope.expanded = true;
   $scope.totalSelectedUIDs="Select UIDs";
   $scope.selectedUIDtoSend;
+
 this.$onInit = function () {
     $scope.totalSelectedUIDs="Select UIDs";
    $scope.showCheckboxes();
    
     $scope.fetchSiteList();
     
-
-    console.log('onit '+ $state.paramOne);
+    $scope.tab = $stateParams.paramOne;
+    console.log( $scope.tab);
+    // $scope.tab = 'CUSTOMER';
+    
   };
 $scope.closeExpanded=()=>{
   console.log('exp')
@@ -285,7 +290,7 @@ $scope.toggleSelection = function toggleSelection(UID) {
     $state.reload(true);
   }
 
-  $scope.tab = 'CUSTOMER';
+  
 
   $scope.setTab = function (tabId) {
     console.log('set tabbed');
