@@ -1,5 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy, :change_status]
+  before_action :set_site, only: [ :edit ]
   before_action :active_shift_present, only: :change_status
 
   # GET /shifts
@@ -16,6 +17,7 @@ class ShiftsController < ApplicationController
   # GET /shifts/new
   def new
     @shift = Shift.new
+    @site = Site.all.map {|x| [x.name, x.id]}
   end
 
   # GET /shifts/1/edit
@@ -83,10 +85,17 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      params.require(:shift).permit(:name, :start_time, :end_time, :status)
+      params.require(:shift).permit(:name, :start_time, :end_time, :site_id, :status)
     end
 
     def active_shift_present
       render json: 'Sorry, Shift has few upcoming trips. So we cant deactivate', status: '401' and return if @shift.employee_trips.upcoming.present?
+    end
+
+    def set_site
+      site_id = Shift.find(params[:id]).site_id
+      if site_id != nil
+        @site = Site.includes(params[:site_id]).map {|x| [x.name, x.id]}
+      end
     end
 end

@@ -4,6 +4,7 @@ class Shift < ApplicationRecord
   has_many :employee_trips
   has_many :shift_users
   has_many :users, through: :shift_users
+  belongs_to :sites
   
   validates :name, presence: true
   validates :start_time, presence: true

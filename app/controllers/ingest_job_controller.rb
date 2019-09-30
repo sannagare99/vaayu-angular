@@ -19,7 +19,7 @@ class IngestJobController < ApplicationController
 
   def show
     ingest_job = IngestJob.find(params[:id])
-    render json: ::IngestJobPresenter.new(ingest_job)
+    render json: IngestJobPresenter.new(ingest_job)
   end
 
   private

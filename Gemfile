@@ -59,6 +59,7 @@ gem 'bundler-audit'
 
 # Rack middleware for blocking & throttling abusive requests
 gem 'rack-attack'
+gem 'rack-cors'
 
 # Security related headers all in one gem.
 gem 'secure_headers'
