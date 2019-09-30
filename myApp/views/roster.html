@@ -198,10 +198,10 @@
                                             <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png">
                                             <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV' || key== 'HATCHBACK')">{{key}}</span>
                                         </div>
-                                        <div class="col-md-2" ng-click="minusVehicle(key)"><i class="fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
+                                        <div class="col-md-2" ng-click="minusVehicle(key)"><i class="pointer fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
 
                                         <div class="col-md-2"><h5 style="margin-top: 15px">{{value}}</h5></div>
-                                        <div class="col-md-2" ng-click="plusVehicle(key)"><i class="fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
+                                        <div class="col-md-2" ng-click="plusVehicle(key)"><i class="pointer fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
                                         </div>
                                     </div>
                                     <!-- <div class="text-danger "  ng-if="!currentRoster.vehicle || !currentRoster.vehicle.length">

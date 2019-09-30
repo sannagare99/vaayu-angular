@@ -143,6 +143,15 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       $scope.hideAddMenu = function(){
         $scope.isAddMenuOpen = false;
+        $scope.defaultVehiclesList = {
+          HATCHBACK: 0,
+          SUV: 0,
+          TT: 0,
+          SEDAN:0,
+          BUS: 0,
+          'MINI VAN': 0,
+          TRUCK: 0,
+        };
 
       }
 
