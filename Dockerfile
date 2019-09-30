@@ -71,7 +71,7 @@ ENV BUNDLE_GEMFILE=/home/app/webapp/Gemfile \
   BUNDLE_JOBS=2 \
   BUNDLE_PATH=/bundle
 RUN gem install bundler -v 2.0.1
-RUN rvm-exec 2.3.1 bundle install
+RUN rvm-exec 2.3.1 bundle install -v 1.17.3
 
 RUN npm install -g grunt-cli bower
 RUN npm install && bower --allow-root install
@@ -79,7 +79,7 @@ RUN npm install && bower --allow-root install
 #RUN cp config/initializers/devise_token_auth.rb config/initializers/devise_token_auth_tmp.txt
 #RUN cat config/initializers/devise_token_fix_assets_precomiple.txt > config/initializers/devise_token_auth.rb
 #RUN cat config/initializers/devise_token_auth_tmp.txt >> config/initializers/devise_token_auth.rb
-#RUN RAILS_ENV=production PRECOMPILE=true bundle exec rake assets:precompile
+RUN RAILS_ENV=production PRECOMPILE=true bundle exec rake assets:precompile
 
 RUN chown -R app:app /home/app/webapp
 EXPOSE 80

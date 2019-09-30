@@ -1,5 +1,5 @@
 doctype html
-html
+html ng-app="app"
   head
     title Vaayu
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -7,6 +7,8 @@ html
     = javascript_include_tag "//maps.google.com/maps/api/js?key=#{GoogleAPIKey.working.first.key rescue Configurator.get('GOOGLE_MAPS_API_KEY')}"
     = javascript_include_tag '//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js'
     = javascript_include_tag '//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js'
+    link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet" /
+
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
     = favicon_link_tag 'favicon.ico'

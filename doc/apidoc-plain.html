@@ -1,0 +1,2636 @@
+  <h4><a href='#drivers'>Drivers</a></h4>
+  <ul>
+      <li><a href='#drivers-show'>show</a></li>
+      <li><a href='#drivers-upcoming_trip'>upcoming_trip</a></li>
+      <li><a href='#drivers-trip_history'>trip_history</a></li>
+      <li><a href='#drivers-on_duty'>on_duty</a></li>
+      <li><a href='#drivers-off_duty'>off_duty</a></li>
+      <li><a href='#drivers-last_trip_request'>last_trip_request</a></li>
+      <li><a href='#drivers-update_current_location'>update_current_location</a></li>
+  </ul>
+  <h4><a href='#employee_trips'>Employee trips</a></h4>
+  <ul>
+      <li><a href='#employee_trips-show'>show</a></li>
+      <li><a href='#employee_trips-cancel'>cancel</a></li>
+      <li><a href='#employee_trips-update'>update</a></li>
+      <li><a href='#employee_trips-create'>create</a></li>
+      <li><a href='#employee_trips-rate'>rate</a></li>
+      <li><a href='#employee_trips-exception'>exception</a></li>
+      <li><a href='#employee_trips-dismiss_trip'>dismiss_trip</a></li>
+  </ul>
+  <h4><a href='#employees'>Employees</a></h4>
+  <ul>
+      <li><a href='#employees-show'>show</a></li>
+      <li><a href='#employees-update'>update</a></li>
+      <li><a href='#employees-upcoming_trip'>upcoming_trip</a></li>
+      <li><a href='#employees-last_completed_trip'>last_completed_trip</a></li>
+      <li><a href='#employees-upcoming_trips'>upcoming_trips</a></li>
+      <li><a href='#employees-trip_history'>trip_history</a></li>
+      <li><a href='#employees-call_operator'>call_operator</a></li>
+  </ul>
+  <h4><a href='#trip_route_exceptions'>Trip route exceptions</a></h4>
+  <ul>
+      <li><a href='#trip_route_exceptions-resolve'>resolve</a></li>
+  </ul>
+  <h4><a href='#trip_routes'>Trip routes</a></h4>
+  <ul>
+      <li><a href='#trip_routes-employee_no_show'>employee_no_show</a></li>
+      <li><a href='#trip_routes-initiate_call'>initiate_call</a></li>
+  </ul>
+  <h4><a href='#trips'>Trips</a></h4>
+  <ul>
+      <li><a href='#trips-show'>show</a></li>
+      <li><a href='#trips-start'>start</a></li>
+      <li><a href='#trips-decline_trip_request'>decline_trip_request</a></li>
+      <li><a href='#trips-accept_trip_request'>accept_trip_request</a></li>
+      <li><a href='#trips-driver_arrived'>driver_arrived</a></li>
+      <li><a href='#trips-on_board'>on_board</a></li>
+      <li><a href='#trips-completed'>completed</a></li>
+      <li><a href='#trips-not_on_board'>not_on_board</a></li>
+  </ul>
+  <h4><a href='#users'>Users</a></h4>
+  <ul>
+      <li><a href='#users-verify_email'>verify_email</a></li>
+      <li><a href='#users-set_password'>set_password</a></li>
+  </ul>
+
+
+
+  <hr/>
+
+  <div>
+    <h2 id="drivers">
+      <a href='#drivers'>Drivers</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="drivers-show">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/drivers/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns driver profile data</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 42,
+      &quot;username&quot;: &quot;driver&quot;,
+      &quot;email&quot;: &quot;driver@n3wnormal.com&quot;,
+      &quot;f_name&quot;: &quot;Driver&quot;,
+      &quot;m_name&quot;: null,
+      &quot;l_name&quot;: &quot;Test&quot;,
+      &quot;phone&quot;: &quot;5554433&quot;,
+      &quot;profile_picture&quot;: null,
+      &quot;operating_organization&quot;: {
+        &quot;name&quot;: &quot;oo_name&quot;,
+        &quot;phone&quot;: &quot;oo_phone&quot;
+      },
+      &quot;administrative_organization&quot;: {
+        &quot;name&quot;: &quot;ao_name&quot;,
+        &quot;phone&quot;: &quot;ao_phone&quot;
+      }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-upcoming_trip">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-upcoming_trip'>upcoming_trip</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/drivers/:id/upcoming_trip
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns driver&#39;s most recent upcoming trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;driver_status&quot;: &quot;on_duty&quot;,
+      &quot;id&quot;: 4,
+      &quot;status&quot;: &quot;assigned&quot;,
+      &quot;trip_type&quot;: &quot;check_in&quot;,
+      &quot;passengers&quot;: 2,
+      &quot;approximate_duration&quot;: 21,
+      &quot;approximate_distance&quot;: 6456,
+      &quot;date&quot;: 1479193200,
+      &quot;next_pickup_date&quot;: 1479193200,
+      &quot;vehicle&quot;: {
+        &quot;id&quot;: 1,
+        &quot;plate_number&quot;: &quot;CA12345AA&quot;,
+        &quot;make&quot;: &quot;Tesla&quot;,
+        &quot;model&quot;: &quot;Model X&quot;,
+        &quot;colour&quot;: &quot;black&quot;,
+        &quot;seats&quot;: 4,
+        &quot;make_year&quot;: 2012,
+        &quot;photo&quot;: &quot;http://example.com/photo.png&quot;
+      }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            No upcoming trips found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-trip_history">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-trip_history'>trip_history</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/drivers/:id/trip_history
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns driver&#39;s completed trip list</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">[
+      {
+        &quot;id&quot;: 1,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;real_duration&quot;: 3,
+        &quot;approximate_distance&quot;: 7928,
+        &quot;start_date&quot;: 1483614998,
+        &quot;date&quot;: 1483939200,
+        &quot;site_name&quot;: &quot;PwC - DLF Cyber City&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;real_duration&quot;: 7,
+        &quot;approximate_distance&quot;: 7928,
+        &quot;start_date&quot;: 1483615002,
+        &quot;date&quot;: 1484025600,
+        &quot;site_name&quot;: &quot;PwC - DLF Cyber City&quot;
+      }
+    ]</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            No upcoming trips found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-on_duty">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-on_duty'>on_duty</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/drivers/:id/on_duty
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Set driver as active and attach a car to him</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true,
+      &quot;vehicle&quot;: {
+        &quot;id&quot;: 2,
+        &quot;plate_number&quot;: &quot;CA1002AA&quot;,
+        &quot;make&quot;: &quot;Tesla&quot;,
+        &quot;model&quot;: &quot;Model S&quot;,
+        &quot;colour&quot;: &quot;Black&quot;,
+        &quot;seats&quot;: 5,
+        &quot;make_year&quot;: 2015,
+        &quot;photo&quot;: &quot;http://example.com/photo.png&quot;
+      }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Driver not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            422
+            Unprocessable entity
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-off_duty">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-off_duty'>off_duty</a>
+      </h3>
+
+      <div>
+          <h4>
+              DELETE /api/v1/drivers/:id/off_duty
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Set driver as unavailable, unassign a car</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Driver not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            422
+            Unprocessable entity
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-last_trip_request">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-last_trip_request'>last_trip_request</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/drivers/:id/last_trip_request
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Get latest available trip request. Will be deprecated when push
+notifications would be done</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 2,
+      &quot;status&quot;: &quot;assign_requested&quot;,
+      &quot;trip_type&quot;: &quot;check_in&quot;,
+      &quot;date&quot;: 1479106800
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Driver not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="drivers-update_current_location">
+      <a href='#drivers'>Drivers</a> / <a href='#drivers-update_current_location'>update_current_location</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/drivers/:id/update_current_location
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Update the current location for on duty driver and send a push to all
+employees on that trip for real time update</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true,
+      &quot;updatedETA&quot;: &quot;updated ETA&quot;
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Driver cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Driver not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="employee_trips">
+      <a href='#employee_trips'>Employee trips</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="employee_trips-show">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employee_trips/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee trip by id</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 1,
+      &quot;date&quot;: &quot;2016-10-31T08:00:00.000Z&quot;,
+      &quot;trip_type&quot;: &quot;check_in&quot;,
+      &quot;status&quot;: &quot;created&quot;
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others trip data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Employee trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-cancel">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-cancel'>cancel</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employee_trips/:id/cancel
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Send request to cancel employee trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+     &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others trip data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Employee trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-update">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-update'>update</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employee_trips/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Send request to change employee trip date/time</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+     &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others trip data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Employee trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-create">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-create'>create</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employee_trips
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Send request for a trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+     &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others trip data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Employee trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-rate">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-rate'>rate</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employee_trips/:id/rate
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Rate trip (employee)</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+     &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others trip data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Employee trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-exception">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-exception'>exception</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employee_trips/:id/exception
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Employee marked that smth wrong with his trip (still on board or driver not
+arrived)</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true,
+      &quot;id&quot;: 1,
+      &quot;exception_type&quot;: &quot;still_on_board&quot;,
+      &quot;status&quot;: &quot;open&quot;,
+      &quot;date&quot;: 1482830372
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip route not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employee_trips-dismiss_trip">
+      <a href='#employee_trips'>Employee trips</a> / <a href='#employee_trips-dismiss_trip'>dismiss_trip</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employee_trips/:id/dismiss_trip
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Do not show missed trip to employee</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip route not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="employees">
+      <a href='#employees'>Employees</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="employees-show">
+      <a href='#employees'>Employees</a> / <a href='#employees-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employees/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee profile data</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;user_id&quot;: 4,
+      &quot;username&quot;: &quot;employee&quot;,
+      &quot;email&quot;: &quot;employee@n3wnormal.com&quot;,
+      &quot;f_name&quot;: &quot;Employee&quot;,
+      &quot;m_name&quot;: null,
+      &quot;l_name&quot;: &quot;Test&quot;,
+      &quot;phone&quot;: &quot;6665544&quot;,
+      &quot;profile_picture&quot;: null,
+      &quot;emergency_contact&quot;: {
+        &quot;name&quot;: null,
+        &quot;phone&quot;: null
+      },
+      &quot;employer&quot;: {
+        &quot;name&quot;: &quot;EmployeeCompany_test&quot;,
+        &quot;phone&quot;: &quot;7776655&quot;
+      },
+      &quot;schedule&quot;: [
+        {
+          &quot;day&quot;: 1,
+          &quot;check_in&quot;: &quot;08:00&quot;,
+          &quot;check_out&quot;: &quot;19:00&quot;
+        }
+      ]
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access some others profile
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-update">
+      <a href='#employees'>Employees</a> / <a href='#employees-update'>update</a>
+      </h3>
+
+      <div>
+          <h4>
+              PATCH /api/v1/employees/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Update employee profile data (emergency contacts)</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 32,
+      &quot;username&quot;: &quot;employee&quot;,
+      &quot;email&quot;: &quot;employee@n3wnormal.com&quot;,
+      &quot;f_name&quot;: &quot;Employee&quot;,
+      &quot;m_name&quot;: null,
+      &quot;l_name&quot;: &quot;Test&quot;,
+      &quot;phone&quot;: &quot;6665544&quot;,
+      &quot;profile_picture&quot;: null,
+      &quot;emergency_contact&quot;: {
+        &quot;name&quot;: null,
+        &quot;phone&quot;: null
+      },
+      &quot;employer&quot;: {
+        &quot;name&quot;: &quot;employer name&quot;,
+        &quot;phone&quot;: &quot;12345678&quot;
+      }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            422
+            Unprocessable entity
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>employee </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Hash</p>
+ ]
+      </small>
+      
+<p>Employee info</p>
+
+    </li>
+    <ul>
+    <li>
+      <strong>emergency_contact_name </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Emergency contact name</p>
+
+    </li>
+    
+    <li>
+      <strong>emergency_contact_phone </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Emergency contact phone</p>
+
+    </li>
+    
+</ul>
+
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-upcoming_trip">
+      <a href='#employees'>Employees</a> / <a href='#employees-upcoming_trip'>upcoming_trip</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employees/:id/upcoming_trip
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee&#39;s most recent upcoming trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 10,
+      &quot;trip_type&quot;: &quot;check_out&quot;,
+      &quot;status&quot;: &quot;trip_created&quot;,
+      &quot;schedule_date&quot;: 1478538000,
+      &quot;driver_arrive_date&quot;: 1478538600,
+      &quot;driver&quot;: {
+        &quot;user_id&quot;: 6,
+        &quot;username&quot;: &quot;driver&quot;,
+        &quot;email&quot;: &quot;driver@n3wnormal.com&quot;,
+        &quot;f_name&quot;: &quot;Driver&quot;,
+        &quot;m_name&quot;: null,
+        &quot;l_name&quot;: &quot;Test&quot;,
+        &quot;phone&quot;: &quot;5554433&quot;,
+        &quot;profile_picture&quot;: null,
+        &quot;operating_organization&quot;: {
+          &quot;name&quot;: &quot;LogisticsCompany_test&quot;,
+          &quot;phone&quot;: null
+        }
+      },
+      &quot;trip_change_request&quot;: {
+          &quot;id&quot;: 1,
+          &quot;request_type&quot;: &quot;change&quot;,
+          &quot;reason&quot;: &quot;emergency&quot;,
+          &quot;request_state&quot;: &quot;created&quot;,
+          &quot;new_date&quot;: 1478636457
+        }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            No upcoming trips found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-last_completed_trip">
+      <a href='#employees'>Employees</a> / <a href='#employees-last_completed_trip'>last_completed_trip</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employees/:id/last_completed_trip
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee&#39;s last not rated completed trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 10,
+      &quot;trip_type&quot;: &quot;check_out&quot;,
+      &quot;status&quot;: &quot;trip_created&quot;,
+      &quot;schedule_date&quot;: 1478538000,
+      &quot;driver_arrive_date&quot;: 1478538600,
+      &quot;driver&quot;: {
+        &quot;user_id&quot;: 6,
+        &quot;username&quot;: &quot;driver&quot;,
+        &quot;email&quot;: &quot;driver@n3wnormal.com&quot;,
+        &quot;f_name&quot;: &quot;Driver&quot;,
+        &quot;m_name&quot;: null,
+        &quot;l_name&quot;: &quot;Test&quot;,
+        &quot;phone&quot;: &quot;5554433&quot;,
+        &quot;profile_picture&quot;: null,
+        &quot;operating_organization&quot;: {
+          &quot;name&quot;: &quot;LogisticsCompany_test&quot;,
+          &quot;phone&quot;: null
+        }
+      },
+      &quot;trip_change_request&quot;: {
+          &quot;id&quot;: 1,
+          &quot;request_type&quot;: &quot;change&quot;,
+          &quot;reason&quot;: &quot;emergency&quot;,
+          &quot;request_state&quot;: &quot;created&quot;,
+          &quot;new_date&quot;: 1478636457
+        }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            No upcoming trips found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-upcoming_trips">
+      <a href='#employees'>Employees</a> / <a href='#employees-upcoming_trips'>upcoming_trips</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employees/:id/upcoming_trips
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee&#39;s upcoming trips list</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;upcoming_trips&quot;: [
+        {
+          &quot;id&quot;: 5,
+          &quot;trip_type&quot;: &quot;check_in&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479790800,
+          &quot;driver_arrive_date&quot;: 0,
+          &quot;trip_change_request&quot;: {
+            &quot;id&quot;: 1,
+            &quot;request_type&quot;: &quot;change&quot;,
+            &quot;reason&quot;: &quot;emergency&quot;,
+            &quot;request_state&quot;: &quot;created&quot;,
+            &quot;new_date&quot;: 1479727527
+          }
+        },
+        {
+          &quot;id&quot;: 6,
+          &quot;trip_type&quot;: &quot;check_out&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479823200,
+          &quot;driver_arrive_date&quot;: 0
+        },
+        {
+          &quot;id&quot;: 7,
+          &quot;trip_type&quot;: &quot;check_in&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479877200,
+          &quot;driver_arrive_date&quot;: 0
+        },
+        {
+          &quot;id&quot;: 8,
+          &quot;trip_type&quot;: &quot;check_out&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479909600,
+          &quot;driver_arrive_date&quot;: 0
+        },
+        {
+          &quot;id&quot;: 9,
+          &quot;trip_type&quot;: &quot;check_in&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479963600,
+          &quot;driver_arrive_date&quot;: 0
+        },
+        {
+          &quot;id&quot;: 10,
+          &quot;trip_type&quot;: &quot;check_out&quot;,
+          &quot;status&quot;: &quot;upcoming&quot;,
+          &quot;schedule_date&quot;: 1479996000,
+          &quot;driver_arrive_date&quot;: 0
+        }
+      ],
+      &quot;trips_change_requests&quot;: [
+        {
+          &quot;id&quot;: 1,
+          &quot;request_type&quot;: &quot;change&quot;,
+          &quot;reason&quot;: &quot;emergency&quot;,
+          &quot;request_state&quot;: &quot;created&quot;,
+          &quot;new_date&quot;: 1479727527
+        },
+        {
+          &quot;id&quot;: 2,
+          &quot;request_type&quot;: &quot;new_trip&quot;,
+          &quot;reason&quot;: null,
+          &quot;request_state&quot;: &quot;created&quot;,
+          &quot;new_date&quot;: 1479727527
+        }
+      ]
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-trip_history">
+      <a href='#employees'>Employees</a> / <a href='#employees-trip_history'>trip_history</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/employees/:id/trip_history
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Returns employee&#39;s list of completed trips</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">[
+      {
+        &quot;id&quot;: 1,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;approximate_driver_arrive_date&quot;: 1483939200,
+        &quot;approximate_drop_off_date&quot;: 1483941000,
+        &quot;actual_driver_arrive_date&quot;: 1483615020,
+        &quot;actual_drop_off_date&quot;: 1483615202
+      },
+      {
+        &quot;id&quot;: 3,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;approximate_driver_arrive_date&quot;: 1484025600,
+        &quot;approximate_drop_off_date&quot;: 1484027400,
+        &quot;actual_driver_arrive_date&quot;: 1483615410,
+        &quot;actual_drop_off_date&quot;: 1483615434
+      }
+    ]</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot access others data
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="employees-call_operator">
+      <a href='#employees'>Employees</a> / <a href='#employees-call_operator'>call_operator</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/employees/:id/call_operator
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Connect operator and employee</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="trip_route_exceptions">
+      <a href='#trip_route_exceptions'>Trip route exceptions</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="trip_route_exceptions-resolve">
+      <a href='#trip_route_exceptions'>Trip route exceptions</a> / <a href='#trip_route_exceptions-resolve'>resolve</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trip_route_exceptions/:id/resolve
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Employee marked that trip exception has been resolved</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            Employee cannot resolve others exception
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip route exception not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="trip_routes">
+      <a href='#trip_routes'>Trip routes</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="trip_routes-employee_no_show">
+      <a href='#trip_routes'>Trip routes</a> / <a href='#trip_routes-employee_no_show'>employee_no_show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trips/:id/trip_routes/:trip_route_id/employee_no_show
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver marked employee did not come</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true,
+      &quot;id&quot;: 1,
+      &quot;exception_type&quot;: &quot;employee_no_show&quot;,
+      &quot;status&quot;: &quot;open&quot;,
+      &quot;date&quot;: 1482830372
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip route not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trip_routes-initiate_call">
+      <a href='#trip_routes'>Trip routes</a> / <a href='#trip_routes-initiate_call'>initiate_call</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/trip_routes/:trip_route_id/initiate_call
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Call a driver from employee and vice versa and panic button calling to the
+operator</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="trips">
+      <a href='#trips'>Trips</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="trips-show">
+      <a href='#trips'>Trips</a> / <a href='#trips-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trips/:id
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Return trip by id</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;id&quot;: 4,
+      &quot;status&quot;: &quot;assigned&quot;,
+      &quot;trip_type&quot;: &quot;check_out&quot;,
+      &quot;passengers&quot;: 2,
+      &quot;approximate_duration&quot;: 95,
+      &quot;approximate_distance&quot;: 77349,
+      &quot;date&quot;: 1480342200,
+      &quot;site&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Site_test&quot;,
+        &quot;location&quot;: {
+          &quot;latitude&quot;: &quot;49.443687&quot;,
+          &quot;longitude&quot;: &quot;32.051969&quot;
+        }
+      },
+      &quot;trip_routes&quot;: [
+        {
+          &quot;id&quot;: 7,
+          &quot;route_order&quot;: 0,
+          &quot;status&quot;: &quot;not_started&quot;,
+          &quot;eta&quot;: 1480342800,
+          &quot;employee&quot;: {
+            &quot;id&quot;: 4,
+            &quot;username&quot;: &quot;employee&quot;,
+            &quot;f_name&quot;: &quot;Employee&quot;,
+            &quot;m_name&quot;: null,
+            &quot;l_name&quot;: &quot;Test&quot;,
+            &quot;email&quot;: &quot;employee@n3wnormal.com&quot;,
+            &quot;phone&quot;: &quot;6665544&quot;,
+            &quot;home_address&quot;: &quot;22 Heroiv Stalinhradu str, Cherkasy, Ukraine&quot;,
+              &quot;home_address_location&quot;: {
+                &quot;latitude&quot;: &quot;49.435964&quot;,
+                &quot;longitude&quot;: &quot;32.093944&quot;
+              }
+          }
+        },
+        {
+          &quot;id&quot;: 8,
+          &quot;route_order&quot;: 1,
+          &quot;status&quot;: &quot;not_started&quot;,
+          &quot;eta&quot;: 1480347720,
+          &quot;employee&quot;: {
+            &quot;id&quot;: 5,
+            &quot;username&quot;: &quot;employee2&quot;,
+            &quot;f_name&quot;: &quot;Employee2&quot;,
+            &quot;m_name&quot;: null,
+            &quot;l_name&quot;: &quot;Test&quot;,
+            &quot;email&quot;: &quot;employee2@n3wnormal.com&quot;,
+            &quot;phone&quot;: &quot;66655442&quot;,
+            &quot;home_address&quot;: &quot;Koneva 5, Cherkasy&quot;,
+            &quot;home_address_location&quot;: {
+              &quot;latitude&quot;: &quot;49.416254&quot;,
+              &quot;longitude&quot;: &quot;31.275124&quot;
+            }
+          }
+        }
+      ]
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-start">
+      <a href='#trips'>Trips</a> / <a href='#trips-start'>start</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trips/:id/start
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver started the trip</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-decline_trip_request">
+      <a href='#trips'>Trips</a> / <a href='#trips-decline_trip_request'>decline_trip_request</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trips/:id/decline_trip_request
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver declines incoming trip request</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-accept_trip_request">
+      <a href='#trips'>Trips</a> / <a href='#trips-accept_trip_request'>accept_trip_request</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/trips/:id/accept_trip_request
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver accept incoming trip request</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true,
+      &quot;trip&quot;: {
+        &quot;id&quot;: 2,
+        &quot;status&quot;: &quot;assigned&quot;,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;date&quot;: 1479106800
+      }
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-driver_arrived">
+      <a href='#trips'>Trips</a> / <a href='#trips-driver_arrived'>driver_arrived</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/trips/:id/trip_routes/driver_arrived
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver marked that he&#39;s arrived</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-on_board">
+      <a href='#trips'>Trips</a> / <a href='#trips-on_board'>on_board</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/trips/:id/trip_routes/on_board
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver marked that employee was boarded</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-completed">
+      <a href='#trips'>Trips</a> / <a href='#trips-completed'>completed</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/trips/:id/trip_routes/completed
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver marked that employee has been delivered</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="trips-not_on_board">
+      <a href='#trips'>Trips</a> / <a href='#trips-not_on_board'>not_on_board</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1/trips/:id/trip_routes/not_on_board
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Driver marked that he has moved to next step</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;success&quot;: true
+    }</pre>
+
+          <h4>Errors</h4>
+            401
+            Unauthorized
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            403
+            User cannot access trip he does not belongs to
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+            404
+            Trip not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="users">
+      <a href='#users'>Users</a><br>
+      <small></small>
+    </h2>
+  </div>
+
+
+  <div>
+
+      <hr/>
+
+      <h3 id="users-verify_email">
+      <a href='#users'>Users</a> / <a href='#users-verify_email'>verify_email</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /api/v1/users/verify_email
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Validate email already present in the system</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{
+      &quot;status&quot;: &quot;created&quot;
+    }</pre>
+
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>email </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>phone </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="users-set_password">
+      <a href='#users'>Users</a> / <a href='#users-set_password'>set_password</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /api/v1users/set_password
+            <br>
+            <small></small>
+          </h4>
+      </div>
+
+      <div>
+        
+<p>Set users password</p>
+
+          <h4>Examples</h4>
+            <pre class="wiki">{ &quot;status&quot;: &quot;Success&quot; }</pre>
+
+          <h4>Errors</h4>
+            404
+            Not found
+            <pre class="prettyprint lang-yaml">--- 
+...
+</pre>
+
+            <br>
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a number.</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>password </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>password_confirmation </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+    </li>
+    
+</ul>
+
+      </div>
+  </div>

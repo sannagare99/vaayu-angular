@@ -2,7 +2,8 @@
   "name": "moove",
   "version": "1.0.0",
   "dependencies": {
-    "bower": "1.3.8"
+    "bower": "1.3.8",
+    "gulp": "^4.0.2"
   },
   "engine": {
     "node": "0.12.x",

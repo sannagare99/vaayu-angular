@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180430032910) do
+ActiveRecord::Schema.define(version: 20190725064846) do
 
   create_table "ba_invoices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "company_type"
@@ -247,10 +247,14 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.boolean  "uniform"
     t.boolean  "licence"
     t.boolean  "badge"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.string   "aadhaar_address"
     t.string   "offline_phone"
+    t.integer  "sort_status",                                   default: -1
+    t.integer  "active_checklist_id"
+    t.text     "compliance_notification_message", limit: 65535
+    t.text     "compliance_notification_type",    limit: 65535
     t.index ["business_associate_id"], name: "index_drivers_on_business_associate_id", using: :btree
     t.index ["logistics_company_id"], name: "index_drivers_on_logistics_company_id", using: :btree
     t.index ["site_id"], name: "index_drivers_on_site_id", using: :btree
@@ -326,24 +330,26 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.integer  "trip_type"
     t.string   "status"
     t.integer  "employee_schedule_id"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
     t.integer  "trip_route_id"
     t.integer  "rating"
-    t.text     "rating_feedback",      limit: 65535
-    t.boolean  "dismissed",                          default: false
+    t.text     "rating_feedback",                limit: 65535
+    t.boolean  "dismissed",                                    default: false
     t.integer  "site_id"
     t.integer  "state"
     t.datetime "schedule_date"
     t.integer  "zone"
-    t.text     "cluster_error",        limit: 65535
-    t.boolean  "bus_rider",                          default: false
+    t.text     "cluster_error",                  limit: 65535
+    t.boolean  "bus_rider",                                    default: false
     t.integer  "shift_id"
-    t.boolean  "is_clustered",                       default: false
-    t.text     "route_order",          limit: 65535
+    t.boolean  "is_clustered",                                 default: false
+    t.text     "route_order",                    limit: 65535
     t.integer  "employee_cluster_id"
-    t.text     "cancel_status",        limit: 65535
+    t.text     "cancel_status",                  limit: 65535
     t.string   "exception_status"
+    t.boolean  "is_rating_screen_shown",                       default: false
+    t.boolean  "is_still_on_board_screen_shown",               default: false
     t.index ["employee_cluster_id"], name: "index_employee_trips_on_employee_cluster_id", using: :btree
     t.index ["employee_id"], name: "index_employee_trips_on_employee_id", using: :btree
     t.index ["trip_id"], name: "index_employee_trips_on_trip_id", using: :btree
@@ -471,13 +477,14 @@ ActiveRecord::Schema.define(version: 20180430032910) do
 
   create_table "logistics_companies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "pan"
     t.string   "tan"
     t.string   "business_type"
     t.string   "service_tax_no"
     t.string   "hq_address"
+    t.text     "phone",          limit: 65535
   end
 
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -487,14 +494,20 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.string   "message"
     t.integer  "receiver"
     t.integer  "status"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.boolean  "resolved_status",                default: true
-    t.text     "call_sid",         limit: 65535
-    t.boolean  "new_notification",               default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.boolean  "resolved_status",                 default: true
+    t.text     "call_sid",          limit: 65535
+    t.boolean  "new_notification",                default: false
     t.integer  "sequence"
+    t.string   "reporter"
+    t.string   "remarks"
+    t.integer  "employee_trip_id"
+    t.integer  "driver_request_id"
     t.index ["driver_id"], name: "index_notifications_on_driver_id", using: :btree
+    t.index ["driver_request_id"], name: "index_notifications_on_driver_request_id", using: :btree
     t.index ["employee_id"], name: "index_notifications_on_employee_id", using: :btree
+    t.index ["employee_trip_id"], name: "index_notifications_on_employee_trip_id", using: :btree
     t.index ["trip_id"], name: "index_notifications_on_trip_id", using: :btree
   end
 
@@ -575,12 +588,13 @@ ActiveRecord::Schema.define(version: 20180430032910) do
 
   create_table "sites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.decimal  "latitude",            precision: 10, scale: 6
-    t.decimal  "longitude",           precision: 10, scale: 6
+    t.decimal  "latitude",                          precision: 10, scale: 6
+    t.decimal  "longitude",                         precision: 10, scale: 6
     t.integer  "employee_company_id"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.string   "address"
+    t.text     "phone",               limit: 65535
     t.index ["employee_company_id"], name: "index_sites_on_employee_company_id", using: :btree
   end
 
@@ -729,6 +743,8 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.datetime "driver_should_start_trip_time"
     t.text     "driver_should_start_trip_location",  limit: 65535
     t.datetime "driver_should_start_trip_timestamp"
+    t.datetime "trip_assign_date"
+    t.boolean  "verified_driver_image",                                           default: false
     t.index ["driver_id"], name: "index_trips_on_driver_id", using: :btree
     t.index ["employee_cluster_id"], name: "index_trips_on_employee_cluster_id", using: :btree
     t.index ["scheduled_date"], name: "index_trips_on_scheduled_date", using: :btree
@@ -820,24 +836,28 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.date     "puc_validity_date"
     t.date     "fc_validity_date"
     t.boolean  "ac"
-    t.integer  "seats",                               default: 0
+    t.integer  "seats",                                         default: 0
     t.string   "fuel_type"
-    t.integer  "make_year",                                       null: false, unsigned: true
-    t.integer  "induction_date",                                               unsigned: true
-    t.integer  "odometer",                                                     unsigned: true
+    t.integer  "make_year",                                                  null: false, unsigned: true
+    t.integer  "odometer",                                                                unsigned: true
     t.boolean  "spare_type"
     t.boolean  "first_aid_kit"
     t.string   "tyre_condition"
     t.string   "fuel_level"
     t.string   "plate_condition"
-    t.integer  "device_id",                                                    unsigned: true
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.integer  "device_id",                                                               unsigned: true
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.text     "status",                limit: 65535
+    t.text     "status",                          limit: 65535
+    t.date     "induction_date"
+    t.integer  "sort_status",                                   default: -1
+    t.integer  "active_checklist_id"
+    t.text     "compliance_notification_message", limit: 65535
+    t.text     "compliance_notification_type",    limit: 65535
     t.index ["business_associate_id"], name: "index_vehicles_on_business_associate_id", using: :btree
     t.index ["driver_id"], name: "index_vehicles_on_driver_id", using: :btree
     t.index ["plate_number"], name: "index_vehicles_on_plate_number", using: :btree
@@ -861,8 +881,6 @@ ActiveRecord::Schema.define(version: 20180430032910) do
     t.index ["site_id"], name: "index_zones_on_site_id", using: :btree
   end
 
-  add_foreign_key "bus_trip_routes", "bus_trips"
-  add_foreign_key "driver_requests", "drivers"
   add_foreign_key "employee_trips", "employee_clusters"
   add_foreign_key "trip_change_requests", "employees"
   add_foreign_key "trip_routes", "employee_trips"

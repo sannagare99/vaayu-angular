@@ -45,7 +45,6 @@ class EmployeeCompanyDatatable
        :registered_business_area => @employee_company.registered_business_area,
        :registered_pan_no => @employee_company.registered_pan_no,
        :registered_gstin_no => @employee_company.registered_gstin_no,
-
        :logistics_company => @employee_company.logistics_company&.name,
        :standard_price => @employee_company.standard_price,
        :invoice_frequency => @employee_company.invoice_frequency,

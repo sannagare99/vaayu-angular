@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/bootstrap.min.css'/>
+<link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/prettify.css'/>
+<link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/bootstrap-responsive.min.css'/>
+  <link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/application.css'/>
+  <!-- IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id='container'>
+        <ul class='breadcrumb'>
+  <li>
+    <a href='../apidoc.html'>Moove 1.0</a>
+    <span class='divider'>/</span>
+  </li>
+  <li class='active'>
+    Trip routes
+    
+  </li>
+  
+</ul>
+
+<div class='page-header'>
+  <h1>
+    Trip routes
+    <br>
+    <small></small>
+  </h1>
+</div>
+
+
+
+
+
+
+<div class='accordion' id='accordion'>
+
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/trip_routes/employee_no_show.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-employee_no_show'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            GET /api/v1/trips/:id/trip_routes/:trip_route_id/employee_no_show
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-employee_no_show' class='collapse accordion-body'>
+      
+<p>Driver marked employee did not come</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>User cannot access trip he does not belongs to</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Trip route not found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;success&quot;: true,
+      &quot;id&quot;: 1,
+      &quot;exception_type&quot;: &quot;employee_no_show&quot;,
+      &quot;status&quot;: &quot;open&quot;,
+      &quot;date&quot;: 1482830372
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/trip_routes/initiate_call.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-initiate_call'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            POST /api/v1/trip_routes/:trip_route_id/initiate_call
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-initiate_call' class='collapse accordion-body'>
+      
+<p>Call a driver from employee and vice versa and panic button calling to the
+operator</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>User cannot access trip he does not belongs to</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Trip not found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;success&quot;: true
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+</div>
+
+
+        
+      </div>
+    </div>
+    <hr>
+    <footer></footer>
+  </div>
+  <script type='text/javascript' src='../apidoc/javascripts/bundled/jquery.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/bundled/bootstrap-collapse.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/bundled/prettify.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/apipie.js'></script>
+</body>
+</html>

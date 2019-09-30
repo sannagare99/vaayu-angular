@@ -39,6 +39,7 @@ $(function () {
                     {
                         data: null,
                         render: function (data) {
+
                             return '<a href="" class="modal_edit">Edit</a>&nbsp<a href="" class="modal_view">View</a>&nbsp<a href="" class="editor_remove text-danger">Delete</a>' //Rushikesh made changes here
                         }
                     }
@@ -72,7 +73,8 @@ $(function () {
             label: "Name",
             className: "col-md-4",
             name: "name"
-        }, {
+        },
+        {
             label: "HQ Address",
             className: "col-md-4",
             name: "hq_address"

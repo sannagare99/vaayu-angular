@@ -26,7 +26,7 @@ gem 'rswag'
 # gem 'turbolinks', '~> 5'
 # app now returns a 200 from /healthcheck.
 gem 'aws-healthcheck'
-
+gem 'angular-rails-templates'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'oj'
@@ -75,7 +75,7 @@ group :development, :test do
   # RSpec testing framework
   gem 'rspec-rails', '~> 3.5'
   # RSpec one-liners for common tests
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'rails-5'
+  gem 'shoulda-matchers', '~>4.0.1'
 
   # Replace fixtures with factories
   gem 'factory_girl_rails', '~> 4.0'

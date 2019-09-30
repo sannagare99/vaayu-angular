@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/bootstrap.min.css'/>
+<link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/prettify.css'/>
+<link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/bundled/bootstrap-responsive.min.css'/>
+  <link type='text/css' rel='stylesheet' href='../apidoc/stylesheets/application.css'/>
+  <!-- IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id='container'>
+        <ul class='breadcrumb'>
+  <li>
+    <a href='../apidoc.html'>Moove 1.0</a>
+    <span class='divider'>/</span>
+  </li>
+  <li class='active'>
+    Drivers
+    
+  </li>
+  
+</ul>
+
+<div class='page-header'>
+  <h1>
+    Drivers
+    <br>
+    <small></small>
+  </h1>
+</div>
+
+
+
+
+
+
+<div class='accordion' id='accordion'>
+
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/show.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-show'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            GET /api/v1/drivers/:id
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-show' class='collapse accordion-body'>
+      
+<p>Returns driver profile data</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Not found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;id&quot;: 42,
+      &quot;username&quot;: &quot;driver&quot;,
+      &quot;email&quot;: &quot;driver@n3wnormal.com&quot;,
+      &quot;f_name&quot;: &quot;Driver&quot;,
+      &quot;m_name&quot;: null,
+      &quot;l_name&quot;: &quot;Test&quot;,
+      &quot;phone&quot;: &quot;5554433&quot;,
+      &quot;profile_picture&quot;: null,
+      &quot;operating_organization&quot;: {
+        &quot;name&quot;: &quot;oo_name&quot;,
+        &quot;phone&quot;: &quot;oo_phone&quot;
+      },
+      &quot;administrative_organization&quot;: {
+        &quot;name&quot;: &quot;ao_name&quot;,
+        &quot;phone&quot;: &quot;ao_phone&quot;
+      }
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/upcoming_trip.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-upcoming_trip'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            GET /api/v1/drivers/:id/upcoming_trip
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-upcoming_trip' class='collapse accordion-body'>
+      
+<p>Returns driver&#39;s most recent upcoming trip</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>No upcoming trips found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;driver_status&quot;: &quot;on_duty&quot;,
+      &quot;id&quot;: 4,
+      &quot;status&quot;: &quot;assigned&quot;,
+      &quot;trip_type&quot;: &quot;check_in&quot;,
+      &quot;passengers&quot;: 2,
+      &quot;approximate_duration&quot;: 21,
+      &quot;approximate_distance&quot;: 6456,
+      &quot;date&quot;: 1479193200,
+      &quot;next_pickup_date&quot;: 1479193200,
+      &quot;vehicle&quot;: {
+        &quot;id&quot;: 1,
+        &quot;plate_number&quot;: &quot;CA12345AA&quot;,
+        &quot;make&quot;: &quot;Tesla&quot;,
+        &quot;model&quot;: &quot;Model X&quot;,
+        &quot;colour&quot;: &quot;black&quot;,
+        &quot;seats&quot;: 4,
+        &quot;make_year&quot;: 2012,
+        &quot;photo&quot;: &quot;http://example.com/photo.png&quot;
+      }
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/trip_history.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-trip_history'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            GET /api/v1/drivers/:id/trip_history
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-trip_history' class='collapse accordion-body'>
+      
+<p>Returns driver&#39;s completed trip list</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>No upcoming trips found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">[
+      {
+        &quot;id&quot;: 1,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;real_duration&quot;: 3,
+        &quot;approximate_distance&quot;: 7928,
+        &quot;start_date&quot;: 1483614998,
+        &quot;date&quot;: 1483939200,
+        &quot;site_name&quot;: &quot;PwC - DLF Cyber City&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;trip_type&quot;: &quot;check_in&quot;,
+        &quot;real_duration&quot;: 7,
+        &quot;approximate_distance&quot;: 7928,
+        &quot;start_date&quot;: 1483615002,
+        &quot;date&quot;: 1484025600,
+        &quot;site_name&quot;: &quot;PwC - DLF Cyber City&quot;
+      }
+    ]</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/on_duty.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-on_duty'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            POST /api/v1/drivers/:id/on_duty
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-on_duty' class='collapse accordion-body'>
+      
+<p>Set driver as active and attach a car to him</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Driver not found</td>
+			</tr>
+			<tr>
+				<td><span class="label label-important"> 422 </span></td>
+				<td>Unprocessable entity</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;success&quot;: true,
+      &quot;vehicle&quot;: {
+        &quot;id&quot;: 2,
+        &quot;plate_number&quot;: &quot;CA1002AA&quot;,
+        &quot;make&quot;: &quot;Tesla&quot;,
+        &quot;model&quot;: &quot;Model S&quot;,
+        &quot;colour&quot;: &quot;Black&quot;,
+        &quot;seats&quot;: 5,
+        &quot;make_year&quot;: 2015,
+        &quot;photo&quot;: &quot;http://example.com/photo.png&quot;
+      }
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/off_duty.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-off_duty'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            DELETE /api/v1/drivers/:id/off_duty
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-off_duty' class='collapse accordion-body'>
+      
+<p>Set driver as unavailable, unassign a car</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Driver not found</td>
+			</tr>
+			<tr>
+				<td><span class="label label-important"> 422 </span></td>
+				<td>Unprocessable entity</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;success&quot;: true
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/last_trip_request.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-last_trip_request'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            GET /api/v1/drivers/:id/last_trip_request
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-last_trip_request' class='collapse accordion-body'>
+      
+<p>Get latest available trip request. Will be deprecated when push
+notifications would be done</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Driver not found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;id&quot;: 2,
+      &quot;status&quot;: &quot;assign_requested&quot;,
+      &quot;trip_type&quot;: &quot;check_in&quot;,
+      &quot;date&quot;: 1479106800
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apidoc/drivers/update_current_location.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-update_current_location'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            POST /api/v1/drivers/:id/update_current_location
+          </a>
+          <br>
+          <small></small>
+        </h2>
+    </div>
+
+
+    <div id='description-update_current_location' class='collapse accordion-body'>
+      
+<p>Update the current location for on duty driver and send a push to all
+employees on that trip for real time update</p>
+
+
+  <h3>Supported Formats</h3>
+  json
+
+  <h3>Errors</h3>
+  
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Description</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td><span class="label label-warning"> 401 </span></td>
+				<td>Unauthorized</td>
+			</tr>
+			<tr>
+				<td><span class="label label-warning2"> 403 </span></td>
+				<td>Driver cannot access others data</td>
+			</tr>
+			<tr>
+				<td><span class="label label-inverse"> 404 </span></td>
+				<td>Driver not found</td>
+			</tr>
+	</tbody>
+</table>
+
+
+
+  <h3>Examples</h3>
+    <pre class="prettyprint">{
+      &quot;success&quot;: true,
+      &quot;updatedETA&quot;: &quot;updated ETA&quot;
+    }</pre>
+
+  <h3>Params</h3>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>id </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a number.</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+
+    </tbody>
+  </table>
+
+
+
+    </div>
+</div>
+
+
+        
+      </div>
+    </div>
+    <hr>
+    <footer></footer>
+  </div>
+  <script type='text/javascript' src='../apidoc/javascripts/bundled/jquery.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/bundled/bootstrap-collapse.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/bundled/prettify.js'></script>
+<script type='text/javascript' src='../apidoc/javascripts/apipie.js'></script>
+</body>
+</html>

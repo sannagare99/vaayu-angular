@@ -19,21 +19,9 @@
             a[href="#operator-trip-board" data-toggle="tab"]
               | Trip Board
           li
-            a[href="#employee-trip-request" data-toggle="tab"]
-              | Queue
-          li
-            a[href="#operator-assigned-trips" data-toggle="tab"]
-              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]
-              |  Manifest
-          li
-            a[href="#trips-notifications" data-toggle="tab"]
-              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-danger" id="badge-unresolved-notification"]
-              |  Status
-              sup#new-notification.hidden
-                | *New
-          li
             a[href="#employee-change-request" data-toggle="tab"]
               | Requests
+         
           .nav-actions
             a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
               | Export Clusters
@@ -75,22 +63,16 @@
           li
             a[href="#operator-trip-board" data-toggle="tab"]
               | Trip Board
-          li
-            a[href="#employee-trip-request" data-toggle="tab"]
-              | Queue         
-          li
-            a[href="#operator-assigned-trips" data-toggle="tab"]       
-              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-primary" id="badge-assigned-trips"]                     
-              |  Manifest
-          li
-            a[href="#trips-notifications" data-toggle="tab"]
-              span.hidden.center[style="margin-bottom: 2px;" class="badge badge-danger" id="badge-unresolved-notification"]
-              |  Status
-              sup#new-notification.hidden
-                | *New
+          
           li
             a[href="#employee-change-request" data-toggle="tab"]
               | Requests
+          li
+            a[href="#roster-angular" data-toggle="tab"]
+              | Roster
+          li
+            a[href="#routing-angular" data-toggle="tab"]
+              | Routing
           .nav-actions
             a#export-clusters.hidden.btn.btn-sm.btn-default[type="button"]
               | Export Clusters
@@ -102,23 +84,26 @@
       - if ENV["ENABLE_LINE_MANAGER_APPROVE"] == "true" && current_user.line_manager?
         = render 'trips/employer/adhoc_trips'
       - if current_user.employer? || current_user.transport_desk_manager? || current_user.employer_shift_manager?
-        = render 'trips/operator/trip_board'
+        = render 'trips/trip_board'
         = render 'trips/employer/trip_requests'
         = render 'trips/operator/assigned_trips'
         = render 'trips/trips_notifications'
         = render 'trips/employer/adhoc_trips'
+        
 
       - if current_user.operator? || current_user.operator_shift_manager?
-        = render 'trips/operator/trip_board'
+        = render 'trips/trip_board'
         = render 'trips/operator/assigned_trips'
         = render 'trips/trips_notifications'
 
       - if current_user.admin?
-        = render 'trips/operator/trip_board'
+        = render 'trips/trip_board'
         = render 'trips/employer/trip_requests'
         = render 'trips/operator/assigned_trips'
         = render 'trips/trips_notifications'
         = render 'trips/employer/adhoc_trips'
+        = render 'trips/roster'
+        = render 'trips/routing'
 
 
   - if current_user.employer? || current_user.transport_desk_manager? || current_user.admin?

@@ -1,0 +1,18 @@
+content.content-full
+  .container
+    .signin-wrapper
+      .tab-content
+        #signin.row.tab-pane.fade.in.active
+          .col-md-offset-4.col-md-8.col-sm-offset-2
+            .signin
+              .signup-brand
+                a[href="/"]
+                  = image_tag("logo-dark.svg", :class => "lazy")
+              = flash_messages
+			  = simple_form_for(@user, url: user_registration_path(@user), html: { method: :post }) do |f|
+		            .row
+		              .col-sm-5
+		                .form-group
+		                  = f.input :username, wrapper: false, label: false, required: false, autofocus: true, placeholder: 'Username/Email'
+		                .form-group.form-actions
+		                  = f.button :submit, 'Sign Up', class: 'btn btn-primary'
