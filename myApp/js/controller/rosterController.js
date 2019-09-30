@@ -126,11 +126,13 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
           $scope.currentRoster.vehicle = $scope.defaultVehiclesList;
           $scope.currentRoster.vehicle_capacity = $scope.defaultVehiclesCapacityList;
           $scope.currentRoster.total_seats = 0;
+          $scope.currentRoster.total_vehicles = 0;
 
         }else if(!$scope.currentRoster.vehicle){
           $scope.currentRoster.vehicle = $scope.defaultVehiclesList;
           $scope.currentRoster.vehicle_capacity = $scope.defaultVehiclesCapacityList;
           $scope.currentRoster.total_seats = 0;
+          $scope.currentRoster.total_vehicles = 0;
         }
         $scope.disableDone(roster);
 
@@ -146,6 +148,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       $scope.plusVehicle = function(key){
         $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) + 1;
+        $scope.currentRoster.total_vehicles =  $scope.currentRoster.total_vehicles + 1;
         if( $scope.currentRoster.vehicle_capacity[key]){
           $scope.currentRoster.total_seats = $scope.currentRoster.total_seats + $scope.currentRoster.vehicle_capacity[key];
         }
@@ -155,6 +158,7 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       $scope.minusVehicle = function(key){
         $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) - 1
+        $scope.currentRoster.total_vehicles =  $scope.currentRoster.total_vehicles -1;
         if( $scope.currentRoster.vehicle_capacity[key]){
           $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
         }
@@ -177,6 +181,16 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
         RosterService.addVehicle(postData, function(result){
           $scope.isAddMenuOpen = false;
           $scope.updateFilters();
+          $scope.defaultVehiclesList = {
+            HATCHBACK: 0,
+            SUV: 0,
+            TT: 0,
+            SEDAN:0,
+            BUS: 0,
+            'MINI VAN': 0,
+            TRUCK: 0,
+          };
+
           
         });
 
