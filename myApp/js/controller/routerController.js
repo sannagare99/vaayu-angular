@@ -181,9 +181,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       "to_date":  moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
-    if($scope.shiftType){
-      postData.shift_type = $scope.shiftType;
-    }
+  
     RosterService.get(postData, function(data) {
         $scope.shifts=data.data.shiftdetails;
     }
@@ -283,190 +281,190 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
     RouteService.getRoutes(postData,function(data) {
 
-      // $scope.routes =data;
+      $scope.routes =data;
 
-      $scope.routes ={
-        "success": true,
-        "data": {
-            "tats": [
-                {
-                    "site_id": 30,
-                    "shift_id": 138,
-                    "to_date": "2019-09-24",
-                    "shift_type": "1",
-                    "no_of_routes": 2,
-                    "male_count": 2,
-                    "female_count": 2,
-                    "special": 1,
-                    "on_duty_vehicle": 3,
-                    "kilometres": 60
-                }
-            ],
-            "routes": [
+      // $scope.routes ={
+      //   "success": true,
+      //   "data": {
+      //       "tats": [
+      //           {
+      //               "site_id": 30,
+      //               "shift_id": 138,
+      //               "to_date": "2019-09-24",
+      //               "shift_type": "1",
+      //               "no_of_routes": 2,
+      //               "male_count": 2,
+      //               "female_count": 2,
+      //               "special": 1,
+      //               "on_duty_vehicle": 3,
+      //               "kilometres": 60
+      //           }
+      //       ],
+      //       "routes": [
                
-              {
-                "routeId": 234234,
-                "total_time": 90,
-                "total_distabce": 40,
-                "tripStartTime": "09:00",
-                "tripEndTime": "10:00",
-                "vehicle_type": "SUV",
-                "total_seats": 5,
-                "empty_seats": 2,
-                "guard_required": "N",
-                "vehicle_allocated": "Y",
-                "trip_cost": 100,
-                "guard":{
-                  "guardId":12312,
-                  "guardName" : "Rushikesh Indulkar",
-                  "gender":"M"
-                },
-                "vehicle":{
-                    "vehicleId":12312,
-                    "vehicleNumber":"MH47L5609",
-                    "driverName" : "Rushikesh Indulkar",
-                    "driverID":232423,
-                    "vehicleType":"HB"
-                },
-                "route_final_path": [
-                    {
-                        "lat": "123131231.23",
-                        "long": "123131231.23",
-                        "time": "09:00"
-                    },
-                    {
-                        "lat": "123131231.23",
-                        "long": "123131231.23",
-                        "time": "09:00"
-                    },
-                    {
-                        "lat": "123131231.23",
-                        "long": "123131231.23",
-                        "time": "09:00"
-                    },
-                    {
-                        "lat": "123123123.23",
-                        "long": "23423423423.234",
-                        "time": "09:00"
-                    }
-                ],
-                "employees_nodes_addresses": [
-                    {
-                        "rank": 1,
-                        "empId": 12312,
-                        "empName": "XYZ Indulkar",
-                        "lat": "123123123.23",
-                        "long": "23423423423.234",
-                        "gender": "F",
-                        "special": "Yes"
-                    },
-                    {
-                        "rank": 2,
-                        "empId": 12312,
-                        "empName": "Rushikesh Indulkar",
-                        "lat": "123123123.23",
-                        "long": "23423423423.234",
-                        "gender": "M",
-                        "special": "Yes"
-                    },
-                    {
-                        "rank": 3,
-                        "empId": 12312,
-                        "empName": "Rushikesh Indulkar",
-                        "lat": "123123123.23",
-                        "long": "23423423423.234",
-                        "gender": "M",
-                        "special": "Yes"
-                    },
-                    {
-                        "rank": 4,
-                        "empId": 12312,
-                        "empName": "ABC Indulkar",
-                        "lat": "123123123.23",
-                        "long": "23423423423.234",
-                        "gender": "F",
-                        "special": "Yes"
-                    }
-                ]
-            },
-                {
-                    "routeId": 23423232342344,
-                    "total_time": 90,
-                    "total_distabce": 40,
-                    "tripStartTime": "09:00",
-                    "tripEndTime": "10:00",
-                    "vehicle_type": "SUV",
-                    "total_seats": 5,
-                    "empty_seats": 2,
-                    "guard_required": "Y",
-                    "vehicle_allocated": "N",
-                    "trip_cost": 100,
-                    "route_final_path": [
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123131231.23",
-                            "long": "123131231.23",
-                            "time": "09:00"
-                        },
-                        {
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "time": "09:00"
-                        }
-                    ],
-                    "employees_nodes_addresses": [
-                        {
-                            "rank": 1,
-                            "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "M",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 2,
-                            "empId": 12312,
-                            "empName": "PQR Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "F",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 3,
-                            "empId": 12312,
-                            "empName": "Rushikesh Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "M",
-                            "special": "Yes"
-                        },
-                        {
-                            "rank": 4,
-                            "empId": 12312,
-                            "empName": "PRS Indulkar",
-                            "lat": "123123123.23",
-                            "long": "23423423423.234",
-                            "gender": "F",
-                            "special": "Yes"
-                        }
-                    ]
-                }
-            ]
-        },
-        "errors": {},
-        "message": "routes listed successfully"
-      }
+      //         {
+      //           "routeId": 234234,
+      //           "total_time": 90,
+      //           "total_distabce": 40,
+      //           "tripStartTime": "09:00",
+      //           "tripEndTime": "10:00",
+      //           "vehicle_type": "SUV",
+      //           "total_seats": 5,
+      //           "empty_seats": 2,
+      //           "guard_required": "N",
+      //           "vehicle_allocated": "Y",
+      //           "trip_cost": 100,
+      //           "guard":{
+      //             "guardId":12312,
+      //             "guardName" : "Rushikesh Indulkar",
+      //             "gender":"M"
+      //           },
+      //           "vehicle":{
+      //               "vehicleId":12312,
+      //               "vehicleNumber":"MH47L5609",
+      //               "driverName" : "Rushikesh Indulkar",
+      //               "driverID":232423,
+      //               "vehicleType":"HB"
+      //           },
+      //           "route_final_path": [
+      //               {
+      //                   "lat": "123131231.23",
+      //                   "long": "123131231.23",
+      //                   "time": "09:00"
+      //               },
+      //               {
+      //                   "lat": "123131231.23",
+      //                   "long": "123131231.23",
+      //                   "time": "09:00"
+      //               },
+      //               {
+      //                   "lat": "123131231.23",
+      //                   "long": "123131231.23",
+      //                   "time": "09:00"
+      //               },
+      //               {
+      //                   "lat": "123123123.23",
+      //                   "long": "23423423423.234",
+      //                   "time": "09:00"
+      //               }
+      //           ],
+      //           "employees_nodes_addresses": [
+      //               {
+      //                   "rank": 1,
+      //                   "empId": 12312,
+      //                   "empName": "XYZ Indulkar",
+      //                   "lat": "123123123.23",
+      //                   "long": "23423423423.234",
+      //                   "gender": "F",
+      //                   "special": "Yes"
+      //               },
+      //               {
+      //                   "rank": 2,
+      //                   "empId": 12312,
+      //                   "empName": "Rushikesh Indulkar",
+      //                   "lat": "123123123.23",
+      //                   "long": "23423423423.234",
+      //                   "gender": "M",
+      //                   "special": "Yes"
+      //               },
+      //               {
+      //                   "rank": 3,
+      //                   "empId": 12312,
+      //                   "empName": "Rushikesh Indulkar",
+      //                   "lat": "123123123.23",
+      //                   "long": "23423423423.234",
+      //                   "gender": "M",
+      //                   "special": "Yes"
+      //               },
+      //               {
+      //                   "rank": 4,
+      //                   "empId": 12312,
+      //                   "empName": "ABC Indulkar",
+      //                   "lat": "123123123.23",
+      //                   "long": "23423423423.234",
+      //                   "gender": "F",
+      //                   "special": "Yes"
+      //               }
+      //           ]
+      //       },
+      //           {
+      //               "routeId": 23423232342344,
+      //               "total_time": 90,
+      //               "total_distabce": 40,
+      //               "tripStartTime": "09:00",
+      //               "tripEndTime": "10:00",
+      //               "vehicle_type": "SUV",
+      //               "total_seats": 5,
+      //               "empty_seats": 2,
+      //               "guard_required": "Y",
+      //               "vehicle_allocated": "N",
+      //               "trip_cost": 100,
+      //               "route_final_path": [
+      //                   {
+      //                       "lat": "123131231.23",
+      //                       "long": "123131231.23",
+      //                       "time": "09:00"
+      //                   },
+      //                   {
+      //                       "lat": "123131231.23",
+      //                       "long": "123131231.23",
+      //                       "time": "09:00"
+      //                   },
+      //                   {
+      //                       "lat": "123131231.23",
+      //                       "long": "123131231.23",
+      //                       "time": "09:00"
+      //                   },
+      //                   {
+      //                       "lat": "123123123.23",
+      //                       "long": "23423423423.234",
+      //                       "time": "09:00"
+      //                   }
+      //               ],
+      //               "employees_nodes_addresses": [
+      //                   {
+      //                       "rank": 1,
+      //                       "empId": 12312,
+      //                       "empName": "Rushikesh Indulkar",
+      //                       "lat": "123123123.23",
+      //                       "long": "23423423423.234",
+      //                       "gender": "M",
+      //                       "special": "Yes"
+      //                   },
+      //                   {
+      //                       "rank": 2,
+      //                       "empId": 12312,
+      //                       "empName": "PQR Indulkar",
+      //                       "lat": "123123123.23",
+      //                       "long": "23423423423.234",
+      //                       "gender": "F",
+      //                       "special": "Yes"
+      //                   },
+      //                   {
+      //                       "rank": 3,
+      //                       "empId": 12312,
+      //                       "empName": "Rushikesh Indulkar",
+      //                       "lat": "123123123.23",
+      //                       "long": "23423423423.234",
+      //                       "gender": "M",
+      //                       "special": "Yes"
+      //                   },
+      //                   {
+      //                       "rank": 4,
+      //                       "empId": 12312,
+      //                       "empName": "PRS Indulkar",
+      //                       "lat": "123123123.23",
+      //                       "long": "23423423423.234",
+      //                       "gender": "F",
+      //                       "special": "Yes"
+      //                   }
+      //               ]
+      //           }
+      //       ]
+      //   },
+      //   "errors": {},
+      //   "message": "routes listed successfully"
+      // }
 
       $scope.stats = $scope.routes.data.tats[0];
 
@@ -628,40 +626,23 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
      
     };
 
-    // $scope.dropGuardCallback = function(container,index, item, external, type) {
-      // if ($scope.routeChangedIds.indexOf(container.routeId) === -1){
-      //   $scope.routeChangedIds.push(container.routeId)
-      //   console.log( $scope.routeChangedIds);
-      //   $scope.isDisabled=false;
-      // }
-    //   return item;
-    // };
-
     $scope.dropGuardCallback =function(container,index, item, external, type) {
-      var postData ={
-        "guardId":item.id,
-        "routeId":container.routeId
-      };
+      
+      var isAssign =true;
+      if(isAssign){
+        var postData ={
+          "guardId":item.id,
+          "routeId":container.routeId
+        };
+  
+        GuardAssignService.query(postData, function(data){
+          console.log("Guard Assign");
+          $scope.resetRoute();
+        })
 
-      GuardAssignService.query(postData, function(data){
-        console.log("Guard Assign");
-      })
-
-      // return item;
+        return container;
+      }
     };
-
-    // $scope.dragoverVehicleCallback =function(container,index, item, external, type) {
-    //   var postData ={
-    //     "vehicleId":item.id,
-    //     "routeId":container.routeId
-    //   };
-
-    //   VehicleAssignService.query(postData, function(data){
-    //     console.log("Guard Assign");
-    //   })
-
-    //   return item;
-    // };
 
     $scope.logEvent = function(message) {
         // console.log(message);
@@ -679,8 +660,13 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     // // Initialize model
 
     $scope.autoAllocate =function() {
+      var postData ={
+        "site_id":$scope.siteId,
+        "shift_id_id":$scope.shiftId,
+      }
       AutoAllocationService.query(function(data){
          $scope.routes=data;
+         $scope.resetRoute();
       })
     }
    
