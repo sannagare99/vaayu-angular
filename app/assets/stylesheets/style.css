@@ -679,7 +679,7 @@
   margin-left:10px;
 }
 
-.btn-toolbar .btn-terniary-blue {
+ .btn-terniary-blue {
   /* opacity: 0.5; */
   height: 42px;
   border-radius: 4px;
@@ -782,13 +782,16 @@
   -webkit-column-gap: 1em; /* Chrome, Safari, Opera */
   -moz-column-gap: 1em; /* Firefox */
   column-gap: 1em;
+  display: flex;
+    flex-wrap: wrap;
 }
 
 .employee-cluster-panel { 
   display: inline-block;
   background-color: #eee;
   margin-bottom: 10px;
-  
+  margin-right: 10px;s
+    width: 31%;
 }
 
 .filter-label {

@@ -61,48 +61,48 @@
                     <div class="col-md-2 pad-8">
                         <div class="card-analytic kilometers">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">ALl Trips</div>
-                                <div class="col-md-4 number">{{stats.all_trips}}</div>
+                                <div class=" text">ALl Trips</div>
+                                <div class=" number">{{stats.all_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
                         <div class="card-analytic on-duty-vehical">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">ON GOING</div>
-                                <div class="col-md-4 number">{{stats.ongoing_trips}}</div>
+                                <div class="text">ON GOING</div>
+                                <div class="number">{{stats.ongoing_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
                         <div class="card-analytic special">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">DELYED</div>
-                                <div class="col-md-4 number">{{stats.delayed_trips}}</div>
+                                <div class="text">DELYED</div>
+                                <div class="number">{{stats.delayed_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
                         <div class="card-analytic male">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">ACCEPTED</div>
-                                <div class="col-md-4 number">{{stats.accepted_trips}}</div>
+                                <div class="text">ACCEPTED</div>
+                                <div class=" number">{{stats.accepted_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic pending">
+                        <div class="card-analytic routes">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">PENDING ACCEPTENCE</div>
-                                <div class="col-md-4 number">{{stats.pending_acceptance_trips}}</div>
+                                <div class="text">PENDING ACCEPTENCE</div>
+                                <div class="number">{{stats.pending_acceptance_trips}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pad-8">
-                        <div class="card-analytic cancelled">
+                        <div class="card-analytic female">
                             <div class="card-inner-wrapper">
-                                <div class="col-md-8 text">CANCELLED</div>
-                                <div class="col-md-4 number">{{stats.cancelled}}</div>
+                                <div class=" text">CANCELLED</div>
+                                <div class="number">{{stats.cancelled}}</div>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,9 @@
                             
                            
                             <tbody>
-                                <tr class="active" ng-repeat="roster in rosters track by $index">
+                                <tr 
+                                    ng-class="{'active': ($index % 2) === 0}"
+                                    ng-repeat="roster in rosters track by $index" >
                                     <td> {{$index+1}}</td>
                                     <td>
                                         <a href="">{{roster.trip_type}}</a>
