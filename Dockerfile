@@ -71,7 +71,7 @@ ENV BUNDLE_GEMFILE=/home/app/webapp/Gemfile \
   BUNDLE_JOBS=2 \
   BUNDLE_PATH=/bundle
 RUN gem install bundler -v 2.0.1
-RUN rvm-exec 2.3.1 bundle install -v 1.17.3
+RUN rvm-exec 2.3.1 bundle install
 
 RUN npm install -g grunt-cli bower
 RUN npm install && bower --allow-root install
