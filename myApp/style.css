@@ -844,6 +844,10 @@
 
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .dropdown-menu {
   padding: 10px !important;
 }
