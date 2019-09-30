@@ -251,6 +251,21 @@ $scope.toggleSelection = function toggleSelection(UID) {
   
   }
 
+  $scope.reset = function () {
+    $state.reload(true);
+  }
+
+  
+
+  $scope.setTab = function (tabId) {
+    console.log('set tabbed');
+    $scope.tab = tabId;
+  };
+
+  $scope.isSet = function (tabId) {
+    return $scope.tab === tabId;
+  };
+
   
   $scope.contracts = [{
       cust_id: "23412355-2",
@@ -286,18 +301,5 @@ $scope.toggleSelection = function toggleSelection(UID) {
   ]
  
 
-  $scope.reset = function () {
-    $state.reload(true);
-  }
-
   
-
-  $scope.setTab = function (tabId) {
-    console.log('set tabbed');
-    $scope.tab = tabId;
-  };
-
-  $scope.isSet = function (tabId) {
-    return $scope.tab === tabId;
-  };
 });

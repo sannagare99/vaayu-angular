@@ -35,6 +35,11 @@ app.config(function (
             templateUrl : "./views/contractList.html", 
             controller : "contractListCtrl"
         })
+        .state('contract_list_add', { 
+            url : '/contract_list_add', 
+            templateUrl : "./views/contract_list_add.html", 
+            controller : "contractListAddCtrl"
+        }) 
         .state('constraint', { 
             url : '/constraint', 
             templateUrl : "./views/constraint.html", 
