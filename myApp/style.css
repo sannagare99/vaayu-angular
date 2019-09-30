@@ -239,7 +239,7 @@
 
 .vayau-routing .employee-cluster-panel .employee-list-group-item .inner-text {
   padding: 4px 0 0 10px;
-  width: 140px;
+  width: 134px;
   float:left;
 }
 
@@ -342,7 +342,7 @@
 }
 
 .vayau-panel-footer .employee-list-group .employee-list-group-item.guard-add {
-  width: 115px;
+  width: 95px;
   height: 38px;
   border-radius: 4px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
@@ -352,7 +352,7 @@
 }
 
 .vayau-panel-footer .employee-list-group .employee-list-group-item.guard-assign {
-  width: 115px;
+  width: 95px;
   height: 38px;
   border-radius: 4px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
@@ -802,13 +802,17 @@
 .vaayu-dropzone {
   column-count: 3;
   column-gap: 1em;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .employee-cluster-panel { 
   display: inline-block;
   background-color: #eee;
   margin-bottom: 10px;
-  width: 100%;
+  width: 31%;
+  margin-right: 5px;
+
 }
 
 .filter-label {
