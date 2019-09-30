@@ -4,6 +4,26 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
     $scope.init = function(){
           $scope.isAddMenuOpen = false;
           $scope.today();
+
+          $scope.defaultVehiclesList = {
+            HATCHBACK: 0,
+            SUV: 0,
+            TT: 0,
+            SEDAN:0,
+            BUS: 0,
+            'MINI VAN': 0,
+            TRUCK: 0,
+          };
+
+          $scope.defaultVehiclesCapacityList = {
+            HATCHBACK: 8,
+            SUV: 8,
+            TT: 10,
+            SEDAN:5,
+            BUS: 40,
+            'MINI VAN': 6,
+            TRUCK: 20,
+          }
           // date picket
           $scope.toggleMin();
           $scope.isDoneDisabled = true;
@@ -100,9 +120,23 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
 
       $scope.addVehicleToRoster = function(roster){
         $scope.currentRoster = roster;
+        console.log($scope.currentRoster.vehicle);
+        console.log(angular.equals($scope.currentRoster.vehicle, {}));
+        if(angular.equals($scope.currentRoster.vehicle, {})){
+          $scope.currentRoster.vehicle = $scope.defaultVehiclesList;
+          $scope.currentRoster.vehicle_capacity = $scope.defaultVehiclesCapacityList;
+          $scope.currentRoster.total_seats = 0;
+
+        }else if(!$scope.currentRoster.vehicle){
+          $scope.currentRoster.vehicle = $scope.defaultVehiclesList;
+          $scope.currentRoster.vehicle_capacity = $scope.defaultVehiclesCapacityList;
+          $scope.currentRoster.total_seats = 0;
+        }
         $scope.disableDone(roster);
+
         // Open Side View
         $scope.isAddMenuOpen = true;
+        console.log($scope.currentRoster);
       }
 
       $scope.hideAddMenu = function(){
