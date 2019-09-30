@@ -40,5 +40,18 @@ angular.module('app').factory('RouteService', ['$resource','BASE_URL_8002','Sess
         });
 }]);
 
+angular.module('app').factory('RouteUpdateService', ['$resource','BASE_URL_8002','SessionService',
+    function ($resource,BASE_URL_8002,SessionService) {
+        return $resource(BASE_URL_8002+'updateEmployeeRoutes', {}, {
+            query: { method: "POST"},
+            create: { method: "POST"},
+            getRoutes: { 
+                method: "POST"
+            },
+            remove: { method: "DELETE"},
+            update: { method: "PUT"}
+        });
+}]);
+
 
 

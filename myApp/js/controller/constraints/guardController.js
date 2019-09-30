@@ -1,13 +1,8 @@
 'use strict';
 
 // Register `phoneList` component, along with its associated controller and template
-angular.
-  module('app').
-  component('createGuard', {
-    templateUrl: './views/add_guard.html',
-    controller: function GuardController($scope, $http, SessionService, ToasterService) {
+app.controller('createGuard', function ($scope, $http, SessionService, ToasterService) {
 
-      this.siteID = "";
       $scope.when = ''
       $scope.event = ''
 
@@ -83,5 +78,4 @@ angular.
           });
       }
       
-    }
   });

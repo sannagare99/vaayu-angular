@@ -24,33 +24,291 @@
     
     <ul class="nav nav-tabs">
         <li class="nav-item nav-link " ng-class="{active:isSet(1)}" ng-click="setTab(1)">Guard</li>
-        <li class="nav-item nav-link " ng-class="{active:isSet(2)}" ng-click="setTab(2)">Distance</li>
-        <li class="nav-item nav-link" ng-class="{active:isSet(3)}" ng-click="setTab(3)">Time</li>
+        <li class="nav-item nav-link " ng-class="{active:isSet(2)}" ng-click="setTab(2)">Time</li>
+        <li class="nav-item nav-link" ng-class="{active:isSet(3)}" ng-click="setTab(3)">Distance</li>
         <li class="nav-item nav-link" ng-class="{active:isSet(4)}" ng-click="setTab(4)">Zone</li>
     </ul>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade  bg" ng-class="{'in active show':isSet(1)}">
-            <create-guard></create-guard>
+        <div id="home" class="tab-pane fade  bg" ng-class="{'in active show':isSet(1)}" ng-controller='createGuard'>
+            <form name="form" ng-submit="submitForm(form.$valid)" novalidate >
+                <div class="tab-content-area ">
+                    <div class="row mb-2 ">
+                        <div class="col-md-3 d-flex;">
+                            <label class="radio-inline mb-0 mr-2" >
+                                <input type="radio" name="radioWhen"  class="mr-2"
+                                ng-model="when" checked value='first'
+                                 required >First
+                            </label>
+                            <label class="radio-inline  mb-0 mr-2" >
+                                <input type="radio" name="radioWhen" class="mr-2" " 
+                                ng-model="when" value='last' required>Last
+                            </label>
+                            <span ng-show="hasError('radioWhen', 'required')" class="help-block">
+                                    Field is required.</span>
+                        </div>
+            
+                        <div class="col-md-3 ">
+                            <label class="radio-inline mb-0 mr-2" >
+                                <input type="radio"
+                                ng-model="event" name="radioEvent" class="mr-2" value='pick' checked " required>Pick
+                            </label>
+                            <label class="radio-inline mb-0 mr-2" >
+                                <input type="radio" 
+                                ng-model="event" name="radioEvent" class="mr-2"  value='drop' " required>Drop
+                            </label>
+                            <span ng-show="hasError('radioEvent', 'required')" class="help-block">
+                                    Field is required.</span>
+                        </div>
+                        <!-- <div class="col-md-5">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <label class="text-label" for="basic-url">Site Name</label>
+                                    <select class="custom-select" ng-model="$ctrl.siteID">
+                                        <option value="">Select here</option>
+                                        <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">
+                                            {{site.name.toUpperCase()}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4 ">
+                            <select class="custom-select" name='gender' ng-model="for" required>
+                                <option value="">Select Gender</option>
+                                <option value="F">Female</option>
+                                <option value="M">Male</option>
+                                <option value="F_M">Both</option>
+                            </select>
+                            <span ng-show="hasError('gender', 'required')" class="help-block">Gender is
+                                required.</span>
+                        </div>
+            
+                    </div>
+                    <div class=" guard">
+                        <div class="row padding-20 bg">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <label class="text-label" for="basic-url">Time</label>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">FROM</span>
+                                    </div>
+                                    <input type="number" id="appt" min="0" max="23" ng-model="from_time" name='from_time'
+                                        required>
+                                    <span ng-show="hasError('from_time', 'required')" class="help-block">From Time is
+                                        required.</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">TO</span>
+                                    </div>
+                                    <input type="number" id="appt" min="0" max="23"  ng-model="to_time" name='to_time' required>
+                                    <span ng-show="hasError('to_time', 'required')" class="help-block">To Time is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                        <button type="button" class="btn btn-primary main-submit-btn"
+                            ng-click="submitForm(form.$valid)">Submit</button>
+            
+            </div>
+            
+            
+                    </div>
+            
+                </div>
+            </form>
+            
+            
+            <!-- <div class="tab-content-area ">
+                <div class="row margin-b-20 ">
+                    <div class="col-md-6 ">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Site Name</label>
+                                <select class="custom-select" ng-model="$ctrl.siteID">
+                                    <option value="">Select here</option>
+                                    <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                            <label class="custom-control-label" for="defaultUnchecked">Last Drop</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="pick">
+                            <label class="custom-control-label" for="pick">First Pick</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <select class="custom-select">
+                            <option value="1">Female</option>
+                            <option value="2">Male-Female</option>
+                        </select>
+                    </div>
+                   
+                </div>
+                <div class=" guard">
+                    <div class="row padding-20 bg">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Time</label>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">FROM</span>
+                                </div>
+                                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">TO</span>
+                                </div>
+                                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bg">
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Time</label>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">FROM</span>
+                                </div>
+                                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">TO</span>
+                                </div>
+                                <input type="time" id="appt" name="appt" min="00:00" max="11:59" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary main-submit-btn">Submit</button>
+            
+            
+            
+            
+                </div>
+            </div> -->
         </div>
 
 
 
 
         <div id="menu1" class="tab-pane fade " ng-class="{'in active show':isSet(2)}">
-            <add-distance></add-distance>
+            <!-- <add-distance></add-distance> -->
+            <form name="form" ng-submit="submitForm(form.$valid)" novalidate ng-controller='addTime'>
+                <div class="tab-content-area">
+                    <div class="row ">
+                
+                        <!-- <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Site Name</label>
+                                <select class="custom-select" ng-model="$ctrl.siteID">
+                                    <option value="">Select here</option>
+                                    <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                                </select>
+                            </div>
+                        </div> -->
+                
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Max Trip Time*</label>
+                                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" 
+                                    name='distance' ng-model='distance' required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Min</span>
+                                </div>
+                                <span ng-show="hasError('distance', 'required')" class="help-block">
+                                    Field is required.</span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Between Two Points</label>
+                                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Min</span>
+                                </div>
+                            </div>
+                        </div>
+                
+                
+                
+                    </div>
+                    <hr>
+                    <button type="button" class="btn btn-primary main-submit-btn"
+                    ng-click="submitForm(form.$valid)">Submit</button>
+                </div>
+                </form>
+                
         </div>
 
 
 
         <div id="menu2" class="tab-pane fade " ng-class="{'in active show':isSet(3)}">
-            <add-time></add-time>
+            <!-- <add-time></add-time> -->
+            <form name="form" ng-submit="submitForm(form.$valid)" novalidate ng-controller='addDistance'>
+                <div class="tab-content-area">
+                    <div class="row ">
+                
+                <!-- 
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Site Name</label>
+                                <select class="custom-select" ng-model="$ctrl.siteID">
+                                    <option value="">Select here</option>
+                                    <option ng-repeat="site in $ctrl.siteNames" value="{{$ctrl.site.id}}">{{site.name.toUpperCase()}}</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Max Trip Distance *</label>
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                                name='distance' ng-model='distance' required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Km</span>
+                                </div>
+                            </div>
+                            <span ng-show="hasError('distance', 'required')" class="help-block">
+                                    Field is required.</span>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="text-label" for="basic-url">Between Two Points</label>
+                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Km</span>
+                                </div>
+                            </div>
+                        </div>
+                
+                
+                
+                    </div>
+                    <hr>
+                    <button type="button" class="btn btn-primary main-submit-btn"
+                    ng-click="submitForm(form.$valid)">Submit</button>
+                </div>
+                </form>
         </div>
 
 
 
         <div id="menu3" class="tab-pane  " ng-class="{'in active show':isSet(4)}">
-            <add-zone></add-zone>
+            <!-- <add-zone></add-zone> -->
         </div>
     </div>
 
