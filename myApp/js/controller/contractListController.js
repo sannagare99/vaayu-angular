@@ -82,10 +82,7 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
   $scope.openNewContract = () => {
     console.log($scope.tab)
     $state.go('contract', {
-      paramOne: {
-        objectProperty: "test_not_default1"
-      },
-      paramTwo: "from controller"
+      paramOne:  $scope.tab 
     });
   }
 });

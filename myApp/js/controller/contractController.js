@@ -1,7 +1,6 @@
 app.controller('contractCtrl', function ($scope, $http, $state, $stateParams) {
-  $scope.paramOne = $stateParams.paramOne;
-  $scope.paramTwo = $stateParams.paramTwo;
-  console.log('onit '+ JSON.stringify($scope.paramOne));
+  
+  $scope.tab = $stateParams.paramOne;
   $scope.fileObject;
   $scope.ctype;
   $scope.bcycle;
@@ -126,7 +125,9 @@ this.$onInit = function () {
    
     $scope.fetchSiteList();
     
-
+    $scope.tab = $stateParams.paramOne;
+    console.log( $scope.tab);
+    // $scope.tab = 'CUSTOMER';
     
   };
 $scope.closeExpanded=()=>{
@@ -289,7 +290,7 @@ $scope.toggleSelection = function toggleSelection(UID) {
     $state.reload(true);
   }
 
-  $scope.tab = 'CUSTOMER';
+  
 
   $scope.setTab = function (tabId) {
     console.log('set tabbed');
