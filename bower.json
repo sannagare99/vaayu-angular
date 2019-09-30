@@ -88,6 +88,7 @@
     "get-size": "~1.1.7",
     "jquery": "2.1.0",
     "outlayer": "~1.1.10",
+    "angular": "^1.7.8",
     "bootstrap": "^ 4.3.1"
   }
 }
