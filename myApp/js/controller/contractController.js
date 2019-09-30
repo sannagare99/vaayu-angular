@@ -1,4 +1,7 @@
-app.controller('contractCtrl', function ($scope, $http, $state) {
+app.controller('contractCtrl', function ($scope, $http, $state, $stateParams) {
+  $scope.paramOne = $stateParams.paramOne;
+  $scope.paramTwo = $stateParams.paramTwo;
+  console.log('onit '+ JSON.stringify($scope.paramOne));
   $scope.fileObject;
   $scope.ctype;
   $scope.bcycle;
@@ -116,6 +119,7 @@ app.controller('contractCtrl', function ($scope, $http, $state) {
   $scope.expanded = true;
   $scope.totalSelectedUIDs="Select UIDs";
   $scope.selectedUIDtoSend;
+
 this.$onInit = function () {
     $scope.totalSelectedUIDs="Select UIDs";
    $scope.showCheckboxes();
@@ -123,7 +127,7 @@ this.$onInit = function () {
     $scope.fetchSiteList();
     
 
-    console.log('onit '+ $state.paramOne);
+    
   };
 $scope.closeExpanded=()=>{
   console.log('exp')

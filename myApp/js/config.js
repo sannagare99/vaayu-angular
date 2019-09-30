@@ -26,7 +26,12 @@ app.config(function (
             url : '/contract', 
             templateUrl : "./views/contract.html", 
             controller : "contractCtrl",
-            paramOne: { contractType: 'CUSTOMER', }
+            params: {
+                paramOne: { 
+                  objectProperty: "defaultValueOne"
+                }, 
+                paramTwo: "defaultValueTwo"
+            }
         }) 
         .state('contractList', { 
             url : '/contract-list', 

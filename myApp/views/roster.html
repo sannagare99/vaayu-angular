@@ -190,7 +190,7 @@
                                         </div>
                                     </div> -->
                                     <div   class="add-vehicle-card-container">
-                                    <div ng-if="currentRoster.vehicle > 0" class="row add-vehicle-card" ng-repeat="(key, value) in currentRoster.vehicle" >
+                                    <div class="row add-vehicle-card" ng-repeat="(key, value) in currentRoster.vehicle" >
                                         <div class="col-md-5">
                                             <img ng-if="key== 'SUV'" src="../assets/img/suv.png">
                                             <img ng-if="key== 'TT'" src="../assets/img/tt.png">
@@ -204,11 +204,11 @@
                                         <div class="col-md-2" ng-click="plusVehicle(key)"><i class="fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <div class="text-danger "  ng-if="!currentRoster.vehicle || !currentRoster.vehicle.length">
+                                    <!-- <div class="text-danger "  ng-if="!currentRoster.vehicle || !currentRoster.vehicle.length">
                                         <div class="col-md-12 text-center">
                                         <span class="text-center">No Vehicle Available</span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     </div>
                                    
                                     <div class="row add-vehicle-card-border" style="margin-top: 2em">
