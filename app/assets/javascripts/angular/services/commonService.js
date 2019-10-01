@@ -11,10 +11,16 @@ angular.module('app').factory('SessionService', function() {
     //     client:'A50BtzCIieAvpcTk2450ew'
     // }
 
+    // var _data2 ={
+    //     uid:'deekshithmech@gmail.com',
+    //     access_token:'aFZIMX0-5uAuKvorJn6wVg',
+    //     client:'jM0YUtfxE9aOBj-wisoGzw'
+    // }
     var _data2 ={
+        custId : 1,
         uid:'deekshithmech@gmail.com',
-        access_token:'aFZIMX0-5uAuKvorJn6wVg',
-        client:'jM0YUtfxE9aOBj-wisoGzw'
+        access_token:'LD0GDI5yEEG7oYIXJFfa1A',
+        client:'R5qaZj5Za6wry2CPBkUvSQ'
     }
     
     return _data2;

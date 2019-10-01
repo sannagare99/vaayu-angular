@@ -12,19 +12,19 @@ SecureHeaders::Configuration.default do |config|
   config.x_xss_protection = "1; mode=block"
   config.x_download_options = "noopen"
   config.x_permitted_cross_domain_policies = "none"
-  config.referrer_policy = %w(origin-when-cross-origin strict-origin-when-cross-origin)
+  config.referrer_policy = %w(origin-when-cross-origin)
   config.csp_report_only = {
-   default_src: ["'self'"],
+   default_src: ["'self'", '*'],
    child_src: ["'self'"],
    form_action: ["'self'"],
    block_all_mixed_content: true,
-   connect_src: ["'self'", 'ws:'],
-   font_src: ["'self'", 'data:', 'fonts.gstatic.com'],
-   img_src: ["'self'", 'data:', '*.gstatic.com', '*.amazonaws.com', '*.google.com'],
-   media_src: ["'self'"],
-   object_src: ["'none'"],
-   script_src: ["'self'",'*.googleapis.com', '*.google.com', 'cdn.rawgit.com', "'unsafe-eval'", "'unsafe-inline'"],
-   style_src: ["'self'",'*.googleapis.com', "'unsafe-inline'" ],
+   connect_src: ["'self'", 'ws:', '*'],
+   font_src: ["'self'", 'data:', 'fonts.gstatic.com', '*'],
+   img_src: ["'self'", 'data:', '*.gstatic.com', '*.amazonaws.com', '*.google.com', '*'],
+   media_src: ["'self'", '*'],
+   object_src: ["'none'", '*'],
+   script_src: ["'self'",'*.googleapis.com', '*.google.com', 'cdn.rawgit.com', "'unsafe-eval'", "'unsafe-inline'", '*'],
+   style_src: ["'self'",'*.googleapis.com', "'unsafe-inline'" , '*'],
    base_uri: ["'self'"],
    report_uri: %w(https://report-uri.io/example-csp)
  }

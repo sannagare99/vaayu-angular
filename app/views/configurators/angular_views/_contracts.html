@@ -1,0 +1,242 @@
+<div class="container" ng-controller='contractListAddCtrl'> 
+    <div class="container">
+        <h2 class="main-title">Create Contract</h2>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="/css/contract.css" rel="stylesheet">
+        <div class="tab-content-area">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Unique Identifier<span
+                                class="required">*</span></label>
+                        <div class="multiselect">
+                            <div class="selectBox" ng-click="showCheckboxes()">
+                                <select class="custom-select">
+                                    <option>
+                                        {{totalSelectedUIDs}}
+                                    </option>
+                                </select>
+                                <div class="overSelect">
+
+                                </div>
+                            </div>
+                            <div id="checkboxes">
+                                <label for="{{uid.value}}" ng-repeat="uid in uniqueId" value="{{uid.value}}">
+                                    <input type="checkbox" id="{{uid.value}}"
+                                        ng-checked="selectedUIDs.indexOf(uid) > -1"
+                                        ng-click="toggleSelection(uid)" />{{uid.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 ">
+                    <div class="input-group mb-3">
+                        <label class="text-label" for="basic-url">Site Name<span class="required">*</span></label>
+                        <select class="custom-select" ng-model="selectedSiteId" ng-change="getContracts()"
+                            ng-click="closeExpanded()">
+                            <option value="">Select Site</option>
+                            <option ng-repeat="site in siteList" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <button ng-repeat="uid in selectedUIDs" class="btn selectedUIDs ">
+                        {{uid.name}}<i class="fa fa-close" ng-click="toggleSelection(uid)" style="margin: 5px"></i>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item nav-link " ng-class="{active:isSet('CUSTOMER')}" ng-click="setTab('CUSTOMER')">
+                    Customer</li>
+                <li class="nav-item nav-link " ng-class="{active:isSet('BA')}" ng-click="setTab('BA')">BA</li>
+
+            </ul>
+            <div class="tab-content">
+                <toaster-container></toaster-container>
+                <div id="CUSTOMER" class="tab-pane fade  bg" ng-class="{'in active show':isSet('CUSTOMER')}">
+                    <div class="card margin-t20">
+                        <div class="card-header">
+                            Customer Contract Details
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <label class="text-label" for="basic-url">Billing Cycle<span
+                                            class="required">*</span></label>
+                                    <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
+                                        <option value="">Select Billing Cycle</option>
+                                        <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                            {{bill.name.toUpperCase()}}</option>
+
+                                    </select>
+                                    <label class="text-label" for="basic-url">Download Sample File</label>
+                                    <div class="input-group mb-3" ng-click="closeExpanded()">
+
+
+
+                                        <a href="http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile"
+                                            class=" btn btn-primary main-submit-btn">Download Sample File</a>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <label class="text-label" for="basic-url">Contract Type<span
+                                            class="required">*</span></label>
+                                    <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                        <option value="">Choose Options</option>
+                                        <option value="Per km">PER KM</option>
+                                        <option value="Per head">PER HEAD</option>
+                                        <option value="Per zone">PER ZONE</option>
+                                    </select>
+
+                                    <label class="text-label" for="basic-url">Upload File<span
+                                            class="required">*</span></label>
+                                    <div class="input-group mb-3" ng-click="closeExpanded()">
+                                        <input type="file" accept=".csv, text/csv" id="file" name='file'
+                                            onchange="angular.element(this).scope().fileNameChanged(this)" />
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                {{submitResponse.message}}
+                            </p>
+                            <button href="#" ng-click="createContract()"
+                                class="btn btn-primary main-submit-btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
+                    <div class="card margin-t20">
+                        <div class="card-header">
+                            BA Contract Details
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <label class="text-label" for="basic-url">Billing Cycle<span
+                                            class="required">*</span></label>
+                                    <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
+                                        <option value="">Select Billing Cycle</option>
+                                        <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                            {{bill.name.toUpperCase()}}</option>
+
+                                    </select>
+                                    <label class="text-label" for="basic-url">Download Sample File</label>
+                                    <div class="input-group mb-3" ng-click="closeExpanded()">
+
+
+
+                                        <a href="http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile"
+                                            class=" btn btn-primary main-submit-btn">Download Sample File</a>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <label class="text-label" for="basic-url">Contract Type<span
+                                            class="required">*</span></label>
+                                    <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                        <option value="">Choose Options</option>
+                                        <option value="Per km">PER KM</option>
+                                        <option value="Per head">PER HEAD</option>
+                                        <option value="Per zone">PER ZONE</option>
+                                    </select>
+
+                                    <label class="text-label" for="basic-url">Upload File<span
+                                            class="required">*</span></label>
+                                    <div class="input-group mb-3" ng-click="closeExpanded()">
+                                        <input type="file" accept=".csv, text/csv" id="file" name='file'
+                                            onchange="angular.element(this).scope().fileNameChanged(this)" />
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                {{submitResponse.message}}
+                            </p>
+                            <button href="#" ng-click="createContract()"
+                                class="btn btn-primary main-submit-btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div id="CUSTOMER" class="tab-pane fade  bg" ng-class="{'in active show':isSet('CUSTOMER')}">
+                    <table class="table table-condensed ">
+                        <thead class="pop-table-head">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Site</th>
+                                <th>Unique Identification</th>
+                                <th>Billing Cycle</th>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody class="pop-table-body">
+                            <tr class="active" ng-repeat="contract in contractList track by $index">
+                                <td>{{contract.customerId}}</td>
+                                <td>{{siteName.toUpperCase()}}</td>
+                                <td>
+                                    <div class="contractListMenu">
+                                        <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
+
+                                    </div>
+                                </td>
+                                <td>{{contract.billingCycle}}</td>
+                                <td> <a href="{{contract.fileUrl}}"><button class="btn btn-primary">
+                                            <i class="fa fa-download "></i>
+                                        </button></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
+                    <table class="table table-condensed ">
+                        <thead class="pop-table-head">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Site</th>
+                                <th>Unique Identification</th>
+                                <th>Billing Cycle</th>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody class="pop-table-body">
+                            <tr class="active" ng-repeat="contract in contractList.data track by $index">
+                                <td>{{contract.customerId}}</td>
+                                <td>{{siteName}}</td>
+                                <td>
+                                    <div class="contractListMenu">
+                                        <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
+
+                                    </div>
+                                </td>
+                                <td>{{contract.billingCycle}}</td>
+                                <td> <a href="{{contract.fileUrl}}"><button class="btn btn-primary">
+                                            <i class="fa fa-download "></i>
+                                        </button></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

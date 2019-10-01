@@ -27,6 +27,9 @@
         li.system_zones
           a[href="#system_zones" data-toggle="tab"]
             | Zones        
+        li.system_contracts
+          a[href="#system_contracts" data-toggle="tab"]
+            | Contracts        
       .nav-actions
         .edit-buttons
           a.btn.btn-sm.btn-default.cancel.btn-fixed-width[type="button" data-action="cancel"]
@@ -46,6 +49,7 @@
       = render partial: 'configurators/system_settings'
       = render 'configurators/constraint'
       = render 'configurators/addzone'
+      = render 'configurators/contracts'
 
       #configurators.tab-pane.fade
         .col-md-12.table-content-edit

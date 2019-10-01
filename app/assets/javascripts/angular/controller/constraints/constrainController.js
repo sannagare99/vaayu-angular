@@ -1,4 +1,4 @@
-app.controller('constraintController', function ($scope, $http, $state, SessionService, $location) {
+app.controller('constraintController', function ($scope, $http, $state, SessionService, ToasterService) {
 
   $scope.siteNames = [];
   $scope.siteID = null;
@@ -10,8 +10,6 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
 
   this.$onInit = () => {
     $scope.fetchSiteList();
-    console.log('constraintController');
-    console.log($location);
   }
 
 
@@ -32,6 +30,9 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
   };
 
   $scope.fetchConstraintList = (id) => {
+    console.log(SessionService.uid);
+    console.log(SessionService.access_token);
+    console.log(SessionService.client);
     $http({
       method: 'GET',
       url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'constraint/getall/site/'+id,
@@ -42,9 +43,8 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
         'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
       },
       data: { test: 'test' }
-    })
-      .then(function (res) {
-        //console.log(JSON.stringify(res.data))
+    }).then(function (res) {
+        console.log(JSON.stringify(res))
         if (res.data['success']) {
           $scope.constraintList = res.data.data;
           
@@ -53,7 +53,7 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
         }
       }).catch(err => {
         console.log(err)
-        ToasterService.showError('Error', 'Something went wrong, Try again later.');
+        // ToasterService.showError('Error', 'Something went wrong, Try again later.');
       });
   }
 
@@ -65,8 +65,8 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
       headers: {
         'Content-Type': 'application/json',
         'uid': SessionService.uid,
-            'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
-            'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
+        'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+        'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
       },
       data: { test: 'test' }
     })
