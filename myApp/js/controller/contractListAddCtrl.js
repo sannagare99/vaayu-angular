@@ -1,4 +1,4 @@
-app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService) {
+app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService) {
 
     this.$onInit = function () {
         console.log('onit - contractListAddCtrl');
@@ -9,6 +9,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
         $scope.tab = 'CUSTOMER';
         console.log($scope.tab);
+        
     };
 
     $scope.fileObject;
@@ -183,6 +184,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                 }
 
             }).catch(err => {
+                ToasterService.showError('Error', 'Something went wrong, Try again later.');
                 console.log(err)
             });
 
@@ -235,6 +237,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         var vm = $scope;
         request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
         request.onload = function () {
+            console.log(request.response);
             if (request.readyState === request.DONE) {
                 if (request.status === 200) {
                     console.log(request.response);
@@ -242,6 +245,8 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
 
                 }
+            } else {
+                ToasterService.showError('Error', 'Something went wrong, Try again later.');
             }
         };
         console.log($scope.submitResponse)
@@ -318,19 +323,19 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                 'client': SessionService.client
             },
             data: { test: 'test' }
-        })
-            .then(function (res) {
-                if (res.data['success']) {
-                    $scope.contractList = res.data.data;
-                    // $scope.$broadcast('onSiteListReceived',res.data.data.list);
-                    console.log(JSON.stringify($scope.contractList))
-                } else {
-                    alert(res.data['message']);
-                }
+        }).then(function (res) {
+            if (res.data['success']) {
+                $scope.contractList = res.data.data;
+                // $scope.$broadcast('onSiteListReceived',res.data.data.list);
+                console.log(JSON.stringify($scope.contractList))
+            } else {
+                alert(res.data['message']);
+            }
 
-            }).catch(err => {
-                console.log(err)
-            });
+        }).catch(err => {
+            console.log(err)
+            ToasterService.showError('Error', 'Something went wrong, Try again later.');
+        });
     }
 
 });

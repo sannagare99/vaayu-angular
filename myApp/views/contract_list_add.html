@@ -1,13 +1,12 @@
 <div class="container">
-    <div class="container" >
+    <div class="container">
         <h2 class="main-title">Create Contract</h2>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="/css/contract.css" rel="stylesheet">
         <div class="tab-content-area">
-
-
             <div class="row">
+                
                 <div class="col-md-6">
                     <div class="input-group mb-3">
                         <label class="text-label" for="basic-url">Unique Identifier<span
@@ -36,11 +35,8 @@
                 <div class="col-md-6 ">
                     <div class="input-group mb-3">
                         <label class="text-label" for="basic-url">Site Name<span class="required">*</span></label>
-                        <select class="custom-select" 
-                            ng-model="selectedSiteId"
-                            ng-change="getContracts()"
-                            ng-click="closeExpanded()"
-                            >
+                        <select class="custom-select" ng-model="selectedSiteId" ng-change="getContracts()"
+                            ng-click="closeExpanded()">
                             <option value="">Select Site</option>
                             <option ng-repeat="site in siteList" value="{{site.id}}">{{site.name.toUpperCase()}}
                             </option>
@@ -62,6 +58,7 @@
 
             </ul>
             <div class="tab-content">
+                <toaster-container></toaster-container>
                 <div id="CUSTOMER" class="tab-pane fade  bg" ng-class="{'in active show':isSet('CUSTOMER')}">
                     <div class="card margin-t20">
                         <div class="card-header">

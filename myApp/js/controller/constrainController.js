@@ -1,4 +1,4 @@
-app.controller('constraintController', function ($scope, $http, $state, SessionService) {
+app.controller('constraintController', function ($scope, $http, $state, SessionService, ToasterService) {
 
   $scope.siteNames = [];
   $scope.siteID = null;
