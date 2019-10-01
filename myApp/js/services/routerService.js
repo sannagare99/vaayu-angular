@@ -95,7 +95,7 @@ angular.module('app').factory('GuardAssignService', ['$resource','BASE_URL_8002'
 
 angular.module('app').factory('FinalizeService', ['$resource','BASE_URL_8002','SessionService',
     function ($resource,BASE_URL_8002,SessionService) {
-        return $resource(BASE_URL_8002+'finalize', {}, {
+        return $resource(BASE_URL_8002+'routesFinalize', {}, {
             query: { method: "POST"},
             create: { method: "POST"},
             getRoutes: { 
