@@ -1,6 +1,6 @@
 class API::V2::VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
+  skip_before_action :authenticate_user!
   # before_action :validate_plate_number, only: [:create]
   before_action :check_insurance_date, only: [:create]
   before_action :check_puc_validity_date, only: [:create] 

@@ -1,6 +1,6 @@
 class API::V2::DriversController < ApplicationController
   before_action :set_driver, only: [:edit, :update, :destroy, :show]
-  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
+  skip_before_action :authenticate_user!
   before_action :check_date_validation, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
   # before_action :check_f_name_validate, only: [:create]
