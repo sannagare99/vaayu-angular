@@ -3,7 +3,7 @@ class API::V2::DriversController < ApplicationController
   # skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
   before_action :check_date_validation, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
-  before_action :check_f_name_validate, only: [:create]
+  # before_action :check_f_name_validate, only: [:create]
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
@@ -204,10 +204,10 @@ class API::V2::DriversController < ApplicationController
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
       # user.entity.registration_steps = params[:registration_steps] if params[:registration_steps].present?
-      user.f_name = params[:f_name] if params[:f_name].present?
-      user.l_name = params[:l_name] if params[:l_name].present?
-      user.entity.f_name = params[:f_name] if params[:f_name].present?
-      user.entity.l_name =  params[:l_name] if params[:l_name].present?
+      # user.f_name = params[:f_name] if params[:f_name].present?
+      # user.l_name = params[:l_name] if params[:l_name].present?
+      # user.entity.f_name = params[:f_name] if params[:f_name].present?
+      # user.entity.l_name =  params[:l_name] if params[:l_name].present?
       user.entity.registration_steps = nil
       user.entity.driver_name = params[:f_name] + ' ' + (params[:l_name].present? ? params[:l_name] : '')
       user.save_with_notify_for_driver
@@ -313,13 +313,13 @@ class API::V2::DriversController < ApplicationController
       end
     end
 
-    def check_f_name_validate
-      if params[:registration_steps] == "Step_1"
-        if params[:f_name].blank?
-          render json: {success: false , message: "First name can't be blank", data: {}, errors: "Record not updated",status: :ok }
-        end
-      end
-    end
+    # def check_f_name_validate
+    #   if params[:registration_steps] == "Step_1"
+    #     if params[:f_name].blank?
+    #       render json: {success: false , message: "First name can't be blank", data: {}, errors: "Record not updated",status: :ok }
+    #     end
+    #   end
+    # end
 
     def validate_first_step(driver)
       result = {}
@@ -343,6 +343,6 @@ class API::V2::DriversController < ApplicationController
     def driver_params
       # params.permit(:business_associate_id, :licence_number, :aadhaar_mobiformat: { with: /\A[a-z]*\z/i, message:  "Name must only contain letters." },le_number,:date_of_birth,:marital_status,:gender,:blood_group, :driver_name, :father_spouse_name, :alternate_number, :licence_type, :licence_validity, :local_address, :permanent_address, :total_experience,:business_state, :business_city, :qualification, :date_of_registration, :badge_number, :badge_issue_date,:badge_expiry_date, :verified_by_police, :police_verification_vailidty,:date_of_police_verification, :criminal_offence, :bgc_date, :bgc_agency_id, :medically_certified_date, :sexual_policy, :bank_name, :bank_no, :ifsc_code, :status, :blacklisted, :driving_license_doc_url, :driver_badge_doc_url, :id_proof_doc_url, :sexual_policy_doc_url,:police_verification_vailidty_doc_url,:medically_certified_doc_url, :bgc_doc_url,:profile_picture_url,:other_docs_url,:driving_registration_form_doc_url, :created_by, :updated_by,
       #   :site_id )
-      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_number,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc, :f_name, :l_name, :profile_picture, :police_verification_vailidty_doc, :police_verification_vailidty_doc_url, :sexual_policy_doc, :sexual_policy_doc_url, :medically_certified_doc, :medically_certified_doc_url, :bgc_doc, :bgc_doc_url )
+      params.permit(:business_associate_id, :licence_number, :driver_name, :alternate_number,:date_of_birth,:father_spouse_name, :gender, :blood_group, :licence_type, :licence_validity, :badge_number, :badge_expire_date, :ifsc_code,:bank_name, :bank_no,:profile_picture_url,:driver_badge_doc_url,:driving_license_doc_url,:id_proof_doc_url,:driving_registration_form_doc_url,:business_city,:business_state,:registration_steps, :aadhaar_mobile_number,:driving_license_doc, :driver_badge_doc, :id_proof_doc, :driving_registration_form_doc,  :profile_picture, :police_verification_vailidty_doc, :police_verification_vailidty_doc_url, :sexual_policy_doc, :sexual_policy_doc_url, :medically_certified_doc, :medically_certified_doc_url, :bgc_doc, :bgc_doc_url )
     end
 end
