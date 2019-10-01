@@ -30,15 +30,17 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
   };
 
   $scope.fetchConstraintList = (id) => {
+    let  headers = {
+      // 'Content-Type': 'application/json',
+      'uid': SessionService.uid,
+      'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
+      'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
+    };
+    console.log(headers)
     $http({
       method: 'GET',
       url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/' + 'constraint/getall/site/'+id,
-      headers: {
-        // 'Content-Type': 'application/json',
-        'uid': SessionService.uid,
-        'access_token': SessionService.access_token, //'8HP_3YQagGCUoWCXiCR_cg'
-        'client': SessionService.client//'DDCqul04WXTRkxBHTH3udA',
-      },
+      headers,
       data: { test: 'test' }
     })
       .then(function (res) {
