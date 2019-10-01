@@ -311,7 +311,11 @@ Rails.application.routes.draw do
           post 'call_operator'
         end
       end
-
+      resources :trips do
+        member do
+          post :assign_driver
+        end
+      end
       resources :employee_trips, except: :destroy do
         member do
           post 'cancel'
