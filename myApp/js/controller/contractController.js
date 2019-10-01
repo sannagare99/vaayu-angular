@@ -1,6 +1,5 @@
 app.controller('contractCtrl', function ($scope, $http, $state, $stateParams) {
   
-  $scope.tab = $stateParams.paramOne;
   $scope.fileObject;
   $scope.ctype;
   $scope.bcycle;
@@ -125,10 +124,8 @@ this.$onInit = function () {
    
     $scope.fetchSiteList();
     
-    $scope.tab = $stateParams.paramOne;
+    $scope.tab = 'CUSTOMER';
     console.log( $scope.tab);
-    // $scope.tab = 'CUSTOMER';
-    
   };
 $scope.closeExpanded=()=>{
   console.log('exp')
