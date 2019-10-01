@@ -100,7 +100,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
           icons: [{
             icon: lineSymbol,
             offset: '0',
-            repeat: '20px'
+            repeat: '5px'
           }],
           map: map
         });
