@@ -3,17 +3,21 @@ html ng-app="app"
   head
     title Vaayu
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    meta content=("default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;") http-equiv="Content-Security-Policy" /
 
     = javascript_include_tag "//maps.google.com/maps/api/js?key=#{GoogleAPIKey.working.first.key rescue Configurator.get('GOOGLE_MAPS_API_KEY')}"
     = javascript_include_tag '//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js'
     = javascript_include_tag '//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js'
         = javascript_include_tag '//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js'
     link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet" /
+    link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet" /
 
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
     = favicon_link_tag 'favicon.ico'
     = csrf_meta_tags
+    script data-require="ui-bootstrap@*" data-semver="0.13.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js" 
+
 
   body.animated.fadeIn class =yield(:body_class)
     - if current_user
