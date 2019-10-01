@@ -3,6 +3,7 @@ require 'services/trip_validation_service'
 module API::V1
   class TripsController < BaseController
     before_filter :authenticate_user!, :unless => :is_from_sms?
+    skip_before_filter :authenticate_user!, :if => :assign_driver
     before_action :set_trip
     before_action :set_trip_routes, only: [ :driver_arrived, :on_board, :completed, :missed, :resolve_exception, :not_on_board ]
 

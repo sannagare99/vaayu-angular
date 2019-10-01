@@ -8,7 +8,7 @@ class Driver < ApplicationRecord
 
   DATATABLE_PREFIX = 'driver'
   NOTIFICATION_FIELDS = { badge_expire_date: "Badge", licence_validity: "Licence" }
-  STEP_DRIVER = { Step_1: [:business_associate_id,:licence_number, :f_name, :date_of_birth, :aadhaar_mobile_number, :gender, :blood_group], Step_2: [:licence_type, :badge_number, :badge_expire_date, :licence_validity, :ifsc_code,:bank_no,:bank_name], Step_3: [:driving_registration_form_doc,:driver_badge_doc,:driving_license_doc,:id_proof_doc] }
+  STEP_DRIVER = { Step_1: [:business_associate_id,:licence_number, :date_of_birth, :aadhaar_mobile_number, :gender, :blood_group], Step_2: [:licence_type, :badge_number, :badge_expire_date, :licence_validity, :ifsc_code,:bank_no,:bank_name], Step_3: [:driving_registration_form_doc,:driver_badge_doc,:driving_license_doc,:id_proof_doc] }
   has_one :user, :as => :entity
   has_one    :vehicle
 
