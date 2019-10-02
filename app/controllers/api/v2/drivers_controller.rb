@@ -39,7 +39,7 @@ class API::V2::DriversController < ApplicationController
       set_driver_user_field(user,params)
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
-      if validate_first_step(@driver).values.all?(true)
+      if validate_first_step(@driver).values.uniq == [true]
         if @driver.update(driver_params.except!(:registration_steps))
           @driver.update_attribute('registration_steps', nil)
           render json: {success: true , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
@@ -54,8 +54,8 @@ class API::V2::DriversController < ApplicationController
        if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank? or params[:medically_certified_doc].blank? or params[:bgc_doc].blank? or params[:sexual_policy_doc].blank? or params[:police_verification_vailidty_doc].blank?
         render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
       else
-        if validate_first_and_second_step(@driver).values.all?(true)
-          if @driver.update(driver_params)
+        if validate_first_and_second_step(@driver).values.uniq == [true]
+          if @driver.update!(driver_params)
             @driver.update_attribute('registration_steps', nil)
             upload_driver_badge_doc(@driver) if @driver.present?
             upload_driving_license_doc(@driver) if @driver.present?
