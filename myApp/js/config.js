@@ -27,10 +27,7 @@ app.config(function (
             templateUrl : "./views/contract.html", 
             controller : "contractCtrl",
             params: {
-                paramOne: { 
-                  objectProperty: "defaultValueOne"
-                }, 
-                paramTwo: "defaultValueTwo"
+                paramOne: 'CUSTOMER', 
             }
         }) 
         .state('contractList', { 
@@ -38,6 +35,11 @@ app.config(function (
             templateUrl : "./views/contractList.html", 
             controller : "contractListCtrl"
         })
+        .state('contract_list_add', { 
+            url : '/contract_list_add', 
+            templateUrl : "./views/contract_list_add.html", 
+            controller : "contractListAddCtrl"
+        }) 
         .state('constraint', { 
             url : '/constraint', 
             templateUrl : "./views/constraint.html", 

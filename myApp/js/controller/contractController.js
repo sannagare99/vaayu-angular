@@ -1,7 +1,5 @@
 app.controller('contractCtrl', function ($scope, $http, $state, $stateParams) {
-  $scope.paramOne = $stateParams.paramOne;
-  $scope.paramTwo = $stateParams.paramTwo;
-  console.log('onit '+ JSON.stringify($scope.paramOne));
+  
   $scope.fileObject;
   $scope.ctype;
   $scope.bcycle;
@@ -126,8 +124,8 @@ this.$onInit = function () {
    
     $scope.fetchSiteList();
     
-
-    
+    $scope.tab = 'CUSTOMER';
+    console.log( $scope.tab);
   };
 $scope.closeExpanded=()=>{
   console.log('exp')
@@ -250,6 +248,21 @@ $scope.toggleSelection = function toggleSelection(UID) {
   
   }
 
+  $scope.reset = function () {
+    $state.reload(true);
+  }
+
+  
+
+  $scope.setTab = function (tabId) {
+    console.log('set tabbed');
+    $scope.tab = tabId;
+  };
+
+  $scope.isSet = function (tabId) {
+    return $scope.tab === tabId;
+  };
+
   
   $scope.contracts = [{
       cust_id: "23412355-2",
@@ -285,18 +298,5 @@ $scope.toggleSelection = function toggleSelection(UID) {
   ]
  
 
-  $scope.reset = function () {
-    $state.reload(true);
-  }
-
-  $scope.tab = 'CUSTOMER';
-
-  $scope.setTab = function (tabId) {
-    console.log('set tabbed');
-    $scope.tab = tabId;
-  };
-
-  $scope.isSet = function (tabId) {
-    return $scope.tab === tabId;
-  };
+  
 });

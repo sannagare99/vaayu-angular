@@ -42,7 +42,7 @@
       <div class="col-md-3">
         <div class="btn-toolbar float-right" role="toolbar">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-terniary-blue">Finalize</button>
+            <button type="button" ng-click="finalizeRoutes()" class="btn btn-terniary-blue">Finalize</button>
           </div>
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-terniary">Export CSV</button>
@@ -139,7 +139,7 @@
                         no-drag dnd-callback="container.employees.length" class="employee-cluster-panel">
                         <div class="employee-cluster-panel-heading">
                           <div class="employee-cluster-panel-title">
-                            <input type="checkbox" ng-change="selectRoute(container)" ng-model="route" name="route" class="tick">
+                            <input type="checkbox" ng-change="selectRoute(container)" ng-model="container.selected" name="route" class="tick">
                             <span class="travel-group-name">Travel Group 5 HB</span>
                           </div>
                         </div>

@@ -12,9 +12,10 @@ angular.module('app').factory('SessionService', function() {
     // }
 
     var _data2 ={
+        custId : 1,
         uid:'deekshithmech@gmail.com',
-        access_token:'xbkpmD-oAPQvZIctweoddw',
-        client:'WEfrFeDrBYKU9xIV6qBxRg'
+        access_token:'LD0GDI5yEEG7oYIXJFfa1A',
+        client:'R5qaZj5Za6wry2CPBkUvSQ'
     }
     
     return _data2;

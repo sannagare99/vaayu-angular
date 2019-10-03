@@ -8,9 +8,11 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
     $scope.site=JSON.parse($scope.selectedSiteId);
     console.log( $scope.site)
     $scope.siteName=$scope.site.name;
+    let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType='+$scope.tab+'&siteId=' + $scope.site.id;
+    console.log(url)
     $http({
       method: 'GET',
-      url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType='+$scope.tab+'&siteId=' + $scope.site.id,
+      url: url,
       headers: {
         'Content-Type': 'application/json',
         'uid': 'deekshithmech@gmail.com',
@@ -82,10 +84,7 @@ app.controller('contractListCtrl', function ($scope, $http, $state) {$scope.sele
   $scope.openNewContract = () => {
     console.log($scope.tab)
     $state.go('contract', {
-      paramOne: {
-        objectProperty: "test_not_default1"
-      },
-      paramTwo: "from controller"
+      paramOne:  $scope.tab 
     });
   }
 });
