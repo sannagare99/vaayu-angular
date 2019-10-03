@@ -49,7 +49,7 @@ class Driver < ApplicationRecord
   # validates :driving_registration_form_doc_url, attachment_presence: true
   validates :badge_expire_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :blood_group, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :blood_group, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :ifsc_code, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :gender, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :licence_type, :licence_validity, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}

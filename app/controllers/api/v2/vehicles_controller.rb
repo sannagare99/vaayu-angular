@@ -110,7 +110,7 @@ class API::V2::VehiclesController < ApplicationController
         @vehicle.make_year = @vehicle.make_year.present? ? @vehicle.make_year : 2015
         @vehicle.induction_status = "Draft"
         if @vehicle.save
-          @vehicle.update_attribute('registration_steps', nil)
+          @vehicle.update_attribute('registration_steps', 'Step_1')
             render json: { success: true , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
           else
             render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
@@ -119,7 +119,7 @@ class API::V2::VehiclesController < ApplicationController
           @vehicle = Vehicle.find(params[:vehicle_id].to_i)
           if validate_first_step(@vehicle).values.uniq == [true]
             if @vehicle.update(vehicle_params)
-              @vehicle.update_attribute('registration_steps', nil)
+              @vehicle.update_attribute('registration_steps', 'Step_2')
                 render json: {success: true , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
                 else
                   render json: {success: false , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :ok
@@ -134,7 +134,7 @@ class API::V2::VehiclesController < ApplicationController
           else
             if validate_first_and_second_step(@vehicle).values.uniq == [true]
               if @vehicle.update(vehicle_params)
-                @vehicle.update_attribute('registration_steps', nil)
+                @vehicle.update_attribute('registration_steps', 'Step_3')
                 upload_insurance_doc(@vehicle) if @vehicle.present?
                 upload_rc_book_doc(@vehicle) if @vehicle.present?
                 upload_puc_doc(@vehicle) if @vehicle.present?

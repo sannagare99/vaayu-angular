@@ -44,7 +44,7 @@ class API::V2::DriversController < ApplicationController
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
       if validate_first_step(@driver).values.uniq == [true]
         if @driver.update(driver_params.except!(:registration_steps))
-          @driver.update_attribute('registration_steps', nil)
+          @driver.update_attribute('registration_steps', 'Step_2')
           render json: {success: true , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
         else
           render json: {success: false , message: "Fail Second step", data: {}, errors: @driver.errors.full_messages },status: :ok
@@ -58,8 +58,8 @@ class API::V2::DriversController < ApplicationController
         render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
       else
         if validate_first_and_second_step(@driver).values.uniq == [true]
-          if @driver.update!(driver_params)
-            @driver.update_attribute('registration_steps', nil)
+          if @driver.update(driver_params)
+            @driver.update_attribute('registration_steps', 'Step_3')
             upload_driver_badge_doc(@driver) if @driver.present?
             upload_driving_license_doc(@driver) if @driver.present?
             upload_id_proof_doc(@driver) if @driver.present?
@@ -211,7 +211,7 @@ class API::V2::DriversController < ApplicationController
       # user.l_name = params[:l_name] if params[:l_name].present?
       # user.entity.f_name = params[:f_name] if params[:f_name].present?
       # user.entity.l_name =  params[:l_name] if params[:l_name].present?
-      user.entity.registration_steps = nil
+      user.entity.registration_steps = 'Step_1'
       user.entity.driver_name = params[:f_name] + ' ' + (params[:l_name].present? ? params[:l_name] : '')
       user.save_with_notify_for_driver
       @errors = user.errors.full_messages.to_sentence
