@@ -6,7 +6,7 @@ class Vehicle < ApplicationRecord
   DATATABLE_PREFIX = 'vehicle'
   NOTIFICATION_FIELDS = {insurance_date: "Insurance", puc_validity_date: "PUC", permit_validity_date: "Permit", fc_validity_date: "FC"}
 
-  STEP_VEHICLE = { Step_1: [:business_associate_id,:plate_number, :model, :category, :fuel_type, :colour, :seats, :ac], Step_2: [:insurance_date, :puc_validity_date, :authorization_certificate_validity_date, :fitness_validity_date, :road_tax_validity_date,:permit_validity_date ] }
+  STEP_VEHICLE = { Step_1: [:business_associate_id,:plate_number, :model, :category, :fuel_type, :seats, :ac], Step_2: [:insurance_date, :puc_validity_date, :authorization_certificate_validity_date, :fitness_validity_date, :road_tax_validity_date,:permit_validity_date ] }
 
   belongs_to :driver
   belongs_to :business_associate
@@ -25,7 +25,7 @@ class Vehicle < ApplicationRecord
   validates_length_of :plate_number, minimum: 10, maximum: 12
   # validates :make, presence: true, :unless => Proc.new{|f| f.registration_steps.present? }
   validates :model, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
-  validates :colour, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  #validates :colour, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :category, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :fuel_type, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :seats, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
