@@ -2,7 +2,10 @@ class API::V2::DriversController < ApplicationController
   before_action :set_driver, only: [:edit, :update, :destroy, :show]
   skip_before_action :authenticate_user!
   before_action :check_date_validation, only: [:create]
+  before_action :check_date_of_birth, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
+  before_action :check_gender, :validate_birth_date, only: [:create]
+  before_action :check_badge_number, :validate_birth_date, only: [:create]
   # before_action :check_f_name_validate, only: [:create]
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
@@ -309,6 +312,35 @@ class API::V2::DriversController < ApplicationController
       if params[:registration_steps] == "Step_2"
         if params[:licence_validity].present? && params[:licence_validity].to_date < Date.today 
           render json: {success: false , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :ok }
+        elsif params[:licence_validity].blank?
+          render json: {success: false , message: "Please enter birth date.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+    def check_date_of_birth
+      if params[:registration_steps] == "Step_1"
+        if params[:date_of_birth].present? && params[:date_of_birth].to_date > Date.today
+          render json: {success: false , message: "Birth date  should less then today date.", data: {}, errors: "Record not updated",status: :ok }
+        elsif params[:date_of_birth].blank?
+          render json: {success: false , message: "Please enter birth date.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+    def check_gender
+      if params[:registration_steps] == "Step_1"
+        if params[:gender].blank?
+          render json: {success: false , message: "Please enter gender.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+
+    def check_badge_number
+      if params[:registration_steps] == "Step_2"
+        if params[:badge_number].blank?
+          render json: {success: false , message: "Please enter Badge number.", data: {}, errors: "Record not updated",status: :ok }
         end
       end
     end
