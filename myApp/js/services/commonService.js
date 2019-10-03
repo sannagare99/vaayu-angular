@@ -13,8 +13,8 @@ angular.module('app').factory('SessionService', function() {
 
     var _data2 ={
         uid:'deekshithmech@gmail.com',
-        access_token:'aFZIMX0-5uAuKvorJn6wVg',
-        client:'jM0YUtfxE9aOBj-wisoGzw'
+        access_token:'xbkpmD-oAPQvZIctweoddw',
+        client:'WEfrFeDrBYKU9xIV6qBxRg'
     }
     
     return _data2;

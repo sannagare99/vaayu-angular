@@ -186,7 +186,8 @@ angular.module('app').controller('rosterCtrl', function($scope,RosterService, Si
           total_seats: $scope.currentRoster.total_seats,
           vehicle_capacity: $scope.currentRoster.vehicle_capacity,
           to_date:moment($scope.filterDate).format('YYYY-MM-DD'),
-          total_vehicles: $scope.currentRoster.total_vehicles
+          total_vehicles: $scope.currentRoster.total_vehicles,
+          trip_type: $scope.currentRoster.trip_type,
 
         }
         RosterService.addVehicle(postData, function(result){
