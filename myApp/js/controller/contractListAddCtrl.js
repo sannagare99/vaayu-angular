@@ -1,4 +1,4 @@
-app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService) {
+app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService, $location) {
 
     this.$onInit = function () {
         console.log('onit - contractListAddCtrl');
@@ -317,6 +317,19 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
             console.log(err)
             ToasterService.showError('Error', 'Something went wrong, Try again later.');
         });
+    }
+
+    $scope.downloadSampleFile = () => {
+        console.log($scope.selectedSiteId );
+        if (!$scope.selectedSiteId ) {
+            ToasterService.showError('Error', 'Please select site name');
+            return;
+        }
+        var a = document.createElement("a");
+        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId
+        a.href = url;
+        a.download = 'contract_sample.xlsx';
+        a.click();   
     }
 
 });

@@ -318,6 +318,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       "shift_type":shift_type // 0 -checkin 1-checout
     }
 
+    console.log('getRoutes = '+ JSON.stringify(postData));
+
     RouteService.getRoutes(postData,function(data) {
 
       // $scope.routes =data;
@@ -565,7 +567,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
 
   // Disable weekend selection
   $scope.disabled = function(date, mode) {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    // return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    return false;
   };
 
   $scope.toggleMin = function() {
