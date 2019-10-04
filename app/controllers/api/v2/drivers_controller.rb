@@ -1,8 +1,11 @@
 class API::V2::DriversController < ApplicationController
   before_action :set_driver, only: [:edit, :update, :destroy, :show]
-  skip_before_action :authenticate_user!, unless: -> { ['devise_token_auth', 'overrides' ].include?(params[:controller].split('/')[0])}
+  skip_before_action :authenticate_user!
   before_action :check_date_validation, only: [:create]
+  before_action :check_date_of_birth, only: [:create]
   before_action :check_badge_expire_date, :validate_birth_date, only: [:create]
+  before_action :check_gender, :validate_birth_date, only: [:create]
+  before_action :check_badge_number, :validate_birth_date, only: [:create]
   # before_action :check_f_name_validate, only: [:create]
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
@@ -39,9 +42,9 @@ class API::V2::DriversController < ApplicationController
       set_driver_user_field(user,params)
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
-      if validate_first_step(@driver).values.all?(true)
+      if validate_first_step(@driver).values.uniq == [true]
         if @driver.update(driver_params.except!(:registration_steps))
-          @driver.update_attribute('registration_steps', nil)
+          @driver.update_attribute('registration_steps', 'Step_2')
           render json: {success: true , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
         else
           render json: {success: false , message: "Fail Second step", data: {}, errors: @driver.errors.full_messages },status: :ok
@@ -54,9 +57,9 @@ class API::V2::DriversController < ApplicationController
        if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank? or params[:medically_certified_doc].blank? or params[:bgc_doc].blank? or params[:sexual_policy_doc].blank? or params[:police_verification_vailidty_doc].blank?
         render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
       else
-        if validate_first_and_second_step(@driver).values.all?(true)
+        if validate_first_and_second_step(@driver).values.uniq == [true]
           if @driver.update(driver_params)
-            @driver.update_attribute('registration_steps', nil)
+            @driver.update_attribute('registration_steps', 'Step_3')
             upload_driver_badge_doc(@driver) if @driver.present?
             upload_driving_license_doc(@driver) if @driver.present?
             upload_id_proof_doc(@driver) if @driver.present?
@@ -208,7 +211,7 @@ class API::V2::DriversController < ApplicationController
       # user.l_name = params[:l_name] if params[:l_name].present?
       # user.entity.f_name = params[:f_name] if params[:f_name].present?
       # user.entity.l_name =  params[:l_name] if params[:l_name].present?
-      user.entity.registration_steps = nil
+      user.entity.registration_steps = 'Step_1'
       user.entity.driver_name = params[:f_name] + ' ' + (params[:l_name].present? ? params[:l_name] : '')
       user.save_with_notify_for_driver
       @errors = user.errors.full_messages.to_sentence
@@ -309,6 +312,35 @@ class API::V2::DriversController < ApplicationController
       if params[:registration_steps] == "Step_2"
         if params[:licence_validity].present? && params[:licence_validity].to_date < Date.today 
           render json: {success: false , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :ok }
+        elsif params[:licence_validity].blank?
+          render json: {success: false , message: "Please enter birth date.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+    def check_date_of_birth
+      if params[:registration_steps] == "Step_1"
+        if params[:date_of_birth].present? && params[:date_of_birth].to_date > Date.today
+          render json: {success: false , message: "Birth date  should less then today date.", data: {}, errors: "Record not updated",status: :ok }
+        elsif params[:date_of_birth].blank?
+          render json: {success: false , message: "Please enter birth date.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+    def check_gender
+      if params[:registration_steps] == "Step_1"
+        if params[:gender].blank?
+          render json: {success: false , message: "Please enter gender.", data: {}, errors: "Record not updated",status: :ok }
+        end
+      end
+    end
+
+
+    def check_badge_number
+      if params[:registration_steps] == "Step_2"
+        if params[:badge_number].blank?
+          render json: {success: false , message: "Please enter Badge number.", data: {}, errors: "Record not updated",status: :ok }
         end
       end
     end

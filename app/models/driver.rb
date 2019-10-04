@@ -26,7 +26,7 @@ class Driver < ApplicationRecord
   # validates :permanent_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank? }
   # validates :f_name, presence: true#, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates :local_address, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
-  # validates :badge_number, presence: true#, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  # validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates :badge_number, numericality: { only_integer: true }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   # validates :badge_number, numericality: { only_integer: true }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :badge_number, length: { is: 10 }, format: { with: /\A\d+\z/, message: "Integer only. No sign allowed." }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
@@ -49,7 +49,7 @@ class Driver < ApplicationRecord
   # validates :driving_registration_form_doc_url, attachment_presence: true
   validates :badge_expire_date, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :badge_number, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
-  validates :blood_group, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
+  # validates :blood_group, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :ifsc_code, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :gender, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :licence_type, :licence_validity, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
@@ -60,6 +60,7 @@ class Driver < ApplicationRecord
   validates_length_of :licence_number, minimum: 15, maximum: 15 , :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validates :bank_name, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   validates :bank_name, format: { with: /[a-zA-Z0-9]/, message: "Please enter alphanumeric" }, :if => Proc.new{|f| f.registration_steps == "Step_2"}
+  validates :date_of_birth, presence: true , :if => Proc.new{|f| f.registration_steps == "Step_1"}
   # validates_format_of :bank_name, { :with => /^[A-Za-z0-9 ]*$/ , message: "Please enter only Number or char." }
   # validates :verified_by_police, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
   # validates :site, presence: true, :if => Proc.new{|f| f.registration_steps.blank?}
@@ -95,7 +96,6 @@ class Driver < ApplicationRecord
    has_attached_file :bgc_doc
    validates_attachment :bgc_doc, :content_type => {:content_type => %w(image/jpeg image/jpg image/png application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document)} , :if => Proc.new{|f| f.registration_steps == "Step_3"}
 
-  validates :date_of_birth, presence: true, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   validate :validate_birth_date, :if => Proc.new{|f| f.registration_steps == "Step_1"}
   before_save :validate_licence_expiry_date#, :if => Proc.new{|f| f.registration_steps == "Step_2"}
   before_save :validate_badge_expire_date, :if => Proc.new{|f| f.registration_steps == "Step_2"}

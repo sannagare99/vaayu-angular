@@ -28,21 +28,22 @@ class API::V2::BusinessAssociatesController < ApplicationController
   # POST /api/v2/business_associate
   # POST /api/v2/business_associate.json
   def create
-    if params[:ba_portal_id].present?
-        @business_associate = BusinessAssociate.find_by_ba_portal_id(params[:ba_portal_id])
-        @ba = field_mapper(params, @business_associate)
-        if @ba.save
-          render json: {success: true , message: "Successfully updated business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
-        else
-          render json: {success: false , message: "Business associate not updated", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
-        end
+    @business_associate = BusinessAssociate.find_by_ba_portal_id(params[:baId]) if params[:baId].present?
+    if @business_associate.present?
+      @ba = field_mapper(params, @business_associate)
+    if @ba.save
+      render json: {success: true , message: "Successfully updated business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
+    else
+      render json: {success: false , message: "Business associate not updated", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
+    end
+  else
+    @business_associate = BusinessAssociate.new(business_associate_params)
+    @ba = field_mapper(params, @business_associate)
+      if @ba.save(validate: false)
+        render json: {success: true , message: "Successfully created business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
       else
-        @business_associate = BusinessAssociate.new(business_associate_params)
-          if @business_associate.save(validate: false)
-            render json: {success: true , message: "Successfully created business associate", data: { business_associate_id: @business_associate.id } , errors: {} }, status: :ok
-          else
-            render json: {success: false , message: "Business associate not saved", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
-          end
+        render json: {success: false , message: "Business associate not saved", data: {}, errors: @business_associate.errors.full_messages }, status: :ok
+      end
       end
   end
 
@@ -92,30 +93,31 @@ class API::V2::BusinessAssociatesController < ApplicationController
     end
   
     def field_mapper(params,business_associate)
+      business_associate.ba_portal_id = params[:baId]
       business_associate.admin_email = params[:emailId]
       business_associate.admin_phone = params[:mobileNo]
       business_associate.pan = params[:panNo]
       business_associate.address = params[:addressLine1]
-      business_associate.address = params[:addressLine1]
+      # business_associate.address = params[:addressLine1]
       business_associate.address_2 = params[:addressLine2]
       business_associate.city_of_operation = params[:city]
       business_associate.state_of_operation = params[:state]
-      business_associate.baId = params[:baId]
+      # business_associate.baId = params[:baId]
       business_associate.pin_code = params[:pinCode]
-      business_associate.company_name = params[:companyName]
+      business_associate.legal_name = params[:companyName]
       business_associate.contact_person = params[:contactPerson]
       business_associate.cin_no = params[:cinNo]
-      business_associate.landline = params[:landline]
+      business_associate.alternate_phone = params[:landline]
       business_associate.contact_person_mobile = params[:contactPersonMobile]
       business_associate.approved_till_date = params[:approvedTill]
       business_associate.old_sap_master_code = params[:oldSapMasterCode]
-      business_associate.new_sap_master_code = params[:newSapMasterCode]
+      business_associate.sap_code = params[:newSapMasterCode]
       business_associate.ba_verified_on = params[:baVerifiedOn]
       business_associate.state_code = params[:stateCode]
       business_associate.cancelled_cheque_doc_url = params[:docs][0][:docPath]
       business_associate.pan_card_doc_url = params[:docs][3][:docPath]
       business_associate.msmed_certificate_doc_url = params[:docs][4][:docPath]
-      business_associate.gstDocs = params["gstDocs"].to_json
+      business_associate.gst_certificates_doc_url = params["gstDocs"][0]["path"]
       business_associate.is_gst = params[:isGst]
       business_associate.bussiness_area = params[:bussinessAera].to_a
       return business_associate
