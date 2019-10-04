@@ -4,6 +4,7 @@
         <div class="container-fluid mt-4" ng-init ="init()">
             <div class="row">
                 <div class="col-md-8">
+                    <toaster-container></toaster-container>
                     <form class="form-inline" ng-submit="updateFilters()">
                         <div class="form-group pr-2">
                             <select ng-model="selectedSite" ng-options="site.name for site in siteList track by site.id" class="form-control" placeholder="Select Shift">
@@ -143,7 +144,7 @@
                                 <td class="text-color-blue">{{roster.result}}</td>
                                 <td>
                                     <div class="">
-                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
+                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" ng-click="generateRoutes(roster)" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Generate</button>
                                         <button ng-if="roster.result=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
                                     </div>
                                 </td>

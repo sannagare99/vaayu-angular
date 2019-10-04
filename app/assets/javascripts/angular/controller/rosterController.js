@@ -1,4 +1,4 @@
-angular.module('app').controller('rosterCtrl', function ($scope, RosterService, SiteService, $http) {
+angular.module('app').controller('rosterCtrl', function ($scope, RosterService, RouteService, ToasterService, SiteService, $http) {
 
 
   $scope.init = function () {
@@ -117,6 +117,36 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
   };
 
   //date picker function
+
+  $scope.generateRoutes = function(roster) {
+    console.log(roster);
+    console.log($scope.selectedSite);
+    console.log($scope.filterDate)
+
+    let shift_type = 0;
+    if (roster.shift_type.toLowerCase() === 'check out') {
+      shift_type = 1;
+    }
+
+    let postData = {
+      "site_id":parseInt($scope.selectedSite.id),
+      "shift_id":parseInt(roster.id),
+      "to_date":moment($scope.filterDate).format('YYYY-MM-DD'),
+      "shift_type": shift_type // 0 -checkin 1-checout
+    }
+
+    RouteService.getRoutes(postData,
+      (res) => {
+        console.log(res);
+        if (res['success']) {
+          ToasterService.showSuccess('Success', 'Route generated successfully.');
+        }
+
+    }, (error) => {
+      ToasterService.showError('Error', 'Something went wrong, Try again later.');
+      console.error(error);
+    });
+  } 
 
   $scope.addVehicleToRoster = function (roster) {
     $scope.currentRoster = roster;
