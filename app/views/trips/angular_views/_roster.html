@@ -1,9 +1,10 @@
 
-<div class="vayau-routing vayau-roster" ng-controller='rosterCtrl'>
+<div class="vayau-routing vayau-roster" ng-controller="rosterCtrl">
 
         <div class="container-fluid mt-4" ng-init ="init()">
             <div class="row">
                 <div class="col-md-8">
+                    <toaster-container></toaster-container>
                     <form class="form-inline" ng-submit="updateFilters()">
                         <div class="form-group pr-2">
                             <select ng-model="selectedSite" ng-options="site.name for site in siteList track by site.id" class="form-control" placeholder="Select Shift">
@@ -64,40 +65,40 @@
                 <div class="col-md-2 pad-8">
                     <div class="card-analytic routes">
                         <div class="card-inner-wrapper">
-                            <div class=" text">TOTAL SHIFT</div>
-                            <div class=" number">{{stats.shift_count}}</div>
+                            <div class="text">TOTAL SHIFT</div>
+                            <div class="number">{{stats.shift_count}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 pad-8">
                     <div class="card-analytic kilometers">
                         <div class="card-inner-wrapper">
-                            <div class=" text">TOTAL EMPLOYEE</div>
-                            <div class=" number">{{stats.tot_emp}}</div>
+                            <div class="text">TOTAL EMPLOYEE</div>
+                            <div class="number">{{stats.tot_emp}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 pad-8">
                     <div class="card-analytic male">
                         <div class="card-inner-wrapper">
-                            <div class=" text">LEFT FOR ALLOCATION</div>
-                            <div class=" number">{{stats.left_for_allocation}}</div>
+                            <div class="text">LEFT FOR ALLOCATION</div>
+                            <div class="number">{{stats.left_for_allocation}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 pad-8">
                     <div class="card-analytic female">
                         <div class="card-inner-wrapper">
-                            <div class=" text">ON DUTY VEHICLE</div>
-                            <div class=" number">{{stats.on_duty}}</div>
+                            <div class="text">ON DUTY VEHICLE</div>
+                            <div class="number">{{stats.on_duty}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 pad-8">
                     <div class="card-analytic special">
                         <div class="card-inner-wrapper">
-                            <div class=" text">OFF DUTY VEHICLE</div>
-                            <div class=" number">{{stats.off_duty}}</div>
+                            <div class="text">OFF DUTY VEHICLE</div>
+                            <div class="number">{{stats.off_duty}}</div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +144,7 @@
                                 <td class="text-color-blue">{{roster.result}}</td>
                                 <td>
                                     <div class="">
-                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Genrate</button>
+                                        <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" ng-click="generateRoutes(roster)" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Generate</button>
                                         <button ng-if="roster.result=='REQUIRED MORE VEHICLE'"  ng-click="addVehicleToRoster(roster)" type="button" class="btn btn-sm-vaayu btn-terniary btn-block">Add Vehicle</button>
                                     </div>
                                 </td>
@@ -189,7 +190,7 @@
                                                 </select>
                                         </div>
                                     </div> -->
-                                    <div class="add-vehicle-card-container">
+                                    <div   class="add-vehicle-card-container">
                                     <div class="row add-vehicle-card" ng-repeat="(key, value) in currentRoster.vehicle" >
                                         <div class="col-md-5">
                                             <img ng-if="key== 'SUV'" src="../assets/img/suv.png">
@@ -198,13 +199,19 @@
                                             <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png">
                                             <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV' || key== 'HATCHBACK')">{{key}}</span>
                                         </div>
-                                        <div class="col-md-2" ng-click="minusVehicle(key)"><i class="fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
+                                        <div class="col-md-2" ng-click="minusVehicle(key)"><i class="pointer fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
 
                                         <div class="col-md-2"><h5 style="margin-top: 15px">{{value}}</h5></div>
-                                        <div class="col-md-2" ng-click="plusVehicle(key)"><i class="fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
+                                        <div class="col-md-2" ng-click="plusVehicle(key)"><i class="pointer fa fa-plus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i>
                                         </div>
                                     </div>
+                                    <!-- <div class="text-danger "  ng-if="!currentRoster.vehicle || !currentRoster.vehicle.length">
+                                        <div class="col-md-12 text-center">
+                                        <span class="text-center">No Vehicle Available</span>
+                                        </div>
+                                    </div> -->
                                     </div>
+                                   
                                     <div class="row add-vehicle-card-border" style="margin-top: 2em">
                                             <div class="col-md-8"> <h5 class="text-center" style="margin: auto">Employee Count</div>
                                         <h5 class="text-center" style="margin: auto"><span>{{currentRoster.no_of_emp}} </span></h5>
@@ -218,7 +225,7 @@
                                         <div class="col-md-6 pr-2" >
                                             <button type="button" style="width:100%" ng-click="hideAddMenu()" class="btn btn-cancel ">Cancel</button>
                                         </div>
-                                        <div class="col-md-6 pr-2"><button style="width:100%" type="submit" class="btn btn-primary add-vehicle-btn-done">DONE</button>
+                                        <div   class="col-md-6 pr-2"><button ng-disabled="isDoneDisabled"  style="width:100%" type="submit" class="btn btn-primary add-vehicle-btn-done">DONE</button>
                                         </div>
                                     </div>
 
