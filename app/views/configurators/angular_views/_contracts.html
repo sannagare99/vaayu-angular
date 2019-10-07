@@ -48,7 +48,7 @@
                         <select class="custom-select" ng-model="baID" ng-change="getBAContracts()"
                             ng-click="closeExpanded()">
                             <option value="">Select BA</option>
-                            <option ng-repeat="site in baList" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            <option ng-repeat="site in baList" value="{{site.id}}">{{site.legal_name.toUpperCase()}}
                             </option>
                         </select>
                     </div>

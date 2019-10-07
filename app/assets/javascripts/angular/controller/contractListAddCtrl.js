@@ -6,6 +6,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         $scope.showCheckboxes();
 
         $scope.fetchSiteList();
+        $scope.fetchBAList();
 
         $scope.tab = 'CUSTOMER';
         console.log($scope.tab);
@@ -179,6 +180,36 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                     $scope.siteList = res.data.data.list;
                     // $scope.$broadcast('onSiteListReceived',res.data.data.list);
                     console.log(JSON.stringify($scope.siteList))
+                } else {
+                    alert(res.data['message']);
+                }
+
+            }).catch(err => {
+                ToasterService.showError('Error', 'Something went wrong, Try again later.');
+                console.log(err)
+            });
+
+    };
+
+
+    $scope.fetchBAList = () => {
+
+        $http({
+            method: 'POST',
+            url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/induction/getAllBaList',
+            headers: {
+                'Content-Type': 'application/json',
+                'uid': SessionService.uid,
+                'access_token': SessionService.access_token,
+                'client': SessionService.client
+            },
+            data: { test: 'test' }
+        })
+            .then(function (res) {
+                if (res.data['success']) {
+                    $scope.baList = res.data.data.list;
+                    // $scope.$broadcast('onSiteListReceived',res.data.data.list);
+                    console.log(JSON.stringify($scope.baList))
                 } else {
                     alert(res.data['message']);
                 }
