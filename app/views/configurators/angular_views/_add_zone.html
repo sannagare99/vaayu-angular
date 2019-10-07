@@ -1,71 +1,97 @@
 <form name="form" ng-submit="submitZone(form.$valid)" novalidate ng-controller='addZone'>
-    <div class="tab-content-area">
-        <div class="row ">
-            <toaster-container></toaster-container>
-            <div class="col-md-4 ">
+    <div class="tab-content-area ">
+        <div class="tab-content">
+            <div class="row ">
+                <toaster-container></toaster-container>
+                <div class="col-md-4 ">
                     <div class="form-group">
-                            <label for="usr" class="leb_color">Site Name *</label>
-                            <select class="form-control" ng-model="siteID" name="siteID" required
-                        >
-                        
-                        <option value="">Select Site Name</option>
-                        <option ng-repeat="site in site_list" value="{{site.id}}">{{site.name.toUpperCase()}}
-                        </option>
-            
-                    </select>
-                    <span ng-show="hasError('siteID', 'required')" class="help-block">Site is required.
+                        <label for="usr" class="leb_color">Site Name *</label>
+                        <select class="form-control" ng-model="siteID" name="siteID" required>
+                            <option value="">Select Site Name</option>
+                            <option ng-repeat="site in site_list" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            </option>
+                        </select>
+                        <span ng-show="hasError('siteID', 'required')" class="help-block">Site is required.
                         </span>
-                          </div>
-                   
-            </div>
-            <div class="col-md-4">
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
-                            <label for="usr" class="leb_color">Zone Name *</label>
-                            
-                            <input type="text" class="form-control" ng-model="zoneName" name="zoneName" required>
-                            <div ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
-                                is required.</div>
-                          </div>
-            </div>
-            
-            <div class="col-md-4">
+                        <label for="usr" class="leb_color">Zone Name *</label>
+
+                        <input type="text" class="form-control" ng-model="zoneName" name="zoneName" required>
+                        <div ng-show="hasError('zoneName', 'required')" class="help-block">Zone name
+                            is required.</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
                     <div class="form-group">
-                            <label for="usr" class="leb_color">Latitude</label>
-                            <input type="number" class="form-control" ng-model="latitude" name="latitude" class="form-control"
-                            required>
-    
+                        <label for="usr" class="leb_color">Latitude</label>
+                        <input type="number" class="form-control" ng-model="latitude" name="latitude"
+                            class="form-control" required>
+
                         <div ng-show="hasError('latitude', 'required')" class="help-block">Latitude is
                             required.</div>
-                          </div>
+                    </div>
 
-            </div>
+                </div>
 
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
-                            <label for="usr" class="leb_color">Longitude</label>
-                            <input type="number" class="form-control" name="longitude" ng-model="longitude" required>
+                        <label for="usr" class="leb_color">Longitude</label>
+                        <input type="number" class="form-control" name="longitude" ng-model="longitude" required>
 
-                    <span ng-show="hasError('longitude', 'required')" class="help-block">Longitude
-                        is required.</span>
-                          </div>
-            </div>
-            <div class="col-md-6">
+                        <span ng-show="hasError('longitude', 'required')" class="help-block">Longitude
+                            is required.</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
-                            <label  for="basic-url" class="leb_color">Zipcode {{}}</label>
-                            <input type="number" class="form-control" name="zipcode" required ng-model="zipcode">
-                            <span ng-show="hasError('zipcode', 'required')" class="help-block">Zipcode
-                                is required.</span>
-                          </div>
+                        <label for="basic-url" class="leb_color">Zipcode {{}}</label>
+                        <input type="number" class="form-control" name="zipcode" required ng-model="zipcode">
+                        <span ng-show="hasError('zipcode', 'required')" class="help-block">Zipcode
+                            is required.</span>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-12 "><button type="submit" class="btn btn-primary main-submit-btn"
+                        ng-click="submitZone(form.$valid)">Submit</button></div>
 
             </div>
 
-            
-<div class="col-md-12 "><button type="submit" class="btn btn-primary main-submit-btn"
-    ng-click="submitZone(form.$valid)">Submit</button></div>
-            
         </div>
-        
-       
+
+        <div class="pop-img-card" style="margin-top:30px;">
+            <span class="main-title" style="padding: 10px;float: left;">All List</span>
+
+
+            <table class="table table-striped table-bordered ">
+                <thead class="pop-table-head">
+                    <tr>
+                        <th>Site Name</th>
+                        <th>Zone Name</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Zipcode</th>
+                    </tr>
+                </thead>
+                <tbody class="pop-table-body">
+                    <tr ng-repeat="item in zoneList track by $index">
+                        <td>{{item.for}}</td>
+                        <td>{{item.event}}</td>
+                        <td>{{item.when}}</td>
+                        <td>{{item.from_time }}</td>
+                        <td>{{item.to_time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
+
+
+
 </form>

@@ -1,33 +1,36 @@
 <div class="container-fluid" ng-controller='constraintController'>
     <div class="row">
-      
+
         <div class="col-md-9">
-            <span class="main-title" >Constraints</span>
+            <span class="main-title">Constraints</span>
         </div>
         <div class="col-md-3">
-                <div class="form-group">
-                        <toaster-container></toaster-container>
-                        <select class="form-control" id="sel1" ng-model="siteID" name="site_name" required
-                        ng-change="fetchConstraintList(siteID)">
-                        <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}
-                            </option>
-                        </select>
-                      </div>
-            
+            <div class="form-group">
+                <toaster-container></toaster-container>
+                <select class="form-control" id="sel1" ng-model="siteID" name="site_name" required
+                    ng-change="fetchConstraintList(siteID)">
+                    <option ng-repeat="site in siteNames" value="{{site.id}}">{{site.name.toUpperCase()}}
+                    </option>
+                </select>
+            </div>
+
         </div>
 
 
     </div>
 
-<div>
+    <div>
         <ul class="nav nav-tabs">
-                <li class="nav-item nav-link " ng-class="{active:isSet(1)}" ng-click="setTab(1)"><a href="javascript:void(0)">Guard</a></li>
-                <li class="nav-item nav-link " ng-class="{active:isSet(2)}" ng-click="setTab(2)"><a href="javascript:void(0)">Time</a></li>
-                <li class="nav-item nav-link" ng-class="{active:isSet(3)}" ng-click="setTab(3)"><a href="javascript:void(0)">Distance</a></li>
-                <!-- <li class="nav-item nav-link" ng-class="{active:isSet(4)}" ng-click="setTab(4)"><a href="javascript:void(0)">Zone</a></li> -->
-            </ul>
-</div>
-    
+            <li class="nav-item nav-link " ng-class="{active:isSet(1)}" ng-click="setTab(1)"><a
+                    href="javascript:void(0)">Guard</a></li>
+            <li class="nav-item nav-link " ng-class="{active:isSet(2)}" ng-click="setTab(2)"><a
+                    href="javascript:void(0)">Time</a></li>
+            <li class="nav-item nav-link" ng-class="{active:isSet(3)}" ng-click="setTab(3)"><a
+                    href="javascript:void(0)">Distance</a></li>
+            <!-- <li class="nav-item nav-link" ng-class="{active:isSet(4)}" ng-click="setTab(4)"><a href="javascript:void(0)">Zone</a></li> -->
+        </ul>
+    </div>
+
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade  bg" ng-class="{'in active show':isSet(1)}" ng-controller='createGuard'>
@@ -35,7 +38,7 @@
                 <div class="tab-content-area ">
                     <div class="row mb-2 ">
                         <div class="col-md-4 ">
-                            
+
                             <label class="radio-inline mb-0 mr-2">
                                 <input type="radio" name="radioWhen" class="mr-2" ng-model="when" checked value='first'
                                     required>First
@@ -84,39 +87,39 @@
                     </div>
                     <div class=" ">
                         <div class="row padding-20 ">
-                            <div class="col-md-12 sele_tim"> 
+                            <div class="col-md-12 sele_tim">
                                 <label class="text-label pd_lf" for="basic-url">Select Time</label>
                             </div>
-                               
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usr" class="leb_color">FROM:</label>
-                                    
-                                    <input type="number" class="form-control" id="appt" min="0" max="23" ng-model="from_time"
-                                    name='from_time' required>
-                                <span ng-show="hasError('from_time', 'required')" class="help-block">From Time is
-                                    required.</span>
-                                  </div>
-                                
+
+                                    <input type="number" class="form-control" id="appt" min="0" max="23"
+                                        ng-model="from_time" name='from_time' required>
+                                    <span ng-show="hasError('from_time', 'required')" class="help-block">From Time is
+                                        required.</span>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
-                                    <div class="form-group">
-                                            <label for="usr" class="leb_color">TO:</label>
-                                            
-                                            <input type="number" class="form-control" id="appt" min="0" max="23" ng-model="to_time" name='to_time'
-                                        required>
+                                <div class="form-group">
+                                    <label for="usr" class="leb_color">TO:</label>
+
+                                    <input type="number" class="form-control" id="appt" min="0" max="23"
+                                        ng-model="to_time" name='to_time' required>
                                     <span ng-show="hasError('to_time', 'required')" class="help-block">To Time is
                                         required.</span>
-                                          </div>
-                                
+                                </div>
+
                             </div>
                             <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary main-submit-btn"
-                                        ng-click="submitForm(form.$valid)">Submit</button>
-        
-                                </div>
+                                <button type="button" class="btn btn-primary main-submit-btn"
+                                    ng-click="submitForm(form.$valid)">Submit</button>
+
+                            </div>
                         </div>
-                        
+
 
 
                     </div>
@@ -228,8 +231,7 @@
                         <div class="col-md-6">
                             <div class="input-group mb-3">
                                 <label class="text-label" for="basic-url">Max Trip Time*</label>
-                                <input type="number" class="form-control" 
-                                    name='max_trip_time' ng-model='max_trip_time' 
+                                <input type="number" class="form-control" name='max_trip_time' ng-model='max_trip_time'
                                     required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">Min</span>
@@ -281,8 +283,7 @@
                             <div class="input-group mb-3">
                                 <label class="text-label" for="basic-url">Max Trip Distance *</label>
                                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
-                                    name='distance' ng-model='distance' 
-                                    required>
+                                    name='distance' ng-model='distance' required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">Km</span>
                                 </div>
@@ -333,7 +334,7 @@
                 </tr>
             </thead>
             <tbody class="pop-table-body">
-                <tr  ng-repeat="item in constraintList track by $index">
+                <tr ng-repeat="item in constraintList track by $index">
                     <td>{{item.for}}</td>
                     <td>{{item.event}}</td>
                     <td>{{item.when}}</td>
