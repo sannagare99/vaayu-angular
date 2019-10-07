@@ -18,6 +18,16 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
     $scope.siteList;
     $scope.selectedSiteId;
     $scope.selectedUIDs = [];
+
+
+    $scope.contract_type = [
+        { name: 'PER KM',   value: 'Per km' },
+        { name: 'PER HEAD', value: 'Per head', },
+        { name: 'PER ZONE', value: 'Per zone', },
+        { name: 'PER SLAB', value: 'Per slab', },
+        { name: 'PER PACKAGE', value: 'Per package', }
+    ];
+
     $scope.uniqueId = [
         {
             "name": "Trip Category",
@@ -216,24 +226,21 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         }
         var request = new XMLHttpRequest();
         var vm = $scope;
-        request.open("POST", "http://743512fa.ngrok.io/api/v1/" + contractType + "/upload");
+        request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
         request.onload = function () {
             console.log(request.response);
             if (request.readyState === request.DONE) {
                 if (request.status === 200) {
-                    console.log(request.response);
-                    vm.submitResponse = request.response;
-
-
+                    // console.log(request.response);
+                    vm.submitResponse = request.response;                    
+                    ToasterService.showSuccess('Success', 'Contract created successfully.');
+                    console.log('Contract created successfully.');
                 }
             } else {
                 ToasterService.showError('Error', 'Something went wrong, Try again later.');
             }
         };
-        console.log($scope.submitResponse)
         request.send(formData);
-
-
     }
 
     $scope.reset = function () {
