@@ -1,12 +1,12 @@
-<div class="container" >
+<div class="container">
     <div class="container">
         <h2 class="main-title">Create Contract</h2>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="/css/contract.css" rel="stylesheet">
-        <div class="tab-content-area" >
+        <div class="tab-content-area">
             <div class="row">
-                
+
                 <div class="col-md-6">
                     <div class="input-group mb-3">
                         <label class="text-label" for="basic-url">Unique Identifier<span
@@ -33,12 +33,22 @@
 
                 </div>
                 <div class="col-md-6 ">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" ng-show="tab === 'CUSTOMER'">
                         <label class="text-label" for="basic-url">Site Name<span class="required">*</span></label>
                         <select class="custom-select" ng-model="selectedSiteId" ng-change="getContracts()"
                             ng-click="closeExpanded()">
                             <option value="">Select Site</option>
                             <option ng-repeat="site in siteList" value="{{site.id}}">{{site.name.toUpperCase()}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3" ng-show="tab !== 'CUSTOMER'">
+                        <label class="text-label" for="basic-url">BA<span class="required">*</span></label>
+                        <select class="custom-select" ng-model="baID" ng-change="getContracts()"
+                            ng-click="closeExpanded()">
+                            <option value="">Select BA</option>
+                            <option ng-repeat="site in baList" value="{{site.id}}">{{site.legal_name.toUpperCase()}}
                             </option>
                         </select>
                     </div>
@@ -80,8 +90,8 @@
 
 
 
-                                        <div ng-click="downloadSampleFile()"
-                                            class=" btn btn-primary main-submit-btn">Download Sample File</div>
+                                        <div ng-click="downloadSampleFile()" class=" btn btn-primary main-submit-btn">
+                                            Download Sample File</div>
 
                                     </div>
                                 </div>
@@ -172,7 +182,7 @@
                     <table class="table table-condensed ">
                         <thead class="pop-table-head">
                             <tr>
-                                <!-- <th>Customer</th> -->
+                                <th>Customer</th>
                                 <th>Site</th>
                                 <th>Unique Identification</th>
                                 <th>Billing Cycle</th>
@@ -181,8 +191,8 @@
                         </thead>
                         <tbody class="pop-table-body">
                             <tr class="active" ng-repeat="contract in contractList track by $index">
-                                <!-- <td>{{contract.customerId}}</td> -->
-                                <td>{{contract.siteName.toUpperCase()}}</td>
+                                <td>{{contract.customerId}}</td>
+                                <td>{{siteName.toUpperCase()}}</td>
                                 <td>
                                     <div class="contractListMenu">
                                         <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
@@ -197,16 +207,11 @@
                         </tbody>
                     </table>
                 </div>
-
-
-
-
-
                 <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
                     <table class="table table-condensed ">
                         <thead class="pop-table-head">
                             <tr>
-                                <th>BA</th>
+                                <th>Customer</th>
                                 <th>Site</th>
                                 <th>Unique Identification</th>
                                 <th>Billing Cycle</th>

@@ -6,6 +6,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         $scope.showCheckboxes();
 
         $scope.fetchSiteList();
+        $scope.fetchBAList();
 
         $scope.tab = 'CUSTOMER';
         console.log($scope.tab);
@@ -207,26 +208,59 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
             });
         console.log('download CSV');
     }
+    
+    $scope.isValid = () => {
+        $scope.selectedUIDtoSend = $scope.selectedUIDs.map(({ value }) => value)
+        if ($scope.selectedUIDtoSend.length == 0) {
+            ToasterService.showError('Error', 'Select one or more UDID\'s');
+            return false;
+        } else if (!$scope.selectedSiteId && $scope.tab == 'CUSTOMER') {
+            ToasterService.showError('Error', 'Select Site');
+            return false;
+        } else if (!$scope.baID && $scope.tab == 'BA') {
+            ToasterService.showError('Error', 'Select BA');
+            return false;
+        } else if (!$scope.bcycle) {
+            ToasterService.showError('Error', 'Select Billing Cycle.');
+            return false;
+        } else if (!$scope.ctype) {
+            ToasterService.showError('Error', 'Select Contract Type.');
+            return false;
+        } else if (!$scope.fileObject) {
+            ToasterService.showError('Error', 'Upload contract in csv');
+            return false;
+        }
+        return true;
+    }
 
     $scope.createContract = function () {
         // var file=$scope.myFile;
+        if (!$scope.isValid()) {
+            return;
+        }
         $scope.selectedUIDtoSend = $scope.selectedUIDs.map(({ value }) => value)
         console.log($scope.selectedUIDtoSend);
+
+        
+
         var formData = new FormData();
         formData.append("customer_id", "1");
-        formData.append("site_id", $scope.selectedSiteId);
+        
         formData.append("unique_identification[]", $scope.selectedUIDtoSend);
         formData.append("billig_cycle", $scope.bcycle);
         formData.append("contract_type", $scope.ctype);
         formData.append("contract_file", $scope.fileObject);
+        formData.append("site_id", $scope.selectedSiteId);
         console.log(formData)
         var contractType = "contract";
         if ($scope.tab == 'BA') {
+            formData.append("ba_id", $scope.baID);
             contractType = 'bacontract'
-        }
+        } 
         var request = new XMLHttpRequest();
         var vm = $scope;
         request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
+        // request.open("POST", "http://83015bdb.ngrok.io/api/v1/" + contractType + "/upload");
         request.onload = function () {
             console.log(request.response);
             if (request.readyState === request.DONE) {
@@ -296,10 +330,12 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
     $scope.getContracts = () => {
         console.log($scope.selectedSiteId)
-        if (!$scope.selectedSiteId) {
-            return;
+        var urlEnd = $scope.selectedSiteId;
+        if ($scope.tab === 'BA') {
+            urlEnd = $scope.baID;
         }
-        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + $scope.selectedSiteId;
+        // let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
+        let url = 'http://bb1e4886.ngrok.io/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
         console.log(url)
         $http({
             method: 'GET',
@@ -338,5 +374,35 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         a.download = 'contract_sample.xlsx';
         a.click();   
     }
+
+    $scope.fetchBAList = () => {
+
+        $http({
+            method: 'POST',
+            url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/induction/getAllBaList',
+            headers: {
+                'Content-Type': 'application/json',
+                'uid': SessionService.uid,
+                'access_token': SessionService.access_token,
+                'client': SessionService.client
+            },
+            data: { test: 'test' }
+        })
+            .then(function (res) {
+                if (res.data['success']) {
+                    $scope.baList = res.data.data.list;
+                    // $scope.$broadcast('onSiteListReceived',res.data.data.list);
+                    console.log(JSON.stringify($scope.baList))
+                } else {
+                    alert(res.data['message']);
+                }
+
+            }).catch(err => {
+                ToasterService.showError('Error', 'Something went wrong, Try again later.');
+                console.log(err)
+            });
+
+    };
+
 
 });
