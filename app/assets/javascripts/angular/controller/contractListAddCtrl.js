@@ -338,4 +338,35 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         });
     }
 
+    $scope.downloadSampleFile = () => {
+        
+        if (!$scope.selectedSiteId ) {
+            ToasterService.showError('Error', 'Please select site name');
+            return;
+        }
+        
+        if (!$scope.selectedSiteId ) {
+            ToasterService.showError('Error', 'Please select site name');
+            return;
+        }
+        var a = document.createElement("a");
+        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId
+        console.log($scope.selectedSiteId );
+        console.log('excel url = '+url)
+        a.href = url;
+        a.download = 'contract_sample.xlsx';
+        a.click();   
+        // $http({
+        //     method: 'GET',
+        //     url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId,
+        // }).then(function (res) {
+        //     var blob = new Blob([res.data]);
+        //     var fileURL = window.URL.createObjectURL(blob);
+            
+        //     a.href = fileURL;
+        //     a.download = 'contract_sample.csv';
+        //     a.click();            
+        // })
+    }
+
 });
