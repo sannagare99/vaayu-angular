@@ -6,8 +6,8 @@ class Vehicle < ApplicationRecord
   DATATABLE_PREFIX = 'vehicle'
   NOTIFICATION_FIELDS = {insurance_date: "Insurance", puc_validity_date: "PUC", permit_validity_date: "Permit", fc_validity_date: "FC"}
 
-  STEP_VEHICLE = { Step_1: [:business_associate_id,:plate_number, :model, :category, :fuel_type, :seats, :ac], Step_2: [:insurance_date, :puc_validity_date, :authorization_certificate_validity_date, :fitness_validity_date, :road_tax_validity_date,:permit_validity_date ] }
-
+  STEP_VEHICLE = { Step_2: [:insurance_date, :puc_validity_date, :authorization_certificate_validity_date, :fitness_validity_date, :road_tax_validity_date,:permit_validity_date ] }
+  VEHICLE_STEP = { Step_1: [:business_associate_id,:plate_number, :model, :category, :fuel_type, :seats, :ac] }
   belongs_to :driver
   belongs_to :business_associate
   has_many :trips
