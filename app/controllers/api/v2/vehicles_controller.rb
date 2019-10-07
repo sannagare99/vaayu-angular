@@ -118,7 +118,7 @@ class API::V2::VehiclesController < ApplicationController
       elsif params[:registration_steps] == "Step_2"
         puts "#{params.to_a}"
         @vehicle = Vehicle.find(params[:vehicle_id].to_i)
-          if validate_first_step(@vehicle).values.uniq == [true]
+          if validate_first_step(@vehicle) == true
             if @vehicle.update(vehicle_params)
               @vehicle.update_attribute('registration_steps', 'Step_2')
                 render json: {success: true , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
@@ -165,11 +165,10 @@ class API::V2::VehiclesController < ApplicationController
 
   
   def validate_first_step(vehicle)
-    result = {}
+    result = false
     Vehicle::VEHICLE_STEP[:Step_1].each do |i|
-      puts "#{i}, #{vehicle[i]}"
-      other_result = { i => vehicle[i].present? } 
-      result.merge!(other_result)
+      other_result = vehicle[i].present?
+      result = other_result
     end
     return result
   end
