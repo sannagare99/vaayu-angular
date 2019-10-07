@@ -111,29 +111,30 @@ class API::V2::VehiclesController < ApplicationController
         @vehicle.induction_status = "Draft"
         if @vehicle.save
           @vehicle.update_attribute('registration_steps', 'Step_1')
-            render json: { success: true , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
-          else
-            render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
-          end
-       elsif params[:registration_steps] == "Step_2"
-          @vehicle = Vehicle.find(params[:vehicle_id].to_i)
+           render json: { success: true , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
+        else
+          render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
+      end
+      elsif params[:registration_steps] == "Step_2"
+        @vehicle = Vehicle.find(params[:vehicle_id].to_i)
           if validate_first_step(@vehicle).values.uniq == [true]
             if @vehicle.update(vehicle_params)
               @vehicle.update_attribute('registration_steps', 'Step_2')
                 render json: {success: true , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
-                else
-                  render json: {success: false , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :ok
-              end
             else
-              render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
+              render json: {success: false , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :ok
             end
-        elsif params[:registration_steps] == "Step_3"
-          @vehicle = Vehicle.find(params[:vehicle_id])
+          else
+            render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
+          end
+      elsif params[:registration_steps] == "Step_3"
+        @vehicle = Vehicle.find(params[:vehicle_id]) if params[:vehicle_id].present?
           if params[:insurance_doc].blank? or params[:rc_book_doc].blank? or params[:puc_doc].blank? or  params[:commercial_permit_doc].blank? or params[:road_tax_doc].blank? or params[:authorization_certificate_doc].blank?  or params[:vehicle_picture_doc].blank? or params[:fitness_doc].blank?
               render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
-          else
+          else  
             if validate_first_and_second_step(@vehicle).values.uniq == [true]
               if @vehicle.update(vehicle_params)
+                # binding pry
                 @vehicle.update_attribute('registration_steps', 'Step_3')
                 upload_insurance_doc(@vehicle) if @vehicle.present?
                 upload_rc_book_doc(@vehicle) if @vehicle.present?
@@ -149,12 +150,12 @@ class API::V2::VehiclesController < ApplicationController
                 @vehicle.update(compliance_status: "Ready For Allocation") if @vehicle.present?
                 @vehicle.update(date_of_registration: Time.now )
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
+              else
+                render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
+              end
             else
-              render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
+              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
             end
-          else
-            render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
-          end
       end
       else
         render json: { success: false , message: "You have not assign registration steps", data: {}, errors: {} },status: :ok
