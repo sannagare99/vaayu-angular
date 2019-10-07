@@ -126,7 +126,7 @@ class API::V2::VehiclesController < ApplicationController
               render json: {success: false , message: "Fail Second step", data: {}, errors: { errors: @vehicle.errors.full_messages } },status: :ok
             end
           else
-            render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: { errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys } },status: :ok
+            render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: { errors: validate_first_step(@vehicle) } },status: :ok
           end
       elsif params[:registration_steps] == "Step_3"
         @vehicle = Vehicle.find(params[:vehicle_id]) if params[:vehicle_id].present?
