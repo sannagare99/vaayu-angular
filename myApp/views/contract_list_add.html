@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container" >
     <div class="container">
         <h2 class="main-title">Create Contract</h2>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="/css/contract.css" rel="stylesheet">
-        <div class="tab-content-area">
+        <div class="tab-content-area" >
             <div class="row">
                 
                 <div class="col-md-6">
@@ -12,7 +12,7 @@
                         <label class="text-label" for="basic-url">Unique Identifier<span
                                 class="required">*</span></label>
                         <div class="multiselect">
-                            <div class="selectBox" ng-click="showCheckboxes()">
+                            <div class="selectBox" ng-click="showCheckboxes(); $event.preventDefault();">
                                 <select class="custom-select">
                                     <option>
                                         {{totalSelectedUIDs}}
@@ -90,9 +90,7 @@
                                             class="required">*</span></label>
                                     <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
                                         <option value="">Choose Options</option>
-                                        <option value="Per km">PER KM</option>
-                                        <option value="Per head">PER HEAD</option>
-                                        <option value="Per zone">PER ZONE</option>
+                                        <option ng-repeat="c in contract_type" value="{{c.value}}">{{c.name}}</option>
                                     </select>
 
                                     <label class="text-label" for="basic-url">Upload File<span
@@ -145,9 +143,7 @@
                                             class="required">*</span></label>
                                     <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
                                         <option value="">Choose Options</option>
-                                        <option value="Per km">PER KM</option>
-                                        <option value="Per head">PER HEAD</option>
-                                        <option value="Per zone">PER ZONE</option>
+                                        <option ng-repeat="c in contract_type" value="{{c.value}}">{{c.name}}</option>
                                     </select>
 
                                     <label class="text-label" for="basic-url">Upload File<span
@@ -176,7 +172,7 @@
                     <table class="table table-condensed ">
                         <thead class="pop-table-head">
                             <tr>
-                                <th>Customer</th>
+                                <!-- <th>Customer</th> -->
                                 <th>Site</th>
                                 <th>Unique Identification</th>
                                 <th>Billing Cycle</th>
@@ -185,8 +181,8 @@
                         </thead>
                         <tbody class="pop-table-body">
                             <tr class="active" ng-repeat="contract in contractList track by $index">
-                                <td>{{contract.customerId}}</td>
-                                <td>{{siteName.toUpperCase()}}</td>
+                                <!-- <td>{{contract.customerId}}</td> -->
+                                <td>{{contract.siteName.toUpperCase()}}</td>
                                 <td>
                                     <div class="contractListMenu">
                                         <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
@@ -201,11 +197,16 @@
                         </tbody>
                     </table>
                 </div>
+
+
+
+
+
                 <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
                     <table class="table table-condensed ">
                         <thead class="pop-table-head">
                             <tr>
-                                <th>Customer</th>
+                                <th>BA</th>
                                 <th>Site</th>
                                 <th>Unique Identification</th>
                                 <th>Billing Cycle</th>
