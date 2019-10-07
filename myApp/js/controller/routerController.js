@@ -124,19 +124,19 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
           if(data.data){
             $scope.shifts=data.data.shiftdetails;
             if($scope.shifts && $scope.shifts.length){
-              $scope.shiftId=$scope.shifts[0].id;
+              $scope.selectedShift = $scope.shifts[0];
               $scope.resetRoute();
               // $scope.genrateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
             }else{
-              $scope.shiftId=0;
+              $scope.selectedShift = null;
               $scope.resetRoute();
             }
           }
       }, function (error) {
-          console.error(error);
+          console.log(error);
       });
     } , function (error) {
-        console.error(error);
+        console.log(error);
     });   
  
   }
@@ -158,7 +158,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
           }
       ];
     }, function (error) {
-      console.error(error);
+      console.log(error);
     });
     
     VehicleService.get({ "siteId":siteId,"shiftId":shiftId}, function(res){
@@ -175,7 +175,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         }
       ];
     }, function (error) {
-      console.error(error);
+      console.log(error);
     }); 
   }
 
@@ -190,8 +190,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
         $scope.shifts=data.data.shiftdetails;
     }
     , function (error) {
-        console.error(error);
-    });;
+        console.log(error);
+    });
   }
 
   $scope.shuffleEvent = function(item) {
@@ -260,19 +260,12 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     })
 
     if(finalChangedRoutes.length){
-      var shift_type='';
-
-      angular.forEach($scope.shifts,function(shift,idx,shiftArray){
-          if(shift.id == $scope.shiftId){
-            shift_type=shift.shift_type;
-          }
-      });
   
       let postData = {
         "site_id":parseInt($scope.siteId),
-        "shift_id":parseInt($scope.shiftId),
+        "shift_id":parseInt($scope.selectedShift.id),
         "to_date":moment($scope.filterDate).format('YYYY-MM-DD'),
-        "shift_type":shift_type,
+        "shift_type":$scope.selectedShift.shift_type,
         "updated_routes":finalChangedRoutes,
         "original_route":original_routes
       }
@@ -288,42 +281,28 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
   $scope.resetRoute =function(){
     $scope.finalizeArray=[];
     $scope.routeChangedIds =[];
-    var shift_type='';
 
-    angular.forEach($scope.shifts,function(shift,idx,shiftArray){
-        if(shift.id == $scope.shiftId){
-          shift_type=shift.shift_type;
-        }
-    });
-
-    $scope.genrateRoute($scope.siteId,$scope.shiftId,$scope.filterDate,shift_type);
+    $scope.genrateRoute($scope.siteId,$scope.selectedShift.id,$scope.filterDate,$scope.selectedShift.trip_type);
   }
 
   $scope.genrateRoute = function(siteId,shiftId,filterDate,shiftType) {
-  
-    $scope.getVehicleAndGuardList(siteId,shiftId);
 
-    var shift_type='';
+    let shift = JSON.parse($scope.selectedShift);
 
-    angular.forEach($scope.shifts,function(shift,idx,shiftArray){
-        if(shift.id == shiftId){
-          shift_type=shift.shift_type;
-        }
-    });
-
+    $scope.getVehicleAndGuardList(siteId,shift.id);    
     let postData = {
-      "site_id":parseInt(siteId),
-      "shift_id":parseInt(shiftId),
+      "site_id":parseInt($scope.siteId),
+      "shift_id":parseInt(shift.id),
       "to_date":moment(filterDate).format('YYYY-MM-DD'),
-      "shift_type":shift_type // 0 -checkin 1-checout
+      "shift_type": shift.trip_type // 0 -checkin 1-checout
     }
 
     console.log('getRoutes = '+ JSON.stringify(postData));
 
-    RouteService.getRoutes(postData,function(data) {
+    RouteService.getRoutes(postData,(data) => {
 
       // $scope.routes =data;
-     
+      console.log(data);
 
       $scope.routes ={
         "success": true,
@@ -551,8 +530,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
       $scope.model2 = $scope.fullModel;
     
     }
-    , function (error) {
-        console.error(error);
+    , (error) => {
+        console.log(error);
     });
   }
 
@@ -707,7 +686,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     $scope.autoAllocate =function() {
       var postData ={
         "site_id":$scope.siteId,
-        "shift_id_id":$scope.shiftId,
+        "shift_id_id": $scope.selectedShift.id,
       }
       AutoAllocationService.query(function(data){
          $scope.routes=data;
@@ -763,6 +742,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state,Ma
     $scope.showFilterSidebar =function(){
         $scope.resetSidebar();
         $scope.isFilterSidebarView=true;
+    }
+
+    $scope.getShiftType = (shiftType) => {
+      return shiftType.toLowerCase() === 'check out' ? 1 : 0;
     }
 
 });
