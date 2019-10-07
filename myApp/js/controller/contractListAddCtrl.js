@@ -334,8 +334,8 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         if ($scope.tab === 'BA') {
             urlEnd = $scope.baID;
         }
-        // let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
-        let url = 'http://bb1e4886.ngrok.io/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
+        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
+        // let url = 'http://4607df07.ngrok.io/api/v1/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
         console.log(url)
         $http({
             method: 'GET',
@@ -404,5 +404,15 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
     };
 
+
+    $scope.getSelectedBA = () => {
+        var name = 'NA';
+        angular.forEach($scope.baList,function(item,idx,shiftArray){
+            if(item.id == $scope.baID){
+              name = item.legal_name;
+            }
+        });
+        return name;
+    }
 
 });

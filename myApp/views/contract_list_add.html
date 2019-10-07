@@ -192,7 +192,7 @@
                         <tbody class="pop-table-body">
                             <tr class="active" ng-repeat="contract in contractList track by $index">
                                 <td>{{contract.customerId}}</td>
-                                <td>{{siteName.toUpperCase()}}</td>
+                                <td>{{contract.siteName.toUpperCase()}}</td>
                                 <td>
                                     <div class="contractListMenu">
                                         <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
@@ -209,31 +209,31 @@
                 </div>
                 <div id="BA" class="tab-pane fade  bg" ng-class="{'in active show':isSet('BA')}">
                     <table class="table table-condensed ">
-                        <thead class="pop-table-head">
-                            <tr>
-                                <th>Customer</th>
-                                <th>Site</th>
-                                <th>Unique Identification</th>
-                                <th>Billing Cycle</th>
-                                <th>File</th>
-                            </tr>
-                        </thead>
-                        <tbody class="pop-table-body">
-                            <tr class="active" ng-repeat="contract in contractList.data track by $index">
-                                <td>{{contract.customerId}}</td>
-                                <td>{{siteName}}</td>
-                                <td>
-                                    <div class="contractListMenu">
-                                        <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
-
-                                    </div>
-                                </td>
-                                <td>{{contract.billingCycle}}</td>
-                                <td> <a href="{{contract.fileUrl}}"><button class="btn btn-primary">
-                                            <i class="fa fa-download "></i>
-                                        </button></a></td>
-                            </tr>
-                        </tbody>
+                            <thead class="pop-table-head">
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>BA Name</th>
+                                        <th>Unique Identification</th>
+                                        <th>Billing Cycle</th>
+                                        <th>File</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="pop-table-body">
+                                    <tr class="active" ng-repeat="contract in contractList track by $index">
+                                        <td>{{contract.customerId}}</td>
+                                        <td>{{getSelectedBA()}}</td>
+                                        <td>
+                                            <div class="contractListMenu">
+                                                <a ng-repeat="uid in contract.uniqueId.split(',')">{{uid}} </a>
+        
+                                            </div>
+                                        </td>
+                                        <td>{{contract.billingCycle}}</td>
+                                        <td> <a href="{{contract.fileUrl}}"><button class="btn btn-primary">
+                                                    <i class="fa fa-download "></i>
+                                                </button></a></td>
+                                    </tr>
+                                </tbody>
                     </table>
                 </div>
             </div>
