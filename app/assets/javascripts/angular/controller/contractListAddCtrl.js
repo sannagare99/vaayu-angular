@@ -262,6 +262,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         console.log(formData)
         var contractType = "contract";
         if ($scope.tab == 'BA') {
+            formData.append("ba_id", $scope.baID);
             contractType = 'bacontract'
         }
         var request = new XMLHttpRequest();

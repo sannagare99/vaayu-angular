@@ -6,7 +6,7 @@
                 <div class="col-md-4 ">
                     <div class="form-group">
                         <label for="usr" class="leb_color">Site Name *</label>
-                        <select class="form-control" ng-model="siteID" name="siteID" required>
+                        <select class="form-control" ng-model="siteID" name="siteID" required ng-change="fetchZones()">
                             <option value="">Select Site Name</option>
                             <option ng-repeat="site in site_list" value="{{site.id}}">{{site.name.toUpperCase()}}
                             </option>
@@ -80,11 +80,11 @@
                 </thead>
                 <tbody class="pop-table-body">
                     <tr ng-repeat="item in zoneList track by $index">
-                        <td>{{item.for}}</td>
-                        <td>{{item.event}}</td>
-                        <td>{{item.when}}</td>
-                        <td>{{item.from_time }}</td>
-                        <td>{{item.to_time}}</td>
+                        <td>{{item.site_id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.latitude}}</td>
+                        <td>{{item.longitude }}</td>
+                        <td>{{item.zipcode}}</td>
                     </tr>
                 </tbody>
             </table>
