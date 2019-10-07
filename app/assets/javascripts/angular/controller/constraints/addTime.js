@@ -7,7 +7,8 @@
 //     templateUrl: './views/add_time.html',
 //     controller: function GuardController($http, $scope, SessionService, ToasterService) {
 app.controller('addTime', function ($scope, $http, $state, SessionService, ToasterService) {
-
+  
+  
 
   this.$onInit = () => {
     console.log('onInit called addTime');
@@ -21,7 +22,7 @@ app.controller('addTime', function ($scope, $http, $state, SessionService, Toast
 
   $scope.submitForm = function (isValid) {
     console.log($scope.$parent.siteID)
-    console.log($scope.distance)
+    console.log($scope.max_trip_time)
 
     $scope.submitted = true;
     if ($scope.$parent.siteID == null) {
@@ -57,7 +58,7 @@ app.controller('addTime', function ($scope, $http, $state, SessionService, Toast
         type: 'time',
         clause: 'total_time',
         operator: 'less_than',
-        value: parseInt($scope.distance)
+        value: parseInt($scope.max_trip_time)
       }
     })
       .then(function (res) {

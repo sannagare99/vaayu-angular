@@ -13,7 +13,7 @@ app.controller('addDistance', function ($scope, $http, $state, SessionService, T
     console.log('onInit called addDistance');
   }
 
-  // $scope.distance_data = $scope.parent.distance_data;
+  
 
   // $scope.$on("onSiteListReceived", (evt, list) => {
   //   this.siteNames = list;
