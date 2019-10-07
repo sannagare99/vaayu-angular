@@ -113,19 +113,20 @@ class API::V2::VehiclesController < ApplicationController
           @vehicle.update_attribute('registration_steps', 'Step_1')
            render json: { success: true , message: "Success First step", data: { vehicle_id: @vehicle.id }, errors: {} }, status: :ok
         else
-          render json: {success: false , message: "Fail First step", data: {}, errors: @vehicle.errors.full_messages,status: :ok }
-      end
+          render json: {success: false , message: "Fail First step", data: {}, errors: { errors: @vehicle.errors.full_messages } ,status: :ok }
+        end
       elsif params[:registration_steps] == "Step_2"
+        puts "#{params.to_a}"
         @vehicle = Vehicle.find(params[:vehicle_id].to_i)
           if validate_first_step(@vehicle).values.uniq == [true]
             if @vehicle.update(vehicle_params)
               @vehicle.update_attribute('registration_steps', 'Step_2')
                 render json: {success: true , message: "Success second step", data: { vehicle_id:  @vehicle.id }, errors: {} }, status: :ok if @vehicle.id.present?
             else
-              render json: {success: false , message: "Fail Second step", data: {}, errors: @vehicle.errors.full_messages },status: :ok
+              render json: {success: false , message: "Fail Second step", data: {}, errors: { errors: @vehicle.errors.full_messages } },status: :ok
             end
           else
-            render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
+            render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: { errors: validate_first_step(@vehicle).reject {|i,j| j == true  }.keys } },status: :ok
           end
       elsif params[:registration_steps] == "Step_3"
         @vehicle = Vehicle.find(params[:vehicle_id]) if params[:vehicle_id].present?
@@ -151,16 +152,27 @@ class API::V2::VehiclesController < ApplicationController
                 @vehicle.update(date_of_registration: Time.now )
                 render json: {success: true , message: "Success Final step", data:{vehicle_id: @vehicle.id } , errors: {} }, status: :ok if @vehicle.id.present?
               else
-                render json: {success: false , message: "Fail Final step", data: {}, errors: @vehicle.errors.full_messages  },status: :ok if @vehicle.id.blank?
+                render json: {success: false , message: "Fail Final step", data: {}, errors: { errors: @vehicle.errors.full_messages  } },status: :ok if @vehicle.id.blank?
               end
             else
-              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys },status: :ok
+              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys } },status: :ok
             end
       end
       else
         render json: { success: false , message: "You have not assign registration steps", data: {}, errors: {} },status: :ok
       end
     end
+
+  
+  def validate_first_step(vehicle)
+    result = {}
+    Vehicle::VEHICLE_STEP[:Step_1].each do |i|
+      puts "#{i}, #{vehicle[i]}"
+      other_result = { i => vehicle[i].present? } 
+      result.merge!(other_result)
+    end
+    return result
+  end
 
    def upload_insurance_doc(vehicle)
     if vehicle.insurance_doc.url.present?
@@ -238,7 +250,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_puc_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:puc_validity_date].present? && params[:puc_validity_date].to_date < Date.today 
-        render json: {success: false , message: "Your puc validity date has expired", data: {}, errors: "Record not updated",status: :ok }
+        render json: {success: false , message: "Your puc validity date has expired", data: {}, errors: { errors: "Record not updated" },status: :ok }
       end
     end
   end
@@ -246,7 +258,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_permit_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:permit_validity_date].present? && params[:permit_validity_date].to_date < Date.today 
-        render json: {success: false , message: "Your permit validity date has expired", data: {}, errors: "Record not updated",status: :ok }
+        render json: {success: false , message: "Your permit validity date has expired", data: {}, errors: { errors: "Record not updated" },status: :ok }
       end
     end
   end
@@ -254,7 +266,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_authorization_certificate_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:authorization_certificate_validity_date].present? && params[:authorization_certificate_validity_date].to_date < Date.today 
-        render json: {success: false , message: "Your authorization certificate validity date has expired", data: {}, errors: "Record not updated",status: :ok }
+        render json: {success: false , message: "Your authorization certificate validity date has expired", data: {}, errors: { errors: "Record not updated" },status: :ok }
       end
     end
   end
@@ -262,7 +274,7 @@ class API::V2::VehiclesController < ApplicationController
   def check_fitness_validity_date
     if params[:registration_steps] == "Step_2"
       if params[:fitness_validity_date].present? && params[:fitness_validity_date].to_date < Date.today 
-        render json: {success: false , message: "Your fitness validity date has expired", data: {}, errors: "Record not updated",status: :ok }
+        render json: {success: false , message: "Your fitness validity date has expired", data: {}, errors: { errors: "Record not updated" },status: :ok }
       end
     end
   end
@@ -275,18 +287,10 @@ class API::V2::VehiclesController < ApplicationController
     end
   end
 
-  def validate_first_step(vehicle)
-    result = {}
-    Vehicle::STEP_VEHICLE[:Step_1].each do |i|
-      other_result = { i => vehicle[i].present? } 
-      result.merge!(other_result)
-    end
-    return result
-  end
 
   def validate_first_and_second_step(vehicle)
       result = {}
-      vehicles_step = Vehicle::STEP_VEHICLE[:Step_1].concat Vehicle::STEP_VEHICLE[:Step_2]
+      vehicles_step = Vehicle::VEHICLE_STEP[:Step_1].concat Vehicle::STEP_VEHICLE[:Step_2]
       vehicles_step.each do |i|
         other_result = { i => vehicle[i].present? } 
         result.merge!(other_result)
