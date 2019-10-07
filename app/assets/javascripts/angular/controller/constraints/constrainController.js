@@ -47,7 +47,15 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
         console.log(JSON.stringify(res))
         if (res.data['success']) {
           $scope.constraintList = res.data.data;
-          
+          for (i = 0; i < $scope.constraintList; i++) {
+            if (constraintList[i].type === 'time') {
+              $scope.time_data = constraintList[i];
+            } else if (constraintList[i].type === 'distance') {
+              $scope.distance_data = constraintList[i];
+            }
+            
+          }
+          console.log($scope.constraintList);
         } else {
           alert(res.data['message']);
         }

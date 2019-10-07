@@ -13,7 +13,9 @@ app.controller('addTime', function ($scope, $http, $state, SessionService, Toast
     console.log('onInit called addTime');
   }
 
-  // $scope.$on("onSiteListReceived", (evt, list) => {
+  // $scope.time_data = $scope.parent.time_data;
+
+  // $scope.$on("onDataReceived", (evt, list) => {
   //   this.siteNames = list;
   // });
 
