@@ -169,7 +169,7 @@
                             dnd-dragover="dragoverCallback(container,index, external, type)"
                             dnd-drop="dropCallback(container,index, item, external, type)"
                             dnd-inserted="logListEvent('inserted at', index, external, type)" class="itemlist">
-                            <li ng-if="container.employees.length" class="input-group employee-list-group-item"
+                            <li ng-if="container.employees.length" class=" employee-list-group-item_1"
                               ng-repeat="item in container.employees" dnd-draggable="item" dnd-type="'item'"
                               dnd-dragstart="logEvent('Started to drag an item')"
                               dnd-moved="container.employees.splice($index, 1)" dnd-dragend="logEvent(item)">
@@ -177,17 +177,19 @@
                               <span class="input-group-addon addon-prepend female"
                                 ng-class="{'male': item.gender=='M', 'female': item.gender=='F'}">
                                 <div class="inner-addon">
-                                  <span ng-if="item.gender=='M'">M</span>
-                                  <span ng-if="item.gender=='F'">F</span>
+                                  <span style="line-height: 1cm" ng-if="item.gender=='M'">M</span>
+                                  <span style="line-height: 1cm" ng-if="item.gender=='F'">F</span>
                                 </div>
                               </span>
-
-                              <div class="inner-text">
-                                {{item.empName}}
+                              <div class="inner-text-container">
+                                <div class="inner-text">
+                                  {{item.empName}}
+                                </div>
                               </div>
+                              
 
-                              <div class="input-group-addon addon-append">
-                                <i class="fa fa-bars" aria-hidden="true"></i>
+                              <div class="input-group-addon addon-append" >
+                                <i class="fa fa-bars"  aria-hidden="true"></i>
                               </div>
 
                             </li>
