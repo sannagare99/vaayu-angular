@@ -45,7 +45,7 @@
 
                     <div class="input-group mb-3" ng-show="tab !== 'CUSTOMER'">
                         <label class="text-label" for="basic-url">BA<span class="required">*</span></label>
-                        <select class="custom-select" ng-model="baID" ng-change="getBAContracts()"
+                        <select class="custom-select" ng-model="baID" ng-change="getContracts()"
                             ng-click="closeExpanded()">
                             <option value="">Select BA</option>
                             <option ng-repeat="site in baList" value="{{site.id}}">{{site.legal_name.toUpperCase()}}
