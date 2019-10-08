@@ -293,7 +293,7 @@ class API::V2::VehiclesController < ApplicationController
         other_result = { i => vehicle[i].present? } 
         result.merge!(other_result)
       end
-      return result
+      return true
     end
 end
 
