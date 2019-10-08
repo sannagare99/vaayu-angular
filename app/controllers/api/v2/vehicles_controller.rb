@@ -153,7 +153,7 @@ class API::V2::VehiclesController < ApplicationController
                 render json: {success: false , message: "Fail Final step", data: {}, errors: { errors: @vehicle.errors.full_messages  } },status: :ok if @vehicle.id.blank?
               end
             else
-              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@vehicle) },status: :ok
+              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@vehicle) } },status: :ok
             end
       end
       else
