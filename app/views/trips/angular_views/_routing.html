@@ -1,3 +1,4 @@
+<!-- <div class="vayau-routing" ng-init="init()" ng-controller='routeCtrl'> -->
 
 <div class="vayau-routing" ng-init="init()" ng-controller='routeCtrl'>
 
@@ -12,8 +13,8 @@
           </div>
 
           <div class="form-group pr-2">
-            <select id="disabledSelect" class="form-control" ng-model="shiftId">
-              <option ng-repeat="shift in shifts" value="{{shift.id}}">{{shift.name + ' ('+shift.shift_type+')'}}
+            <select id="disabledSelect" class="form-control" ng-model="selectedShift">
+              <option ng-repeat="shift in shifts" value="{{shift}}">{{shift.name + ' ('+shift.shift_type+')'}}
               </option>
             </select>
           </div>
@@ -27,7 +28,7 @@
               <p class="input-group custom-date">
                 <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="filterDate"
                   is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-                  ng-required="true" close-text="Close" />
+                  ng-required="true" close-text="Close" ng-change="updateFilters()" />
                 <span class="input-group-btn-datePicket">
                   <button type="button" class="btn btn-default" ng-click="open($event)"><i
                       class="fa fa-calendar"></i></button>
@@ -36,7 +37,8 @@
             </div>
           </div>
 
-          <button type="button" ng-click="genrateRoute(siteId,shiftId,filterDate,1)"
+          <button type="button"
+            ng-click="genrateRoute(siteId, JSON.parse(selectedShift.id) , filterDate, JSON.parse(selectedShift.trip_type))"
             class="btn btn-terniary-disable">OK</button>
         </form>
       </div>
