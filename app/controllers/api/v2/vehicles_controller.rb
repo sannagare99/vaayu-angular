@@ -132,9 +132,8 @@ class API::V2::VehiclesController < ApplicationController
           if params[:insurance_doc].blank? or params[:rc_book_doc].blank? or params[:puc_doc].blank? or  params[:commercial_permit_doc].blank? or params[:road_tax_doc].blank? or params[:authorization_certificate_doc].blank?  or params[:vehicle_picture_doc].blank? or params[:fitness_doc].blank?
               render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
           else  
-            if validate_first_and_second_step(@vehicle).values.uniq == [true]
+            if validate_first_and_second_step(@vehicle)== true
               if @vehicle.update(vehicle_params)
-                # binding pry
                 @vehicle.update_attribute('registration_steps', 'Step_3')
                 upload_insurance_doc(@vehicle) if @vehicle.present?
                 upload_rc_book_doc(@vehicle) if @vehicle.present?
@@ -154,7 +153,7 @@ class API::V2::VehiclesController < ApplicationController
                 render json: {success: false , message: "Fail Final step", data: {}, errors: { errors: @vehicle.errors.full_messages  } },status: :ok if @vehicle.id.blank?
               end
             else
-              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@vehicle).reject {|i,j| j == true  }.keys } },status: :ok
+              render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@vehicle) } },status: :ok
             end
       end
       else
