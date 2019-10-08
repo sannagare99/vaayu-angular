@@ -269,6 +269,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                     vm.submitResponse = request.response;                    
                     ToasterService.showSuccess('Success', 'Contract created successfully.');
                     console.log('Contract created successfully.');
+                    $scope.getContracts();
                 }
             } else {
                 ToasterService.showError('Error', 'Something went wrong, Try again later.');
@@ -348,10 +349,12 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
             },
             data: { test: 'test' }
         }).then(function (res) {
+            console.log(res)
             if (res.data['success']) {
                 $scope.contractList = res.data.data;
                 // $scope.$broadcast('onSiteListReceived',res.data.data.list);
                 console.log(JSON.stringify($scope.contractList))
+                
             } else {
                 alert(res.data['message']);
             }

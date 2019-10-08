@@ -114,11 +114,13 @@ angular.
           },
           data: data
         })
+
           .then( (res) => {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
               ToasterService.showSuccess('Success', 'Zone added successfully.');
               console.log(JSON.stringify(res.data))
+              $scope.fetchZones()
             } else {
               ToasterService.showError('Error', res.data['message']);
             }
