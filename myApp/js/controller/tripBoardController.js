@@ -53,20 +53,24 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
   $scope.getAllTrips = function () {
 
-    let postData = {
-      "site_id": $scope.selectedSiteID,
-      "to_date": moment($scope.filterDate).format('YYYY-MM-DD')
-    }
-    console.log(postData)
-    TripboardService.get(postData, function (data) {
-      // $scope.rosters = data.data.tripsdetails;
-      $scope.fullRoster = $scope.tempResponse.tripsdetails;
-      $scope.rosters = $scope.fullRoster;
-      $scope.stats = $scope.tempResponse.stats;
-      console.log($scope.rosters);
-    }, function (error) {
-        console.error(error);
-      });
+    $scope.fullRoster = $scope.tempResponse.tripsdetails;
+    $scope.rosters = $scope.fullRoster;
+    $scope.stats = $scope.tempResponse.stats;
+
+    // let postData = {
+    //   "site_id": $scope.selectedSiteID,
+    //   "to_date": moment($scope.filterDate).format('YYYY-MM-DD')
+    // }
+    // console.log(postData)
+    // TripboardService.get(postData, function (data) {
+    //   // $scope.rosters = data.data.tripsdetails;
+    //   $scope.fullRoster = $scope.tempResponse.tripsdetails;
+    //   $scope.rosters = $scope.fullRoster;
+    //   $scope.stats = $scope.tempResponse.stats;
+    //   console.log($scope.rosters);
+    // }, function (error) {
+    //   console.error(error);
+    // });
 
   }
   //date picker function
@@ -79,32 +83,32 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
     // };
     // var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
     var map = new google.maps.Map(document.getElementById('googleMap'), {
-          zoom: 4,
-          center: {lat: 25.291, lng: 153.027},
-          mapTypeId: 'terrain'
-        });
+      zoom: 4,
+      center: { lat: 25.291, lng: 153.027 },
+      mapTypeId: 'terrain'
+    });
 
-        // Define a symbol using SVG path notation, with an opacity of 1.
-        var lineSymbol = {
-          path: 'M 0,-1 0,1',
-          strokeOpacity: 1,
-          scale: 2
-        };
-        
+    // Define a symbol using SVG path notation, with an opacity of 1.
+    var lineSymbol = {
+      path: 'M 0,-1 0,1',
+      strokeOpacity: 1,
+      scale: 2
+    };
 
-        // Create the polyline, passing the symbol in the 'icons' property.
-        // Give the line an opacity of 0.
-        // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
-        var line = new google.maps.Polyline({
-          path: [{lat: 32.291, lng: 157.027}, {lat: 22.291, lng: 153.027}, {lat: 28.291, lng: 158.027},{lat: 18.291, lng: 153.027}],
-          strokeOpacity: 0,
-          icons: [{
-            icon: lineSymbol,
-            offset: '0',
-            repeat: '5px'
-          }],
-          map: map
-        });
+
+    // Create the polyline, passing the symbol in the 'icons' property.
+    // Give the line an opacity of 0.
+    // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
+    var line = new google.maps.Polyline({
+      path: [{ lat: 32.291, lng: 157.027 }, { lat: 22.291, lng: 153.027 }, { lat: 28.291, lng: 158.027 }, { lat: 18.291, lng: 153.027 }],
+      strokeOpacity: 0,
+      icons: [{
+        icon: lineSymbol,
+        offset: '0',
+        repeat: '5px'
+      }],
+      map: map
+    });
 
 
     var modal = document.getElementById("myModal");
@@ -138,9 +142,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
   }
 
   $scope.filterTrips = function (status) {
-
-    $scope.rosters = $scope.fullRoster.filter (item => item.current_status === status) 
-
+    $scope.rosters = $scope.fullRoster.filter(item => item.current_status === status)
   }
 
   $scope.tempResponse = {
@@ -157,7 +159,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
         "trip_id": 138,
         "trip_type": "checkin",
         "shift_time": "09:00 AM",
-        "vehicle_type": 'SUV',
+        "vehicle_type": 'HB',
         "vehicle_model": 'CRETA',
         "vehicle_number": "MH43K7867",
         "driver_name": 'Ram Kumar',
@@ -179,7 +181,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
         "trip_id": 138,
         "trip_type": "checkin",
         "shift_time": "09:00 AM",
-        "vehicle_type": 'SUV',
+        "vehicle_type": 'SEDAN',
         "vehicle_model": 'CRETA',
         "vehicle_number": "MH43K7867",
         "driver_name": 'Ram Kumar',
