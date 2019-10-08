@@ -42,7 +42,7 @@ class API::V2::DriversController < ApplicationController
       set_driver_user_field(user,params)
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
-      if validate_first_step(@driver).values.uniq == [true]
+      if validate_first_step(@driver) == [true]
         if @driver.update(driver_params.except!(:registration_steps))
           @driver.update_attribute('registration_steps', 'Step_2')
           render json: {success: true , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
@@ -50,14 +50,14 @@ class API::V2::DriversController < ApplicationController
           render json: {success: false , message: "Fail Second step", data: {}, errors: { errors: @driver.errors.full_messages } },status: :ok
         end
       else
-        render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: { errors: validate_first_step(@driver).reject {|i,j| j == true  }.keys } },status: :ok
+        render json: {success: false , message: "Please complete Step 1 form", data: {}, errors: { errors: validate_first_step(@driver) },status: :ok
       end
     elsif params[:registration_steps] == "Step_3"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
        if params[:driving_registration_form_doc].blank? or params[:driver_badge_doc].blank? or params[:driving_license_doc].blank? or params[:id_proof_doc].blank? or params[:medically_certified_doc].blank? or params[:bgc_doc].blank? or params[:sexual_policy_doc].blank? or params[:police_verification_vailidty_doc].blank?
         render json: {success: false , message: "Please Upload all docs", data: {}, errors: {},status: :ok }
       else
-        if validate_first_and_second_step(@driver).values.uniq == [true]
+        if validate_first_and_second_step(@driver) == [true]
           if @driver.update(driver_params)
             @driver.update_attribute('registration_steps', 'Step_3')
             upload_driver_badge_doc(@driver) if @driver.present?
@@ -78,11 +78,11 @@ class API::V2::DriversController < ApplicationController
             render json: {success: false , message: "Fail Final step", data: {}, errors: { errors: @driver.errors.split(",") } },status: :ok
           end
       else
-        render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@driver).reject {|i,j| j == true  }.keys } },status: :ok
+        render json: {success: false , message: "Please complete Step 1 and 2 form", data: {}, errors: { errors: validate_first_and_second_step(@driver) } },status: :ok
       end
     end
     else 
-      render json: {success: true , message: "You have not used ", data: { driver: @driver } },status: :ok
+      render json: {success: true , message: "You have not used", data: { driver: @driver } },status: :ok
     end
   end
 
@@ -359,7 +359,7 @@ class API::V2::DriversController < ApplicationController
         other_result = { i => driver[i].present? } 
         result.merge!(other_result)
       end
-      return result
+      return true
     end
 
     def validate_first_and_second_step(driver)
@@ -369,7 +369,7 @@ class API::V2::DriversController < ApplicationController
         other_result = { i => driver[i].present? } 
         result.merge!(other_result)
       end
-      return result
+      return true
     end
 
     def driver_params
