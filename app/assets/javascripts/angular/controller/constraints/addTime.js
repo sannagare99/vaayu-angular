@@ -7,19 +7,22 @@
 //     templateUrl: './views/add_time.html',
 //     controller: function GuardController($http, $scope, SessionService, ToasterService) {
 app.controller('addTime', function ($scope, $http, $state, SessionService, ToasterService) {
-
+  
+  
 
   this.$onInit = () => {
     console.log('onInit called addTime');
   }
 
-  // $scope.$on("onSiteListReceived", (evt, list) => {
+  // $scope.time_data = $scope.parent.time_data;
+
+  // $scope.$on("onDataReceived", (evt, list) => {
   //   this.siteNames = list;
   // });
 
   $scope.submitForm = function (isValid) {
     console.log($scope.$parent.siteID)
-    console.log($scope.distance)
+    console.log($scope.max_trip_time)
 
     $scope.submitted = true;
     if ($scope.$parent.siteID == null) {
@@ -55,7 +58,7 @@ app.controller('addTime', function ($scope, $http, $state, SessionService, Toast
         type: 'time',
         clause: 'total_time',
         operator: 'less_than',
-        value: parseInt($scope.distance)
+        value: parseInt($scope.max_trip_time)
       }
     })
       .then(function (res) {

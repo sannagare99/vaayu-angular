@@ -813,4 +813,14 @@
 {
   padding: 50px;
 }
+.tab-content{display: inline-block;width: 100%;}
+.pd_lf{margin-left: 0px;
+  font-weight: 600;
+  font-size: 18px;}
+.sele_tim{border-bottom: 1px solid #ccc;
+  margin-bottom: 14px;}
+  .leb_color{color:#000;}
+  .wd-full{width: 100%;}
+  .border-bt{border:1px solid #CCC !important;}
+  .nav-tabs-new{margin-top: 18px;}
 /*e*/

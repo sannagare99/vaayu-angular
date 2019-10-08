@@ -7,6 +7,8 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
   $scope.siteLong = null;
   $scope.zipcode = null;
 
+  
+
 
   this.$onInit = () => {
     $scope.fetchSiteList();
@@ -44,9 +46,19 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
       },
       data: { test: 'test' }
     }).then(function (res) {
-        console.log(JSON.stringify(res))
+        
         if (res.data['success']) {
           $scope.constraintList = res.data.data;
+          for (i = 0; i < $scope.constraintList.length; i++) {
+            if ( $scope.constraintList[i].type === 'time') {
+              $scope.max_trip_time = $scope.constraintList[i].value;
+            } else if ( $scope.constraintList[i].type === 'distance') {
+              $scope.distance =  $scope.constraintList[i].value;
+            }
+            
+          }
+          console.log($scope.constraintList);
+          arr = $scope.constraintList.sort((a, b) => a.id > b.id ? -1 : 1);
           
         } else {
           alert(res.data['message']);
@@ -56,6 +68,25 @@ app.controller('constraintController', function ($scope, $http, $state, SessionS
         // ToasterService.showError('Error', 'Something went wrong, Try again later.');
       });
   }
+
+
+  $scope.sortByKey = (array, key) => {
+    return array.sort(function(a, b) {
+        var x = a[key];
+        var y = b[key];
+
+        if (typeof x == "string")
+        {
+            x = (""+x).toLowerCase(); 
+        }
+        if (typeof y == "string")
+        {
+            y = (""+y).toLowerCase();
+        }
+
+        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+    });
+}
 
   $scope.fetchSiteList = () => {
 

@@ -51,6 +51,26 @@ angular.
       };
 
 
+      $scope.fetchZones = () => {
+        console.log('fetchZones');
+        $http({
+          method: 'GET',
+          url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/zones/' + $scope.siteID,
+        })
+          .then( (res) => {
+            
+            if (res.data['success']) {
+              $scope.zoneList = res.data.data.zoneList;
+              console.log($scope.zoneList);
+            } else {
+              ToasterService.showError('Error', res.data['message']);
+            }
+          }).catch(err => {
+            console.log(err)
+            ToasterService.showError('Error', 'Something went wrong, Try again later.');
+          });
+      }
+
       $scope.submitZone =  (isValid) =>  {
         console.log($scope.site_list);
         console.log(SessionService.uid)
@@ -64,6 +84,8 @@ angular.
         }
        
       };
+
+
 
       $scope.addZone = () => {
 
@@ -92,11 +114,13 @@ angular.
           },
           data: data
         })
+
           .then( (res) => {
             console.log(JSON.stringify(res));
             if (res.data['success']) {
               ToasterService.showSuccess('Success', 'Zone added successfully.');
               console.log(JSON.stringify(res.data))
+              $scope.fetchZones()
             } else {
               ToasterService.showError('Error', res.data['message']);
             }

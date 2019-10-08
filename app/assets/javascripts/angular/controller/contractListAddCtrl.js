@@ -1,4 +1,4 @@
-app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService) {
+app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService, $location) {
 
     this.$onInit = function () {
         console.log('onit - contractListAddCtrl');
@@ -6,6 +6,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         $scope.showCheckboxes();
 
         $scope.fetchSiteList();
+        $scope.fetchBAList();
 
         $scope.tab = 'CUSTOMER';
         console.log($scope.tab);
@@ -18,6 +19,16 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
     $scope.siteList;
     $scope.selectedSiteId;
     $scope.selectedUIDs = [];
+
+
+    $scope.contract_type = [
+        { name: 'PER KM',   value: 'Per km' },
+        { name: 'PER HEAD', value: 'Per head', },
+        { name: 'PER ZONE', value: 'Per zone', },
+        { name: 'PER SLAB', value: 'Per slab', },
+        { name: 'PER PACKAGE', value: 'Per package', }
+    ];
+
     $scope.uniqueId = [
         {
             "name": "Trip Category",
@@ -99,31 +110,12 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         },
     ]
     $scope.billingOption = [
-        {
-            "name": "Per Trip",
-            "value": "Per Trip"
-        },
-
-        {
-            "name": "Daily",
-            "value": "Daily"
-        },
-        {
-            "name": "Weekly",
-            "value": "Weekly"
-        },
-        {
-            "name": "Forth Nightly",
-            "value": "Forth Nightly"
-        },
-        {
-            "name": "Monthly",
-            "value": "Monthly"
-        },
-        {
-            "name": "Quarterly",
-            "value": "Quarterly"
-        }
+        // {"name": "Per Trip", "value": "Per Trip"},
+        { "name": "Daily", "value": "Daily" },
+        // { "name": "Weekly", "value": "Weekly" },
+        // { "name": "Forth Nightly",  "value": "Forth Nightly" },
+        { "name": "Monthly",  "value": "Monthly" },
+        // {  "name": "Quarterly", "value": "Quarterly"  }
     ]
     $scope.submitResponse;
     $scope.expanded = true;
@@ -216,43 +208,74 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
             });
         console.log('download CSV');
     }
+    
+    $scope.isValid = () => {
+        $scope.selectedUIDtoSend = $scope.selectedUIDs.map(({ value }) => value)
+        if ($scope.selectedUIDtoSend.length == 0) {
+            ToasterService.showError('Error', 'Select one or more UDID\'s');
+            return false;
+        } else if (!$scope.selectedSiteId && $scope.tab == 'CUSTOMER') {
+            ToasterService.showError('Error', 'Select Site');
+            return false;
+        } else if (!$scope.baID && $scope.tab == 'BA') {
+            ToasterService.showError('Error', 'Select BA');
+            return false;
+        } else if (!$scope.bcycle) {
+            ToasterService.showError('Error', 'Select Billing Cycle.');
+            return false;
+        } else if (!$scope.ctype) {
+            ToasterService.showError('Error', 'Select Contract Type.');
+            return false;
+        } else if (!$scope.fileObject) {
+            ToasterService.showError('Error', 'Upload contract in csv');
+            return false;
+        }
+        return true;
+    }
 
     $scope.createContract = function () {
         // var file=$scope.myFile;
+        if (!$scope.isValid()) {
+            return;
+        }
         $scope.selectedUIDtoSend = $scope.selectedUIDs.map(({ value }) => value)
         console.log($scope.selectedUIDtoSend);
+
+        
+
         var formData = new FormData();
         formData.append("customer_id", "1");
-        formData.append("site_id", $scope.selectedSiteId);
+        
         formData.append("unique_identification[]", $scope.selectedUIDtoSend);
         formData.append("billig_cycle", $scope.bcycle);
         formData.append("contract_type", $scope.ctype);
         formData.append("contract_file", $scope.fileObject);
+        formData.append("site_id", $scope.selectedSiteId);
         console.log(formData)
         var contractType = "contract";
         if ($scope.tab == 'BA') {
+            formData.append("ba_id", $scope.baID);
             contractType = 'bacontract'
-        }
+        } 
         var request = new XMLHttpRequest();
         var vm = $scope;
         request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
+        // request.open("POST", "http://83015bdb.ngrok.io/api/v1/" + contractType + "/upload");
         request.onload = function () {
             console.log(request.response);
             if (request.readyState === request.DONE) {
                 if (request.status === 200) {
-                    console.log(request.response);
-                    vm.submitResponse = request.response;
-
-
+                    // console.log(request.response);
+                    vm.submitResponse = request.response;                    
+                    ToasterService.showSuccess('Success', 'Contract created successfully.');
+                    console.log('Contract created successfully.');
+                    $scope.getContracts();
                 }
             } else {
                 ToasterService.showError('Error', 'Something went wrong, Try again later.');
             }
         };
-        console.log($scope.submitResponse)
         request.send(formData);
-
-
     }
 
     $scope.reset = function () {
@@ -308,10 +331,12 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
     $scope.getContracts = () => {
         console.log($scope.selectedSiteId)
-        if (!$scope.selectedSiteId) {
-            return;
+        var urlEnd = $scope.selectedSiteId;
+        if ($scope.tab === 'BA') {
+            urlEnd = $scope.baID;
         }
-        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + $scope.selectedSiteId;
+        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
+        // let url = 'http://4607df07.ngrok.io/api/v1/getContractListByCustId?custId=1&custType=' + $scope.tab + '&siteId=' + urlEnd;
         console.log(url)
         $http({
             method: 'GET',
@@ -324,10 +349,12 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
             },
             data: { test: 'test' }
         }).then(function (res) {
+            console.log(res)
             if (res.data['success']) {
                 $scope.contractList = res.data.data;
                 // $scope.$broadcast('onSiteListReceived',res.data.data.list);
                 console.log(JSON.stringify($scope.contractList))
+                
             } else {
                 alert(res.data['message']);
             }
@@ -339,34 +366,56 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
     }
 
     $scope.downloadSampleFile = () => {
-        
-        if (!$scope.selectedSiteId ) {
-            ToasterService.showError('Error', 'Please select site name');
-            return;
-        }
-        
+        console.log($scope.selectedSiteId );
         if (!$scope.selectedSiteId ) {
             ToasterService.showError('Error', 'Please select site name');
             return;
         }
         var a = document.createElement("a");
         let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId
-        console.log($scope.selectedSiteId );
-        console.log('excel url = '+url)
         a.href = url;
         a.download = 'contract_sample.xlsx';
         a.click();   
-        // $http({
-        //     method: 'GET',
-        //     url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId,
-        // }).then(function (res) {
-        //     var blob = new Blob([res.data]);
-        //     var fileURL = window.URL.createObjectURL(blob);
-            
-        //     a.href = fileURL;
-        //     a.download = 'contract_sample.csv';
-        //     a.click();            
-        // })
+    }
+
+    $scope.fetchBAList = () => {
+
+        $http({
+            method: 'POST',
+            url: 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com/induction/getAllBaList',
+            headers: {
+                'Content-Type': 'application/json',
+                'uid': SessionService.uid,
+                'access_token': SessionService.access_token,
+                'client': SessionService.client
+            },
+            data: { test: 'test' }
+        })
+            .then(function (res) {
+                if (res.data['success']) {
+                    $scope.baList = res.data.data.list;
+                    // $scope.$broadcast('onSiteListReceived',res.data.data.list);
+                    console.log(JSON.stringify($scope.baList))
+                } else {
+                    alert(res.data['message']);
+                }
+
+            }).catch(err => {
+                ToasterService.showError('Error', 'Something went wrong, Try again later.');
+                console.log(err)
+            });
+
+    };
+
+
+    $scope.getSelectedBA = () => {
+        var name = 'NA';
+        angular.forEach($scope.baList,function(item,idx,shiftArray){
+            if(item.id == $scope.baID){
+              name = item.legal_name;
+            }
+        });
+        return name;
     }
 
 });

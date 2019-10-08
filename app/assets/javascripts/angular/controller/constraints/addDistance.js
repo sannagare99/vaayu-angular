@@ -13,12 +13,11 @@ app.controller('addDistance', function ($scope, $http, $state, SessionService, T
     console.log('onInit called addDistance');
   }
 
+  
+
   // $scope.$on("onSiteListReceived", (evt, list) => {
   //   this.siteNames = list;
   // });
-
-
-
 
   $scope.submitForm = function (isValid) {
     console.log($scope.$parent.siteID)
