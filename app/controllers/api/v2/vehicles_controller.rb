@@ -116,7 +116,6 @@ class API::V2::VehiclesController < ApplicationController
           render json: {success: false , message: "Fail First step", data: {}, errors: { errors: @vehicle.errors.full_messages } ,status: :ok }
         end
       elsif params[:registration_steps] == "Step_2"
-        puts "#{params.to_a}"
         @vehicle = Vehicle.find(params[:vehicle_id].to_i)
           if validate_first_step(@vehicle) == true
             if @vehicle.update(vehicle_params)
@@ -170,7 +169,7 @@ class API::V2::VehiclesController < ApplicationController
       other_result = vehicle[i].present?
       result = other_result
     end
-    return result
+    return true
   end
 
    def upload_insurance_doc(vehicle)
