@@ -14,8 +14,8 @@ angular.module('app').factory('SessionService', function() {
     var _data2 ={
         custId : 1,
         uid:'deekshithmech@gmail.com',
-        access_token:'LD0GDI5yEEG7oYIXJFfa1A',
-        client:'R5qaZj5Za6wry2CPBkUvSQ'
+        access_token:'K4Iq30RbFchBU7jB5w8j0w',
+        client:'-VZXBtuVitjKoJ2A43_IsQ'
     }
     
     return _data2;
