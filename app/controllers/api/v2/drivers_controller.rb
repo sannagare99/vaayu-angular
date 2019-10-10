@@ -17,6 +17,7 @@ class API::V2::DriversController < ApplicationController
   # GET /api/v2/drivers/1
   # GET /api/v2/drivers/1.json
   def show
+    @driver = Driver.find(params[:id])
     if @driver.present?
       render json: { success: true , message: "Loaded driver", data: { driver: @driver } , errors: {} },status: :ok
     else
