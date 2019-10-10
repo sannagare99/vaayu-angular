@@ -66,9 +66,6 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
 
   }
 
-  $scope.updateDirectionData = function (directionData) {
-  }
-
   $scope.updateFilters = function () {
 
     let postData = {
@@ -76,9 +73,10 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
       "to_date": moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
-    if ($scope.directionData) {
-      postData.shift_type = $scope.directionData;
+    if ($scope.shift_type) {
+      postData.shift_type = $scope.shift_type;
     }
+    console.log(postData)
     RosterService.get(postData, function (data) {
       $scope.rosters = data.data.shiftdetails;
       $scope.stats = data.data.stats;
