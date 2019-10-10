@@ -10,7 +10,7 @@ class API::V2::DriversController < ApplicationController
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
-    @drivers = Driver.all
+    @drivers = Driver.all.order("created_at DESC")
     render json: {success: true , message: "Loaded drivers", data: { drivers: @drivers } , errors: {}},status: :ok
   end
 

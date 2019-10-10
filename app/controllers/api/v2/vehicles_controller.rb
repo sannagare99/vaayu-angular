@@ -9,7 +9,7 @@ class API::V2::VehiclesController < ApplicationController
   # GET /api/v2/vehicles
   # GET /api/v2/vehicles.json
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.all.order("created_at DESC")
     render json: { success: true , message: "Loaded vehicles", data: { Vehicle: @vehicles }, errors: {} }, status: :ok
   end
 
