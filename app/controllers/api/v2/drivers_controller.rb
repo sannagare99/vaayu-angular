@@ -204,7 +204,7 @@ class API::V2::DriversController < ApplicationController
       user.entity.business_associate_id = params[:business_associate_id] if params[:business_associate_id].present?
       user.entity.gender = params[:gender] if params[:gender].present?
       user.entity.profile_picture  = params[:profile_picture] if params[:profile_picture].present?
-      user.entity.profile_picture_url = "https://#{user.entity.profile_picture.url.gsub("//",'')}" if user.entity.profile_picture.present?
+      user.entity.profile_picture_url = "#{user.entity.profile_picture.url.gsub("//",'')}" if user.entity.profile_picture.present?
       user.entity.business_state = "validate"
       user.entity.induction_status = "Draft"
       # user.entity.registration_steps = params[:registration_steps] if params[:registration_steps].present?
@@ -228,14 +228,14 @@ class API::V2::DriversController < ApplicationController
   def upload_driver_badge_doc(driver)
     if driver.driver_badge_doc.url.present?
       driver.update(driver_badge_doc_url: driver.driver_badge_doc.url.gsub("//",''))
-      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "7", document_url: "https://#{driver.driver_badge_doc.url.gsub("//",'')}", expiry_date: driver.badge_expire_date , created_by: 0, resource_type: "Driver" ) if driver.badge_expire_date.present?
+      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "7", document_url: "#{driver.driver_badge_doc.url.gsub("//",'')}", expiry_date: driver.badge_expire_date , created_by: 0, resource_type: "Driver" ) if driver.badge_expire_date.present?
     end 
   end
 
   def upload_driving_license_doc(driver)
     if driver.driving_license_doc.url.present?
       driver.update(driving_license_doc_url: driver.driving_license_doc.url.gsub("//",''))
-      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "2", document_url: "https://#{driver.driving_license_doc.url.gsub("//",'')}", expiry_date: driver.licence_validity , created_by: 0, resource_type: "Driver" ) if driver.licence_validity.present?
+      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "2", document_url: "#{driver.driving_license_doc.url.gsub("//",'')}", expiry_date: driver.licence_validity , created_by: 0, resource_type: "Driver" ) if driver.licence_validity.present?
     end
   end
 
