@@ -193,13 +193,11 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       "to_date": moment($scope.filterDate).format('YYYY-MM-DD')
     }
 
-
     RosterService.get(postData, function (data) {
       $scope.shifts = data.data.shiftdetails;
-    }
-      , function (error) {
+    }, function (error) {
         console.log(error);
-      });
+    });
   }
 
   $scope.shuffleEvent = function (item) {
@@ -343,73 +341,72 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
     let shift = JSON.parse($scope.selectedShift);
 
-    $scope.showStaticData();
+    // Static data display
+    // $scope.showStaticData();
+     // $scope.getVehicleAndGuardList(siteId, 92);
 
-    // $scope.getVehicleAndGuardList(siteId, shift.id);
-    $scope.getVehicleAndGuardList(siteId, 92);
-
-
-
+    $scope.getVehicleAndGuardList(siteId, shift.id);
+   
     let postData = {
       "site_id": parseInt($scope.siteId),
       "shift_id": parseInt(shift.id),
       "to_date": moment(filterDate).format('YYYY-MM-DD'),
       "shift_type": shift.trip_type // 0 -checkin 1-checout
     }
-    console.log('getRoutes = ' + JSON.stringify(postData));
-    // RouteService.getRoutes(postData, (data) => {
+   
+    RouteService.getRoutes(postData, (data) => {
 
-    //   // $scope.routes =data;
-    //   console.log(data);
-    //   $scope.routes = RouteStaticResponse.route_response;
+      $scope.routes =data;
+      console.log(data);
+      // $scope.routes = RouteStaticResponse.route_response;
 
-    //   $scope.originalRoutes = angular.copy($scope.routes.data.routes);
+      if($scope.routes.data){
+        $scope.originalRoutes = angular.copy($scope.routes.data.routes);
 
-    //   $scope.stats = $scope.routes.data.tats[0];
-
-    //   angular.forEach($scope.routes.data.routes, function (route, index, routeArray) {
-    //     route.allowed = "all";
-    //     if (route.guard) {
-    //       let guard = route.guard;
-    //       guard.type = 'guard';
-    //       route.guard = [guard]
-    //     } else {
-    //       route.guard = [];
-    //     }
-    //     if (route.vehicle) {
-    //       let vehical = route.vehicle;
-    //       vehical.type = 'vehical';
-    //       route.vehicle = [vehical]
-    //     } else {
-    //       route.vehicle = [];
-    //     }
-
-    //     angular.forEach(route.employees_nodes_addresses, function (employee, idx, emmplyeeArray) {
-    //       employee.type = "employee";
-    //       employee.effectAllowed = "all";
-    //     })
-
-    //     route.employees = route.employees_nodes_addresses;
-    //   })
-
-    //   $scope.routes.data.routes.push(
-    //     {
-    //       "vehicle_allocated": '',
-    //       "employees": [],
-    //       "vehicle": [],
-    //       "guard": [],
-    //       "allowed": "all"
-    //     }
-    //   )
-
-    //   $scope.fullModel = [$scope.routes.data.routes];
-    //   $scope.model2 = $scope.fullModel;
-
-
-    // }
-    //   , (error) => {
-    //     console.log(error);
-    //   });
+        $scope.stats = $scope.routes.data.tats[0];
+  
+        angular.forEach($scope.routes.data.routes, function (route, index, routeArray) {
+          route.allowed = "all";
+          if (route.guard) {
+            let guard = route.guard;
+            guard.type = 'guard';
+            route.guard = [guard]
+          } else {
+            route.guard = [];
+          }
+          if (route.vehicle) {
+            let vehical = route.vehicle;
+            vehical.type = 'vehical';
+            route.vehicle = [vehical]
+          } else {
+            route.vehicle = [];
+          }
+  
+          angular.forEach(route.employees_nodes_addresses, function (employee, idx, emmplyeeArray) {
+            employee.type = "employee";
+            employee.effectAllowed = "all";
+          })
+  
+          route.employees = route.employees_nodes_addresses;
+        })
+  
+        $scope.routes.data.routes.push(
+          {
+            "vehicle_allocated": '',
+            "employees": [],
+            "vehicle": [],
+            "guard": [],
+            "allowed": "all"
+          }
+        )
+  
+        $scope.fullModel = [$scope.routes.data.routes];
+        $scope.model2 = $scope.fullModel;
+  
+      }
+    }, (error) => {
+        console.log(error);
+      });
   }
 
   // datepicker function
