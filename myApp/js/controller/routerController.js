@@ -24,11 +24,6 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   // Map.init();
 
   $scope.initMap = function () {
-    $scope.mymap = new google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: { lat: 0, lng: -180 },
-      mapTypeId: 'terrain'
-    });
 
     // $scope.drawMapPath([
     //   {lat: 37.772, lng: -122.214},
@@ -44,25 +39,32 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     // {lat: -27.467, lng: 153.027}
     // ];
 
-  }
-
-  $scope.drawMapPath = (coordinates) => {
-    var pt = new google.maps.LatLng(coordinates[0].lat, coordinates[0].lng);
-    // var pt = new google.maps.LatLng(19.184925, 72.8398173);
-
-    $scope.mymap.setCenter(pt);
-    $scope.mymap.setZoom(13);
-
-    let flightPath = new google.maps.Polyline({
-      path: coordinates,
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: { lat: 19.2578, lng: 72.8731 },
+      mapTypeId: 'terrain'
     });
+    directionsRenderer.setMap(map);
+    var stepDisplay = new google.maps.InfoWindow;
+    var waypts =[
+      {
+        location: 'Kandivali Station (W), Parekh Nagar, Kandivali, Mumbai, Maharashtra',
+        stopover: true
+      },
+      {
+        location: 'Thane Station Road, Jambli Naka, Thane West, Thane, Maharashtra',
+        stopover: true
+      }
 
-    flightPath.setMap($scope.mymap);
+    ];
+    // calculateAndDisplayRoute(directionsRenderer, directionsService, $scope.markerArray, waypts, stepDisplay, map);    // Define a symbol using SVG path notation, with an opacity of 1.
+    calculateAndDisplayRoute( directionsService, directionsRenderer, waypts)
+
   }
+
+ 
 
   $scope.finalizeArray = [];
 
@@ -76,7 +78,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       } catch (er) { console.log(er) }
     });
 
-    $scope.drawMapPath(coords)
+    
   }
 
 
@@ -658,6 +660,46 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.resetSidebar();
     $scope.isFilterSidebarView = true;
   }
+
+  function calculateAndDisplayRoute(directionsService, directionsRenderer,waypts) {
+    directionsService.route({
+      origin: 'Veer Savarkar Flyover, Malad, Liliya Nagar, Malad West, Mumbai, Maharashtra 400064',
+      destination: 'Panvel, Navi Mumbai, Maharashtra',
+      waypoints: waypts,
+      optimizeWaypoints: true,
+      travelMode:  google.maps.DirectionsTravelMode.DRIVING
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsRenderer.setDirections(response);
+        var route = response.routes[0];
+        var summaryPanel = document.getElementById('directions-panel');
+        if(summaryPanel){
+        summaryPanel.innerHTML = '';
+        // For each route, display summary information.
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;
+          summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+              '</b><br>';
+          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+        }
+        }
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+
+  function attachInstructionText(stepDisplay, marker, text, map) {
+    google.maps.event.addListener(marker, 'click', function() {
+      // Open an info window when the marker is clicked on, containing the text
+      // of the step.
+      stepDisplay.setContent(text);
+      stepDisplay.open(map, marker);
+    });
+  }
+  // Helping Functions End
 
   $scope.getShiftType = (shiftType) => {
     return shiftType.toLowerCase() === 'check out' ? 1 : 0;
