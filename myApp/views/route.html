@@ -6,12 +6,14 @@
         <form class="form-inline">
           <div class="form-group pr-2">
             <select ng-model="siteId" class="form-control" placeholder="Select Site" ng-change="updateFilters()">
+              <option value=''>Select Site</option>
               <option ng-repeat="site in siteList" ng-value="site.id">{{site.name}}</option>
             </select>
           </div>
 
           <div class="form-group pr-2">
             <select id="disabledSelect" class="form-control" ng-model="selectedShift">
+              <option value=''>Select Shift</option>
               <option ng-repeat="shift in shifts" value="{{shift}}">{{shift.name + ' ('+shift.shift_type+')'}}
               </option>
             </select>
@@ -55,6 +57,7 @@
     </div>
 
     <div class="row analytic-panel">
+      <toaster-container></toaster-container>
       <div class="col-md-2 pad-8">
         <div class="card-analytic routes">
           <div class="card-inner-wrapper">
@@ -134,8 +137,9 @@
                 <div class="col-md-12">
                   <div ng-repeat="containers in model2">
                     <div class="vaayu-dropzone">
+                        <!-- | filter :{vehicle_allocated:search} | range : 'empty_seats' : slider_empty.minValue : slider_empty.maxValue | range : 'total_seats' : slider_occupied.minValue : slider_occupied.maxValue -->
                       <div
-                        ng-repeat="container in containers | filter :{vehicle_allocated:search} | range : 'empty_seats' : slider_empty.minValue : slider_empty.maxValue | range : 'total_seats' : slider_occupied.minValue : slider_occupied.maxValue"
+                        ng-repeat="container in containers "
                         no-drag dnd-callback="container.employees.length" class="employee-cluster-panel">
                         <div class="employee-cluster-panel-heading">
                           <div class="employee-cluster-panel-title">

@@ -18,7 +18,7 @@ angular.module('app')
 
 angular.module('app').controller('routeCtrl', function ($scope, $http, $state, Map, VehicleService, SiteService, GuardsService, RosterService, RouteService, RouteUpdateService,
   AutoAllocationService, VehicleAssignService, GuardAssignService,
-  FinalizeService, RouteStaticResponse) {
+  FinalizeService, RouteStaticResponse, ToasterService, SessionService) {
 
   $scope.place = {};
   // Map.init();
@@ -126,6 +126,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       }
 
       RosterService.get(postData, function (data) {
+        
         if (data.data) {
           $scope.shifts = data.data.shiftdetails;
           if ($scope.shifts && $scope.shifts.length) {
@@ -147,7 +148,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   }
 
   $scope.getVehicleAndGuardList = function (siteId, shiftId) {
-
+    
     GuardsService.get({ "siteId": siteId, "shiftId": shiftId }, function (res) {
       // $scope.guardList = res.data;
       $scope.guardList = RouteStaticResponse.all_guards_response;
@@ -339,11 +340,18 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
   $scope.genrateRoute = function (siteId, shiftId, filterDate, shiftType) {
 
-    let shift = JSON.parse($scope.selectedShift);
+    if (!$scope.siteId) {
+      ToasterService.showError('Error', 'Select Site.');
+      return;
+    } else if (!$scope.selectedShift) {
+      ToasterService.showError('Error', 'Select Shift.');
+      return;
+    }
 
+    let shift = JSON.parse($scope.selectedShift);
     // Static data display
     // $scope.showStaticData();
-     // $scope.getVehicleAndGuardList(siteId, 92);
+    //  $scope.getVehicleAndGuardList(siteId, 92);
 
     $scope.getVehicleAndGuardList(siteId, shift.id);
    
@@ -351,18 +359,23 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       "site_id": parseInt($scope.siteId),
       "shift_id": parseInt(shift.id),
       "to_date": moment(filterDate).format('YYYY-MM-DD'),
-      "shift_type": shift.trip_type // 0 -checkin 1-checout
+      "search" : "1",
+      "shift_type": shift.trip_type+'' // 0 -checkin 1-checout
     }
+
+    console.log(postData)
    
     RouteService.getRoutes(postData, (data) => {
 
-      $scope.routes =data;
-      console.log(data);
+      $scope.routes = data;
+      console.log(data)
+      
       // $scope.routes = RouteStaticResponse.route_response;
 
       if($scope.routes.data){
+        console.log(JSON.stringify($scope.routes));
+        console.log($scope.routes);
         $scope.originalRoutes = angular.copy($scope.routes.data.routes);
-
         $scope.stats = $scope.routes.data.tats[0];
   
         angular.forEach($scope.routes.data.routes, function (route, index, routeArray) {
@@ -402,6 +415,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   
         $scope.fullModel = [$scope.routes.data.routes];
         $scope.model2 = $scope.fullModel;
+        console.log($scope.model2 )
   
       }
     }, (error) => {
@@ -558,13 +572,35 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   // // Initialize model
 
   $scope.autoAllocate = function () {
+    let shift = JSON.parse($scope.selectedShift);
+    // var postData = {
+    //   'customerId': SessionService.custId,
+    //   "siteId": $scope.siteId,
+    //   "shiftId": shift.id,
+    //   "shift_type": shift.trip_type,
+    //   scheduledDate: '2019-10-24' //moment($scope.filterDate).format('YYYY-MM-DD')
+    // }
     var postData = {
-      "site_id": $scope.siteId,
-      "shift_id_id": $scope.selectedShift.id,
+      "customerId": 1,
+      "siteId": 30,
+      "shiftId": 138,
+      "scheduledDate": "2019-09-24",
+      "shift_type": 1
     }
-    AutoAllocationService.query(function (data) {
-      $scope.routes = data;
-      $scope.resetRoute();
+    console.log(postData)
+    AutoAllocationService.query (function (data) {
+      console.log(data);
+      if (data['success']) {
+        $scope.routes = data;
+      } else {
+        ToasterService.showError('Error', data.message);
+      }
+      
+      // $scope.resetRoute();
+
+
+    }, function(err) {
+      ToasterService.showError('Error', 'Something went wrong..');
     })
   }
 
