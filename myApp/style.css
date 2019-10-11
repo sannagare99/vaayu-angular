@@ -242,6 +242,10 @@
   width: 134px;
   float:left;
 }
+.collapse-icon {
+  float:right;
+  font-size:14px;
+}
 
 .vayau-routing .employee-cluster-panel .employee-list-group-item .inner-addon {
   width: 20px;
