@@ -4,46 +4,46 @@
       span.field-label
         | Primary Administrator:
     .col-md-15-3
-      = f.input :admin_f_name, label: 'First Name', required: true
+      = f.input :pan, label: 'Pan'
     .col-md-15-3
-      = f.input :admin_m_name, label: 'Middle Name', required: true
+      = f.input :contact_person, label: 'Contact Person'
     .col-md-15-3
-      = f.input :admin_l_name, label: 'Last Name', required: true
+      = f.input :cin_no, label: 'Cin No'
   .row
     .col-md-15-3.col-md-15-offset-3
-      = f.input :admin_email, label: 'Email', required: true
+      = f.input :admin_email, label: 'Email'
     .col-md-15-3
-      = f.input :admin_phone, label: 'Phone', required: true
+      = f.input :admin_phone, label: 'Phone'
     .col-md-15-3
-      = f.input :name, label: 'Name', required: true
+      = f.input :legal_name, label: 'Legal Name'
   .row
     .col-md-15-3.group-label.text-right
       span.field-label
         | Business Information:
     .col-md-15-3
-      = f.input :legal_name, label: 'Legal Name', required: true
+      = f.input :address, label: 'AddressLine1'
     .col-md-15-3
-      = f.input :pan, label: 'Legal Business Name (PAN Card)', required: true, input_html: {minlength: 10, maxlength: 10}
+      = f.input :address_2, label: 'AddressLine2'
     .col-md-15-3
-      = f.input :tan, label: 'Legal Business Name (TAN Card)', required: true, input_html: {minlength: 10, maxlength: 10}
+      = f.input :pin_code, label: 'Pin Code'
   .row
     .col-md-15-3.col-md-15-offset-3
-      = f.input :business_type, label: 'Business Type', required: true
+      = f.input :city_of_operation, label: 'City'
     .col-md-15-3
-      = f.input :service_tax_no, label: 'Service Tax No.', required: true, input_html: {minlength: 15, maxlength: 15}
+      = f.input :state_of_operation, label: 'State'
   .row
     .col-md-15-6.col-md-15-offset-3
-      = f.input :hq_address, label: 'HQ Address', required: true
+      = f.input :state_code, label: 'State Code'
 
 
 
 
 
-  p[style="font-size:18px; font-weight:600; margin-left:10px"]
+  p[style="font-size:18px; font-weight:600; margin-left:10px; display:none"]
     | Billing Attributes
   .row
     -if current_user.admin?
-      .col-md-4.no-margin
+      .col-md-4.no-margin[style="display:none"]
         label.site_labels for="ba_operator"
           | Operator
         select.form-control#ba_operator

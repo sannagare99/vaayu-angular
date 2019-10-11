@@ -44,7 +44,6 @@ class API::V2::DriversController < ApplicationController
     elsif params[:registration_steps] == "Step_2"
       @driver = Driver.find(params[:driver_id]) if params[:driver_id].present?
       if validate_first_step(@driver) == true
-
         if @driver.update(driver_params.except!(:registration_steps))
           @driver.update_attribute('registration_steps', 'Step_2')
           render json: {success: true , message: "Success Second step", data: { driver_id: @driver.id }, errors: {} }, status: :ok if @driver.id.present?
@@ -229,14 +228,14 @@ class API::V2::DriversController < ApplicationController
   def upload_driver_badge_doc(driver)
     if driver.driver_badge_doc.url.present?
       driver.update(driver_badge_doc_url: driver.driver_badge_doc.url.gsub("//",''))
-      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "7", document_url: "#{driver.driver_badge_doc.url.gsub("//",'')}", expiry_date: driver.badge_expire_date , created_by: 0, resource_type: "Driver" ) if driver.badge_expire_date.present?
+      DocumentRenewalRequest.create(status: "New", resource_id: driver.id, document_id: "7", document_url: "#{driver.driver_badge_doc.url.gsub("//",'')}", expiry_date: driver.badge_expire_date , created_by: 0, resource_type: "Driver" ) if driver.badge_expire_date.present?
     end 
   end
 
   def upload_driving_license_doc(driver)
     if driver.driving_license_doc.url.present?
       driver.update(driving_license_doc_url: driver.driving_license_doc.url.gsub("//",''))
-      DocumentRenewalRequest.create(status: "Renew", resource_id: driver.id, document_id: "2", document_url: "#{driver.driving_license_doc.url.gsub("//",'')}", expiry_date: driver.licence_validity , created_by: 0, resource_type: "Driver" ) if driver.licence_validity.present?
+      DocumentRenewalRequest.create(status: "New", resource_id: driver.id, document_id: "2", document_url: "#{driver.driving_license_doc.url.gsub("//",'')}", expiry_date: driver.licence_validity , created_by: 0, resource_type: "Driver" ) if driver.licence_validity.present?
     end
   end
 
@@ -315,7 +314,7 @@ class API::V2::DriversController < ApplicationController
         if params[:licence_validity].present? && params[:licence_validity].to_date < Date.today 
           render json: {success: false , message: "Your Licence has expired", data: {}, errors: "Record not updated",status: :ok }
         elsif params[:licence_validity].blank?
-          render json: {success: false , message: "Please enter birth date.", data: {}, errors: "Record not updated",status: :ok }
+          render json: {success: false , message: "Please enter licence validity.", data: {}, errors: "Record not updated",status: :ok }
         end
       end
     end
