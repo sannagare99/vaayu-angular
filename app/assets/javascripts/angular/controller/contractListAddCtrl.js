@@ -367,12 +367,23 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
     $scope.downloadSampleFile = () => {
         console.log($scope.selectedSiteId );
-        if (!$scope.selectedSiteId ) {
+        if (!$scope.selectedSiteId && $scope.tab === 'CUSTOMER') {
             ToasterService.showError('Error', 'Please select site name');
             return;
         }
+        
+        if (!$scope.baID && $scope.tab === 'BA') {
+            ToasterService.showError('Error', 'Please select BA name');
+            return;
+        }
+        let id = $scope.selectedSiteId;
+        let type = "SITE";
+        if ($scope.tab == 'BA') {
+            id = $scope.baID;
+            type = 'BA'
+        } 
         var a = document.createElement("a");
-        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+$scope.selectedSiteId
+        let url = 'http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/contract/download-samplefile/'+id+'/'+type
         a.href = url;
         a.download = 'contract_sample.xlsx';
         a.click();   
