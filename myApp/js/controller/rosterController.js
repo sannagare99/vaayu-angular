@@ -197,13 +197,15 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
   }
 
   $scope.minusVehicle = function (key) {
-    $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) - 1
-    $scope.currentRoster.total_vehicles = $scope.currentRoster.total_vehicles - 1;
-    if ($scope.currentRoster.vehicle_capacity[key]) {
-      $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
-    }
+    if(parseInt($scope.currentRoster.vehicle[key]) > 0){
+      $scope.currentRoster.vehicle[key] = parseInt($scope.currentRoster.vehicle[key]) - 1
+      $scope.currentRoster.total_vehicles = $scope.currentRoster.total_vehicles - 1;
+      if ($scope.currentRoster.vehicle_capacity[key]) {
+        $scope.currentRoster.total_seats = $scope.currentRoster.total_seats - $scope.currentRoster.vehicle_capacity[key];
+      }
 
-    $scope.disableDone($scope.currentRoster);
+      $scope.disableDone($scope.currentRoster);
+    }
   }
 
   $scope.submitAddVehicle = function () {
