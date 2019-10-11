@@ -98,11 +98,9 @@ class API::V2::BusinessAssociatesController < ApplicationController
       business_associate.admin_phone = params[:mobileNo]
       business_associate.pan = params[:panNo]
       business_associate.address = params[:addressLine1]
-      # business_associate.address = params[:addressLine1]
       business_associate.address_2 = params[:addressLine2]
       business_associate.city_of_operation = params[:city]
       business_associate.state_of_operation = params[:state]
-      # business_associate.baId = params[:baId]
       business_associate.pin_code = params[:pinCode]
       business_associate.legal_name = params[:companyName]
       business_associate.contact_person = params[:contactPerson]
@@ -117,10 +115,18 @@ class API::V2::BusinessAssociatesController < ApplicationController
       business_associate.cancelled_cheque_doc_url = params[:docs][0][:docPath]
       business_associate.pan_card_doc_url = params[:docs][3][:docPath]
       business_associate.msmed_certificate_doc_url = params[:docs][4][:docPath]
-      business_associate.gst_certificates_doc_url = params["gstDocs"][0]["path"]
+      business_associate.gst_certificates_doc_url = set_gstdoc(params["gstDocs"])
       business_associate.is_gst = params[:isGst]
       business_associate.bussiness_area = params[:bussinessAera].to_a
       return business_associate
+    end
+
+    def set_gstdoc(gst_doc)
+      docs = [] 
+      gst_doc.each do |i|
+        docs << i[:path]
+      end
+      return docs
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

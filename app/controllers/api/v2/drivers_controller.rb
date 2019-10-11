@@ -10,7 +10,7 @@ class API::V2::DriversController < ApplicationController
   # GET /api/v2/drivers
   # GET /api/v2/drivers.json
   def index
-    @drivers = Driver.all
+    @drivers = Driver.all.order("created_at DESC")
     render json: {success: true , message: "Loaded drivers", data: { drivers: @drivers } , errors: {}},status: :ok
   end
 
@@ -219,7 +219,7 @@ class API::V2::DriversController < ApplicationController
       @errors = user.errors.full_messages.to_sentence
       @datatable_name = "drivers"
       if @errors.present?
-        render json: {success: false , message: "Fail First step", data: {}, errors: @errors.split(",") },status: :ok
+        render json: {success: false , message: "Fail First step", data: {}, errors: { errors: @errors.split(",") } },status: :ok
       else
         render json: { success: true , message: "Success First step", data: { driver_id: user.entity.id } , errors: {} }, status: :ok
       end
