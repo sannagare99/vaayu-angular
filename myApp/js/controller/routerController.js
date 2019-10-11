@@ -376,6 +376,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
    
     RouteService.getRoutes(postData, (data) => {
 
+      console.log(data);
       $scope.routes = data;
      
       // $scope.routes = RouteStaticResponse.route_response;

@@ -131,8 +131,11 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
       "site_id":parseInt($scope.selectedSite.id),
       "shift_id":parseInt(roster.id),
       "to_date":moment($scope.filterDate).format('YYYY-MM-DD'),
+      "search" : '0',
       "shift_type": shift_type // 0 -checkin 1-checout
     }
+
+    console.log(postData)
 
     RouteService.getRoutes(postData,
       (res) => {

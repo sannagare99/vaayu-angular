@@ -29,7 +29,7 @@ angular.module('app').factory('GuardsService', ['$resource', 'BASE_URL_8002', 'S
 
 angular.module('app').factory('RouteService', ['$resource', 'BASE_URL_8002', 'SessionService',
     function ($resource, BASE_URL_8002, SessionService) {
-        return $resource(BASE_URL_8002 + 'generateRoutes', {}, {
+        return $resource('https://2c6da523.ngrok.io/api/v1/' + 'generateRoutes', {}, {
             query: { method: "GET", isArray: true },
             create: { method: "POST" },
             getRoutes: {
