@@ -5,8 +5,8 @@
             <div class="col-md-8">
                 <form class="form-inline">
                     <div class="form-group pr-2">
-                            <select ng-change="getAllTrips()" ng-model="selectedSiteID" class="form-control" placeholder="Select Shift"
-                            ng-options="site.id as site.name for site in siteList"  ></select>
+                        <select ng-change="getAllTrips()" ng-model="selectedSiteID" class="form-control"
+                            placeholder="Select Shift" ng-options="site.id as site.name for site in siteList"></select>
                     </div>
                     <div class="form-group pr-2">
                         <select id="disabledSelect" class="form-control ng-hide">
@@ -167,7 +167,7 @@
                                         </div> -->
                                 </td>
 
-                                <td>{{roster.current_status}}</td>
+                                <td>{{roster.current_status.toUpperCase()}}</td>
                                 <td>
                                     <div class="">
                                         <button type="button" id="myBtn" ng-click="popup(roster)"
@@ -210,9 +210,10 @@
                                 </tr>
                             </thead>
                             <tbody class="pop-table-body">
-                                <tr class="active" ng-repeat="roster in rosters track by $index">
-                                    <td>{{roster.driver_name}}</td>
-                                    <td>{{roster.live_tracking_in_eta}}</td>
+                                <tr class="active"
+                                    ng-repeat="item in modelData.employees_nodes_addresses track by $index">
+                                    <td>{{item.empName}}</td>
+                                    <td></td>
                                     <td><i class="fa fa-phone callIcon"></i></td>
                                 </tr>
                             </tbody>
@@ -220,11 +221,11 @@
                         <div class="container">
                             <div>
                                 <span class="pop-name">Shift</span>
-                                <span class="pop-status">8:30 AM</span>
+                                <span class="pop-status">{{modelData.shift_time}}</span>
                             </div>
                             <div>
                                 <span class="pop-name">Arrival Time</span>
-                                <span class="pop-status">8:25 AM</span>
+                                <span class="pop-status">{{modelData.tripInfo[0].tripStartTime}}</span>
                             </div>
                         </div>
                     </div>
@@ -236,11 +237,11 @@
                         <div class="container">
                             <div>
                                 <span class="pop-name">Duration</span>
-                                <span class="pop-status">47 Mins</span>
+                                <span class="pop-status">{{modelData.tripInfo[0].total_time}} Mins</span>
                             </div>
                             <div>
                                 <span class="pop-name">Duration</span>
-                                <span class="pop-status">37 Km</span>
+                                <span class="pop-status">{{modelData.tripInfo[0].total_distabce}} Kms</span>
                             </div>
                         </div>
                     </div>
@@ -249,13 +250,12 @@
                     <div class="pop-img-card">
                         <img src="./img_avatar.png" alt="Avatar" style="width:100%">
                         <div class="container">
-                            <span class="pop-name">Aarav Banerjee</span>
-                            <span class="pop-status">Approved</span>
-                            <span class="pop-carNumber"> KA 19 P 8688</span>
-
+                            <span class="pop-name">{{modelData.driver_name}}</span>
+                            <span class="pop-status">{{modelData.tripInfo[0].vehicle_type}}</span>
+                            <span class="pop-carNumber"> {{modelData.vehicle_number}}</span>
                         </div>
                     </div>
-                </div>
+                </div>`
             </div>
 
         </div>

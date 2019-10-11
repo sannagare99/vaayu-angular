@@ -172,7 +172,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                     // $scope.$broadcast('onSiteListReceived',res.data.data.list);
                     console.log(JSON.stringify($scope.siteList))
                 } else {
-                    alert(res.data['message']);
+                    ToasterService.showError('Error', res.data['message']);
                 }
 
             }).catch(err => {
@@ -245,8 +245,8 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
         var formData = new FormData();
         formData.append("customer_id", "1");
-        
-        formData.append("unique_identification[]", $scope.selectedUIDtoSend);
+        console.log($scope.selectedUIDtoSend);
+        formData.append("unique_identification", $scope.selectedUIDtoSend);
         formData.append("billig_cycle", $scope.bcycle);
         formData.append("contract_type", $scope.ctype);
         formData.append("contract_file", $scope.fileObject);
@@ -259,8 +259,8 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
         } 
         var request = new XMLHttpRequest();
         var vm = $scope;
-        request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
-        // request.open("POST", "http://83015bdb.ngrok.io/api/v1/" + contractType + "/upload");
+        // request.open("POST", "http://ec2-13-233-214-215.ap-south-1.compute.amazonaws.com:8003/api/v1/" + contractType + "/upload");
+        request.open("POST", "http://5be4a49e.ngrok.io/api/v1/" + contractType + "/upload");
         request.onload = function () {
             console.log(request.response);
             if (request.readyState === request.DONE) {
@@ -356,7 +356,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                 console.log(JSON.stringify($scope.contractList))
                 
             } else {
-                alert(res.data['message']);
+                ToasterService.showError('Error', res.data['message']);
             }
 
         }).catch(err => {
@@ -397,7 +397,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
                     // $scope.$broadcast('onSiteListReceived',res.data.data.list);
                     console.log(JSON.stringify($scope.baList))
                 } else {
-                    alert(res.data['message']);
+                    ToasterService.showError('Error', res.data['message']);
                 }
 
             }).catch(err => {
