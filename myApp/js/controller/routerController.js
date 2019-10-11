@@ -557,7 +557,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     var isAssign = true;
     if (isAssign) {
       var postData = {
-        "guardId": String(item.guardId),
+        "guardId": item.guardId,
         "routeId": container.routeId
       };
 
