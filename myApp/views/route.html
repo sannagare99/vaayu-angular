@@ -138,17 +138,17 @@
                   <div ng-repeat="containers in model2">
                     <div class="vaayu-dropzone">
                         <!-- | filter :{vehicle_allocated:search} | range : 'empty_seats' : slider_empty.minValue : slider_empty.maxValue | range : 'total_seats' : slider_occupied.minValue : slider_occupied.maxValue -->
-                      <div
-                        ng-repeat="container in containers | filter :{vehicle_allocated:search}"
+                      <div ng-repeat="container in containers | filter :{vehicle_allocated:search}"
                         no-drag dnd-callback="container.employees.length" class="employee-cluster-panel">
                         <div class="employee-cluster-panel-heading">
                           <div class="employee-cluster-panel-title">
                             <input type="checkbox" ng-change="selectRoute(container)" ng-model="container.selected" name="route" class="tick">
                             <span class="travel-group-name">Travel Group 5 HB</span>
+                            <span class="collapse-icon fa fa-angle-down" ng-click="collapsiblePanel(container)"></span>
                           </div>
                         </div>
 
-                        <div class="employee-cluster-panel-body">
+                        <div class="employee-cluster-panel-body" ng-if="!container.collapse">
                           <div class="employee-cluster-panel-heading-meta">
                             <div class="employee-cluster-panel-title">
                               <div class="row">
@@ -195,7 +195,7 @@
                               </div>
 
                             </li>
-                            <li ng-if="!container.employees.length">
+                            <li ng-if="!container.employees.length && !container.vehicles.length && !container.gurads.length">
                               <div class="drop-box">
                                 <div class="drop-box-label">
                                   <div>Drop here you employee and</div>

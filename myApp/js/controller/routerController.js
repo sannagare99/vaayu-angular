@@ -420,6 +420,14 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     });
   }
 
+  $scope.collapsiblePanel =function(item){
+    if(item.collapse){
+      item.collapse=false;
+    }else{
+      item.collapse=true;
+    }
+  }
+
   // datepicker function
   $scope.today = function () {
     $scope.filterDate = new Date();
