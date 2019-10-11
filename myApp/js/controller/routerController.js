@@ -553,11 +553,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   };
 
   $scope.dropGuardCallback = function (container, index, item, external, type) {
-
     var isAssign = true;
     if (isAssign) {
       var postData = {
-        "guardId": item.id,
+        "guardId": String(item.guardId),
         "routeId": container.routeId
       };
 
