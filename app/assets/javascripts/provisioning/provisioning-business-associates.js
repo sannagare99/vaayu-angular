@@ -50,8 +50,8 @@ $(function () {
                     {data: "email"},
                     {
                         data: null,
-                        render: function () {
-                            return '<a href="#" class="editor_remove text-danger">Delete</a>';
+                        render: function (data) {
+                            return '<a style="cursor:pointer" id="viewBa" class="editor_edit" data-remote="true" data-ba_id="' + data.id + '">View</a> | <a href="#" class="editor_remove text-danger">Delete</a>'
                         }
                     }
                 ],
@@ -120,6 +120,46 @@ $(function () {
                     edit_ba = true                    
                     var html = generate_edit(response, 'business_associates', response.logistics_company_id, orig_service_html)
                     $("#serviceContainer").html(html)
+                    $('input').removeAttr('disabled');
+                    $('.btn-primary').css("display", "block")   
+                    if(logistics_company_id == null){
+                        $("#cgst_1").parent().css("display", "none")
+                        $("#sgst_1").parent().css("display", "none")
+                        $("#addServicesDiv").css("display", "none")
+                        $("#services").css("display", "none")
+                    }
+                    else{
+                        $("#cgst_1").parent().css("display", "block")
+                        $("#sgst_1").parent().css("display", "block")
+                        $("#addServicesDiv").css("display", "block")
+                        $("#services").css("display", "block")   
+                    }
+                })            
+            });
+        });
+        // View BA
+        $(document).on('click', '#viewBa', function(e){
+            e.preventDefault()
+            ba_id = e.target.dataset.ba_id
+            // $("#services").html('')
+            $.ajax({
+                type: "GET",                
+                url: '/business_associates/' + ba_id + '/edit'
+            }).done(function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: '/business_associates/details',
+                    data: {
+                        'id': ba_id
+                    }
+                }).done(function(response){   
+                    logistics_company_id = response.logistics_company_id                    
+                    orig_service_html = $("#services").html()
+                    edit_ba = true                    
+                    var html = generate_edit(response, 'business_associates', response.logistics_company_id, orig_service_html)
+                    $("#serviceContainer").html(html)
+                    $('input').attr('disabled','disabled');
+                    $('.btn-primary').css("display","none");
                     if(logistics_company_id == null){
                         $("#cgst_1").parent().css("display", "none")
                         $("#sgst_1").parent().css("display", "none")
@@ -137,6 +177,8 @@ $(function () {
         });
 
         $(document).on('click', '.editor_create', function(e){
+            $('.btn-primary').css("display", "block");
+            $('input').removeAttr('disabled');
             if(e.target.baseURI.indexOf("business-associates") != -1){
                 $.ajax({
                     type: "GET",
