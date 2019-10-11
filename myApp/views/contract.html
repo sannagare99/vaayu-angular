@@ -87,9 +87,8 @@
                                                         class="required">*</span></label>
                                                 <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
                                                     <option value="">Choose Options</option>
-                                                    <option value="Per km">PER KM</option>
-                                                    <option value="Per head">PER HEAD</option>
-                                                    <option value="Per zone">PER ZONE</option>
+                                                    <option ng-repeat="item in contract_type" value="{{item.value}}">
+                                                        {{item.name.toUpperCase()}}</option>
                                                 </select>
                     
                                                 <label class="text-label" for="basic-url">Upload File<span class="required">*</span></label>
