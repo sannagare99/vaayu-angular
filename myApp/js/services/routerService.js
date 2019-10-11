@@ -55,7 +55,7 @@ angular.module('app').factory('RouteUpdateService', ['$resource', 'BASE_URL_8002
 
 angular.module('app').factory('AutoAllocationService', ['$resource', 'BASE_URL_8002', 'SessionService',
     function ($resource, BASE_URL_8002, SessionService) {
-        return $resource(BASE_URL_8002 + 'allocateVehicles', {}, {
+        return $resource('https://2c6da523.ngrok.io/' + 'allocateVehicles', {}, {
             query: { method: "POST" },
             create: { method: "POST" },
             getRoutes: {
@@ -126,7 +126,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
                     // {
                     //     "routeId": 234234,
                     //     "total_time": 90,
-                    //     "total_distabce": 40,
+                    //     "total_distance": 40,
                     //     "tripStartTime": "09:00",
                     //     "tripEndTime": "10:00",
                     //     "vehicle_type": "SUV",
@@ -159,7 +159,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
                     // {
                     //     "routeId": 234234,
                     //     "total_time": 90,
-                    //     "total_distabce": 100,
+                    //     "total_distance": 100,
                     //     "tripStartTime": "09:00",
                     //     "tripEndTime": "10:00",
                     //     "vehicle_type": "SUV",
@@ -199,7 +199,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
                         ], 
                         "guard_required": "Y",
                         "empty_seats": 1, 
-                        "total_distabce": 100,
+                        "total_distance": 100,
                         "employees_nodes_addresses": [
                             {
                                 "empId": 3949,
@@ -264,7 +264,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
         //             {
         //                 "routeId": 234234,
         //                 "total_time": 90,
-        //                 "total_distabce": 40,
+        //                 "total_distance": 40,
         //                 "tripStartTime": "09:00",
         //                 "tripEndTime": "10:00",
         //                 "vehicle_type": "SUV",
@@ -349,7 +349,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
         //             {
         //                 "routeId": 234278,
         //                 "total_time": 90,
-        //                 "total_distabce": 40,
+        //                 "total_distance": 40,
         //                 "tripStartTime": "09:00",
         //                 "tripEndTime": "10:00",
         //                 "vehicle_type": "SUV",
@@ -436,7 +436,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
         //             {
         //                 "routeId": 23423232342344,
         //                 "total_time": 90,
-        //                 "total_distabce": 40,
+        //                 "total_distance": 40,
         //                 "tripStartTime": "09:00",
         //                 "tripEndTime": "10:00",
         //                 "vehicle_type": "SUV",
@@ -509,7 +509,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
         //             {
         //                 "routeId": 23423232342389,
         //                 "total_time": 90,
-        //                 "total_distabce": 40,
+        //                 "total_distance": 40,
         //                 "tripStartTime": "09:00",
         //                 "tripEndTime": "10:00",
         //                 "vehicle_type": "SUV",

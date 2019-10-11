@@ -5,6 +5,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
     $scope.today();
     // date picket
     $scope.toggleMin();
+    $scope.markerArray = [];
 
 
     $scope.dateOptions = {
@@ -18,8 +19,9 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
     // date function
 
     TripboardService.getAllSiteList(function (data) {
+      console.log(data);
       $scope.siteList = data.data.list;
-      $scope.selectedSiteID = $scope.siteList[0].id;
+      if($scope.siteList) $scope.selectedSiteID = $scope.siteList[0].id;
     }
       , function (error) {
         console.error(error);
@@ -82,13 +84,30 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
     //   zoom: 5,
     // };
     // var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
     var map = new google.maps.Map(document.getElementById('googleMap'), {
-      zoom: 4,
-      center: { lat: 25.291, lng: 153.027 },
+      zoom: 13,
+      center: { lat: 19.2578, lng: 72.8731 },
       mapTypeId: 'terrain'
     });
 
-    // Define a symbol using SVG path notation, with an opacity of 1.
+    directionsRenderer.setMap(map);
+    var stepDisplay = new google.maps.InfoWindow;
+    var waypts =[
+      {
+        location: 'Kandivali Station (W), Parekh Nagar, Kandivali, Mumbai, Maharashtra',
+        stopover: true
+      },
+      {
+        location: 'Thane Station Road, Jambli Naka, Thane West, Thane, Maharashtra',
+        stopover: true
+      }
+
+    ];
+
+    // calculateAndDisplayRoute(directionsRenderer, directionsService, $scope.markerArray, waypts, stepDisplay, map);    // Define a symbol using SVG path notation, with an opacity of 1.
+    calculateAndDisplayRoute( directionsService, directionsRenderer, waypts)
     var lineSymbol = {
       path: 'M 0,-1 0,1',
       strokeOpacity: 1,
@@ -140,6 +159,87 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
     }
 
   }
+    // Helper function to display route with Waypointers  no Steps
+
+  function calculateAndDisplayRoute(directionsService, directionsRenderer,waypts) {
+    directionsService.route({
+      origin: 'Veer Savarkar Flyover, Malad, Liliya Nagar, Malad West, Mumbai, Maharashtra 400064',
+      destination: 'Panvel, Navi Mumbai, Maharashtra',
+      waypoints: waypts,
+      optimizeWaypoints: true,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsRenderer.setDirections(response);
+        var route = response.routes[0];
+        var summaryPanel = document.getElementById('directions-panel');
+        summaryPanel.innerHTML = '';
+        // For each route, display summary information.
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;
+          summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+              '</b><br>';
+          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+        }
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+  // Helper function to display route with Steps and not Waypointers 
+//   function calculateAndDisplayRoute(directionsRenderer, directionsService,markerArray, waypts, stepDisplay, map) {
+//   // First, remove any existing markers from the map.
+//   for (var i = 0; i < markerArray.length; i++) {
+//     markerArray[i].setMap(null);
+//   }
+
+//   // Retrieve the start and end locations and create a DirectionsRequest using
+//   // WALKING directions.
+//   directionsService.route({
+//     origin: 'Veer Savarkar Flyover, Malad, Liliya Nagar, Malad West, Mumbai, Maharashtra 400064',
+//     destination: 'Panvel, Navi Mumbai, Maharashtra',
+//     // waypoints: waypts,
+//     // optimizeWaypoints: true,
+//     travelMode: 'DRIVING'
+//   }, function(response, status) {
+//     // Route the directions and pass the response to a function to create
+//     // markers for each step.
+//     if (status === 'OK') {
+//       document.getElementById('warnings-panel').innerHTML =
+//           '<b>' + response.routes[0].warnings + '</b>';
+//       directionsRenderer.setDirections(response);
+//       // showSteps(response, $scope.markerArray, stepDisplay, map);
+//     } else {
+//       window.alert('Directions request failed due to ' + status);
+//     }
+//   });
+// }
+
+function showSteps(directionResult, markerArray, stepDisplay, map) {
+  // For each step, place a marker, and add the text to the marker's infowindow.
+  // Also attach the marker to an array so we can keep track of it and remove it
+  // when calculating new routes.
+  var myRoute = directionResult.routes[0].legs[0];
+  for (var i = 0; i < myRoute.steps.length; i++) {
+    var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+    marker.setMap(map);
+    marker.setPosition(myRoute.steps[i].start_location);
+    attachInstructionText(
+        stepDisplay, marker, myRoute.steps[i].instructions, map);
+  }
+}
+
+function attachInstructionText(stepDisplay, marker, text, map) {
+  google.maps.event.addListener(marker, 'click', function() {
+    // Open an info window when the marker is clicked on, containing the text
+    // of the step.
+    stepDisplay.setContent(text);
+    stepDisplay.open(map, marker);
+  });
+}
+// Helping Functions End
 
   $scope.filterTrips = function (status) {
     $scope.rosters = $scope.fullRoster.filter(item => item.current_status === status)
@@ -168,7 +268,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
@@ -232,7 +332,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
@@ -296,7 +396,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
