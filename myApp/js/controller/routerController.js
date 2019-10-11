@@ -148,8 +148,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   }
 
   $scope.getVehicleAndGuardList = function (siteId, shiftId) {
-    
-    GuardsService.get({ "siteId": siteId, "shiftId": shiftId }, function (res) {
+    let body = {shiftId:105, siteId:8} // { siteId, shiftId }
+    GuardsService.get(body, function (res) {
       // $scope.guardList = res.data;
       $scope.guardList = RouteStaticResponse.all_guards_response;
       console.log(res.data);
@@ -168,10 +168,11 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       console.log(error);
     });
 
-    VehicleService.get({ "siteId": siteId, "shiftId": shiftId }, function (res) {
-      // $scope.vehicleList = res.data;
-      $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
+    VehicleService.get({shiftId:138, siteId:30}, function (res) {
+      // $scope.vehicleList = res.data;c
+      console.log('------------ vechile response -----------------')
       console.log(res.data);
+      $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
       angular.forEach($scope.vehicleList, function (item) {
         item.type = "vehical";
       })
@@ -581,16 +582,17 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     //   scheduledDate: '2019-10-24' //moment($scope.filterDate).format('YYYY-MM-DD')
     // }
     var postData = {
-      "customerId": 1,
-      "siteId": 30,
-      "shiftId": 138,
-      "scheduledDate": "2019-09-24",
-      "shift_type": 1
+      "siteId" :30,
+      "shiftId" :138 ,
+      "customerId" :1,
+      "shift_type":1,
+      "scheduledDate" : "2019-10-24"
     }
     console.log(postData)
-    AutoAllocationService.query (function (data) {
+    AutoAllocationService.query (postData, function (data) {
       console.log(data);
       if (data['success']) {
+        console.log(JSON.stringify(data))
         $scope.routes = data;
       } else {
         ToasterService.showError('Error', data.message);

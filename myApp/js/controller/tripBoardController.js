@@ -168,7 +168,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
@@ -232,7 +232,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
@@ -296,7 +296,7 @@ angular.module('app').controller('tripboardCtrl', function ($scope, TripboardSer
 
         "routeId": 23423232342344,
         "total_time": 90,
-        "total_distabce": 40,
+        "total_distance": 40,
         "tripStartTime": "09:00",
         "tripEndTime": "10:00",
         "vehicle_type": "SUV",
