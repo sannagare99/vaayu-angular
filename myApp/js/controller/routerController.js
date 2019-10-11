@@ -175,9 +175,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
     VehicleService.get({shiftId:138, siteId:30}, function (res) {
       // $scope.vehicleList = res.data;c
-      console.log('guard list')
+      console.log('vehicle list')
       console.log(res.data);
-      $scope.vehicleLis = res.data;
+      $scope.vehicleList = res.data;
+
       // $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
       angular.forEach($scope.vehicleList, function (item) {
         item.type = "vehical";
