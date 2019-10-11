@@ -139,7 +139,7 @@
                     <div class="vaayu-dropzone">
                         <!-- | filter :{vehicle_allocated:search} | range : 'empty_seats' : slider_empty.minValue : slider_empty.maxValue | range : 'total_seats' : slider_occupied.minValue : slider_occupied.maxValue -->
                       <div
-                        ng-repeat="container in containers "
+                        ng-repeat="container in containers | filter :{vehicle_allocated:search}"
                         no-drag dnd-callback="container.employees.length" class="employee-cluster-panel">
                         <div class="employee-cluster-panel-heading">
                           <div class="employee-cluster-panel-title">

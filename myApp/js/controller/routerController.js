@@ -118,7 +118,9 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
     RosterService.getAllSiteList(function (data) {
       $scope.siteList = data.data.list;
-      $scope.siteId = $scope.siteList[0].id;
+      if($scope.siteList.length){
+        $scope.siteId = $scope.siteList[0].id;
+      }
 
       let postData = {
         "site_id": $scope.siteList[0].id,
@@ -150,9 +152,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   $scope.getVehicleAndGuardList = function (siteId, shiftId) {
     
     GuardsService.get({ "siteId": siteId, "shiftId": shiftId }, function (res) {
-      // $scope.guardList = res.data;
-      $scope.guardList = RouteStaticResponse.all_guards_response;
-      console.log(res.data);
+      $scope.guardList = res.data;
       angular.forEach($scope.guardList, function (item) {
         item.type = "guard";
       })
@@ -169,9 +169,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     });
 
     VehicleService.get({ "siteId": siteId, "shiftId": shiftId }, function (res) {
-      // $scope.vehicleList = res.data;
-      $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
-      console.log(res.data);
+      $scope.vehicleList = res.data;
       angular.forEach($scope.vehicleList, function (item) {
         item.type = "vehical";
       })
@@ -334,6 +332,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       }
     )
 
+    console.log($scope.routes);
+
     $scope.fullModel = [$scope.routes.data.routes];
     $scope.model2 = $scope.fullModel;
   }
@@ -363,18 +363,15 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       "shift_type": shift.trip_type+'' // 0 -checkin 1-checout
     }
 
-    console.log(postData)
    
     RouteService.getRoutes(postData, (data) => {
 
       $scope.routes = data;
-      console.log(data)
-      
+     
       // $scope.routes = RouteStaticResponse.route_response;
 
       if($scope.routes.data){
-        console.log(JSON.stringify($scope.routes));
-        console.log($scope.routes);
+       
         $scope.originalRoutes = angular.copy($scope.routes.data.routes);
         $scope.stats = $scope.routes.data.tats[0];
   
@@ -420,7 +417,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       }
     }, (error) => {
         console.log(error);
-      });
+    });
   }
 
   // datepicker function
