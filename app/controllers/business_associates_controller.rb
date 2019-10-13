@@ -178,7 +178,15 @@ class BusinessAssociatesController < ApplicationController
                           :tan => params[:ba]['tan'],
                           :business_type => params[:ba]['business_type'],
                           :service_tax_no => params[:ba]['service_tax_no'],
-                          :hq_address => params[:ba]['hq_address']
+                          :hq_address => params[:ba]['hq_address'],
+                          :contact_person => params[:ba]['contact_person'],
+                          :cin_no => params[:ba]['cin_no'],
+                          :address => params[:ba]['address'],
+                          :address_2 => params[:ba]['address_2'],
+                          :pin_code => params[:ba]['pin_code'],
+                          :city_of_operation => params[:ba]['city_of_operation'],
+                          :state_of_operation => params[:ba]['state_of_operation'],
+                          :state_code => params[:ba]['state_code']
                       )
       if !params[:ba]['logistics_company_id'].blank?
         @services = BaService.where(:business_associate_id => @business_associate.id).where(:logistics_company_id => params[:ba]['logistics_company_id'])
@@ -258,7 +266,7 @@ class BusinessAssociatesController < ApplicationController
         :admin_email, :admin_phone, :legal_name, :pan, :tan,
         :business_type, :service_tax_no, :hq_address,
         :standard_price, :pay_period, :time_on_duty_limit, :distance_limit, :rate_by_time, :service_tax_percent,
-        :rate_by_distance, :agreement_date, :swachh_bharat_cess, :krishi_kalyan_cess, :profit_centre, :invoice_frequency
+        :rate_by_distance, :agreement_date, :swachh_bharat_cess, :krishi_kalyan_cess, :profit_centre, :invoice_frequency, :contact_person,:cin_no, :address,:address_2,:pin_code,:city_of_operation,:state_of_operation,:state_code
     )
   end
 

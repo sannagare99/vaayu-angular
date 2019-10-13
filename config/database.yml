@@ -2,11 +2,11 @@ default: &default
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: moove_db #<%= ENV['DATABASE_NAME'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
   pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
-  username: MOOVE_DEV #<%= ENV['DATABASE_USERNAME'] %>
-  password:  NG$Pir7ySMJ9m&p9 #<%= ENV['DATABASE_PASSWORD'] %>
-  host: moove-uat10.cjny84emnsh9.ap-south-1.rds.amazonaws.com  #<%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
   port: 3306 #<%= ENV['DATABASE_PORT'] %>
 
  

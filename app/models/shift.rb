@@ -9,7 +9,6 @@ class Shift < ApplicationRecord
   validates :name, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
-  validates :name_2, presence: true  #Rushikesh made changes here: step 2 validate here
   validate :start_end_time_format
 
   aasm column: :status do

@@ -50,8 +50,8 @@ $(function () {
                     {data: "email"},
                     {
                         data: null,
-                        render: function () {
-                            return '<a href="#" class="editor_remove text-danger">Delete</a>';
+                        render: function (data) {
+                            return '<a style="cursor:pointer" id="viewBa" class="editor_edit" data-remote="true" data-ba_id="' + data.id + '">View</a> | <a href="#" class="editor_remove text-danger">Delete</a>'
                         }
                     }
                 ],
@@ -120,6 +120,46 @@ $(function () {
                     edit_ba = true                    
                     var html = generate_edit(response, 'business_associates', response.logistics_company_id, orig_service_html)
                     $("#serviceContainer").html(html)
+                    $('input').removeAttr('disabled');
+                    $('.btn-primary').css("display", "block")   
+                    if(logistics_company_id == null){
+                        $("#cgst_1").parent().css("display", "none")
+                        $("#sgst_1").parent().css("display", "none")
+                        $("#addServicesDiv").css("display", "none")
+                        $("#services").css("display", "none")
+                    }
+                    else{
+                        $("#cgst_1").parent().css("display", "block")
+                        $("#sgst_1").parent().css("display", "block")
+                        $("#addServicesDiv").css("display", "block")
+                        $("#services").css("display", "block")   
+                    }
+                })            
+            });
+        });
+        // View BA
+        $(document).on('click', '#viewBa', function(e){
+            e.preventDefault()
+            ba_id = e.target.dataset.ba_id
+            // $("#services").html('')
+            $.ajax({
+                type: "GET",                
+                url: '/business_associates/' + ba_id + '/edit'
+            }).done(function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: '/business_associates/details',
+                    data: {
+                        'id': ba_id
+                    }
+                }).done(function(response){   
+                    logistics_company_id = response.logistics_company_id                    
+                    orig_service_html = $("#services").html()
+                    edit_ba = true                    
+                    var html = generate_edit(response, 'business_associates', response.logistics_company_id, orig_service_html)
+                    $("#serviceContainer").html(html)
+                    $('input').attr('disabled','disabled');
+                    $('.btn-primary').css("display","none");
                     if(logistics_company_id == null){
                         $("#cgst_1").parent().css("display", "none")
                         $("#sgst_1").parent().css("display", "none")
@@ -137,6 +177,8 @@ $(function () {
         });
 
         $(document).on('click', '.editor_create', function(e){
+            $('.btn-primary').css("display", "block");
+            $('input').removeAttr('disabled');
             if(e.target.baseURI.indexOf("business-associates") != -1){
                 $.ajax({
                     type: "GET",
@@ -179,30 +221,6 @@ $(function () {
         })
 
         function validateBa(ba, validationError){
-            if($("#business_associate_admin_f_name").val() == '' || $("#business_associate_admin_f_name").val() == undefined || $("#business_associate_admin_f_name").val() == null){
-                document.getElementById("business_associate_admin_f_name").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_admin_f_name").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_admin_m_name").val() == '' || $("#business_associate_admin_m_name").val() == undefined || $("#business_associate_admin_m_name").val() == null){
-                document.getElementById("business_associate_admin_m_name").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_admin_m_name").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_admin_l_name").val() == '' || $("#business_associate_admin_l_name").val() == undefined || $("#business_associate_admin_l_name").val() == null){
-                document.getElementById("business_associate_admin_l_name").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_admin_l_name").classList.remove("border-danger")
-                validationError = validationError || false
-            }
             if($("#business_associate_admin_email").val() == '' || $("#business_associate_admin_email").val() == undefined || $("#business_associate_admin_email").val() == null){
                 document.getElementById("business_associate_admin_email").classList.add("border-danger")
                 validationError = true
@@ -211,70 +229,94 @@ $(function () {
                 document.getElementById("business_associate_admin_email").classList.remove("border-danger")
                 validationError = validationError || false
             }
-            if($("#business_associate_admin_phone").val() == '' || $("#business_associate_admin_phone").val() == undefined || $("#business_associate_admin_phone").val() == null){
-                document.getElementById("business_associate_admin_phone").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_admin_phone").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_name").val() == '' || $("#business_associate_name").val() == undefined || $("#business_associate_name").val() == null){
-                document.getElementById("business_associate_name").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_name").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_legal_name").val() == '' || $("#business_associate_legal_name").val() == undefined || $("#business_associate_legal_name").val() == null){
-                document.getElementById("business_associate_legal_name").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_legal_name").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_pan").val() == '' || $("#business_associate_pan").val() == undefined || $("#business_associate_pan").val() == null || $("#business_associate_pan").val().length != 10){
-                document.getElementById("business_associate_pan").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_pan").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_tan").val() == '' || $("#business_associate_tan").val() == undefined || $("#business_associate_tan").val() == null || $("#business_associate_pan").val().length != 10){
-                document.getElementById("business_associate_tan").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_tan").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_business_type").val() == '' || $("#business_associate_business_type").val() == undefined || $("#business_associate_business_type").val() == null){
-                document.getElementById("business_associate_business_type").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_business_type").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_service_tax_no").val() == '' || $("#business_associate_service_tax_no").val() == undefined || $("#business_associate_service_tax_no").val() == null){
-                document.getElementById("business_associate_service_tax_no").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_service_tax_no").classList.remove("border-danger")
-                validationError = validationError || false
-            }
-            if($("#business_associate_hq_address").val() == '' || $("#business_associate_hq_address").val() == undefined || $("#business_associate_hq_address").val() == null){
-                document.getElementById("business_associate_hq_address").classList.add("border-danger")
-                validationError = true
-            }
-            else{
-                document.getElementById("business_associate_hq_address").classList.remove("border-danger")
-                validationError = validationError || false
-            }
+            // if($("#business_associate_admin_m_name").val() == '' || $("#business_associate_admin_m_name").val() == undefined || $("#business_associate_admin_m_name").val() == null){
+            //     document.getElementById("business_associate_admin_m_name").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_admin_m_name").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_admin_l_name").val() == '' || $("#business_associate_admin_l_name").val() == undefined || $("#business_associate_admin_l_name").val() == null){
+            //     document.getElementById("business_associate_admin_l_name").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_admin_l_name").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_admin_email").val() == '' || $("#business_associate_admin_email").val() == undefined || $("#business_associate_admin_email").val() == null){
+            //     document.getElementById("business_associate_admin_email").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_admin_email").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_admin_phone").val() == '' || $("#business_associate_admin_phone").val() == undefined || $("#business_associate_admin_phone").val() == null){
+            //     document.getElementById("business_associate_admin_phone").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_admin_phone").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_name").val() == '' || $("#business_associate_name").val() == undefined || $("#business_associate_name").val() == null){
+            //     document.getElementById("business_associate_name").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_name").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_legal_name").val() == '' || $("#business_associate_legal_name").val() == undefined || $("#business_associate_legal_name").val() == null){
+            //     document.getElementById("business_associate_legal_name").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_legal_name").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_pan").val() == '' || $("#business_associate_pan").val() == undefined || $("#business_associate_pan").val() == null || $("#business_associate_pan").val().length != 10){
+            //     document.getElementById("business_associate_pan").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_pan").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_tan").val() == '' || $("#business_associate_tan").val() == undefined || $("#business_associate_tan").val() == null || $("#business_associate_pan").val().length != 10){
+            //     document.getElementById("business_associate_tan").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_tan").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_business_type").val() == '' || $("#business_associate_business_type").val() == undefined || $("#business_associate_business_type").val() == null){
+            //     document.getElementById("business_associate_business_type").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_business_type").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_service_tax_no").val() == '' || $("#business_associate_service_tax_no").val() == undefined || $("#business_associate_service_tax_no").val() == null){
+            //     document.getElementById("business_associate_service_tax_no").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_service_tax_no").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
+            // if($("#business_associate_hq_address").val() == '' || $("#business_associate_hq_address").val() == undefined || $("#business_associate_hq_address").val() == null){
+            //     document.getElementById("business_associate_hq_address").classList.add("border-danger")
+            //     validationError = true
+            // }
+            // else{
+            //     document.getElementById("business_associate_hq_address").classList.remove("border-danger")
+            //     validationError = validationError || false
+            // }
 
             return validationError
         }
@@ -284,10 +326,6 @@ $(function () {
             e.preventDefault()
             if(e.target.baseURI.indexOf("business-associates") != -1){
                 var ba = {
-                    'admin_f_name': $("#business_associate_admin_f_name").val(),
-                    'admin_m_name': $("#business_associate_admin_m_name").val(),
-                    'admin_l_name': $("#business_associate_admin_l_name").val(),
-                    'admin_email': $("#business_associate_admin_email").val(),
                     'admin_phone': $("#business_associate_admin_phone").val(),
                     'name': $("#business_associate_name").val(),
                     'legal_name': $("#business_associate_legal_name").val(),
@@ -295,7 +333,16 @@ $(function () {
                     'tan': $("#business_associate_tan").val(),
                     'business_type': $("#business_associate_business_type").val(),
                     'service_tax_no': $("#business_associate_service_tax_no").val(),
-                    'hq_address': $("#business_associate_hq_address").val()
+                    'contact_person': $("#business_associate_contact_person").val(),
+                    'hq_address': $("#business_associate_hq_address").val(),
+                    'cin_no': $("#business_associate_cin_no").val(),
+                    'address': $("#business_associate_address").val(),
+                    'address_2': $("#business_associate_address_2").val(),
+                    'pin_code': $("#business_associate_pin_code").val(),
+                    'city_of_operation': $("#business_associate_city_of_operation").val(),
+                    'state_of_operation': $("#business_associate_state_of_operation").val(),
+                    'state_code': $("#business_associate_state_code").val(),
+                    'admin_email': $("#business_associate_admin_email").val()
                 }
                 if(current_user == 'Operator'){
                     ba['logistics_company_id'] = $("#ba_operator_id").val()                
