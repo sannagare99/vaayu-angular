@@ -138,7 +138,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
           if ($scope.shifts && $scope.shifts.length) {
             $scope.selectedShift = $scope.shifts[0];
             $scope.resetRoute();
-            // $scope.genrateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
+            // $scope.generateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
           } else {
             $scope.selectedShift = null;
             // $scope.resetRoute();
@@ -156,8 +156,9 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   $scope.getVehicleAndGuardList = function (siteId, shiftId) {
     let body = {shiftId:105, siteId:8} // { siteId, shiftId }
     GuardsService.get(body, function (res) {
-      // $scope.guardList = res.data;
-      $scope.guardList = RouteStaticResponse.all_guards_response;
+      console.log('guard list')
+      $scope.guardList = res.data;
+      // $scope.guardList = RouteStaticResponse.all_guards_response;
       console.log(res.data);
       angular.forEach($scope.guardList, function (item) {
         item.type = "guard";
@@ -176,9 +177,11 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
     VehicleService.get({shiftId:138, siteId:30}, function (res) {
       // $scope.vehicleList = res.data;c
-      console.log('------------ vechile response -----------------')
+      console.log('vehicle list')
       console.log(res.data);
-      $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
+      $scope.vehicleList = res.data;
+
+      // $scope.vehicleList = RouteStaticResponse.all_vehicle_response;
       angular.forEach($scope.vehicleList, function (item) {
         item.type = "vehical";
       })
@@ -296,7 +299,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.finalizeArray = [];
     $scope.routeChangedIds = [];
 
-    $scope.genrateRoute($scope.siteId, $scope.selectedShift.id, $scope.filterDate, $scope.selectedShift.trip_type);
+    $scope.generateRoute($scope.siteId, $scope.selectedShift.id, $scope.filterDate, $scope.selectedShift.trip_type);
   }
 
   $scope.showStaticData = () => {
@@ -347,7 +350,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.model2 = $scope.fullModel;
   }
 
-  $scope.genrateRoute = function (siteId, shiftId, filterDate, shiftType) {
+  $scope.generateRoute = function (siteId, shiftId, filterDate, shiftType) {
 
     if (!$scope.siteId) {
       ToasterService.showError('Error', 'Select Site.');
@@ -375,6 +378,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
    
     RouteService.getRoutes(postData, (data) => {
 
+      console.log(data);
       $scope.routes = data;
      
       // $scope.routes = RouteStaticResponse.route_response;
@@ -553,11 +557,10 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   };
 
   $scope.dropGuardCallback = function (container, index, item, external, type) {
-
     var isAssign = true;
     if (isAssign) {
       var postData = {
-        "guardId": item.id,
+        "guardId": item.guardId,
         "routeId": container.routeId
       };
 

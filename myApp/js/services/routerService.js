@@ -163,11 +163,11 @@ angular.module('app').factory('RouteStaticResponse', function () {
                     //     "tripStartTime": "09:00",
                     //     "tripEndTime": "10:00",
                     //     "vehicle_type": "SUV",
- 
+
                     //     "empty_seats": 1, 
                     //     "total_seats": 5,
                     //     "trip_cost": 100,
-                        
+
                     //     "vehicle_allocated": "Y",
                     //     "guard_required": "Y",
                     //     "guard": null, 
@@ -188,7 +188,7 @@ angular.module('app').factory('RouteStaticResponse', function () {
                     //             "special": "No"
                     //         }
                     //     ],
-                        
+
                     // },
                     {
                         "total_time": "1:00:00",
@@ -196,9 +196,9 @@ angular.module('app').factory('RouteStaticResponse', function () {
                             {
                                 "lat": 12.935227, "long": 77.624433, "rank": "1", "time": "09:30"
                             }
-                        ], 
+                        ],
                         "guard_required": "Y",
-                        "empty_seats": 1, 
+                        "empty_seats": 1,
                         "total_distance": 100,
                         "employees_nodes_addresses": [
                             {
