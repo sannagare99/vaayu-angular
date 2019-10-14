@@ -118,9 +118,9 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
   //date picker function
 
   $scope.generateRoutes = function(roster) {
-    console.log(roster);
-    console.log($scope.selectedSite);
-    console.log($scope.filterDate)
+    // console.log(roster);
+    // console.log($scope.selectedSite);
+    // console.log($scope.filterDate)
 
     let shift_type = 0;
     if (roster.shift_type.toLowerCase() === 'check out') {
@@ -134,7 +134,6 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
       "search" : '0',
       "shift_type": shift_type // 0 -checkin 1-checout
     }
-
     console.log(postData)
 
     RouteService.getRoutes(postData,
@@ -142,6 +141,8 @@ angular.module('app').controller('rosterCtrl', function ($scope, RosterService, 
         console.log(res);
         if (res['success']) {
           ToasterService.showSuccess('Success', 'Route generated successfully.');
+        } else {
+          ToasterService.showError('Error', res['message']);
         }
 
     }, (error) => {
