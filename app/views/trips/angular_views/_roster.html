@@ -111,7 +111,7 @@
             <section>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-condensed">
+                        <table class="table table-bordered table-striped table-condensed c">
                             <thead>
                                 <tr>
                                 <th>Shift</th>
@@ -126,7 +126,7 @@
                             </thead>
                             
                             <tbody ng-show="rosters.length">
-                                <tr class="active" ng-repeat="roster in rosters">
+                                <tr ng-class="{'active': ($index % 2) === 0}"  ng-repeat="roster in rosters">
                                 <th scope="row">
                                     <a href="">{{roster.name}}</a>
                                 </th>
@@ -141,7 +141,7 @@
                                     
                                 </td>
                                 <td class="text-color-blue">{{roster.total_vehicles}}</td>
-                                <td class="text-color-blue">{{roster.result}}</td>
+                                <td class="text-color-blue " style="color: #14a89e !important;"><b>{{roster.result}}</b></td>
                                 <td>
                                     <div class="">
                                         <button ng-if="roster.result!=='REQUIRED MORE VEHICLE'" ng-click="generateRoutes(roster)" type="button" class="btn btn-sm-vaayu btn-terniary-blue btn-block">Generate</button>
@@ -191,13 +191,13 @@
                                         </div>
                                     </div> -->
                                     <div   class="add-vehicle-card-container">
-                                    <div class="row add-vehicle-card" ng-repeat="(key, value) in currentRoster.vehicle" >
+                                    <div class="row add-vehicle-card card_flex" ng-repeat="(key, value) in currentRoster.vehicle" >
                                         <div class="col-md-5">
-                                            <img ng-if="key== 'SUV'" src="../assets/img/suv.png">
-                                            <img ng-if="key== 'TT'" src="../assets/img/tt.png">
-                                            <img ng-if="key== 'SEDAN'" src="../assets/img/sedan.png">
-                                            <img ng-if="key== 'HATCHBACK'" src="../assets/img/hatchback.png">
-                                            <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV' || key== 'HATCHBACK')">{{key}}</span>
+                                            <img ng-if="key== 'SUV'" src="../assets/angular_images/suv.png">
+                                            <img ng-if="key== 'TT'" src="../assets/angular_images/tt.png">
+                                            <img ng-if="key== 'SEDAN'" src="../assets/angular_images/sedan.png">
+                                            <img ng-if="key== 'HATCHBACK'" src="../assets/angular_images/hatchback.png">
+                                            <span class="text-center text-key-name" ng-if="!(key== 'SEDAN' || key== 'TT' || key== 'SUV' || key== 'HATCHBACK')" style="display: block;">{{key}}</span>
                                         </div>
                                         <div class="col-md-2" ng-click="minusVehicle(key)"><i class="pointer fa fa-minus-circle add-vehicle-plus-minus-button" aria-hidden="true"></i></div>
 

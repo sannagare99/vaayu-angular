@@ -828,4 +828,12 @@
   .cut_title{font-size: 16px;font-weight: 500;padding-bottom: 20px;}
   #toast-container > div{padding-left: 45px !important;}
   .action-buttons, .save-button{display: inline-block !important;margin-right: 2px !important;}
+  .btn-terniary{background-color: #14a89e;
+    color: #fff;}
+    .table-condensed th{text-align: center;}
+    .table-condensed td  {text-align: center; color:#6c6c6c;}
+    .card_flex{display: flex;align-items: center;background-color: #e3e3e3;}
+    .card_flex img{width: 100%;}
+    .card_flex .fa{font-size: 26px;}
+    .card_flex h5{font-size: 16px;font-weight: 600;padding-left: 7px;}
 /*e*/
