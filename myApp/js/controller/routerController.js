@@ -136,7 +136,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
           if ($scope.shifts && $scope.shifts.length) {
             $scope.selectedShift = $scope.shifts[0];
             $scope.resetRoute();
-            // $scope.genrateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
+            // $scope.generateRoute($scope.siteId,$scope.shifts[0].id,moment().format('YYYY-MM-DD'),1);
           } else {
             $scope.selectedShift = null;
             // $scope.resetRoute();
@@ -297,7 +297,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.finalizeArray = [];
     $scope.routeChangedIds = [];
 
-    $scope.genrateRoute($scope.siteId, $scope.selectedShift.id, $scope.filterDate, $scope.selectedShift.trip_type);
+    $scope.generateRoute($scope.siteId, $scope.selectedShift.id, $scope.filterDate, $scope.selectedShift.trip_type);
   }
 
   $scope.showStaticData = () => {
@@ -348,7 +348,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.model2 = $scope.fullModel;
   }
 
-  $scope.genrateRoute = function (siteId, shiftId, filterDate, shiftType) {
+  $scope.generateRoute = function (siteId, shiftId, filterDate, shiftType) {
 
     if (!$scope.siteId) {
       ToasterService.showError('Error', 'Select Site.');
