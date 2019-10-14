@@ -46,6 +46,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       center: { lat: 19.2578, lng: 72.8731 },
       mapTypeId: 'terrain'
     });
+    $scope.map = map
+    console.log('map ', $scope.map)
     directionsRenderer.setMap(map);
     var stepDisplay = new google.maps.InfoWindow;
     var waypts =[
@@ -202,7 +204,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     RosterService.get(postData, function (data) {
       $scope.shifts = data.data.shiftdetails;
     }, function (error) {
-        console.log(error);
+      console.log(error);
     });
   }
 
@@ -423,7 +425,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   
       }
     }, (error) => {
-        console.log(error);
+      console.log(error);
     });
   }
 
@@ -680,16 +682,16 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
         var route = response.routes[0];
         var summaryPanel = document.getElementById('directions-panel');
         if(summaryPanel){
-        summaryPanel.innerHTML = '';
-        // For each route, display summary information.
-        for (var i = 0; i < route.legs.length; i++) {
-          var routeSegment = i + 1;
-          summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+          summaryPanel.innerHTML = '';
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
               '</b><br>';
-          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-        }
+            summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+            summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+            summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+          }
         }
       } else {
         window.alert('Directions request failed due to ' + status);
@@ -711,4 +713,47 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     return shiftType.toLowerCase() === 'check out' ? 1 : 0;
   }
 
+  $scope.getCurrentVehicleLocation = (vehicleNumber) => {
+    // call vehicle list api
+    // $http({
+    //   method: 'GET',
+    //   url: 'https://intouch.mapmyindia.com/Intouch/apis/getEntityList?token=z5fmo6ekwd6ucrp4k9ujf1x5jwnw25m2'
+    // })
+    //   .then(function (response) {
+    //   // console.log(JSON.stringify(response))
+
+    //     if (response.entity.length > 0 && response.message === 'success' && response.status === 200) {
+    //       const vehicleListData = response.entity.filter((e) => e.registrationNumber === vehicleNumber)
+
+    //       if (vehicleListData.length > 0) {
+    //         const entityId = vehicleListData[0].id
+    //         $http({
+    //           method: 'GET',
+    //           url: 'https://intouch.mapmyindia.com/Intouch/apis/getEntityLiveData?token=z5fmo6ekwd6ucrp4k9ujf1x5jwnw25m2&entityId=' + entityId
+    //         })
+    //           .then((vehicleData) => {
+    //           // map car icon in google map
+    //           })
+    //           .catch(() => {
+    //             ToasterService.showError('Error', 'Something went wrong, Try again later.')    
+    //           })
+    //       } else {
+    //         ToasterService.showError('Error', 'Something went wrong, Try again later.')
+    //       }
+    //     } else {
+    //       ToasterService.showError('Error', 'Something went wrong, Try again later.')
+    //     }
+    //   }).catch(err => {
+    //     console.log(err)
+    //     ToasterService.showError('Error', 'Something went wrong, Try again later.')
+    //   })
+
+    // hard coded vehicle location
+    console.log('$scope.map ', $scope.map)
+    var marker1 = new google.maps.Marker({
+      map: $scope.map,
+      position:  new google.maps.LatLng(19.2578, 72.8731),
+      icon: '../../assets/img/car.png'
+    })
+  }
 });
