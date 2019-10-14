@@ -823,4 +823,9 @@
   .wd-full{width: 100%;}
   .border-bt{border:1px solid #CCC !important;}
   .nav-tabs-new{margin-top: 18px;}
+  .date_style{display: flex !important;margin-bottom: 0px;height: 42px;}
+  .data_in_style{height: 42px !important;border: 1px solid #707070 !important;}
+  .cut_title{font-size: 16px;font-weight: 500;padding-bottom: 20px;}
+  #toast-container > div{padding-left: 45px !important;}
+  .action-buttons, .save-button{display: inline-block !important;margin-right: 2px !important;}
 /*e*/

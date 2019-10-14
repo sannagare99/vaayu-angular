@@ -88,110 +88,161 @@
             <toaster-container></toaster-container>
             <div id="CUSTOMER" class="tab-pane fade  " ng-class="{'in active show':isSet('CUSTOMER')}">
                 <div class="tab-content-area ">
-                    <div class="card-header">
+                    <div class="card-header cut_title">
                         Customer Contract Details
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 ">
-                                <label class="text-label" for="basic-url">Billing Cycle<span
-                                        class="required">*</span></label>
-                                <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
-                                    <option value="">Select Billing Cycle</option>
-                                    <option ng-repeat="bill in billingOption" value="{{bill.value}}">
-                                        {{bill.name.toUpperCase()}}</option>
+                                    <div class="form-group">
+                                            <label class="leb_color" for="basic-url">Billing Cycle<span
+                                                class="required">*</span></label>
+                                            
+                                            <select class="custom-select form-control" ng-model="bcycle" ng-click="closeExpanded()">
+                                                    <option value="">Select Billing Cycle</option>
+                                                    <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                                        {{bill.name.toUpperCase()}}</option>
+                
+                                                </select>
+                                          </div>
+                                
+                                          <div class="form-group">
+                                                <label class="leb_color" for="basic-url">Download Sample File</label>
+                                                <div class="input-group mb-3" ng-click="closeExpanded()">
 
-                                </select>
-                                <label class="text-label" for="basic-url">Download Sample File</label>
-                                <div class="input-group mb-3" ng-click="closeExpanded()">
 
 
-
-                                    <div ng-click="downloadSampleFile()" class=" btn btn-primary main-submit-btn">
-                                        Download Sample File</div>
-
-                                </div>
+                                                        <div ng-click="downloadSampleFile()" style="margin-top: 0px;" class=" btn btn-primary main-submit-btn">
+                                                            Download Sample File</div>
+                    
+                                                    </div>
+                                          </div>
+                                
+                                
                             </div>
                             <div class="col-md-6 ">
-                                <label class="text-label" for="basic-url">Contract Type<span
+                                    <div class="form-group">
+                                <label class="leb_color" for="basic-url">Contract Type<span
                                         class="required">*</span></label>
-                                <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                <select class="custom-select form-control" ng-model="ctype" ng-click="closeExpanded()">
                                     <option value="">Choose Options</option>
                                     <option ng-repeat="item in contract_type" value="{{item.value}}">
                                             {{item.name.toUpperCase()}}</option>
                                 </select>
-                                <br>
-                                <label class="text-label" for="basic-url">Upload File<span
+                            </div>
+                            <div class="form-group">
+                                    <label class="leb_color" for="basic-url">Upload File<span
+                                        class="required">*</span></label>
+                                    <div class="input-group">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-primary">
+                                                     Choose File&hellip; <input type="file" style="display: none;"
+                                                    accept=".csv, text/csv" id="file" name='file'
+                                                    onchange="angular.element(this).scope().fileNameChanged(this)"
+                                                    >
+                                                </span>
+                                            </label>
+                                            <input type="text" ng-model="tempfileName" ng-value="tempfileName" class="form-control" readonly>
+                                        </div>
+                                        <span class="help-block">
+                                            <!-- Try selecting one or more files and watch the feedback -->
+                                        </span>
+                                    </div>
+                                <!-- <label class="leb_color" for="basic-url">Upload File<span
                                         class="required">*</span></label>
                                 <div class="input-group mb-3" ng-click="closeExpanded()">
                                     <input type="file" accept=".csv, text/csv" id="file" name='file'
                                         onchange="angular.element(this).scope().fileNameChanged(this)" />
 
-
-                                </div>
+                                    </div>
+                                </div> -->
                             </div>
+                            <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                    {{submitResponse.message}}
+                                </p>
+                                <button href="#" ng-click="createContract()"
+                                    class="btn btn-primary main-submit-btn">Submit</button>
                         </div>
 
-                        <p class="submitMsg" ng-class="{error:!submitResponse.success}">
-                            {{submitResponse.message}}
-                        </p>
-                        <button href="#" ng-click="createContract()"
-                            class="btn btn-primary main-submit-btn">Submit</button>
+                       
                     </div>
                 </div>
             </div>
             <div id="BA" class="tab-pane fade  " ng-class="{'in active show':isSet('BA')}">
                 <div class="tab-content-area">
-                    <div class="card-header">
+                    <div class="card-header cut_title">
                         BA Contract Details
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 ">
-                                <label class="text-label" for="basic-url">Billing Cycle<span
-                                        class="required">*</span></label>
-                                <select class="custom-select" ng-model="bcycle" ng-click="closeExpanded()">
-                                    <option value="">Select Billing Cycle</option>
-                                    <option ng-repeat="bill in billingOption" value="{{bill.value}}">
-                                        {{bill.name.toUpperCase()}}</option>
-
-                                </select>
-                                <label class="text-label" for="basic-url">Download Sample File</label>
+                                <div class="form-group">
+                                        <label class="leb_color " for="basic-url">Billing Cycle<span
+                                            class="required">*</span></label>
+                                    <select class="custom-select form-control" ng-model="bcycle" ng-click="closeExpanded()">
+                                        <option value="">Select Billing Cycle</option>
+                                        <option ng-repeat="bill in billingOption" value="{{bill.value}}">
+                                            {{bill.name.toUpperCase()}}</option>
+    
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                <label class="leb_color" for="basic-url">Download Sample File</label>
                                 <div class="input-group mb-3" ng-click="closeExpanded()">
 
 
 
-                                    <div ng-click="downloadSampleFile()" class=" btn btn-primary main-submit-btn">
+                                    <div ng-click="downloadSampleFile()" style="margin-top: 0px;" class=" btn btn-primary main-submit-btn">
                                             Download Sample File</div>
-
+                                </div>
                                 </div>
                             </div>
                             <div class="col-md-6 ">
-                                <label class="text-label" for="basic-url">Contract Type<span
+                                    <div class="form-group">
+                                <label class="tleb_color" for="basic-url">Contract Type<span
                                         class="required">*</span></label>
                                
-                                <select class="custom-select" ng-model="ctype" ng-click="closeExpanded()">
+                                <select class="custom-select form-control" ng-model="ctype" ng-click="closeExpanded()">
                                     <option value="">Choose Options</option>
                                     <option ng-repeat="item in contract_type" value="{{item.value}}">
                                             {{item.name.toUpperCase()}}</option>
                                 </select>
-
-                                <label class="text-label" for="basic-url">Upload File<span
+                            </div>
+                            <div class="form-group">
+                                    <label class="leb_color" for="basic-url">Upload File<span
+                                        class="required">*</span></label>
+                                    <div class="input-group">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-primary">
+                                                     Choose File&hellip; <input type="file" style="display: none;"
+                                                    accept=".csv, text/csv" id="file" name='file'
+                                                    onchange="angular.element(this).scope().fileNameChanged(this)"
+                                                    >
+                                                </span>
+                                            </label>
+                                            <input type="text" ng-model="tempfileName" ng-value="tempfileName" class="form-control" readonly>
+                                        </div>
+                                        <span class="help-block">
+                                            <!-- Try selecting one or more files and watch the feedback -->
+                                        </span>
+                            </div>
+                                <!-- <label class="text-label" for="basic-url">Upload File<span
                                         class="required">*</span></label>
                                 <div class="input-group mb-3" ng-click="closeExpanded()">
                                     <input type="file" accept=".csv, text/csv" id="file" name='file'
                                         onchange="angular.element(this).scope().fileNameChanged(this)" />
 
 
-                                </div>
+                                </div> -->
                             </div>
+                            <p class="submitMsg" ng-class="{error:!submitResponse.success}">
+                                    {{submitResponse.message}}
+                                </p>
+                                <button href="#" ng-click="createContract()"
+                                    class="btn btn-primary main-submit-btn">Submit</button>
                         </div>
 
-                        <p class="submitMsg" ng-class="{error:!submitResponse.success}">
-                            {{submitResponse.message}}
-                        </p>
-                        <button href="#" ng-click="createContract()"
-                            class="btn btn-primary main-submit-btn">Submit</button>
+                        
                     </div>
                 </div>
             </div>

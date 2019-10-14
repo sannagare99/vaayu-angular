@@ -25,12 +25,12 @@
                   </div> -->
           <div class="form-group pr-2">
             <div class="form-group pr-2">
-              <p class="input-group custom-date">
-                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="filterDate"
+              <p class="input-group custom-date date_style">
+                <input type="text" class="form-control data_in_style" datepicker-popup="{{format}}" ng-model="filterDate"
                   is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
                   ng-required="true" close-text="Close" ng-change="updateFilters()" />
-                <span class="input-group-btn-datePicket">
-                  <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                <span class="input-group-btn-datePicket ">
+                  <button type="button" class="btn btn-default data_in_style" ng-click="open($event)"><i
                       class="fa fa-calendar"></i></button>
                 </span>
               </p>

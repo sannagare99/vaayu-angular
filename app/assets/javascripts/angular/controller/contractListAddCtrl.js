@@ -1,4 +1,4 @@
-app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService, $location) {
+app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionService, ToasterService, $location, $timeout) {
 
     this.$onInit = function () {
         console.log('onit - contractListAddCtrl');
@@ -182,13 +182,18 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
 
     };
 
-
+    $scope.onFileSelected = () => {
+        console.log($scope.selectedFile)
+    }
 
     $scope.fileNameChanged = function (e) {
         console.log(e.files)
         $scope.fileObject = e.files[0];
         console.log(e, $scope.fileObject)
-
+        $timeout(() => {
+            $scope.tempfileName = $scope.fileObject.name
+            console.log($scope.tempfileName)
+        }, 200)
     }
 
     $scope.downloadCSV = function () {
@@ -234,6 +239,7 @@ app.controller('contractListAddCtrl', function ($scope, $http, $state, SessionSe
     }
 
     $scope.createContract = function () {
+        $scope.tempfileName = 'atul jadhav'
         // var file=$scope.myFile;
         if (!$scope.isValid()) {
             return;

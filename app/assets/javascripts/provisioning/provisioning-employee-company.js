@@ -84,7 +84,7 @@ $(function () {
             name: "business_type"
         }, {
             label: 'PAN',
-            className: "col-md-offset-4 col-md-4 clear",
+            className: " col-md-4 clear",
             name: "pan"
         }, {
             label: 'Service Tax No.',
