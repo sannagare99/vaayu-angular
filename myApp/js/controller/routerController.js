@@ -48,7 +48,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     });
     directionsRenderer.setMap(map);
     var stepDisplay = new google.maps.InfoWindow;
-    var waypts =[
+    var waypts = [
       {
         location: 'Kandivali Station (W), Parekh Nagar, Kandivali, Mumbai, Maharashtra',
         stopover: true
@@ -64,7 +64,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
   }
 
- 
+
 
   $scope.finalizeArray = [];
 
@@ -78,7 +78,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       } catch (er) { console.log(er) }
     });
 
-    
+
   }
 
 
@@ -120,7 +120,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
 
     RosterService.getAllSiteList(function (data) {
       $scope.siteList = data.data.list;
-      if($scope.siteList.length){
+      if ($scope.siteList.length) {
         $scope.siteId = $scope.siteList[0].id;
       }
 
@@ -130,7 +130,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       }
 
       RosterService.get(postData, function (data) {
-        
+
         if (data.data) {
           $scope.shifts = data.data.shiftdetails;
           if ($scope.shifts && $scope.shifts.length) {
@@ -152,8 +152,8 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   }
 
   $scope.getVehicleAndGuardList = function (siteId, shiftId) {
-    let body = {shiftId:105, siteId:8} // { siteId, shiftId }
-    GuardsService.get(body, function (res) {
+    // let body = {shiftId:105, siteId:8} // { siteId, shiftId }
+    GuardsService.get({ siteId, shiftId }, function (res) {
       console.log('guard list')
       $scope.guardList = res.data;
       // $scope.guardList = RouteStaticResponse.all_guards_response;
@@ -173,7 +173,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       console.log(error);
     });
 
-    VehicleService.get({shiftId:138, siteId:30}, function (res) {
+    VehicleService.get({ shiftId, siteId }, function (res) {
       // $scope.vehicleList = res.data;c
       console.log('vehicle list')
       console.log(res.data);
@@ -205,7 +205,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     RosterService.get(postData, function (data) {
       $scope.shifts = data.data.shiftdetails;
     }, function (error) {
-        console.log(error);
+      console.log(error);
     });
   }
 
@@ -364,78 +364,87 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     //  $scope.getVehicleAndGuardList(siteId, 92);
 
     $scope.getVehicleAndGuardList(siteId, shift.id);
-   
+
     let postData = {
       "site_id": parseInt($scope.siteId),
       "shift_id": parseInt(shift.id),
       "to_date": moment(filterDate).format('YYYY-MM-DD'),
-      "search" : "1",
-      "shift_type": shift.trip_type+'' // 0 -checkin 1-checout
+      "search": "1",
+      "shift_type": shift.trip_type + '' // 0 -checkin 1-checout
     }
+    console.log(postData)
 
-   
     RouteService.getRoutes(postData, (data) => {
 
       console.log(data);
       $scope.routes = data;
-     
+
       // $scope.routes = RouteStaticResponse.route_response;
 
-      if($scope.routes.data){
-       
-        $scope.originalRoutes = angular.copy($scope.routes.data.routes);
-        $scope.stats = $scope.routes.data.tats[0];
-  
-        angular.forEach($scope.routes.data.routes, function (route, index, routeArray) {
-          route.allowed = "all";
-          if (route.guard) {
-            let guard = route.guard;
-            guard.type = 'guard';
-            route.guard = [guard]
-          } else {
-            route.guard = [];
-          }
-          if (route.vehicle) {
-            let vehical = route.vehicle;
-            vehical.type = 'vehical';
-            route.vehicle = [vehical]
-          } else {
-            route.vehicle = [];
-          }
-  
-          angular.forEach(route.employees_nodes_addresses, function (employee, idx, emmplyeeArray) {
-            employee.type = "employee";
-            employee.effectAllowed = "all";
-          })
-  
-          route.employees = route.employees_nodes_addresses;
-        })
-  
-        $scope.routes.data.routes.push(
-          {
-            "vehicle_allocated": '',
-            "employees": [],
-            "vehicle": [],
-            "guard": [],
-            "allowed": "all"
-          }
-        )
-  
-        $scope.fullModel = [$scope.routes.data.routes];
-        $scope.model2 = $scope.fullModel;
-        console.log($scope.model2 )
-  
+      if ($scope.routes.data) {
+        try {
+          ToasterService.showToast('info', 'Response Received', $scope.routes.data.routes.length+' Routes found for this shift')
+          $scope.originalRoutes = angular.copy($scope.routes.data.routes);
+          $scope.stats = $scope.routes.data.tats[0];
+          console.log($scope.model2)
+        } catch (err) {
+          $scope.routes = RouteStaticResponse.emptyResponse;
+          $scope.routes.data.routes = [];
+          ToasterService.showToast('info', 'Response Received', 'No Routes found for this shift')
+          console.log('error', err)
+        }
+        $scope.showRouteData()
       }
     }, (error) => {
-        console.log(error);
+      console.log(error);
     });
   }
 
-  $scope.collapsiblePanel =function(item){
-    if(item.collapse){
-      item.collapse=false;
-    }else{
-      item.collapse=true;
+  $scope.showRouteData = () => {
+    angular.forEach($scope.routes.data.routes, function (route, index, routeArray) {
+      route.allowed = "all";
+      if (route.guard) {
+        let guard = route.guard;
+        guard.type = 'guard';
+        route.guard = [guard]
+      } else {
+        route.guard = [];
+      }
+      if (route.vehicle) {
+        let vehical = route.vehicle;
+        vehical.type = 'vehical';
+        route.vehicle = [vehical]
+      } else {
+        route.vehicle = [];
+      }
+
+      angular.forEach(route.employees_nodes_addresses, function (employee, idx, emmplyeeArray) {
+        employee.type = "employee";
+        employee.effectAllowed = "all";
+      })
+
+      route.employees = route.employees_nodes_addresses;
+    })
+
+    $scope.routes.data.routes.push(
+      {
+        "vehicle_allocated": '',
+        "employees": [],
+        "vehicle": [],
+        "guard": [],
+        "allowed": "all"
+      }
+    )
+
+    $scope.fullModel = [$scope.routes.data.routes];
+    $scope.model2 = $scope.fullModel;
+  }
+
+  $scope.collapsiblePanel = function (item) {
+    if (item.collapse) {
+      item.collapse = false;
+    } else {
+      item.collapse = true;
     }
   }
 
@@ -596,14 +605,14 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     //   scheduledDate: '2019-10-24' //moment($scope.filterDate).format('YYYY-MM-DD')
     // }
     var postData = {
-      "siteId" :30,
-      "shiftId" :138 ,
-      "customerId" :1,
-      "shift_type":1,
-      "scheduledDate" : "2019-10-24"
+      "siteId": 30,
+      "shiftId": 138,
+      "customerId": 1,
+      "shift_type": 1,
+      "scheduledDate": "2019-10-24"
     }
     console.log(postData)
-    AutoAllocationService.query (postData, function (data) {
+    AutoAllocationService.query(postData, function (data) {
       console.log(data);
       if (data['success']) {
         console.log(JSON.stringify(data))
@@ -611,11 +620,11 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
       } else {
         ToasterService.showError('Error', data.message);
       }
-      
+
       // $scope.resetRoute();
 
 
-    }, function(err) {
+    }, function (err) {
       ToasterService.showError('Error', 'Something went wrong..');
     })
   }
@@ -670,29 +679,29 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
     $scope.isFilterSidebarView = true;
   }
 
-  function calculateAndDisplayRoute(directionsService, directionsRenderer,waypts) {
+  function calculateAndDisplayRoute(directionsService, directionsRenderer, waypts) {
     directionsService.route({
       origin: 'Veer Savarkar Flyover, Malad, Liliya Nagar, Malad West, Mumbai, Maharashtra 400064',
       destination: 'Panvel, Navi Mumbai, Maharashtra',
       waypoints: waypts,
       optimizeWaypoints: true,
-      travelMode:  google.maps.DirectionsTravelMode.DRIVING
-    }, function(response, status) {
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    }, function (response, status) {
       if (status === 'OK') {
         directionsRenderer.setDirections(response);
         var route = response.routes[0];
         var summaryPanel = document.getElementById('directions-panel');
-        if(summaryPanel){
-        summaryPanel.innerHTML = '';
-        // For each route, display summary information.
-        for (var i = 0; i < route.legs.length; i++) {
-          var routeSegment = i + 1;
-          summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+        if (summaryPanel) {
+          summaryPanel.innerHTML = '';
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
               '</b><br>';
-          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-        }
+            summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+            summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+            summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+          }
         }
       } else {
         window.alert('Directions request failed due to ' + status);
@@ -701,7 +710,7 @@ angular.module('app').controller('routeCtrl', function ($scope, $http, $state, M
   }
 
   function attachInstructionText(stepDisplay, marker, text, map) {
-    google.maps.event.addListener(marker, 'click', function() {
+    google.maps.event.addListener(marker, 'click', function () {
       // Open an info window when the marker is clicked on, containing the text
       // of the step.
       stepDisplay.setContent(text);
